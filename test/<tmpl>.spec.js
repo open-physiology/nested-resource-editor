@@ -8,7 +8,7 @@ import {
 	expect,
 } from './test.helper';
 
-// import something from '../src/something.js';
+import {plus} from '../src/index.js';
 
 describe("<test suite>", () => {
 	
@@ -19,6 +19,12 @@ describe("<test suite>", () => {
 	it("can test things", () => {
 		
 		expect(true).to.be.truthy;
+		
+	});
+	
+	it("can add two numbers", () => {
+		
+		expect(plus(1, 2)).to.equal(3);
 		
 	});
 	
