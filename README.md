@@ -1,6 +1,6 @@
-# project-template
+# project-template (template/angular2)
 
-[![Build Status](http://img.shields.io/travis/open-physiology/project-template.svg)](https://travis-ci.org/open-physiology/project-template?branch=master)
+[![Build Status](http://img.shields.io/travis/open-physiology/project-template/template/angular2.svg)](https://travis-ci.org/open-physiology/project-template/branches)
 
 This is a project template used for creating new JavaScript based projects under the open-physiology organisation.
 
@@ -9,12 +9,12 @@ To use it for a new project, it's best to [duplicate it](https://help.github.com
 * [Create the new repository on GitHub](https://github.com/organizations/open-physiology/repositories/new)
 * In a terminal, create a bare clone of this template repository:
     ```shell
-    $ git clone --bare --single-branch --branch master https://github.com/open-physiology/project-template.git
+    $ git clone --bare --single-branch --branch template/angular2 https://github.com/open-physiology/project-template.git
     ```
 * In a terminal, create a bare clone of this template repository:
     ```shell
     $ cd project-template.git
-    $ git push https://github.com/open-physiology/<new-repo>.git master:master
+    $ git push https://github.com/open-physiology/<new-repo>.git template/angular2:master
     ```
 * You can now remove the temporary local clone:
     ```shell
