@@ -3,7 +3,7 @@
     "__docId__": 0,
     "kind": "file",
     "name": "src/index.js",
-    "content": "/**\n * An excellent function that adds two numbers together.\n * @param   {number}  a  The first number.\n * @param   {number}  b  The second number.\n * @returns {number}     a + b\n */\nexport function plus(a: number, b: number) {\n\treturn a + b;\n}\n",
+    "content": "/**\n * An excellent function that adds two numbers together.\n * @param   {number}  a  The first number.\n * @param   {number}  b  The second number.\n * @returns {number}     a + b\n * @example\n * let x = plus(10, 20);\n * expect(x).to.equal(30);\n */\nexport function plus(a: number, b: number) {\n\treturn a + b;\n}\n",
     "static": true,
     "longname": "src/index.js",
     "access": null,
@@ -24,7 +24,10 @@
     "importPath": "project-template/src/index.js",
     "importStyle": "{plus}",
     "description": "An excellent function that adds two numbers together.",
-    "lineNumber": 7,
+    "examples": [
+      "let x = plus(10, 20);\nexpect(x).to.equal(30);"
+    ],
+    "lineNumber": 10,
     "unknown": [
       {
         "tagName": "@returns",
@@ -723,5 +726,73 @@
     "description": "",
     "lineNumber": 34,
     "builtinExternal": true
+  },
+  {
+    "__docId__": 59,
+    "kind": "testFile",
+    "name": "test/index.spec.js",
+    "content": "import {\n\tchai,\n\tsinon,\n\tdescribe,\n\tit,\n\tbeforeEach,\n\tafterEach,\n\texpect,\n} from './test.helper';\n\nimport {plus} from '../src/index.js';\n\n/** @test */\ndescribe(\"the project-template\", () => {\n\t\n\tbeforeEach(() => {\n\t\t// setup\n\t});\n\t\n\tit(\"can test things\", () => {\n\t\t\n\t\texpect(true).to.be.truthy;\n\t\t\n\t});\n\t\n\t/** @test {plus} */\n\tit(\"can add two numbers\", () => {\n\t\t\n\t\texpect(plus(1, 2)).to.equal(3);\n\t\t\n\t});\n\t\n\tafterEach(() => {\n\t\t// teardown\n\t});\n\t\n});\n",
+    "static": true,
+    "longname": "test/index.spec.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 60,
+    "kind": "testDescribe",
+    "name": "describe0",
+    "testId": 0,
+    "memberof": "test/index.spec.js",
+    "testDepth": 0,
+    "static": true,
+    "longname": "test/index.spec.js~describe0",
+    "access": null,
+    "description": "the project-template",
+    "lineNumber": 6,
+    "unknown": [
+      {
+        "tagName": "@test",
+        "tagValue": ""
+      }
+    ],
+    "testTargets": [
+      "*"
+    ]
+  },
+  {
+    "__docId__": 61,
+    "kind": "testIt",
+    "name": "it1",
+    "testId": 1,
+    "memberof": "test/index.spec.js~describe0",
+    "testDepth": 1,
+    "static": true,
+    "longname": "test/index.spec.js~describe0.it1",
+    "access": null,
+    "description": "can test things",
+    "lineNumber": 12
+  },
+  {
+    "__docId__": 62,
+    "kind": "testIt",
+    "name": "it2",
+    "testId": 2,
+    "memberof": "test/index.spec.js~describe0",
+    "testDepth": 1,
+    "static": true,
+    "longname": "test/index.spec.js~describe0.it2",
+    "access": null,
+    "description": "can add two numbers",
+    "lineNumber": 18,
+    "unknown": [
+      {
+        "tagName": "@test",
+        "tagValue": "{plus}"
+      }
+    ],
+    "testTargets": [
+      "plus"
+    ]
   }
 ]

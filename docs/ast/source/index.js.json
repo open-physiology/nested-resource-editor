@@ -1,28 +1,28 @@
 {
   "type": "File",
   "start": 0,
-  "end": 229,
+  "end": 293,
   "loc": {
     "start": {
       "line": 1,
       "column": 0
     },
     "end": {
-      "line": 9,
+      "line": 12,
       "column": 1
     }
   },
   "program": {
     "type": "Program",
     "start": 0,
-    "end": 229,
+    "end": 293,
     "loc": {
       "start": {
         "line": 1,
         "column": 0
       },
       "end": {
-        "line": 9,
+        "line": 12,
         "column": 1
       }
     },
@@ -30,15 +30,15 @@
     "body": [
       {
         "type": "ExportNamedDeclaration",
-        "start": 183,
-        "end": 229,
+        "start": 247,
+        "end": 293,
         "loc": {
           "start": {
-            "line": 7,
+            "line": 10,
             "column": 0
           },
           "end": {
-            "line": 9,
+            "line": 12,
             "column": 1
           }
         },
@@ -46,29 +46,29 @@
         "source": null,
         "declaration": {
           "type": "FunctionDeclaration",
-          "start": 190,
-          "end": 229,
+          "start": 254,
+          "end": 293,
           "loc": {
             "start": {
-              "line": 7,
+              "line": 10,
               "column": 7
             },
             "end": {
-              "line": 9,
+              "line": 12,
               "column": 1
             }
           },
           "id": {
             "type": "Identifier",
-            "start": 199,
-            "end": 203,
+            "start": 263,
+            "end": 267,
             "loc": {
               "start": {
-                "line": 7,
+                "line": 10,
                 "column": 16
               },
               "end": {
-                "line": 7,
+                "line": 10,
                 "column": 20
               },
               "identifierName": "plus"
@@ -82,15 +82,15 @@
           "params": [
             {
               "type": "Identifier",
-              "start": 204,
-              "end": 205,
+              "start": 268,
+              "end": 269,
               "loc": {
                 "start": {
-                  "line": 7,
+                  "line": 10,
                   "column": 21
                 },
                 "end": {
-                  "line": 7,
+                  "line": 10,
                   "column": 22
                 },
                 "identifierName": "a"
@@ -99,15 +99,15 @@
             },
             {
               "type": "Identifier",
-              "start": 207,
-              "end": 208,
+              "start": 271,
+              "end": 272,
               "loc": {
                 "start": {
-                  "line": 7,
+                  "line": 10,
                   "column": 24
                 },
                 "end": {
-                  "line": 7,
+                  "line": 10,
                   "column": 25
                 },
                 "identifierName": "b"
@@ -117,58 +117,58 @@
           ],
           "body": {
             "type": "BlockStatement",
-            "start": 210,
-            "end": 229,
+            "start": 274,
+            "end": 293,
             "loc": {
               "start": {
-                "line": 7,
+                "line": 10,
                 "column": 27
               },
               "end": {
-                "line": 9,
+                "line": 12,
                 "column": 1
               }
             },
             "body": [
               {
                 "type": "ReturnStatement",
-                "start": 214,
-                "end": 227,
+                "start": 278,
+                "end": 291,
                 "loc": {
                   "start": {
-                    "line": 8,
+                    "line": 11,
                     "column": 2
                   },
                   "end": {
-                    "line": 8,
+                    "line": 11,
                     "column": 15
                   }
                 },
                 "argument": {
                   "type": "BinaryExpression",
-                  "start": 221,
-                  "end": 226,
+                  "start": 285,
+                  "end": 290,
                   "loc": {
                     "start": {
-                      "line": 8,
+                      "line": 11,
                       "column": 9
                     },
                     "end": {
-                      "line": 8,
+                      "line": 11,
                       "column": 14
                     }
                   },
                   "left": {
                     "type": "Identifier",
-                    "start": 221,
-                    "end": 222,
+                    "start": 285,
+                    "end": 286,
                     "loc": {
                       "start": {
-                        "line": 8,
+                        "line": 11,
                         "column": 9
                       },
                       "end": {
-                        "line": 8,
+                        "line": 11,
                         "column": 10
                       },
                       "identifierName": "a"
@@ -178,15 +178,15 @@
                   "operator": "+",
                   "right": {
                     "type": "Identifier",
-                    "start": 225,
-                    "end": 226,
+                    "start": 289,
+                    "end": 290,
                     "loc": {
                       "start": {
-                        "line": 8,
+                        "line": 11,
                         "column": 13
                       },
                       "end": {
-                        "line": 8,
+                        "line": 11,
                         "column": 14
                       },
                       "identifierName": "b"
@@ -201,16 +201,16 @@
           "leadingComments": [
             {
               "type": "CommentBlock",
-              "value": "*\n * An excellent function that adds two numbers together.\n * @param   {number}  a  The first number.\n * @param   {number}  b  The second number.\n * @returns {number}     a + b\n ",
+              "value": "*\n * An excellent function that adds two numbers together.\n * @param   {number}  a  The first number.\n * @param   {number}  b  The second number.\n * @returns {number}     a + b\n * @example\n * let x = plus(10, 20);\n * expect(x).to.equal(30);\n ",
               "start": 0,
-              "end": 182,
+              "end": 246,
               "loc": {
                 "start": {
                   "line": 1,
                   "column": 0
                 },
                 "end": {
-                  "line": 6,
+                  "line": 9,
                   "column": 3
                 }
               }
@@ -221,16 +221,16 @@
         "leadingComments": [
           {
             "type": "CommentBlock",
-            "value": "*\n * An excellent function that adds two numbers together.\n * @param   {number}  a  The first number.\n * @param   {number}  b  The second number.\n * @returns {number}     a + b\n ",
+            "value": "*\n * An excellent function that adds two numbers together.\n * @param   {number}  a  The first number.\n * @param   {number}  b  The second number.\n * @returns {number}     a + b\n * @example\n * let x = plus(10, 20);\n * expect(x).to.equal(30);\n ",
             "start": 0,
-            "end": 182,
+            "end": 246,
             "loc": {
               "start": {
                 "line": 1,
                 "column": 0
               },
               "end": {
-                "line": 6,
+                "line": 9,
                 "column": 3
               }
             }
@@ -243,16 +243,16 @@
   "comments": [
     {
       "type": "CommentBlock",
-      "value": "*\n * An excellent function that adds two numbers together.\n * @param   {number}  a  The first number.\n * @param   {number}  b  The second number.\n * @returns {number}     a + b\n ",
+      "value": "*\n * An excellent function that adds two numbers together.\n * @param   {number}  a  The first number.\n * @param   {number}  b  The second number.\n * @returns {number}     a + b\n * @example\n * let x = plus(10, 20);\n * expect(x).to.equal(30);\n ",
       "start": 0,
-      "end": 182,
+      "end": 246,
       "loc": {
         "start": {
           "line": 1,
           "column": 0
         },
         "end": {
-          "line": 6,
+          "line": 9,
           "column": 3
         }
       }
@@ -261,16 +261,16 @@
   "tokens": [
     {
       "type": "CommentBlock",
-      "value": "*\n * An excellent function that adds two numbers together.\n * @param   {number}  a  The first number.\n * @param   {number}  b  The second number.\n * @returns {number}     a + b\n ",
+      "value": "*\n * An excellent function that adds two numbers together.\n * @param   {number}  a  The first number.\n * @param   {number}  b  The second number.\n * @returns {number}     a + b\n * @example\n * let x = plus(10, 20);\n * expect(x).to.equal(30);\n ",
       "start": 0,
-      "end": 182,
+      "end": 246,
       "loc": {
         "start": {
           "line": 1,
           "column": 0
         },
         "end": {
-          "line": 6,
+          "line": 9,
           "column": 3
         }
       }
@@ -290,15 +290,15 @@
         "updateContext": null
       },
       "value": "export",
-      "start": 183,
-      "end": 189,
+      "start": 247,
+      "end": 253,
       "loc": {
         "start": {
-          "line": 7,
+          "line": 10,
           "column": 0
         },
         "end": {
-          "line": 7,
+          "line": 10,
           "column": 6
         }
       }
@@ -317,15 +317,15 @@
         "binop": null
       },
       "value": "function",
-      "start": 190,
-      "end": 198,
+      "start": 254,
+      "end": 262,
       "loc": {
         "start": {
-          "line": 7,
+          "line": 10,
           "column": 7
         },
         "end": {
-          "line": 7,
+          "line": 10,
           "column": 15
         }
       }
@@ -343,15 +343,15 @@
         "binop": null
       },
       "value": "plus",
-      "start": 199,
-      "end": 203,
+      "start": 263,
+      "end": 267,
       "loc": {
         "start": {
-          "line": 7,
+          "line": 10,
           "column": 16
         },
         "end": {
-          "line": 7,
+          "line": 10,
           "column": 20
         }
       }
@@ -368,15 +368,15 @@
         "postfix": false,
         "binop": null
       },
-      "start": 203,
-      "end": 204,
+      "start": 267,
+      "end": 268,
       "loc": {
         "start": {
-          "line": 7,
+          "line": 10,
           "column": 20
         },
         "end": {
-          "line": 7,
+          "line": 10,
           "column": 21
         }
       }
@@ -394,15 +394,15 @@
         "binop": null
       },
       "value": "a",
-      "start": 204,
-      "end": 205,
+      "start": 268,
+      "end": 269,
       "loc": {
         "start": {
-          "line": 7,
+          "line": 10,
           "column": 21
         },
         "end": {
-          "line": 7,
+          "line": 10,
           "column": 22
         }
       }
@@ -420,15 +420,15 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 205,
-      "end": 206,
+      "start": 269,
+      "end": 270,
       "loc": {
         "start": {
-          "line": 7,
+          "line": 10,
           "column": 22
         },
         "end": {
-          "line": 7,
+          "line": 10,
           "column": 23
         }
       }
@@ -446,15 +446,15 @@
         "binop": null
       },
       "value": "b",
-      "start": 207,
-      "end": 208,
+      "start": 271,
+      "end": 272,
       "loc": {
         "start": {
-          "line": 7,
+          "line": 10,
           "column": 24
         },
         "end": {
-          "line": 7,
+          "line": 10,
           "column": 25
         }
       }
@@ -471,15 +471,15 @@
         "postfix": false,
         "binop": null
       },
-      "start": 208,
-      "end": 209,
+      "start": 272,
+      "end": 273,
       "loc": {
         "start": {
-          "line": 7,
+          "line": 10,
           "column": 25
         },
         "end": {
-          "line": 7,
+          "line": 10,
           "column": 26
         }
       }
@@ -496,15 +496,15 @@
         "postfix": false,
         "binop": null
       },
-      "start": 210,
-      "end": 211,
+      "start": 274,
+      "end": 275,
       "loc": {
         "start": {
-          "line": 7,
+          "line": 10,
           "column": 27
         },
         "end": {
-          "line": 7,
+          "line": 10,
           "column": 28
         }
       }
@@ -524,15 +524,15 @@
         "updateContext": null
       },
       "value": "return",
-      "start": 214,
-      "end": 220,
+      "start": 278,
+      "end": 284,
       "loc": {
         "start": {
-          "line": 8,
+          "line": 11,
           "column": 2
         },
         "end": {
-          "line": 8,
+          "line": 11,
           "column": 8
         }
       }
@@ -550,15 +550,15 @@
         "binop": null
       },
       "value": "a",
-      "start": 221,
-      "end": 222,
+      "start": 285,
+      "end": 286,
       "loc": {
         "start": {
-          "line": 8,
+          "line": 11,
           "column": 9
         },
         "end": {
-          "line": 8,
+          "line": 11,
           "column": 10
         }
       }
@@ -577,15 +577,15 @@
         "updateContext": null
       },
       "value": "+",
-      "start": 223,
-      "end": 224,
+      "start": 287,
+      "end": 288,
       "loc": {
         "start": {
-          "line": 8,
+          "line": 11,
           "column": 11
         },
         "end": {
-          "line": 8,
+          "line": 11,
           "column": 12
         }
       }
@@ -603,15 +603,15 @@
         "binop": null
       },
       "value": "b",
-      "start": 225,
-      "end": 226,
+      "start": 289,
+      "end": 290,
       "loc": {
         "start": {
-          "line": 8,
+          "line": 11,
           "column": 13
         },
         "end": {
-          "line": 8,
+          "line": 11,
           "column": 14
         }
       }
@@ -629,15 +629,15 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 226,
-      "end": 227,
+      "start": 290,
+      "end": 291,
       "loc": {
         "start": {
-          "line": 8,
+          "line": 11,
           "column": 14
         },
         "end": {
-          "line": 8,
+          "line": 11,
           "column": 15
         }
       }
@@ -654,15 +654,15 @@
         "postfix": false,
         "binop": null
       },
-      "start": 228,
-      "end": 229,
+      "start": 292,
+      "end": 293,
       "loc": {
         "start": {
-          "line": 9,
+          "line": 12,
           "column": 0
         },
         "end": {
-          "line": 9,
+          "line": 12,
           "column": 1
         }
       }
@@ -680,15 +680,15 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 229,
-      "end": 229,
+      "start": 293,
+      "end": 293,
       "loc": {
         "start": {
-          "line": 9,
+          "line": 12,
           "column": 1
         },
         "end": {
-          "line": 9,
+          "line": 12,
           "column": 1
         }
       }

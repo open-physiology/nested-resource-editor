@@ -1,16 +1,18 @@
 var webpack = require('webpack');
+var loaders = require('./webpack.loaders.js');
+
 module.exports = {
 	devtool: 'source-map',
 	context: __dirname + '/src',
 	entry: {
-		'{{project-name}}': [ 'babel-polyfill', './index.js' ],
-		'{{project-name}}-minimal':           [ './index.js' ]
+		'project-template': [ 'babel-polyfill', './index.js' ],
+		'project-template-minimal':           [ './index.js' ]
 	},
 	output: {
 		path: __dirname + '/dist',
 		filename: '[name].js',
-		library: '{{library-name}}',
-		libraryTarget: 'umd',
+		// library: 'ProjectName',
+		// libraryTarget: 'umd',
 		sourceMapFilename: '[file].map',
 		/* source-map support for IntelliJ/WebStorm */
 		devtoolModuleFilenameTemplate:         '[absolute-resource-path]',

@@ -10,7 +10,8 @@ import {
 
 import {plus} from '../src/index.js';
 
-describe("<test suite>", () => {
+/** @test */
+describe("the project-template", () => {
 	
 	beforeEach(() => {
 		// setup
@@ -22,6 +23,7 @@ describe("<test suite>", () => {
 		
 	});
 	
+	/** @test {plus} */
 	it("can add two numbers", () => {
 		
 		expect(plus(1, 2)).to.equal(3);
