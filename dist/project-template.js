@@ -15948,9 +15948,8 @@ var HelloComponent = exports.HelloComponent = (_dec = (0, _core.Component)({
 })), _class2)) || _class);
 
 /**
- * The HelloModule module, which offers the excellent HelloComponent component!
+ * The HelloModule module, which offers the _excellent_ HelloComponent component!
  */
-
 var HelloModule = exports.HelloModule = (_dec3 = (0, _core.NgModule)({
 	declarations: [HelloComponent],
 	exports: [HelloComponent]

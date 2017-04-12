@@ -24,6 +24,12 @@ window.esdocSearchIndex = [
     "variable"
   ],
   [
+    "project-template/src/index.js~plus",
+    "function/index.html#static-function-plus",
+    "<span>plus</span> <span class=\"search-result-import-path\">project-template/src/index.js</span>",
+    "function"
+  ],
+  [
     "builtinexternal/ecmascriptexternal.js~array",
     "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array",
     "BuiltinExternal/ECMAScriptExternal.js~Array",
@@ -370,5 +376,41 @@ window.esdocSearchIndex = [
     "file/src/test-app/index.js.html",
     "src/test-app/index.js",
     "file"
+  ],
+  [
+    "src/test-page/app.js",
+    "file/src/test-page/app.js.html",
+    "src/test-page/app.js",
+    "file"
+  ],
+  [
+    "src/test-page/index.js",
+    "file/src/test-page/index.js.html",
+    "src/test-page/index.js",
+    "file"
+  ],
+  [
+    "test/index.spec.js",
+    "test-file/test/index.spec.js.html",
+    "test/index.spec.js",
+    "testFile"
+  ],
+  [
+    "* *,*",
+    "test-file/test/index.spec.js.html#lineNumber6",
+    "the project-template",
+    "test"
+  ],
+  [
+    "plus src/index.js~plus,plus",
+    "test-file/test/index.spec.js.html#lineNumber18",
+    "the project-template can add two numbers",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/index.spec.js.html#lineNumber12",
+    "the project-template can test things",
+    "test"
   ]
 ]

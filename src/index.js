@@ -24,3 +24,13 @@ export class HelloComponent {
  * The HelloModule module, which offers the _excellent_ HelloComponent component!
  */
 export class HelloModule {}
+
+/**
+ * Add two numbers together.
+ * @param {number} a - the first number
+ * @param {number} b - the second number
+ * @returns {number} - the result: a + b
+ */
+export function plus(a: number, b: number): number {
+	return a + b;
+}
