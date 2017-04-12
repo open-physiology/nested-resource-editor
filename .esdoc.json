@@ -1,6 +1,10 @@
 {
   "source":      "./src",
   "destination": "./docs",
+  "test": {
+    "type":   "mocha",
+    "source": "./test"
+  },
   "plugins": [{
     "name": "esdoc-babel-plugin",
     "option": {

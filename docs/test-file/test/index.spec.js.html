@@ -2,8 +2,8 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <base data-ice="baseUrl">
-  <title data-ice="title">API Document</title>
+  <base data-ice="baseUrl" href="../../">
+  <title data-ice="title">test/index.spec.js | API Document</title>
   <link type="text/css" rel="stylesheet" href="css/style.css">
   <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
   <script src="script/prettify/prettify.js"></script>
@@ -32,16 +32,51 @@
 <nav class="navigation" data-ice="nav"><div>
   <ul>
     
-  <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-HelloComponent">HelloComponent</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-HelloModule">HelloModule</a></span></span></li>
-<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">test-app</div><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-HelloApp">HelloApp</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-HelloAppModule">HelloAppModule</a></span></span></li>
+  <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-plus">plus</a></span></span></li>
 </ul>
 </div>
 </nav>
 
-<div class="content" data-ice="content"><div data-ice="index" class="github-markdown"><h1 id="under-construction">Under Construction</h1>
-</div>
+<div class="content" data-ice="content"><h1 data-ice="title">test/index.spec.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import {
+	chai,
+	sinon,
+	describe,
+	it,
+	beforeEach,
+	afterEach,
+	expect,
+} from &apos;./test.helper&apos;;
+
+import {plus} from &apos;../src/index.js&apos;;
+
+/** @test */
+describe(&quot;the project-template&quot;, () =&gt; {
+	
+	beforeEach(() =&gt; {
+		// setup
+	});
+	
+	it(&quot;can test things&quot;, () =&gt; {
+		
+		expect(true).to.be.truthy;
+		
+	});
+	
+	/** @test {plus} */
+	it(&quot;can add two numbers&quot;, () =&gt; {
+		
+		expect(plus(1, 2)).to.equal(3);
+		
+	});
+	
+	afterEach(() =&gt; {
+		// teardown
+	});
+	
+});
+</code></pre>
+
 </div>
 
 <footer class="footer">
