@@ -14,7 +14,7 @@ To use it for a new project, it's best to [mirror it](https://help.github.com/ar
 * In a terminal, create a bare clone of this template repository:
     ```shell
     $ cd project-template.git
-    $ git push --mirror https://github.com/open-physiology/<new-repo>.git
+    $ git push https://github.com/open-physiology/<new-repo>.git master:master
     ```
 * You can now remove the temporary local clone:
     ```shell
