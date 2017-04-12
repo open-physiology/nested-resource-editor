@@ -4,7 +4,7 @@
 
 This is a project template used for creating new JavaScript based projects under the open-physiology organisation.
 
-To use it for a new project, it's best to [mirror it](https://help.github.com/articles/duplicating-a-repository), rather than just copy the files. That way, the original git history is preserved, and changes made to this template can be merged into derived projects at a later stage:
+To use it for a new project, it's best to [duplicate it](https://help.github.com/articles/duplicating-a-repository), rather than just copy the files. That way, the original git history is preserved, and changes made to this template can be merged into derived projects at a later stage:
 
 * [Create the new repository on GitHub](https://github.com/organizations/open-physiology/repositories/new)
 * In a terminal, create a bare clone of this template repository:
