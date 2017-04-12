@@ -1,8 +1,5 @@
 import {NgModule, Component, Input} from '@angular/core';
 
-/**
- * The HelloComponent component, used to greet any subject you like!
- */
 @Component({
 	selector: 'hello',
 	styles: [`
@@ -12,15 +9,18 @@ import {NgModule, Component, Input} from '@angular/core';
 	`],
 	template: '<p>Hello {{ subject }}!</p>',
 })
+/**
+ * The HelloComponent component, used to greet any subject you like!
+ */
 export class HelloComponent {
 	@Input() subject: string;
 }
 
-/**
- * The HelloModule module, which offers the excellent HelloComponent component!
- */
 @NgModule({
 	declarations: [ HelloComponent ],
 	exports:      [ HelloComponent ]
 })
+/**
+ * The HelloModule module, which offers the _excellent_ HelloComponent component!
+ */
 export class HelloModule {}

@@ -2,8 +2,8 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <base data-ice="baseUrl" href="../../">
-  <title data-ice="title">src/index.js | API Document</title>
+  <base data-ice="baseUrl" href="../../../">
+  <title data-ice="title">src/test-app/index.js | API Document</title>
   <link type="text/css" rel="stylesheet" href="css/style.css">
   <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
   <script src="script/prettify/prettify.js"></script>
@@ -40,33 +40,12 @@
 </div>
 </nav>
 
-<div class="content" data-ice="content"><h1 data-ice="title">src/index.js</h1>
-<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import {NgModule, Component, Input} from &apos;@angular/core&apos;;
+<div class="content" data-ice="content"><h1 data-ice="title">src/test-app/index.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import { platformBrowserDynamic } from &apos;@angular/platform-browser-dynamic&apos;;
 
-@Component({
-	selector: &apos;hello&apos;,
-	styles: [`
-		p {
-			font-style: italic;
-		}
-	`],
-	template: &apos;&lt;p&gt;Hello {{ subject }}!&lt;/p&gt;&apos;,
-})
-/**
- * The HelloComponent component, used to greet any subject you like!
- */
-export class HelloComponent {
-	@Input() subject: string;
-}
+import { HelloAppModule } from &apos;./app&apos;;
 
-@NgModule({
-	declarations: [ HelloComponent ],
-	exports:      [ HelloComponent ]
-})
-/**
- * The HelloModule module, which offers the _excellent_ HelloComponent component!
- */
-export class HelloModule {}
+platformBrowserDynamic().bootstrapModule(HelloAppModule);
 </code></pre>
 
 </div>

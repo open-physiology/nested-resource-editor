@@ -3,10 +3,10 @@
     "es2015"
   ],
   "plugins": [
-    "babel-plugin-angular2-annotations",
+    "angular2-annotations",
     "transform-decorators-legacy",
     "transform-class-properties",
-    "babel-plugin-transform-strict-mode",
+    "transform-strict-mode",
     "transform-object-rest-spread",
     "transform-es2015-instanceof",
     "transform-async-to-generator",

@@ -36,7 +36,7 @@ export class HelloApp {
 }
 
 /**
- * The HelloAppModule test module, which supplies the excellent HelloApp test application!
+ * The HelloAppModule test module, which supplies the _excellent_ HelloApp test application!
  */
 @NgModule({
 	imports: [

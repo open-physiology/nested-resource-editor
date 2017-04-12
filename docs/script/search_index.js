@@ -1,9 +1,27 @@
 window.esdocSearchIndex = [
   [
-    "project-template/src/index.js~plus",
-    "function/index.html#static-function-plus",
-    "<span>plus</span> <span class=\"search-result-import-path\">project-template/src/index.js</span>",
-    "function"
+    "project-template/src/test-app/app.js~helloapp",
+    "variable/index.html#static-variable-HelloApp",
+    "<span>HelloApp</span> <span class=\"search-result-import-path\">project-template/src/test-app/app.js</span>",
+    "variable"
+  ],
+  [
+    "project-template/src/test-app/app.js~helloappmodule",
+    "variable/index.html#static-variable-HelloAppModule",
+    "<span>HelloAppModule</span> <span class=\"search-result-import-path\">project-template/src/test-app/app.js</span>",
+    "variable"
+  ],
+  [
+    "project-template/src/index.js~hellocomponent",
+    "variable/index.html#static-variable-HelloComponent",
+    "<span>HelloComponent</span> <span class=\"search-result-import-path\">project-template/src/index.js</span>",
+    "variable"
+  ],
+  [
+    "project-template/src/index.js~hellomodule",
+    "variable/index.html#static-variable-HelloModule",
+    "<span>HelloModule</span> <span class=\"search-result-import-path\">project-template/src/index.js</span>",
+    "variable"
   ],
   [
     "builtinexternal/ecmascriptexternal.js~array",
@@ -339,6 +357,18 @@ window.esdocSearchIndex = [
     "src/index.js",
     "file/src/index.js.html",
     "src/index.js",
+    "file"
+  ],
+  [
+    "src/test-app/app.js",
+    "file/src/test-app/app.js.html",
+    "src/test-app/app.js",
+    "file"
+  ],
+  [
+    "src/test-app/index.js",
+    "file/src/test-app/index.js.html",
+    "src/test-app/index.js",
     "file"
   ]
 ]
