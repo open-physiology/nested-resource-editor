@@ -22,4 +22,6 @@ To use it for a new project, it's best to [duplicate it](https://help.github.com
     ```
 * Make a working copy of the new repo to start working on it.
 * Do a search/replace across the whole project to replace `project-template` with the name of the new repo.
-* Replace the example code and example tests with real code and real tests.
+* Replace the example code, example documentation and example tests with real code, real documentation and real tests.
+* Run the `init-repo.js` script from the [open-physiology/open-physiology-scripts](https://github.com/open-physiology/open-physiology-scripts) to add the proper labels and milestones.
+* Go to the [ZenHub Board](https://github.com/open-physiology/open-physiology#boards) and [merge the new repo](https://www.zenhub.com/blog/multi-repo-boards-have-arrived#mergingrepositories) into the board.
