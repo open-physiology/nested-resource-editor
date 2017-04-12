@@ -3,7 +3,7 @@
     "__docId__": 0,
     "kind": "file",
     "name": "src/index.js",
-    "content": "/**\n * An excellent function that adds two numbers together.\n * @param   {number}  a  The first number.\n * @param   {number}  b  The second number.\n * @returns {number}     a + b\n * @example\n * let x = plus(10, 20);\n * expect(x).to.equal(30);\n */\nexport function plus(a: number, b: number) {\n\treturn a + b;\n}\n",
+    "content": "/**\n * An excellent function that adds two numbers together.\n * @param {number} a - the first number\n * @param {number} b - the second number\n * @returns {number} - the result: a + b\n * @example\n * let x = plus(10, 20);\n * expect(x).to.equal(30);\n */\nexport function plus(a: number, b: number): number {\n\treturn a + b;\n}\n",
     "static": true,
     "longname": "src/index.js",
     "access": null,
@@ -31,7 +31,7 @@
     "unknown": [
       {
         "tagName": "@returns",
-        "tagValue": "{number}     a + b"
+        "tagValue": "{number} - the result: a + b"
       }
     ],
     "params": [
@@ -43,7 +43,7 @@
         "spread": false,
         "optional": false,
         "name": "a",
-        "description": "The first number."
+        "description": "the first number"
       },
       {
         "nullable": null,
@@ -53,7 +53,7 @@
         "spread": false,
         "optional": false,
         "name": "b",
-        "description": "The second number."
+        "description": "the second number"
       }
     ],
     "return": {
@@ -62,7 +62,7 @@
         "number"
       ],
       "spread": false,
-      "description": "a + b"
+      "description": "the result: a + b"
     }
   },
   {

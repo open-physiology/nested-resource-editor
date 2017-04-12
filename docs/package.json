@@ -4,9 +4,10 @@
   "description": "Templates for starting new open-physiology projects",
   "main": "dist/index.js",
   "scripts": {
-    "test": "mocha-webpack --opts mocha-webpack.opts",
-    "build": "cross-env BABEL_ENV=production webpack",
-    "docs": "esdoc"
+    "test":       "mocha-webpack --opts mocha-webpack.opts",
+    "build":      "cross-env BABEL_ENV=production webpack",
+    "docs":       "esdoc",
+    "everything": "npm test && npm run build && npm run docs"
   },
   "repository": {
     "type": "git",
