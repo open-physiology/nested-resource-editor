@@ -9,7 +9,7 @@ module.exports = [
 		loader: 'json-loader'
 	},
 	{
-		test: /icons\/\w+\.png$/,
+		test: /icons[\/\\]\w+\.png$/,
 		loader: 'url-loader?limit=20000'
 	}
 ];
