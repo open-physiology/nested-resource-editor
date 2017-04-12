@@ -9,7 +9,7 @@ To use it for a new project, it's best to [duplicate it](https://help.github.com
 * [Create the new repository on GitHub](https://github.com/organizations/open-physiology/repositories/new)
 * In a terminal, create a bare clone of this template repository:
     ```shell
-    $ git clone --bare https://github.com/open-physiology/project-template.git
+    $ git clone --bare --single-branch --branch=master https://github.com/open-physiology/project-template.git
     ```
 * In a terminal, create a bare clone of this template repository:
     ```shell
