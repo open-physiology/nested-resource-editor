@@ -24318,88 +24318,104 @@ addToUnscopables('entries');
 
 
 Object.defineProperty(exports, "__esModule", {
-	value: true
+  value: true
 });
 exports.HelloModule = exports.HelloComponent = undefined;
 
 var _dec, _dec2, _class, _desc, _value, _class2, _descriptor, _dec3, _class4;
+
+exports.plus = plus;
 
 var _core = __webpack_require__(2);
 
 function _instanceof(left, right) { if (right != null && typeof Symbol !== "undefined" && right[Symbol.hasInstance]) { return right[Symbol.hasInstance](left); } else { return _instanceof(left, right); } }
 
 function _initDefineProp(target, property, descriptor, context) {
-	if (!descriptor) return;
-	Object.defineProperty(target, property, {
-		enumerable: descriptor.enumerable,
-		configurable: descriptor.configurable,
-		writable: descriptor.writable,
-		value: descriptor.initializer ? descriptor.initializer.call(context) : void 0
-	});
+  if (!descriptor) return;
+  Object.defineProperty(target, property, {
+    enumerable: descriptor.enumerable,
+    configurable: descriptor.configurable,
+    writable: descriptor.writable,
+    value: descriptor.initializer ? descriptor.initializer.call(context) : void 0
+  });
 }
 
 function _classCallCheck(instance, Constructor) { if (!_instanceof(instance, Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _applyDecoratedDescriptor(target, property, decorators, descriptor, context) {
-	var desc = {};
-	Object['ke' + 'ys'](descriptor).forEach(function (key) {
-		desc[key] = descriptor[key];
-	});
-	desc.enumerable = !!desc.enumerable;
-	desc.configurable = !!desc.configurable;
+  var desc = {};
+  Object['ke' + 'ys'](descriptor).forEach(function (key) {
+    desc[key] = descriptor[key];
+  });
+  desc.enumerable = !!desc.enumerable;
+  desc.configurable = !!desc.configurable;
 
-	if ('value' in desc || desc.initializer) {
-		desc.writable = true;
-	}
+  if ('value' in desc || desc.initializer) {
+    desc.writable = true;
+  }
 
-	desc = decorators.slice().reverse().reduce(function (desc, decorator) {
-		return decorator(target, property, desc) || desc;
-	}, desc);
+  desc = decorators.slice().reverse().reduce(function (desc, decorator) {
+    return decorator(target, property, desc) || desc;
+  }, desc);
 
-	if (context && desc.initializer !== void 0) {
-		desc.value = desc.initializer ? desc.initializer.call(context) : void 0;
-		desc.initializer = undefined;
-	}
+  if (context && desc.initializer !== void 0) {
+    desc.value = desc.initializer ? desc.initializer.call(context) : void 0;
+    desc.initializer = undefined;
+  }
 
-	if (desc.initializer === void 0) {
-		Object['define' + 'Property'](target, property, desc);
-		desc = null;
-	}
+  if (desc.initializer === void 0) {
+    Object['define' + 'Property'](target, property, desc);
+    desc = null;
+  }
 
-	return desc;
+  return desc;
 }
 
 function _initializerWarningHelper(descriptor, context) {
-	throw new Error('Decorating class property failed. Please ensure that transform-class-properties is enabled.');
+  throw new Error('Decorating class property failed. Please ensure that transform-class-properties is enabled.');
 }
 
 /**
  * The HelloComponent component, used to greet any subject you like!
  */
 var HelloComponent = exports.HelloComponent = (_dec = (0, _core.Component)({
-	selector: 'hello',
-	styles: ['\n\t\tp {\n\t\t\tfont-style: italic;\n\t\t}\n\t'],
-	template: '<p>Hello {{ subject }}!</p>'
+  selector: 'hello',
+  styles: ['\n\t\tp {\n\t\t\tfont-style: italic;\n\t\t}\n\t'],
+  template: '<p>Hello {{ subject }}!</p>'
 }), _dec2 = (0, _core.Input)(), _dec(_class = (_class2 = function HelloComponent() {
-	_classCallCheck(this, HelloComponent);
+  _classCallCheck(this, HelloComponent);
 
-	_initDefineProp(this, 'subject', _descriptor, this);
+  _initDefineProp(this, 'subject', _descriptor, this);
 }, (_descriptor = _applyDecoratedDescriptor(_class2.prototype, 'subject', [_dec2], {
-	enumerable: true,
-	initializer: function initializer() {
-		return this.subject;
-	}
+  enumerable: true,
+  initializer: function initializer() {
+    return this.subject;
+  }
 })), _class2)) || _class);
 
 /**
  * The HelloModule module, which offers the _excellent_ HelloComponent component!
  */
 var HelloModule = exports.HelloModule = (_dec3 = (0, _core.NgModule)({
-	declarations: [HelloComponent],
-	exports: [HelloComponent]
+  declarations: [HelloComponent],
+  exports: [HelloComponent]
 }), _dec3(_class4 = function HelloModule() {
-	_classCallCheck(this, HelloModule);
+  _classCallCheck(this, HelloModule);
 }) || _class4);
+
+/**
+ * An excellent function that adds two numbers together.
+ * @param {number} a - the first number
+ * @param {number} b - the second number
+ * @returns {number} - the result: a + b
+ * @example
+ * let x = plus(10, 20);
+ * expect(x).to.equal(30);
+ */
+
+function plus(a, b) {
+  return a + b;
+}
 
 /***/ }),
 /* 189 */

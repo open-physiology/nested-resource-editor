@@ -3,7 +3,7 @@
     "__docId__": 0,
     "kind": "file",
     "name": "src/index.js",
-    "content": "import {NgModule, Component, Input} from '@angular/core';\n\n@Component({\n\tselector: 'hello',\n\tstyles: [`\n\t\tp {\n\t\t\tfont-style: italic;\n\t\t}\n\t`],\n\ttemplate: '<p>Hello {{ subject }}!</p>',\n})\n/**\n * The HelloComponent component, used to greet any subject you like!\n */\nexport class HelloComponent {\n\t@Input() subject: string;\n}\n\n@NgModule({\n\tdeclarations: [ HelloComponent ],\n\texports:      [ HelloComponent ]\n})\n/**\n * The HelloModule module, which offers the _excellent_ HelloComponent component!\n */\nexport class HelloModule {}\n\n/**\n * Add two numbers together.\n * @param {number} a - the first number\n * @param {number} b - the second number\n * @returns {number} - the result: a + b\n */\nexport function plus(a: number, b: number): number {\n\treturn a + b;\n}\n\n",
+    "content": "import {NgModule, Component, Input} from '@angular/core';\n\n@Component({\n\tselector: 'hello',\n\tstyles: [`\n\t\tp {\n\t\t\tfont-style: italic;\n\t\t}\n\t`],\n\ttemplate: '<p>Hello {{ subject }}!</p>',\n})\n/**\n * The HelloComponent component, used to greet any subject you like!\n */\nexport class HelloComponent {\n\t@Input() subject: string;\n}\n\n@NgModule({\n\tdeclarations: [ HelloComponent ],\n\texports:      [ HelloComponent ]\n})\n/**\n * The HelloModule module, which offers the _excellent_ HelloComponent component!\n */\nexport class HelloModule {}\n\n/**\n * An excellent function that adds two numbers together.\n * @param {number} a - the first number\n * @param {number} b - the second number\n * @returns {number} - the result: a + b\n * @example\n * let x = plus(10, 20);\n * expect(x).to.equal(30);\n */\nexport function plus(a: number, b: number): number {\n\treturn a + b;\n}\n",
     "static": true,
     "longname": "src/index.js",
     "access": null,
@@ -207,8 +207,11 @@
     "export": true,
     "importPath": "project-template/src/index.js",
     "importStyle": "{plus}",
-    "description": "Add two numbers together.",
-    "lineNumber": 85,
+    "description": "An excellent function that adds two numbers together.",
+    "examples": [
+      "let x = plus(10, 20);\nexpect(x).to.equal(30);"
+    ],
+    "lineNumber": 88,
     "unknown": [
       {
         "tagName": "@returns",
