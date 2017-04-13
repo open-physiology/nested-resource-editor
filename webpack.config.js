@@ -7,8 +7,8 @@ module.exports = {
 	context: __dirname + '/src',
 	entry: {
 		'test-app/index':   [ 'babel-polyfill', 'zone.js/dist/zone.js', './test-app/index.js' ],
-		'project-template': [ 'babel-polyfill', 'zone.js/dist/zone.js', './index.js' ],
-		'project-template-minimal':                                   [ './index.js' ]
+		'nested-resource-editor': [ 'babel-polyfill', 'zone.js/dist/zone.js', './index.js' ],
+		'nested-resource-editor-minimal':                                   [ './index.js' ]
 	},
 	output: {
 		path: __dirname + '/dist',

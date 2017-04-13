@@ -11,7 +11,7 @@ import {
 import {plus} from '../src/index.js';
 
 /** @test */
-describe("the project-template", () => {
+describe("the nested-resource-editor", () => {
 	
 	beforeEach(() => {
 		// setup

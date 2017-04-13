@@ -1,32 +1,32 @@
 window.esdocSearchIndex = [
   [
-    "project-template/src/test-app/app.js~helloapp",
+    "nested-resource-editor/src/test-app/app.js~helloapp",
     "variable/index.html#static-variable-HelloApp",
-    "<span>HelloApp</span> <span class=\"search-result-import-path\">project-template/src/test-app/app.js</span>",
+    "<span>HelloApp</span> <span class=\"search-result-import-path\">nested-resource-editor/src/test-app/app.js</span>",
     "variable"
   ],
   [
-    "project-template/src/test-app/app.js~helloappmodule",
+    "nested-resource-editor/src/test-app/app.js~helloappmodule",
     "variable/index.html#static-variable-HelloAppModule",
-    "<span>HelloAppModule</span> <span class=\"search-result-import-path\">project-template/src/test-app/app.js</span>",
+    "<span>HelloAppModule</span> <span class=\"search-result-import-path\">nested-resource-editor/src/test-app/app.js</span>",
     "variable"
   ],
   [
-    "project-template/src/index.js~hellocomponent",
+    "nested-resource-editor/src/index.js~hellocomponent",
     "variable/index.html#static-variable-HelloComponent",
-    "<span>HelloComponent</span> <span class=\"search-result-import-path\">project-template/src/index.js</span>",
+    "<span>HelloComponent</span> <span class=\"search-result-import-path\">nested-resource-editor/src/index.js</span>",
     "variable"
   ],
   [
-    "project-template/src/index.js~hellomodule",
+    "nested-resource-editor/src/index.js~hellomodule",
     "variable/index.html#static-variable-HelloModule",
-    "<span>HelloModule</span> <span class=\"search-result-import-path\">project-template/src/index.js</span>",
+    "<span>HelloModule</span> <span class=\"search-result-import-path\">nested-resource-editor/src/index.js</span>",
     "variable"
   ],
   [
-    "project-template/src/index.js~plus",
+    "nested-resource-editor/src/index.js~plus",
     "function/index.html#static-function-plus",
-    "<span>plus</span> <span class=\"search-result-import-path\">project-template/src/index.js</span>",
+    "<span>plus</span> <span class=\"search-result-import-path\">nested-resource-editor/src/index.js</span>",
     "function"
   ],
   [
@@ -378,18 +378,6 @@ window.esdocSearchIndex = [
     "file"
   ],
   [
-    "src/test-page/app.js",
-    "file/src/test-page/app.js.html",
-    "src/test-page/app.js",
-    "file"
-  ],
-  [
-    "src/test-page/index.js",
-    "file/src/test-page/index.js.html",
-    "src/test-page/index.js",
-    "file"
-  ],
-  [
     "test/index.spec.js",
     "test-file/test/index.spec.js.html",
     "test/index.spec.js",
@@ -398,19 +386,19 @@ window.esdocSearchIndex = [
   [
     "* *,*",
     "test-file/test/index.spec.js.html#lineNumber6",
-    "the project-template",
+    "the nested-resource-editor",
     "test"
   ],
   [
     "plus src/index.js~plus,plus",
     "test-file/test/index.spec.js.html#lineNumber18",
-    "the project-template can add two numbers",
+    "the nested-resource-editor can add two numbers",
     "test"
   ],
   [
     "",
     "test-file/test/index.spec.js.html#lineNumber12",
-    "the project-template can test things",
+    "the nested-resource-editor can test things",
     "test"
   ]
 ]

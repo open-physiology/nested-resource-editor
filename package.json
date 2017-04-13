@@ -1,5 +1,5 @@
 {
-  "name": "project-template",
+  "name": "nested-resource-editor",
   "version": "0.1.0",
   "description": "Templates for starting new open-physiology projects",
   "main": "dist/index.js",
@@ -11,13 +11,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/open-physiology/project-template.git"
+    "url": "git+https://github.com/open-physiology/nested-resource-editor.git"
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/open-physiology/project-template/issues"
+    "url": "https://github.com/open-physiology/nested-resource-editor/issues"
   },
-  "homepage": "https://github.com/open-physiology/project-template#readme",
+  "homepage": "https://github.com/open-physiology/nested-resource-editor#readme",
   "devDependencies": {
     "babel-cli": "6",
     "babel-core": "6",
