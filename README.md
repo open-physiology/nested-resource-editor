@@ -1,6 +1,6 @@
 # nested-resource-editor (template/angular2)
 
-[![Build Status](http://img.shields.io/travis/open-physiology/nested-resource-editor/template/angular2.svg)](https://travis-ci.org/open-physiology/nested-resource-editor/branches)
+[![Build Status](http://img.shields.io/travis/open-physiology/nested-resource-editor.svg)](https://travis-ci.org/open-physiology/nested-resource-editor/branches)
 
 This is a project template used for creating new JavaScript based projects under the open-physiology organisation.
 
