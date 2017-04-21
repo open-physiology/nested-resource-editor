@@ -24,15 +24,10 @@ import {HelloModule} from '../index.js';
 		}
 	`],
 	template: `
-	    <ul>
-	      <li><a (click)="subject = 'world'">World</a></li>
-	      <li><a (click)="subject = 'universe'">Universe</a></li>
-	    </ul>
-	    <hello [subject]="subject"></hello>
+	    <hello></hello>
 	`,
 })
 export class HelloApp {
-	subject: string = 'world';
 }
 
 /**
@@ -49,3 +44,9 @@ export class HelloApp {
 	bootstrap: [HelloApp],
 })
 export class HelloAppModule {}
+
+
+
+
+
+

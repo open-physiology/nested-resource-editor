@@ -4,9 +4,9 @@
   "description": "Templates for starting new open-physiology projects",
   "main": "dist/index.js",
   "scripts": {
-    "test":       "mocha-webpack --opts mocha-webpack.opts",
-    "build":      "cross-env BABEL_ENV=production webpack",
-    "docs":       "esdoc",
+    "test": "mocha-webpack --opts mocha-webpack.opts",
+    "build": "cross-env BABEL_ENV=production webpack",
+    "docs": "esdoc",
     "everything": "npm test && npm run build && npm run docs"
   },
   "repository": {
@@ -61,18 +61,29 @@
     "webpack-node-externals": "1.5"
   },
   "dependencies": {
-    "utilities": "open-physiology/utilities",
-    "bound-native-methods": "0.1",
-    "deep-freeze-strict": "1",
-    "lodash-bound": "1",
-    "rxjs": "5",
     "@angular/common": "2",
     "@angular/compiler": "2",
     "@angular/core": "2",
     "@angular/platform-browser": "2",
     "@angular/platform-browser-dynamic": "2",
     "@angular/router": "3",
+    "babel-plugin-transform-builtin-extend": "^1.1.2",
     "babel-polyfill": "6",
+    "bootstrap": "^3.3.7",
+    "bound-native-methods": "0.1",
+    "deep-freeze-strict": "1",
+    "font-awesome": "~4.7.0",
+    "lodash-bound": "1",
+    "najax": "^1.0.3",
+    "ng2-bs3-modal": "^0.10.4",
+    "ng2-select": "^1.2.0",
+    "ng2-toasty": "^1.9.0",
+    "ngx-accordion": "0.0.17",
+    "ngx-dnd": "^1.0.3",
+    "ngx-dropdown": "0.0.22",
+    "open-physiology-model": "github:open-physiology/open-physiology-model",
+    "rxjs": "5",
+    "utilities": "open-physiology/utilities",
     "zone.js": "0.7"
   }
 }

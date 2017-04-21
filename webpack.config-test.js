@@ -12,5 +12,7 @@ module.exports = {
 		devtoolFallbackModuleFilenameTemplate: '[absolute-resource-path]?[hash]'
 	},
 	target: 'node',
-	externals: [require('webpack-node-externals')()]
+	externals: [require('webpack-node-externals')({
+		whitelist: ['utilities', 'open-physiology-model']
+	})]
 };

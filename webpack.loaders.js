@@ -11,5 +11,10 @@ module.exports = [
 	{
 		test: /icons[\/\\]\w+\.png$/,
 		loader: 'url-loader?limit=20000'
+	},
+	{
+		test: /node_modules[\/\\](utilities|open-physiology-model)[\/\\]src[\/\\].*\.js$/,
+		loader: 'babel-loader'
 	}
+
 ];

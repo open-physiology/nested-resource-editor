@@ -1,0 +1,136 @@
+/**
+ * Created by Natallia on 4/18/2017.
+ */
+"use strict";
+import {NgModule, Component} from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
+
+//external
+import {AccordionModule} from "ngx-accordion";
+import {DndModule} from 'ngx-dnd';
+import {ToolbarSettingsModule}  from '../common/toolbars/setttings';
+import {PipeTransformModule} from "../common/pipes";
+import {modelClassNames, model} from "../common/utils";
+
+//internal
+import {ToolbarAddModule}    from '../toolbars/add';
+import {ToolbarFilterModule} from '../toolbars/filter';
+import {ToolbarSortModule}   from '../toolbars/sort';
+import {ResourcePanelModule}  from "./resource";
+import {AbstractResourceList} from "./abstract";
+import {ItemHeader} from "./header";
+import {HighlightService} from "./abstract";
+
+@Component({
+    selector: 'nested-resource-widget',
+    template:`
+     <div class="panel panel-info repo">
+        <div class="panel-heading">{{caption}}
+          <span class="pull-right" *ngIf="options?.showActive">
+            <button type="button" class="btn btn-default btn-header" 
+              [ngClass]="{'active': activeItem === null}" (click)="updateActive(null)">
+              <span class = "glyphicon" [ngClass]="{'glyphicon-pencil': activeItem === null}"></span>
+            </button>
+          </span>
+        </div>
+        <div class="panel-body">
+          <toolbar-sort  [options]="['Name', 'ID', 'Class']" (sorted)="onSorted($event)"></toolbar-sort>
+          <toolbar-add   [options]="types" [transform]="getClassLabel" (added)="onAdded($event)"></toolbar-add>
+          <toolbar-propertySettings  [options] = "typeOptions" [transform] = "getClassLabel" 
+            (selectionChanged) = "hiddenTypesChanged($event)">
+          </toolbar-propertySettings>
+
+          <toolbar-filter [filter]="searchString" [options]="['Name', 'ID', 'Class']" (applied)="onFiltered($event)"></toolbar-filter>
+                    
+          <accordion class="list-group" [closeOthers]="true"> 
+            <!--dnd-sortable-container [dropZones]="zones" [sortableData]="items">-->
+          <accordion-group *ngFor="let item of items           
+          | hideClass : hiddenTypes
+          | orderBy : sortByMode 
+          | filterBy: [searchString, filterByMode]; let i = index">
+            <!--class="list-group-item" dnd-sortable [sortableIndex]="i"> -->
+            <div accordion-heading 
+              (click)="updateSelected(item)" 
+              (mouseover)="updateHighlighted(item)" (mouseout)="cleanHighlighted(item)"
+              [ngClass]="{highlighted: _highlightedItem === item}"
+              >
+              <item-header [item]="item" 
+                [selectedItem]  ="selectedItem" 
+                [isSelectedOpen]="isSelectedOpen" 
+                [icon]          ="getResourceIcon(item)">   
+                <extra *ngIf="options?.showActive">
+                  <button type="button" class="btn btn-default btn-header" 
+                    [ngClass]="{'active': activeItem === item}" (click)="updateActive(item)">
+                    <span class = "glyphicon" [ngClass]="{'glyphicon-pencil': activeItem === item}"></span>
+                  </button>
+                </extra>
+              </item-header>
+            </div>
+
+            <div *ngIf="!options?.headersOnly">
+              <resource-panel *ngIf="item === selectedItem" [item]="item"
+                (saved)="onSaved(item, $event)" 
+                (canceled)="onCanceled($event)"
+                (removed)="onRemoved(item)"
+                (highlightedItemChange)="highlightedItemChange.emit($event)">
+               </resource-panel>   
+            </div>
+                
+          </accordion-group>        
+          </accordion>       
+        </div>
+      </div>
+  `,
+    styles: ['.repo{ width: 100%}']
+})
+export class NestedResourceWidget extends AbstractResourceList{
+    @Input() activeItem: any = null;
+    @Input() highlightedItem: any = null;
+
+    ignoreTypes = new Set([model.Border.name, model.Node.name]);
+    typeOptions = [];
+
+    constructor(highlightService: HighlightService){
+        super(highlightService);
+        this.highlightService = highlightService;
+    }
+
+    ngOnInit(){
+        super.ngOnInit();
+        this.typeOptions = this.types.filter(x => x.class !== modelClassNames.LyphWithAxis).map(x => (
+        { selected: !this.ignoreTypes.has(x), value: x }
+        ));
+        this.typeOptions.push({selected: !this.ignoreTypes.has("Type"), value: "Type"});
+    }
+
+    ngOnChanges(changes: { [propName: string]: any }) {
+        if( changes['highlightedItem'] && changes['highlightedItem'].previousValue !== changes['highlightedItem'].currentValue ) {
+            if (this.highlightService){
+                this.highlightService.highlight(this.highightedItem);
+            }
+        }
+    }
+
+    hiddenTypesChanged(option: any){
+        if ( this.ignoreTypes.has(option.value) &&  option.selected) this.ignoreTypes.delete(option.value);
+        if (!this.ignoreTypes.has(option.value) && !option.selected) this.ignoreTypes.add(option.value);
+    }
+
+    get hiddenTypes () {
+        return Array.from(this.ignoreTypes);
+    }
+}
+
+/**
+ * The NestedResourceModule module, offers the NestedResourceWidget panel.
+ */
+@NgModule({
+    imports: [ BrowserModule, ResourcePanelModule, DndModule.forRoot(), AccordionModule,
+        ToolbarAddModule, ToolbarSortModule, ToolbarFilterModule, PipeTransformModule,
+        ItemHeader],
+    declarations: [ NestedResourceWidget ],
+    exports: [ NestedResourceWidget ]
+})
+export class NestedResourceModule {}
+
+
