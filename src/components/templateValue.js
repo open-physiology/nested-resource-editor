@@ -1,8 +1,9 @@
 /**
  * Created by Natallia on 4/18/2017.
  */
-import {Component, Input, EventEmitter, Output} from '@angular/core';
+import {NgModule, Component, Input, EventEmitter, Output} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
+import {FormsModule} from '@angular/forms';
 
 @Component({
     "inputs": ["caption", "item", "min", "max", "step"],
@@ -141,7 +142,7 @@ export class TemplateValueComponent{
  * The TemplateValueModule module, offers the TemplateValueComponent component.
  */
 @NgModule({
-    imports: [ BrowserModule ],
+    imports: [ BrowserModule, FormsModule ],
     declarations: [ TemplateValueComponent ],
     exports: [ TemplateValueComponent ]
 })

@@ -7,9 +7,9 @@ import {Subscription}   from 'rxjs/Subscription';
 
 @Injectable()
 export class HighlightService {
-    public highlightedItemChanged$: EventEmitter<any>;
+    highlightedItemChanged$: EventEmitter<any>;
     constructor() { this.highlightedItemChanged$ = new EventEmitter(); }
-    public highlight(item: any): void {
+    highlight(item: any): void {
         this.highlightedItemChanged$.emit(item);
     }
 }

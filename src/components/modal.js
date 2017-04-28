@@ -7,7 +7,7 @@
 import {NgModule, Component, ViewChild, EventEmitter, Input, Output} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {Ng2Bs3ModalModule} from 'ng2-bs3-modal/ng2-bs3-modal';
-import {model} from "../common/utils.model";
+import {model} from "../common/utils";
 
 @Component({
     selector: 'modal-window',
@@ -20,8 +20,8 @@ import {model} from "../common/utils.model";
             <li *ngFor="let option of supertypeMeasurables; let i = index">
               <a class="small" href="#">
               <input type="checkbox" 
-                [(ngModel)]="option.selected" 
-                (ngModelChange)="measurablesToReplicateChanged(option)"/>&nbsp;
+                [checked]="option.selected" 
+                (change)="updateValue(option, $event)"/>&nbsp;
               {{option.value.name}}</a>
             </li>
         </modal-body>
@@ -46,7 +46,7 @@ export class ModalWindow{
     @ViewChild('myModal')
     modal: ModalComponent;
 
-    public generateMeasurables() {
+    generateMeasurables() {
         let allSupertypeMeasurables = [];
         for (let type of this.item.types) {
             for (let supertype of type.supertypes) {
@@ -77,7 +77,8 @@ export class ModalWindow{
         this.closed.emit(event);
     }
 
-    measurablesToReplicateChanged(option: any){
+    updateValue(option, event){
+        option.selected = event.target.checked;
         if ( this.measurablesToReplicate.has(option.value) && !option.selected)
             this.measurablesToReplicate.delete(option.value);
         if (!this.measurablesToReplicate.has(option.value) && option.selected)

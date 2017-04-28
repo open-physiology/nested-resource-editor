@@ -2,24 +2,15 @@
  * Created by Natallia on 4/18/2017.
  */
 "use strict";
-import {NgModule, Component} from '@angular/core';
+import {NgModule, Component, Input} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 
 //external
-import {AccordionModule} from "ngx-accordion";
-import {DndModule} from 'ngx-dnd';
-import {ToolbarSettingsModule}  from '../common/toolbars/setttings';
-import {PipeTransformModule} from "../common/pipes";
 import {modelClassNames, model} from "../common/utils";
 
 //internal
-import {ToolbarAddModule}    from '../toolbars/add';
-import {ToolbarFilterModule} from '../toolbars/filter';
-import {ToolbarSortModule}   from '../toolbars/sort';
 import {ResourcePanelModule}  from "./resource";
-import {AbstractResourceList} from "./abstract";
-import {ItemHeader} from "./header";
-import {HighlightService} from "./abstract";
+import {AbstractResourceList, HighlightService} from "./abstract";
 
 @Component({
     selector: 'nested-resource-widget',
@@ -58,12 +49,12 @@ import {HighlightService} from "./abstract";
                 [selectedItem]  ="selectedItem" 
                 [isSelectedOpen]="isSelectedOpen" 
                 [icon]          ="getResourceIcon(item)">   
-                <extra *ngIf="options?.showActive">
-                  <button type="button" class="btn btn-default btn-header" 
-                    [ngClass]="{'active': activeItem === item}" (click)="updateActive(item)">
-                    <span class = "glyphicon" [ngClass]="{'glyphicon-pencil': activeItem === item}"></span>
-                  </button>
-                </extra>
+                <!--<extra *ngIf="options?.showActive">-->
+                  <!--<button type="button" class="btn btn-default btn-header" -->
+                    <!--[ngClass]="{'active': activeItem === item}" (click)="updateActive(item)">-->
+                    <!--<span class = "glyphicon" [ngClass]="{'glyphicon-pencil': activeItem === item}"></span>-->
+                  <!--</button>-->
+                <!--</extra>-->
               </item-header>
             </div>
 
@@ -81,7 +72,10 @@ import {HighlightService} from "./abstract";
         </div>
       </div>
   `,
-    styles: ['.repo{ width: 100%}']
+    styles: ['.repo{ width: 100%}'],
+    styleUrls: [
+        '../../node_modules/bootstrap/dist/css/bootstrap.min.css'
+    ]
 })
 export class NestedResourceWidget extends AbstractResourceList{
     @Input() activeItem: any = null;
@@ -125,12 +119,11 @@ export class NestedResourceWidget extends AbstractResourceList{
  * The NestedResourceModule module, offers the NestedResourceWidget panel.
  */
 @NgModule({
-    imports: [ BrowserModule, ResourcePanelModule, DndModule.forRoot(), AccordionModule,
-        ToolbarAddModule, ToolbarSortModule, ToolbarFilterModule, PipeTransformModule,
-        ItemHeader],
-    declarations: [ NestedResourceWidget ],
+    imports: [ BrowserModule, ResourcePanelModule],
+    declarations: [ NestedResourceWidget],
+    providers: [HighlightService],
     exports: [ NestedResourceWidget ]
 })
-export class NestedResourceModule {}
+export class NestedResourceWidgetModule {}
 
 

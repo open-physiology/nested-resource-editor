@@ -38,10 +38,6 @@ export class ToolbarPropertySettings {
     @Input()  transform: (x: string) => string;
     @Output() selectionChanged = new EventEmitter();
 
-    ngOnInit(){
-        console.log("My options", this.options);
-    }
-
     updateValue(option, event){
         option.selected = event.target.checked;
         this.selectionChanged.emit(option);

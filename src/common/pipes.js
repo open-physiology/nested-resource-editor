@@ -50,9 +50,32 @@ export class OrderBy implements PipeTransform {
     }
 }
 
+@Pipe({name: 'mapToOptions'})
+class MapToOptions implements PipeTransform {
+    transform(items: Array<any> = []): any {
+        return items.filter(x => (x.name && (x.name !== ""))).map((entry: any) => ({
+            id: entry,
+            text: entry.name? entry.name: "(Unnamed) " + entry.class
+        }))
+    }
+}
+
+@Pipe({name: 'mapToCategories'})
+class MapToCategories implements PipeTransform {
+    transform(items: Array<any> = []): any {
+        let types = Array.from(new Set(items.map(item => item.type)));
+        let typedItems: Array<any> = [];
+        for (let type of types){
+            let typed = items.filter(item => (item.type === type));
+            typedItems.push({text: type, children: typed});
+        }
+        return typedItems;
+    }
+}
+
 @NgModule({
-    declarations: [ OrderBy, FilterBy, SetToArray, HideClass ],
-    exports: [ OrderBy, FilterBy, SetToArray, HideClass ]
+    declarations: [ OrderBy, FilterBy, SetToArray, HideClass, MapToOptions, MapToCategories ],
+    exports: [ OrderBy, FilterBy, SetToArray, HideClass, MapToOptions, MapToCategories ]
 })
 export class PipeTransformModule {}
 

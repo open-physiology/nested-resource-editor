@@ -5,7 +5,6 @@ import {Component, Input} from '@angular/core';
 
 @Component({
     selector: 'item-header',
-    inputs: ['item', 'selectedItem', 'isSelectedOpen', 'icon'],
     template: `
       <i class="pull-left glyphicon"
         [ngClass]="{
@@ -31,3 +30,6 @@ export class ItemHeader {
         this.isType = this.item && (this.item.class === "Type");
     }
 }
+
+
+

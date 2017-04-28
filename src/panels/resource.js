@@ -4,24 +4,29 @@
 /**
  * Created by Natallia on 6/14/2016.
  */
-import {NgModule, Component, ViewChild, EventEmitter, Input, Output} from '@angular/core';
+import {NgModule, Component, ViewChild, EventEmitter, Input, Output, forwardRef} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
-import {DropdownModule} from 'ngx-dropdown';
+import {FormsModule} from '@angular/forms';
+import {AccordionModule} from "ngx-accordion";
+import {DndModule} from 'ngx-dnd';
 
-//External
-import {SelectControlsModule} from "ngx-select-controls";
-import {ToastyModule, ToastyService} from 'ng2-toasty';
-
-import {PipeTranformModule, SetToArray}    from "../common/pipes";
+//import {ToastyModule, ToastyService} from 'ng2-toasty';
+//Common
+import {PipeTransformModule, SetToArray} from "../common/pipes";
 import {ToolbarSettingsModule} from '../common/toolbars/settings';
+import {CustomSelectModule} from '../common/components/select';
 import {model, getPropertyLabel} from "../common/utils";
 
-//Internal
-import {ToolbarCommands} from '../toolbar/commands';
-import {SelectModule}   from '../components/select';
-import {TemplateValueModule} from '../components/templateValue';
+//Local
+import {ToolbarAddModule}      from '../toolbars/add';
+import {ToolbarFilterModule}   from '../toolbars/filter';
+import {ToolbarSortModule}     from '../toolbars/sort';
+import {HighlightService}      from "./abstract";
+import {ItemHeader}            from "./header";
+import {NestedResourceList}    from './nested';
+import {ToolbarCommandsModule} from '../toolbars/commands';
+import {TemplateValueModule}   from '../components/templateValue';
 import {ModalWindowModule, ModalWindow} from "../components/modal";
-import {NestedResourceListModule} from "./nested";
 
 @Component({
     selector: 'resource-panel',
@@ -39,15 +44,15 @@ import {NestedResourceListModule} from "./nested";
             [transform] = "getPropertyLabel"
             (selectionChanged) = "visibleFieldsChanged($event)">
           </toolbar-propertySettings>
-          <toolbar *ngIf="!options?.hideCreateType && isTyped()" >
+          <div *ngIf="!options?.hideCreateType && isTyped()" >
             <input type="checkbox" [disabled]="typeCreated" [(ngModel)]="createType">Create type
-          </toolbar>
-          <toolbar *ngIf="item.class === model.Lyph.name">
+          </div>
+          <div *ngIf="item.class === model.Lyph.name">
             <button type="button" class="btn btn-default btn-icon" 
               (click)="generateMeasurables()">
               <span class="glyphicon glyphicon-cog"></span>
             </button>
-          </toolbar>
+          </div>
                     
           <div class="panel-content"> 
             <div class="input-control" *ngFor="let property of fieldNames">
@@ -94,10 +99,10 @@ import {NestedResourceListModule} from "./nested";
                 
                 <fieldset *ngIf="checkboxGroup.includes(property)">
                   <legend>{{getPropertyLabel(property)}}:</legend>
-                  <checkbox-group *ngFor = "let option of possibleValues[property]"
+                  <p *ngFor = "let option of possibleValues[property]"
                     [(ngModel)]="item[property]" (ngModelChange)="updateArray(property, item[property])">
                      <input type="checkbox" [value]="option">{{option}}&nbsp;
-                  </checkbox-group>
+                  </p>
                 </fieldset>
               </div>
             </div>
@@ -108,7 +113,7 @@ import {NestedResourceListModule} from "./nested";
           </div>
         </div>
     </div>
-    <ng2-toasty></ng2-toasty>
+    <!--<ng2-toasty></ng2-toasty>-->
   `
 })
 export class ResourcePanel {
@@ -146,7 +151,10 @@ export class ResourcePanel {
     /*Selection options*/
     possibleValues = {};
 
-    constructor(toastyService:ToastyService){ }
+    constructor(/*toastyService:ToastyService*/){
+        //console.log("ToastyModule", ToastyModule);
+        //console.log("toastyService", toastyService);
+    }
 
     ngOnInit(){
         this.ignore = new Set(["id", "cardinalityBase", "cardinalityMultipliers", "definedType"]);
@@ -272,7 +280,7 @@ export class ResourcePanel {
             .catch(reason => {
                 let errorMsg = "Failed to commit resource: Relationship constraints violated! \n" +
                     "See browser console (Ctrl+Shift+J) for technical details.";
-                this.toastyService.error(errorMsg);
+                //this.toastyService.error(errorMsg);
                 console.log(reason);
             });
 
@@ -295,15 +303,36 @@ export class ResourcePanel {
         this.item.rollback();
         this.canceled.emit(event);
     }
-
 }
 
-
 @NgModule({
-    imports: [ BrowserModule, DropdownModule, SelectControlsModule,
-        SelectModule, PipeTranformModule, ToolbarSettingsModule, TemplateValueModule,
-        NestedResourceListModule, ModalWindowModule, ToastyModule.forRoot()],
-    declarations: [ ResourcePanel ],
-    exports: [ ResourcePanel ]
+    imports: [ BrowserModule,
+        FormsModule,
+        DndModule.forRoot(),
+        AccordionModule,
+        ToolbarSettingsModule,
+        ToolbarCommandsModule,
+        ToolbarAddModule,
+        ToolbarFilterModule,
+        ToolbarSortModule,
+        TemplateValueModule,
+        PipeTransformModule,
+        CustomSelectModule,
+        ModalWindowModule /*, ToastyModule.forRoot()*/],
+    declarations: [ forwardRef(() => ResourcePanel), NestedResourceList, ItemHeader ],
+    providers: [HighlightService],
+    exports: [
+        //Existing
+        AccordionModule,
+        DndModule,
+        PipeTransformModule,
+        ToolbarSettingsModule,
+        ToolbarAddModule,
+        ToolbarFilterModule,
+        ToolbarSortModule,
+        //New
+        ResourcePanel,
+        ItemHeader
+        /*, ToastyModule*/ ]
 })
 export class ResourcePanelModule {}

@@ -2,29 +2,14 @@
  * Created by Natallia on 4/18/2017.
  */
 "use strict";
-import {NgModule, Component, Input} from '@angular/core';
-import {BrowserModule} from '@angular/platform-browser';
-
-//external
-import {AccordionModule} from "ngx-accordion";
-import {DndModule} from 'ngx-dnd';
-import {ToastyModule, ToastyService} from 'ng2-toasty';
-import {ToolbarSettingsModule}  from '../common/toolbars/settings';
-import {PipeTransformModule, SetToArray, FilterBy} from "../common/pipes";
+import {Component, SkipSelf, Host} from '@angular/core';
+import {AbstractResourceList, HighlightService} from "./abstract";
+import {SetToArray, FilterBy} from "../common/pipes";
 import {model} from "../common/utils";
-
-//internal
-import {ToolbarAddModule}    from '../toolbars/add';
-import {ToolbarFilterModule} from '../toolbars/filter';
-import {ToolbarSortModule}   from '../toolbars/sort';
-import {ResourcePanelModule}  from "./resource";
-import {AbstractResourceList} from "./abstract";
-import {ItemHeader} from "./header";
-import {HighlightService} from "./abstract";
+import {ResourcePanel} from "./resource";
 
 @Component({
     selector: 'nested-resource-list',
-    inputs: ['items', 'caption', 'types', 'selectedItem', 'options', 'selectionOptions'],
     template:`
     <div class="panel repo-nested">
       <div class="panel-heading"> <label>{{caption}}: </label></div>
@@ -74,15 +59,18 @@ import {HighlightService} from "./abstract";
         </accordion>       
       </div>
     </div>
-    <ng2-toasty></ng2-toasty>
-  `
+    <!--<ng2-toasty></ng2-toasty>-->
+  `,
+    styleUrls: [
+        '../../node_modules/bootstrap/dist/css/bootstrap.min.css'
+    ]
 })
 export class NestedResourceList extends AbstractResourceList{
     itemToInclude: any = null;
 
-    constructor(toastyService: ToastyService, highlightService: HighlightService){
+    constructor(/*toastyService: ToastyService,*/ highlightService: HighlightService){
         super(highlightService);
-        this.toastyService = toastyService;
+        //this.toastyService = toastyService;
     }
 
     ngOnInit(){
@@ -109,9 +97,7 @@ export class NestedResourceList extends AbstractResourceList{
     }
 
     ngOnDestroy() {
-        if (this.ts) {
-            this.ts.unsubscribe();
-        }
+        if (this.ts) { this.ts.unsubscribe(); }
     }
 
     ngOnChanges(changes: { [propName: string]: any }) {
@@ -145,7 +131,7 @@ export class NestedResourceList extends AbstractResourceList{
                 this.selectedItem = newItem;
 
             } else {
-                this.toastyService.error("Selected resource is already included to the set!");
+                //this.toastyService.error("Selected resource is already included to the set!");
             }
         }
     }
@@ -154,18 +140,3 @@ export class NestedResourceList extends AbstractResourceList{
         this.itemToInclude = item;
     }
 }
-
-/**
- * The NestedResourceModule module, offers the NestedResourceWidget panel.
- */
-@NgModule({
-    imports: [ BrowserModule, ResourcePanelModule, DndModule.forRoot(), AccordionModule,
-        ToolbarAddModule, ToolbarSortModule, ToolbarFilterModule, PipeTransformModule,
-        ItemHeader, ToastyModule.forRoot(), ToolbarSettingsModule],
-    declarations: [ NestedResourceList ],
-    exports: [ NestedResourceList, ToastyModule ]
-})
-export class NestedResourceListModule {}
-
-
-

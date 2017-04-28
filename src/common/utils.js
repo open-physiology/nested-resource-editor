@@ -1,5 +1,7 @@
 "use strict";
 
+import './loadRxjs.js';
+
 import modelFactory, {ajaxBackend} from 'open-physiology-model';
 import najax from 'najax';
 
