@@ -6,7 +6,6 @@ import {Component, SkipSelf, Host} from '@angular/core';
 import {AbstractResourceList, HighlightService} from "./abstract";
 import {SetToArray, FilterBy} from "../common/pipes";
 import {model} from "../common/utils";
-import {ResourcePanel} from "./resource";
 
 @Component({
     selector: 'nested-resource-list',
@@ -47,13 +46,13 @@ import {ResourcePanel} from "./resource";
             </div>
 
             <div *ngIf="!options?.headersOnly">
-              <panel-resource *ngIf="item === selectedItem" 
+              <resource-panel *ngIf="item === selectedItem" 
                 [item]    ="item" 
                 [options] ="options"
                 (saved)   ="onSaved(item, $event)" 
                 (removed) ="onRemoved(item)"
                 (highlightedItemChange)="highlightedItemChange.emit($event)"
-                ></panel-resource>            
+                ></resource-panel>            
             </div>
           </accordion-group>        
         </accordion>       

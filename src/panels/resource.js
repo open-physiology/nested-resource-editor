@@ -1,32 +1,12 @@
 /**
  * Created by Natallia on 4/18/2017.
  */
-/**
- * Created by Natallia on 6/14/2016.
- */
-import {NgModule, Component, ViewChild, EventEmitter, Input, Output, forwardRef} from '@angular/core';
-import {BrowserModule} from '@angular/platform-browser';
-import {FormsModule} from '@angular/forms';
-import {AccordionModule} from "ngx-accordion";
-import {DndModule} from 'ngx-dnd';
+import {Component, ViewChild, EventEmitter, Input, Output} from '@angular/core';
 
-//import {ToastyModule, ToastyService} from 'ng2-toasty';
 //Common
-import {PipeTransformModule, SetToArray} from "../common/pipes";
-import {ToolbarSettingsModule} from '../common/toolbars/settings';
-import {CustomSelectModule} from '../common/components/select';
+import {SetToArray} from "../common/pipes";
 import {model, getPropertyLabel} from "../common/utils";
-
-//Local
-import {ToolbarAddModule}      from '../toolbars/add';
-import {ToolbarFilterModule}   from '../toolbars/filter';
-import {ToolbarSortModule}     from '../toolbars/sort';
-import {HighlightService}      from "./abstract";
-import {ItemHeader}            from "./header";
-import {NestedResourceList}    from './nested';
-import {ToolbarCommandsModule} from '../toolbars/commands';
-import {TemplateValueModule}   from '../components/templateValue';
-import {ModalWindowModule, ModalWindow} from "../components/modal";
+import {ModalWindow} from "../components/modal";
 
 @Component({
     selector: 'resource-panel',
@@ -304,35 +284,3 @@ export class ResourcePanel {
         this.canceled.emit(event);
     }
 }
-
-@NgModule({
-    imports: [ BrowserModule,
-        FormsModule,
-        DndModule.forRoot(),
-        AccordionModule,
-        ToolbarSettingsModule,
-        ToolbarCommandsModule,
-        ToolbarAddModule,
-        ToolbarFilterModule,
-        ToolbarSortModule,
-        TemplateValueModule,
-        PipeTransformModule,
-        CustomSelectModule,
-        ModalWindowModule /*, ToastyModule.forRoot()*/],
-    declarations: [ forwardRef(() => ResourcePanel), NestedResourceList, ItemHeader ],
-    providers: [HighlightService],
-    exports: [
-        //Existing
-        AccordionModule,
-        DndModule,
-        PipeTransformModule,
-        ToolbarSettingsModule,
-        ToolbarAddModule,
-        ToolbarFilterModule,
-        ToolbarSortModule,
-        //New
-        ResourcePanel,
-        ItemHeader
-        /*, ToastyModule*/ ]
-})
-export class ResourcePanelModule {}

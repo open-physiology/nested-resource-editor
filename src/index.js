@@ -3,6 +3,7 @@ import {NgModule, Component, Input} from '@angular/core';
 import {Subscription}   from 'rxjs/Subscription';
 
 import {model} from "./common/utils";
+import {PipeTransformModule} from "./common/pipes";
 import {NestedResourceWidgetModule} from './panels/main';
 
 @Component({
@@ -53,7 +54,7 @@ export class HelloComponent {
 }
 
 @NgModule({
-	imports: [
+	imports: [ PipeTransformModule,
 		NestedResourceWidgetModule
 	],
 	declarations: [ HelloComponent ],

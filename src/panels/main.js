@@ -4,13 +4,28 @@
 "use strict";
 import {NgModule, Component, Input} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
+import {FormsModule} from '@angular/forms';
+import {AccordionModule} from "ngx-accordion";
+import {DndModule} from 'ngx-dnd';
 
-//external
+
+//import {ToastyModule, ToastyService} from 'ng2-toasty';
 import {modelClassNames, model} from "../common/utils";
+import {PipeTransformModule} from "../common/pipes";
+import {ToolbarSettingsModule} from '../common/toolbars/settings';
+import {CustomSelectModule} from '../common/components/select';
 
-//internal
-import {ResourcePanelModule}  from "./resource";
+//Local
+import {ResourcePanel}         from "./resource";
+import {ToolbarAddModule}      from '../toolbars/add';
+import {ToolbarFilterModule}   from '../toolbars/filter';
+import {ToolbarSortModule}     from '../toolbars/sort';
 import {AbstractResourceList, HighlightService} from "./abstract";
+import {ItemHeader}            from "./header";
+import {NestedResourceList}    from './nested';
+import {ToolbarCommandsModule} from '../toolbars/commands';
+import {TemplateValueModule}   from '../components/templateValue';
+import {ModalWindowModule} from "../components/modal"
 
 @Component({
     selector: 'nested-resource-widget',
@@ -119,9 +134,21 @@ export class NestedResourceWidget extends AbstractResourceList{
  * The NestedResourceModule module, offers the NestedResourceWidget panel.
  */
 @NgModule({
-    imports: [ BrowserModule, ResourcePanelModule],
-    declarations: [ NestedResourceWidget],
-    providers: [HighlightService],
+    imports: [ BrowserModule,
+        FormsModule,
+        DndModule.forRoot(),
+        AccordionModule,
+        ToolbarSettingsModule,
+        ToolbarCommandsModule,
+        ToolbarAddModule,
+        ToolbarFilterModule,
+        ToolbarSortModule,
+        TemplateValueModule,
+        PipeTransformModule,
+        CustomSelectModule,
+        ModalWindowModule /*, ToastyModule.forRoot()*/],
+    declarations: [ NestedResourceWidget, ResourcePanel, NestedResourceList, ItemHeader ],
+    providers: [ HighlightService ],
     exports: [ NestedResourceWidget ]
 })
 export class NestedResourceWidgetModule {}
