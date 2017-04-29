@@ -8,30 +8,21 @@ import {
 	expect,
 } from './test.helper';
 
-import {plus} from '../src/index.js';
 
-/** @test */
-describe("the nested-resource-editor", () => {
-	
-	beforeEach(() => {
-		// setup
-	});
-	
-	it("can test things", () => {
-		
-		expect(true).to.be.truthy;
-		
-	});
-	
-	/** @test {plus} */
-	it("can add two numbers", () => {
-		
-		expect(plus(1, 2)).to.equal(3);
-		
-	});
-	
-	afterEach(() => {
-		// teardown
-	});
-	
-});
+// /** @test */
+// describe("the nested-resource-editor", () => {
+//
+// 	beforeEach(() => {
+// 		// setup
+// 	});
+//
+// 	/** @test {name} */
+// 	it("", () => {
+//
+// 	});
+//
+// 	afterEach(() => {
+// 		// teardown
+// 	});
+//
+// });
