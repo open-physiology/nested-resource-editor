@@ -1,8 +1,8 @@
 window.esdocSearchIndex = [
   [
     "nested-resource-editor/src/test-app/app.js~helloapp",
-    "variable/index.html#static-variable-HelloApp",
-    "<span>HelloApp</span> <span class=\"search-result-import-path\">nested-resource-editor/src/test-app/app.js</span>",
+    "variable/index.html#static-variable-TestApp",
+    "<span>TestApp</span> <span class=\"search-result-import-path\">nested-resource-editor/src/test-app/app.js</span>",
     "variable"
   ],
   [
@@ -19,8 +19,8 @@ window.esdocSearchIndex = [
   ],
   [
     "nested-resource-editor/src/index.js~hellomodule",
-    "variable/index.html#static-variable-HelloModule",
-    "<span>HelloModule</span> <span class=\"search-result-import-path\">nested-resource-editor/src/index.js</span>",
+    "variable/index.html#static-variable-TestModule",
+    "<span>TestModule</span> <span class=\"search-result-import-path\">nested-resource-editor/src/index.js</span>",
     "variable"
   ],
   [

@@ -1,6 +1,3 @@
-/**
- * Created by Natallia on 4/14/2017.
- */
 import {NgModule, Pipe, PipeTransform} from '@angular/core';
 
 ///////////////////////////////////////////////////

@@ -1,8 +1,5 @@
-/**
- * Created by Natallia on 4/18/2017.
- */
 import {NgModule, Component, Input, Output, EventEmitter} from '@angular/core';
-import {BrowserModule} from '@angular/platform-browser';
+import {CommonModule} from '@angular/common';
 import {DropdownModule} from 'ngx-dropdown';
 //import {DraggableModule} from '../directives/draggable';
 
@@ -48,7 +45,7 @@ export class ToolbarPropertySettings {
  * The ToolbarSettingsModule module, offers the ToolbarPropertySettings component.
  */
 @NgModule({
-    imports: [ BrowserModule, DropdownModule /*BsDropdownModule.forRoot()/*, DraggableModule*/],
+    imports: [ CommonModule, DropdownModule /*BsDropdownModule.forRoot()/*, DraggableModule*/],
     declarations: [ ToolbarPropertySettings ],
     exports: [ ToolbarPropertySettings ]
 })

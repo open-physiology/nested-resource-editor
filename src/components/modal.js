@@ -1,11 +1,5 @@
-/**
- * Created by Natallia on 4/18/2017.
- */
-/**
- * Created by Natallia on 4/9/2017.
- */
 import {NgModule, Component, ViewChild, EventEmitter, Input, Output} from '@angular/core';
-import {BrowserModule} from '@angular/platform-browser';
+import {CommonModule} from '@angular/common';
 import {Ng2Bs3ModalModule} from 'ng2-bs3-modal/ng2-bs3-modal';
 import {model} from "../common/utils";
 
@@ -90,7 +84,7 @@ export class ModalWindow{
  * The ModalWindowModule module, offers the ModalWindow component.
  */
 @NgModule({
-    imports: [ BrowserModule, Ng2Bs3ModalModule],
+    imports: [ CommonModule, Ng2Bs3ModalModule],
     declarations: [ ModalWindow ],
     exports: [ ModalWindow ]
 })

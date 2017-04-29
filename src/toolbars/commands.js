@@ -1,8 +1,5 @@
-/**
- * Created by Natallia on 4/13/2017.
- */
 import {NgModule, Component, Input, Output, EventEmitter} from '@angular/core';
-import {BrowserModule} from '@angular/platform-browser';
+import {CommonModule} from '@angular/common';
 
 @Component({
     selector: 'toolbar-commands',
@@ -36,7 +33,7 @@ export class ToolbarCommands {
 }
 
 @NgModule({
-    imports: [ BrowserModule ],
+    imports: [ CommonModule ],
     declarations: [ ToolbarCommands ],
     exports: [ ToolbarCommands ]
 })

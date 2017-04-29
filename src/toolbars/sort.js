@@ -1,8 +1,5 @@
-/**
- * Created by Natallia on 4/13/2017.
- */
 import {NgModule, Component, Input, Output, EventEmitter} from '@angular/core';
-import {BrowserModule} from '@angular/platform-browser';
+import {CommonModule} from '@angular/common';
 import {DropdownModule} from 'ngx-dropdown';
 
 @Component({
@@ -64,7 +61,7 @@ export class ToolbarSort {
 }
 
 @NgModule({
-    imports: [ BrowserModule, DropdownModule ],
+    imports: [ CommonModule, DropdownModule ],
     declarations: [ ToolbarSort ],
     exports: [ ToolbarSort ]
 })

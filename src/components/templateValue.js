@@ -1,8 +1,5 @@
-/**
- * Created by Natallia on 4/18/2017.
- */
 import {NgModule, Component, Input, EventEmitter, Output} from '@angular/core';
-import {BrowserModule} from '@angular/platform-browser';
+import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
 
 @Component({
@@ -142,7 +139,7 @@ export class TemplateValueComponent{
  * The TemplateValueModule module, offers the TemplateValueComponent component.
  */
 @NgModule({
-    imports: [ BrowserModule, FormsModule ],
+    imports: [ CommonModule, FormsModule ],
     declarations: [ TemplateValueComponent ],
     exports: [ TemplateValueComponent ]
 })

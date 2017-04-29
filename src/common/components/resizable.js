@@ -1,11 +1,5 @@
-/**
- * Created by Natallia on 4/18/2017.
- */
-/**
- * Created by Natallia on 7/22/2016.
- */
 import {NgModule, Component, ElementRef, EventEmitter, Renderer} from '@angular/core';
-import {BrowserModule} from '@angular/platform-browser';
+import {CommonModule} from '@angular/common';
 import {DragEvent, Draggable} from "./directive.draggable";
 
 @Component({
@@ -113,7 +107,7 @@ export class Resizable{
  * The ResizableModule module, offers the Resizable component.
  */
 @NgModule({
-    imports: [ BrowserModule, DragEvent, Draggable],
+    imports: [ CommonModule, DragEvent, Draggable],
     declarations: [ Resizable ],
     exports: [ Resizable ]
 })

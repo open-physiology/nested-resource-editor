@@ -1,6 +1,3 @@
-/**
- * Created by Natallia on 4/18/2017.
- */
 import {NgModule, Directive, ElementRef, EventEmitter, OnDestroy, OnInit, Renderer } from '@angular/core';
 import { Observable, Subscription} from 'rxjs/Rx';
 

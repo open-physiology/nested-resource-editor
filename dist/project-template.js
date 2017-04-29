@@ -15932,7 +15932,7 @@ function _initializerWarningHelper(descriptor, context) {
 }
 
 /**
- * The HelloComponent component, used to greet any subject you like!
+ * The TestComponent component, used to greet any subject you like!
  */
 var HelloComponent = exports.HelloComponent = (_dec = (0, _core.Component)({
   selector: 'hello',
@@ -15950,7 +15950,7 @@ var HelloComponent = exports.HelloComponent = (_dec = (0, _core.Component)({
 })), _class2)) || _class);
 
 /**
- * The HelloModule module, which offers the _excellent_ HelloComponent component!
+ * The TestModule module, which offers the _excellent_ TestComponent component!
  */
 var HelloModule = exports.HelloModule = (_dec3 = (0, _core.NgModule)({
   declarations: [HelloComponent],

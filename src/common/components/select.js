@@ -1,8 +1,5 @@
-/**
- * Created by Natallia on 4/13/2017.
- */
 import {NgModule, Component, Input, Output, EventEmitter} from '@angular/core';
-import {BrowserModule} from '@angular/platform-browser';
+import {CommonModule} from '@angular/common';
 import {PipeTransformModule} from '../pipes';
 import {DropdownModule} from 'ngx-dropdown';
 import {SelectModule} from 'ng2-select';
@@ -92,7 +89,7 @@ export class SingleSelectInput {
 }
 
 @NgModule({
-    imports: [ BrowserModule, DropdownModule, PipeTransformModule, SelectModule ],
+    imports: [ CommonModule, DropdownModule, PipeTransformModule, SelectModule ],
     declarations: [ MultiSelectInput, SingleSelectInput ],
     exports: [ MultiSelectInput, SingleSelectInput ]
 })
