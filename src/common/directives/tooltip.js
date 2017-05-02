@@ -12,5 +12,5 @@ export class TooltipDirective {
     @Input('tooltipEnable') enable:boolean = true;
     @Input('tooltipAppendToBody') appendToBody:boolean;
     @Input('tooltipClass') popupClass:string;
-    @Input('tooltipContext') tooltipContext:any;
+    @Input('tooltipContext') tooltipContext;
 }

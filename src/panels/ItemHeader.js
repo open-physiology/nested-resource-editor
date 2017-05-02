@@ -1,15 +1,14 @@
-/**
- * Created by Natallia on 4/18/2017.
- */
-import {Component, Input} from '@angular/core';
+import {Component, Input, ElementRef} from '@angular/core';
+import $ from '../libs/jquery';
 
 @Component({
     selector: 'item-header',
     template: `
-      <i class="pull-left glyphicon"
-        [ngClass]="{
-          'glyphicon-chevron-down': (item === selectedItem) && isSelectedOpen, 
-          'glyphicon-chevron-right': (item !== selectedItem) || !isSelectedOpen}"></i>&nbsp;
+        <span class="pull-left glyphicon"
+            [ngClass]="{
+              'glyphicon-chevron-down':  (item === selectedItem) && isSelectedOpen, 
+              'glyphicon-chevron-right': (item !== selectedItem) || !isSelectedOpen}">
+        </span>&nbsp;
         {{(item.id)? item.id: "?"}}: {{item.name}}
         <span class="pull-right">
           <img *ngIf="isType" class="imtip" src="src/images/type.png"/>
@@ -21,7 +20,7 @@ import {Component, Input} from '@angular/core';
         .icon {
           height: 16px;
           width: 16px;
-          padding: 0px;
+          padding: 0;
         }
         .imtip {
           position: relative;
@@ -29,19 +28,26 @@ import {Component, Input} from '@angular/core';
           left: 4px;
           width: 24px;
           height: 12px;
-        }
+        } 
+        :host{display: block}
     `]
 })
 export class ItemHeader {
-    @Input() item: any;
-    @Input() selectedItem: any;
+    @Input() item;
+    @Input() selectedItem;
     @Input() isSelectedOpen: boolean;
     @Input() icon: string;
 
     isType = false;
 
-    ngOnInit(){
+    constructor(el: ElementRef) {
+        this.el = $(el.nativeElement);
+
+    }
+
+    ngOnInit() {
         this.isType = this.item && (this.item.class === "Type");
+        this.el.parent().parent().parent().css("padding", 0);
     }
 }
 

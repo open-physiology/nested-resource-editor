@@ -39,21 +39,7 @@ import {DropdownModule} from 'ngx-dropdown';
         </ul>
       </div>
     </div>
-    `,
-    styles: [`
-        .btn-icon{
-          height: 30px;
-        }
-        .dropdown-toggle{
-          padding: 6px;
-        }
-
-    `],
-    styleUrls: [
-        '../../node_modules/bootstrap/dist/css/bootstrap.min.css',
-        '../../node_modules/font-awesome/css/font-awesome.css'
-    ],
-
+    `
 })
 /**
  * The ToolbarSort component, offers sorting modes according to given options in a dropdown menu.
@@ -64,7 +50,7 @@ export class ToolbarSort {
 
     sortByMode = "unsorted";
 
-    onClick(item: any){
+    onClick(item){
         this.sortByMode = item;
         this.sorted.emit(item);
     }

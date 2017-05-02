@@ -22,15 +22,7 @@ import {DropdownModule} from 'ngx-dropdown';
         </li>
       </ul>
     </div>
-    `,
-    styles: [`
-        .btn-icon{
-          height: 30px;
-        }
-    `],
-    styleUrls: [
-        '../../node_modules/bootstrap/dist/css/bootstrap.min.css'
-    ]
+    `
 })
 /**
  * The ToolbarPropertySettings component, offers a button to choose visible properties from dropdown menu.

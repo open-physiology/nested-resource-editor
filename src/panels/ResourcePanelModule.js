@@ -4,9 +4,12 @@ import {FormsModule} from '@angular/forms';
 import {AccordionModule} from "ngx-accordion";
 import {DndModule} from 'ngx-dnd';
 
-//import {ToastyModule, ToastyService} from 'ng2-toasty';
+import {ToastyModule, ToastyService} from 'ng2-toasty';
+import '../../node_modules/ng2-toasty/style.css';
+import '../../node_modules/ng2-toasty/style-bootstrap.css';
+
 //Common
-import {PipeTransformModule, SetToArray} from "../common/pipes";
+import {PipeTransformModule, SetToArray, HideClass} from "../common/pipes";
 import {ToolbarSettingsModule} from '../common/toolbars/settings';
 import {CustomSelectModule} from '../common/components/select';
 import {model, getPropertyLabel} from "../common/utils";
@@ -20,7 +23,7 @@ import {ItemHeader}            from "./ItemHeader";
 import {NestedResourceList}    from './NestedResourceList';
 import {ToolbarCommandsModule} from '../toolbars/commands';
 import {TemplateValueModule}   from '../components/templateValue';
-//import {ModalWindowModule, ModalWindow} from "../components/modal";
+import {ModalWindowModule, ModalWindow} from "../components/modal";
 
 @Component({
     selector: 'resource-panel',
@@ -93,71 +96,75 @@ import {TemplateValueModule}   from '../components/templateValue';
                 
                 <fieldset *ngIf="checkboxGroup.includes(property)">
                   <legend>{{getPropertyLabel(property)}}:</legend>
-                  <p *ngFor = "let option of possibleValues[property]"
-                    [(ngModel)]="item[property]" (ngModelChange)="updateArray(property, item[property])">
-                     <input type="checkbox" [value]="option">{{option}}&nbsp;
+                  <p *ngFor = "let option of possibleValues[property]; let i = index">
+                     <input type="checkbox" [value]="option" 
+                        [(ngModel)]="item[property][i]" (ngModelChange)="updateArray(property, item[property])"
+                     >{{option}}&nbsp;
                   </p>
                 </fieldset>
               </div>
             </div>
             
-            <!--<modal-window *ngIf = "item.class === model.Lyph.name" [item] = item>-->
-            <!--</modal-window>-->
+            <modal-window *ngIf = "item.class === model.Lyph.name" [item] = item>
+            </modal-window>
             
           </div>
         </div>
     </div>
-    <!--<ng2-toasty></ng2-toasty>-->
+    <ng2-toasty></ng2-toasty>
   `,
     styles: [
         `
         input[type=number] {
           text-align:right;
         }
-        .panel-body{
-          padding: 0px;
-        }
         .panel-content{
           border: 1px solid #ccc;
         }
-        .input-control{
+        .input-control >>> {
           margin-left: 4px;
           padding: 2px;
           display: inline-block;
           vertical-align:top;
         }
-        .input-control-lg{
+        .input-control >>> label {
+          display: block;
+        }
+        .input-control-sm >>> {
+          width: 68px;
+        }
+        .input-control-md >>> {
+          width: 124px;
+        }
+        .input-control-lg >>> {
           width: 178px;
         }
-        .form-control:focus {
-          border: 2px solid #ccc;
-          box-shadow: none!important;
-        }
-        fieldset {
+        fieldset >>> {
           border: 1px ridge #e3e3e3;
           padding: 4px;
           margin: 4px;
         }
-        .btn-icon{
-          height: 30px;
-        }
-        .input-control label {
-          display: block;
-        }
-         legend{
+        legend{
           font: inherit;
           font-weight: bold;
           padding: 4px;
-          margin-bottom: 0px;
+          margin-bottom: 0;
           border: 0;
           width: auto;
         }
-
+        .form-control >>> {
+          height: 30px;
+          box-shadow: none!important;
+        }
+        .form-control:focus >>> {
+          border: 2px solid #ccc;
+          box-shadow: none!important;
+        }
     `]
 })
 class ResourcePanel {
-    @Input() item: any;
-    @Input() options: any;
+    @Input() item;
+    @Input() options;
 
     @Output() saved = new EventEmitter();
     @Output() canceled = new EventEmitter();
@@ -168,7 +175,7 @@ class ResourcePanel {
     getPropertyLabel = getPropertyLabel;
     model = model;
 
-    //@ViewChild(ModalWindow) mGen;
+    @ViewChild(ModalWindow) mGen;
 
     ignore: Set<string> = new Set();
 
@@ -190,10 +197,7 @@ class ResourcePanel {
     /*Selection options*/
     possibleValues = {};
 
-    constructor(/*toastyService:ToastyService*/){
-        //console.log("ToastyModule", ToastyModule);
-        //console.log("toastyService", toastyService);
-    }
+    constructor(toastyService:ToastyService){}
 
     ngOnInit(){
         this.ignore = new Set(["id", "cardinalityBase", "cardinalityMultipliers", "definedType"]);
@@ -229,7 +233,8 @@ class ResourcePanel {
             this.item.fields[key].p('possibleValues') .subscribe(
                 (data) => {
                     this.possibleValues[key] = (key === "cardinalityMultipliers")?
-                        new Set(new HideClass().transform( new SetToArray().transform(data), [model.Border.name, model.Node.name]))
+                        new Set(new HideClass().transform( new SetToArray().transform(data),
+                            [model.Border.name, model.Node.name]))
                         : data;
                 });
         }
@@ -263,7 +268,7 @@ class ResourcePanel {
         if (this.isTyped()){ this.typeCreated = !!this.item['-->DefinesType']; }
     }
 
-    getDefaultValue(property, attribute): any{
+    getDefaultValue(property, attribute){
         let propertySpec = this.item.constructor.properties[property];
         switch(attribute){
             case "type": return ((propertySpec.type === "integer") || (propertySpec.type === "number"))? "number": "text";
@@ -311,19 +316,17 @@ class ResourcePanel {
     onSaved(event){
         if (this.item.class === model.CoalescenceScenario.name){
             if (this.item.lyphs && (this.item.lyphs.size !== 2)){
-                console.log("Wrong number of lyphs", this.item.lyphs.size);
+                this.toastyService.error("Wrong number of lyphs", this.item.lyphs.size);
             }
         }
 
         this.item.commit()
             .catch(reason => {
-                let errorMsg = "Failed to commit resource: Relationship constraints violated! \n" +
-                    "See browser console (Ctrl+Shift+J) for technical details.";
-                //this.toastyService.error(errorMsg);
-                console.log(reason);
+                let errorMsg = "Failed to commit resource: Relationship constraints violated! \n" + reason;
+                this.toastyService.error(errorMsg);
             });
 
-        if (event.createType){
+        if (event && event.createType){
             let template = this.item;
             if (!template['-->DefinesType']){
                 (async function() {
@@ -358,9 +361,10 @@ class ResourcePanel {
         TemplateValueModule,
         PipeTransformModule,
         CustomSelectModule,
-        /*ModalWindowModule, ToastyModule.forRoot()*/],
+        ToastyModule.forRoot(),
+        ModalWindowModule],
     declarations: [ ResourcePanel, NestedResourceList, ItemHeader ],
-    providers: [HighlightService],
+    providers: [HighlightService, ToastyService],
     exports: [
         //Existing
         AccordionModule,
@@ -372,7 +376,6 @@ class ResourcePanel {
         ToolbarSortModule,
         //New
         ResourcePanel,
-        ItemHeader
-        /*, ToastyModule*/ ]
+        ItemHeader]
 })
 export class ResourcePanelModule {}

@@ -6,11 +6,11 @@ import {HighlightService} from './HighlightService.js';
 
 export class AbstractResourceList {
     @Input() caption: string = "Resources";
-    @Input() selectedItem: any = null;
+    @Input() selectedItem = null;
     @Input() items: Array<any> = [];
     @Input() types: Array<any> = [];
-    @Input() options: any = {};
-    @Input() selectionOptions: any;
+    @Input() options = {};
+    @Input() selectionOptions;
 
     @Output() added = new EventEmitter();
     @Output() removed = new EventEmitter();
@@ -19,9 +19,9 @@ export class AbstractResourceList {
     @Output() activeItemChange = new EventEmitter();
     @Output() highlightedItemChange = new EventEmitter();
 
-    _selectedItem: any;
-    _activeItem: any;
-    _highlightedItem: any;
+    _selectedItem;
+    _activeItem;
+    _highlightedItem;
 
     zones: Array<string> = [];
 
@@ -70,15 +70,21 @@ export class AbstractResourceList {
         return this._activeItem;
     }
 
-     set highlightedItem (item: any) {
+     set highlightedItem (item) {
         if (this.highlightedItem !== item){
             this._highlightedItem = item;
             this.highlightedItemChange.emit(item);
         }
     }
 
-     get highightedItem () {
+     get highlightedItem () {
         return this._highlightedItem;
+    }
+
+    unhighlight(item){
+        if (this.highlightedItem === item) {
+            this.highlightedItem = null;
+        }
     }
 
     ngOnInit(){
@@ -92,19 +98,7 @@ export class AbstractResourceList {
         this.zones = this.types.map(x => x + "_zone");
     }
 
-     updateHighlighted(item){
-        this.highlightedItem = item;
-    }
-
-     cleanHighlighted(item){
-        if (this.highlightedItem === item) { this.highlightedItem = null; }
-    }
-
-     updateActive(item: any){
-        this.activeItem = item;
-    }
-
-     updateSelected(item: any){
+    updateSelected(item){
         this.selectedItem = item;
         this.isSelectedOpen = !this.isSelectedOpen;
     }
@@ -113,21 +107,21 @@ export class AbstractResourceList {
         this.sortByMode = prop.toLowerCase();
     }
 
-     onFiltered(config: any){
+     onFiltered(config){
         this.filterByMode = config.mode.toLowerCase();
         this.searchString = config.filter;
     }
 
-     onSaved(item: any, updatedItem: any){
+     onSaved(item, updatedItem){
         this.updated.emit(this.items);
         if (item === this.selectedItem){
             this.selectedItemChange.emit(this.selectedItem);
         }
     }
 
-     onCanceled(updatedItem: any){}
+     onCanceled(updatedItem){}
 
-     onRemoved(item: any){
+     onRemoved(item){
         if (!this.items) return;
         let index = this.items.indexOf(item);
         if (index > -1) this.items.splice(index, 1);
@@ -142,8 +136,8 @@ export class AbstractResourceList {
         this.updated.emit(this.items);
     }
 
-     onAdded(clsName: any){
-        let options: any = {};
+     onAdded(clsName){
+        let options = {};
         if (clsName === modelClassNames.LyphWithAxis) {
             clsName = model.Lyph.name;
             options.createAxis = true;
@@ -152,7 +146,7 @@ export class AbstractResourceList {
             options.createRadialBorders = true;
         }
 
-        let newItem = model[clsName].new({name: "New " + clsName}, options);
+        let newItem = model[clsName].new({name: `New ${clsName}`}, options);
 
         if (clsName === model.Material.name) {
             let newType = model.Type.new({name: newItem.name, definition: newItem});

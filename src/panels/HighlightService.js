@@ -9,7 +9,7 @@ export class HighlightService {
         this.highlightedItemChanged$ = new EventEmitter();
     }
     
-    highlight(item: any): void {
+    highlight(item): void {
         this.highlightedItemChanged$.emit(item);
     }
     

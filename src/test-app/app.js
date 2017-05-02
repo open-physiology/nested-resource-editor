@@ -31,12 +31,12 @@ import {NestedResourceWidgetModule} from '../index.js';
 export class TestApp {
 
 	items:Array<any>;
-	selectedItem:any;
+	selectedItem;
 
 	rs: Subscription;
 	constructor() {
 		this.rs = model.Lyph.p('all').subscribe(
-			(data: any) => {
+			(data) => {
 				this.items = data;
 				if (this.items.length > 0){
 					this.selectedItem = this.items[0];
@@ -51,7 +51,7 @@ export class TestApp {
 
 	ngOnDestroy() { this.rs.unsubscribe(); }
 
-	onItemSelected(item:any) {
+	onItemSelected(item) {
 		setTimeout(() => { this.selectedItem = null; }, 0);
 		setTimeout(() => { this.selectedItem = item; }, 0);
 	}

@@ -19,16 +19,7 @@ import {CommonModule} from '@angular/common';
         <span class="glyphicon glyphicon-refresh"></span>
       </button>    
     </div>
-    `,
-    styles: [`
-        .btn-icon{
-          height: 30px;
-        }
-    `],
-    styleUrls: [
-        '../../node_modules/bootstrap/dist/css/bootstrap.min.css'
-    ],
-
+    `
 })
 export class ToolbarCommands {
     @Input()  options  = {};

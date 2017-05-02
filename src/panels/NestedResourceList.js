@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {AbstractResourceList} from "./AbstractResourceList";
 import {HighlightService} from './HighlightService.js';
+import {ToastyService} from 'ng2-toasty';
 import {SetToArray, FilterBy} from "../common/pipes";
 import {model} from "../common/utils";
 
@@ -31,13 +32,13 @@ import {model} from "../common/utils";
             | filterBy: [searchString, filterByMode]; let i = index" 
             dnd-sortable (onDragStart)="onDragStart()" (onDragEnd)="onDragEnd()" [sortableIndex]="i">
             <accordion-heading 
-              (click)    ="updateSelected(item)" 
-              (mouseover)="updateHighlighted(item)" (mouseout)="cleanHighlighted(item)"
-              [ngClass]  ="{highlighted: _highlightedItem === item}">
+              (click)    ="updateSelected(item)"> 
               <item-header [item]="item" 
                 [selectedItem]  ="selectedItem" 
                 [isSelectedOpen]="isSelectedOpen" 
-                [icon]          ="getResourceIcon(item)">
+                [icon]          ="getResourceIcon(item)"
+                (mouseover)="highlightedItem = item" (mouseout)="unhighlight(item)"
+                [ngClass]  ="{highlighted: highlightedItem === item}">
               </item-header>
             </accordion-heading>
 
@@ -54,40 +55,19 @@ import {model} from "../common/utils";
         </accordion>       
       </div>
     </div>
-    <!--<ng2-toasty></ng2-toasty>-->
   `,
     styles: [`
         .input-select{
           min-width: 100px;
         }
-        .btn-icon{
-          height: 30px;
-        }
-        accordion-group{
-          padding: 0px;
-        }
-        .panel-body{
-          padding: 0px;
-        }
-        .panel-heading{
-          padding: 2px;
-        }
-        .panel-heading label {
-          display: block;
-        }
-
-
-    `],
-    styleUrls: [
-        '../../node_modules/bootstrap/dist/css/bootstrap.min.css'
-    ]
+    `]
 })
 export class NestedResourceList extends AbstractResourceList{
-    itemToInclude: any = null;
+    itemToInclude = null;
 
-    constructor(/*toastyService: ToastyService,*/ highlightService: HighlightService){
+    constructor(toastyService: ToastyService, highlightService: HighlightService){
         super(highlightService);
-        //this.toastyService = toastyService;
+        this.toastyService = toastyService;
     }
 
     ngOnInit(){
@@ -97,7 +77,7 @@ export class NestedResourceList extends AbstractResourceList{
         if (!this.selectionOptions) {
             if (this.types.length === 1){
                 this.ts = model[this.types[0]].p('all').subscribe(
-                    (data: any) => {
+                    (data) => {
                         this.selectionOptions = data;
                     });
             } else {
@@ -106,7 +86,7 @@ export class NestedResourceList extends AbstractResourceList{
                     let filterByClass = new FilterBy();
 
                     this.ts = model.Template.p('all').subscribe(
-                        (data: any) => {this.selectionOptions = new Set(
+                        (data) => {this.selectionOptions = new Set(
                             filterByClass.transform(
                                 setToArray.transform(data), [this.types, 'class']))});
                 }
@@ -118,7 +98,7 @@ export class NestedResourceList extends AbstractResourceList{
         if (this.ts) { this.ts.unsubscribe(); }
     }
 
-    ngOnChanges(changes: { [propName: string]: any }) {
+    ngOnChanges(changes) {
         if (this.items) {
             if (this.options.ordered) {
                 this.items.sort((a, b) => {
@@ -139,17 +119,15 @@ export class NestedResourceList extends AbstractResourceList{
         }
     }
 
-    onIncluded(newItem: any){
+    onIncluded(newItem){
         if (newItem){
             if (this.items.indexOf(newItem) < 0){
-
                 this.items.push(newItem);
                 this.updated.emit(this.items);
                 this.added.emit(newItem);
                 this.selectedItem = newItem;
-
             } else {
-                //this.toastyService.error("Selected resource is already included to the set!");
+                this.toastyService.error("Selected resource is already included to the set!");
             }
         }
     }

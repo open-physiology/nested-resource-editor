@@ -34,7 +34,7 @@ export class Draggable implements OnDestroy, OnInit {
     _dragSubscription: Subscription;
     _isDragging:boolean = false;
     _axis:string;
-    _config:any;
+    _config;
     _mouseDelay:number = 50;
     _mouseDelayMet:boolean;
     _mouseDelayTimer:number;
@@ -45,9 +45,9 @@ export class Draggable implements OnDestroy, OnInit {
     _dragOffsetY:number;
     _elementStartX:number;
     _elementStartY:number;
-    _model:any;
+    _model;
 
-    set config(value:any) {
+    set config(value) {
         this._config = value;
         this.setConfig(this._config);
     }
@@ -55,7 +55,7 @@ export class Draggable implements OnDestroy, OnInit {
     constructor(_element:ElementRef, _renderer:Renderer) {
 }
 
-  setConfig(config:any):void {
+  setConfig(config):void {
     for (let key in config) {
         var value = config[key];
         switch (key) {
@@ -123,7 +123,7 @@ export class Draggable implements OnDestroy, OnInit {
             })
             .filter(() => this._isDragging)
             .takeUntil(mouseUpObservable
-                .map((mouseUpEvent: any) => {
+                .map((mouseUpEvent) => {
                     clearInterval(this._mouseDelayTimer);
                     if (this._isDragging)
                         this.dragStop.emit(mouseUpEvent);
@@ -137,7 +137,7 @@ export class Draggable implements OnDestroy, OnInit {
             );
     });
 
-    this._dragSubscription = dragObservable.subscribe((event: any) => {
+    this._dragSubscription = dragObservable.subscribe((event) => {
             this.drag.emit(event);
             setTimeout(() => {
                 if (!event.cancelled) {

@@ -26,7 +26,8 @@ module.exports = {
 	plugins: [
 		new webpack.optimize.OccurrenceOrderPlugin(),
 		new CopyWebpackPlugin([
-			{ from: 'test-app/index.html', to: 'test-app/index.html' }
+			{ from: 'test-app/index.html', to: 'test-app/index.html' },
+			{ from: 'images/*.png', to: 'images' }
 		])
 	]
 };

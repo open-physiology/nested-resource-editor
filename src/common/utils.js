@@ -1,6 +1,7 @@
 "use strict";
 
-import './loadRxjs';
+import '../libs/rxjs';
+import $ from '../libs/jquery';
 
 import modelFactory, {ajaxBackend} from 'open-physiology-model';
 
@@ -66,9 +67,9 @@ export function getClassLabel(option: string): string{
     return label;
 }
 
-export function getResourceIcon(item: any): string{
+export function getResourceIcon(item): string{
     if (!item) { return ""; }
-    if (item.class === model.Lyph.name && item.axis) { return "src/images/lyphWihAxis.png"; }
+    if (item.class === model.Lyph.name && item.axis) { return "src/images/lyphWithAxis.png"; }
     let clsName = item.class;
     if (item.class === model.Type.name){
         clsName = (item['<--DefinesType'] && item['<--DefinesType'][1])? item['<--DefinesType'][1].class: "Resource";

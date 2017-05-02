@@ -30,10 +30,10 @@ export class Resizable{
      _originalTop: number;
      _minWidth: number = 0;
      _minHeight: number = 0;
-     _model: any;
-     _config: any;
+     _model;
+     _config;
 
-    set config(value: any) {
+    set config(value) {
         this._config = value;
         this.setConfig(this._config);
     }
@@ -42,7 +42,7 @@ export class Resizable{
         return this._handles;
     }
 
-     setConfig(config: any): void {
+     setConfig(config): void {
         for (let key in config) {
             var value = config[key];
             switch (key) {

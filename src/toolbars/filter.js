@@ -23,16 +23,15 @@ import {DropdownModule} from 'ngx-dropdown';
     `,
     styles: [`
         :host {float: right;}
-        .dropdown-toggle{
-          padding: 6px;
+        .form-control {
+          height: 30px;
+          box-shadow: none!important;
         }
-
-    `],
-    styleUrls: [
-        '../../node_modules/bootstrap/dist/css/bootstrap.min.css',
-        '../../node_modules/font-awesome/css/font-awesome.css'
-    ],
-
+        .form-control:focus  {
+          border: 2px solid #ccc;
+          box-shadow: none!important;
+        }
+    `]
 })
 export class ToolbarFilter {
     @Input() options: Array<string> = [];
@@ -52,7 +51,7 @@ export class ToolbarFilter {
         this.applied.emit({filter: this.filter, mode: this.mode});
     }
 
-    updateValue(event: any){
+    updateValue(event){
         this.filter = event.target.value;
         this.applied.emit({filter: this.filter, mode: this.mode});
     }

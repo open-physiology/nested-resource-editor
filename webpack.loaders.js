@@ -9,6 +9,10 @@ module.exports = [
 		loader: 'json-loader'
 	},
 	{
+		test: /\.css$/,
+		loader: [ 'style-loader', 'css-loader', 'autoprefixer-loader' ]
+	},
+	{
 		test: /icons[\/\\]\w+\.png$/,
 		loader: 'url-loader?limit=20000'
 	},

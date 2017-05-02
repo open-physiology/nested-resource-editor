@@ -3,7 +3,7 @@ import {NgModule, Pipe, PipeTransform} from '@angular/core';
 ///////////////////////////////////////////////////
 @Pipe({name: 'hideClass'})
 export class HideClass implements PipeTransform {
-    transform(items: any, classNames: Array<any> = []): Array<any> {
+    transform(items, classNames: Array<any> = []): Array<any> {
         return items.filter(x => !classNames.includes(x.class));
     }
 }
@@ -30,7 +30,7 @@ export class OrderBy implements PipeTransform {
         if (propName === "unsorted") {
             return items;
         } else {
-            return items.sort((a: any, b: any) => {
+            return items.sort((a, b) => {
                 if ((sortMode[0] === '-')) {//desc
                     if (a[propName] > b[propName]) return -1;
                     if (a[propName] < b[propName]) return 1;
@@ -48,8 +48,8 @@ export class OrderBy implements PipeTransform {
 
 @Pipe({name: 'mapToOptions'})
 class MapToOptions implements PipeTransform {
-    transform(items: Array<any> = []): any {
-        return items.filter(x => (x.name && (x.name !== ""))).map((entry: any) => ({
+    transform(items: Array<any> = []) {
+        return items.filter(x => (x.name && (x.name !== ""))).map((entry) => ({
             id: entry,
             text: entry.name? entry.name: "(Unnamed) " + entry.class
         }))
@@ -58,7 +58,7 @@ class MapToOptions implements PipeTransform {
 
 @Pipe({name: 'mapToCategories'})
 class MapToCategories implements PipeTransform {
-    transform(items: Array<any> = []): any {
+    transform(items: Array<any> = []) {
         let types = Array.from(new Set(items.map(item => item.type)));
         let typedItems: Array<any> = [];
         for (let type of types){

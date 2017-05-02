@@ -86,20 +86,13 @@ import {FormsModule} from '@angular/forms';
    `,
     "styles": [`
         input {width: 60px;}
-        .input-control{
-          margin-left: 4px;
-          padding: 2px;
-          display: inline-block;
-          vertical-align:top;
-        }
-        .input-control-sm{
-          width: 68px;
-        }
-        .input-control-md{
-          width: 124px;
-        }
-        .btn-icon{
+        .form-control {
           height: 30px;
+          box-shadow: none!important;
+        }
+        .form-control:focus  {
+          border: 2px solid #ccc;
+          box-shadow: none!important;
         }
 
     `],
@@ -114,13 +107,13 @@ import {FormsModule} from '@angular/forms';
  *   'class': { type: 'string', required: true }
  */
 export class TemplateValueComponent{
-    @Input() item: any;
+    @Input() item;
     @Input() min: number = 0;
     @Input() max: number = 10;
     @Input() step: number = 1;
 
     value: number = 0;
-    valueSet: any = {};
+    valueSet = {};
     valueType: string = "Value";
     @Output() updated = new EventEmitter();
 

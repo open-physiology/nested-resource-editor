@@ -1,10 +1,10 @@
 import {NgModule, Component, ViewChild, EventEmitter, Input, Output} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
-import '../common/loadRxjs';
+import '../libs/jquery';
 
 import {model} from "../common/utils";
-import {Ng2Bs3ModalModule} from 'ng2-bs3-modal/ng2-bs3-modal';
+import {Ng2Bs3ModalModule, ModalComponent} from '../libs/ng2-bs3-modal';
 
 @Component({
     selector: 'modal-window',
@@ -33,7 +33,7 @@ import {Ng2Bs3ModalModule} from 'ng2-bs3-modal/ng2-bs3-modal';
  * ModalWindow component, provides generation of measurables in a pop-up window.
  */
 export class ModalWindow{
-    @Input()  item: any;
+    @Input()  item;
     @Output() closed = new EventEmitter();
 
     //Measurable replication
@@ -48,7 +48,7 @@ export class ModalWindow{
         for (let type of this.item.types) {
             for (let supertype of type.supertypes) {
                 if (supertype.definition && supertype.definition.measurables) {
-                    let supertypeMeasurables = Array.from(new Set(supertype.definition.measurables.map((item:any) => item.type)));
+                    let supertypeMeasurables = Array.from(new Set(supertype.definition.measurables.map((item) => item.type)));
                     for (let supertypeMeasurable of supertypeMeasurables) {
                         if (allSupertypeMeasurables.indexOf(supertypeMeasurable) < 0)
                             allSupertypeMeasurables.push(supertypeMeasurable);
@@ -88,7 +88,7 @@ export class ModalWindow{
 @NgModule({
     imports: [ CommonModule, FormsModule, Ng2Bs3ModalModule],
     declarations: [ ModalWindow ],
-    exports: [ ModalWindow, Ng2Bs3ModalModule ]
+    exports: [ ModalWindow ]
 })
 export class ModalWindowModule {}
 

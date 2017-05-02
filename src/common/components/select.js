@@ -17,10 +17,7 @@ import {SelectModule} from 'ng2-select';
             (data)        = "refreshValue($event)"
           ></ng-select>
       </div>
-    `,
-    styleUrls: [
-        '../../node_modules/bootstrap/dist/css/bootstrap.min.css'
-    ]
+    `
 })
 export class MultiSelectInput {
     @Input()  items   = new Set();
@@ -31,7 +28,7 @@ export class MultiSelectInput {
     active = true;
 
     externalChange = false;
-    ngOnChanges(changes: {[propName: string]: any}) {
+    ngOnChanges(changes) {
         if (this.externalChange){
             setTimeout(() => { this.active = false }, 0);
             setTimeout(() => { this.active = true  }, 0);
@@ -59,10 +56,7 @@ export class MultiSelectInput {
         (data)        = "refreshValue($event)"
       ></ng-select>
     </div>
-  `,
-    styleUrls: [
-        '../../node_modules/bootstrap/dist/css/bootstrap.min.css'
-    ]
+  `
 })
 export class SingleSelectInput {
     @Input()  item    = new Set();
@@ -73,7 +67,7 @@ export class SingleSelectInput {
     active = true;
     externalChange = false;
 
-    ngOnChanges(changes: {[propName: string]: any}) {
+    ngOnChanges(changes) {
         if (this.externalChange){
             setTimeout(() => {this.active = false}, 0);
             setTimeout(() => {this.active = true},  0);
