@@ -1,4 +1,4 @@
-import {Component, SkipSelf, Host} from '@angular/core';
+import {Component} from '@angular/core';
 import {AbstractResourceList} from "./AbstractResourceList";
 import {HighlightService} from './HighlightService.js';
 import {SetToArray, FilterBy} from "../common/pipes";
@@ -24,23 +24,22 @@ import {model} from "../common/utils";
         <toolbar-add    *ngIf = "!(options?.readOnly || options?.headersOnly)"  [options]="types" [transform]="getClassLabel" (added)="onAdded($event)"></toolbar-add>
         <toolbar-filter *ngIf =  "options?.filterToolbar" [options]="['Name', 'ID', 'Class']" [filter]="searchString" (applied)="onFiltered($event)"></toolbar-filter>
           
-        <accordion class="list-group" [closeOthers]="true"
+        <accordion [closeOthers]="true"
           dnd-sortable-container [dropZones]="zones" [sortableData]="items">
           <accordion-group *ngFor="let item of items 
-            | orderBy : sortByMode 
+            | orderBy : sortByMode
             | filterBy: [searchString, filterByMode]; let i = index" 
-            class="list-group-item" dnd-sortable (onDragStart)="onDragStart()" (onDragEnd)="onDragEnd()"
-           [sortableIndex]="i">
-            <div accordion-heading 
-              (click)="updateSelected(item)" 
+            dnd-sortable (onDragStart)="onDragStart()" (onDragEnd)="onDragEnd()" [sortableIndex]="i">
+            <accordion-heading 
+              (click)    ="updateSelected(item)" 
               (mouseover)="updateHighlighted(item)" (mouseout)="cleanHighlighted(item)"
-              [ngClass]="{highlighted: _highlightedItem === item}">
+              [ngClass]  ="{highlighted: _highlightedItem === item}">
               <item-header [item]="item" 
-                [selectedItem]="selectedItem" 
+                [selectedItem]  ="selectedItem" 
                 [isSelectedOpen]="isSelectedOpen" 
-                [icon]="getResourceIcon(item)">
+                [icon]          ="getResourceIcon(item)">
               </item-header>
-            </div>
+            </accordion-heading>
 
             <div *ngIf="!options?.headersOnly">
               <resource-panel *ngIf="item === selectedItem" 
@@ -57,6 +56,28 @@ import {model} from "../common/utils";
     </div>
     <!--<ng2-toasty></ng2-toasty>-->
   `,
+    styles: [`
+        .input-select{
+          min-width: 100px;
+        }
+        .btn-icon{
+          height: 30px;
+        }
+        accordion-group{
+          padding: 0px;
+        }
+        .panel-body{
+          padding: 0px;
+        }
+        .panel-heading{
+          padding: 2px;
+        }
+        .panel-heading label {
+          display: block;
+        }
+
+
+    `],
     styleUrls: [
         '../../node_modules/bootstrap/dist/css/bootstrap.min.css'
     ]
@@ -86,7 +107,8 @@ export class NestedResourceList extends AbstractResourceList{
 
                     this.ts = model.Template.p('all').subscribe(
                         (data: any) => {this.selectionOptions = new Set(
-                            filterByClass.transform(setToArray.transform(data), [this.types, 'class']))});
+                            filterByClass.transform(
+                                setToArray.transform(data), [this.types, 'class']))});
                 }
             }
         }

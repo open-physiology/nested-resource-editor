@@ -21,7 +21,13 @@ import {DropdownModule} from 'ngx-dropdown';
         </div>
       </div>
     `,
-    styles: [':host {float: right;}'],
+    styles: [`
+        :host {float: right;}
+        .dropdown-toggle{
+          padding: 6px;
+        }
+
+    `],
     styleUrls: [
         '../../node_modules/bootstrap/dist/css/bootstrap.min.css',
         '../../node_modules/font-awesome/css/font-awesome.css'
@@ -30,7 +36,7 @@ import {DropdownModule} from 'ngx-dropdown';
 })
 export class ToolbarFilter {
     @Input() options: Array<string> = [];
-    @Input()  filter: string = "";
+    @Input() filter: string = "";
     @Output() applied = new EventEmitter();
 
     mode: string;

@@ -1,7 +1,10 @@
 import {NgModule, Component, ViewChild, EventEmitter, Input, Output} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {Ng2Bs3ModalModule} from 'ng2-bs3-modal/ng2-bs3-modal';
+import {FormsModule} from '@angular/forms';
+import '../common/loadRxjs';
+
 import {model} from "../common/utils";
+import {Ng2Bs3ModalModule} from 'ng2-bs3-modal/ng2-bs3-modal';
 
 @Component({
     selector: 'modal-window',
@@ -14,8 +17,8 @@ import {model} from "../common/utils";
             <li *ngFor="let option of supertypeMeasurables; let i = index">
               <a class="small" href="#">
               <input type="checkbox" 
-                [checked]="option.selected" 
-                (change)="updateValue(option, $event)"/>&nbsp;
+                [(ngModel)]="option.selected" 
+                (ngModelChange)="updateValue(option)"/>&nbsp;
               {{option.value.name}}</a>
             </li>
         </modal-body>
@@ -71,8 +74,7 @@ export class ModalWindow{
         this.closed.emit(event);
     }
 
-    updateValue(option, event){
-        option.selected = event.target.checked;
+    updateValue(option){
         if ( this.measurablesToReplicate.has(option.value) && !option.selected)
             this.measurablesToReplicate.delete(option.value);
         if (!this.measurablesToReplicate.has(option.value) && option.selected)
@@ -84,9 +86,9 @@ export class ModalWindow{
  * The ModalWindowModule module, offers the ModalWindow component.
  */
 @NgModule({
-    imports: [ CommonModule, Ng2Bs3ModalModule],
+    imports: [ CommonModule, FormsModule, Ng2Bs3ModalModule],
     declarations: [ ModalWindow ],
-    exports: [ ModalWindow ]
+    exports: [ ModalWindow, Ng2Bs3ModalModule ]
 })
 export class ModalWindowModule {}
 

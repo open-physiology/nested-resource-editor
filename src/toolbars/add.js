@@ -20,8 +20,14 @@ import {DropdownModule} from 'ngx-dropdown';
         <span class="glyphicon glyphicon-plus"></span>
       </button>
     `,
+    styles: [`
+        .btn-icon{
+          height: 30px;
+        }
+    `],
     styleUrls: [
-        '../../node_modules/bootstrap/dist/css/bootstrap.min.css'
+        '../../node_modules/bootstrap/dist/css/bootstrap.min.css',
+        '../../node_modules/font-awesome/css/font-awesome.css'
     ],
 
 })

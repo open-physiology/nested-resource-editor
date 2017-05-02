@@ -40,8 +40,18 @@ import {DropdownModule} from 'ngx-dropdown';
       </div>
     </div>
     `,
+    styles: [`
+        .btn-icon{
+          height: 30px;
+        }
+        .dropdown-toggle{
+          padding: 6px;
+        }
+
+    `],
     styleUrls: [
-        '../../node_modules/bootstrap/dist/css/bootstrap.min.css'
+        '../../node_modules/bootstrap/dist/css/bootstrap.min.css',
+        '../../node_modules/font-awesome/css/font-awesome.css'
     ],
 
 })

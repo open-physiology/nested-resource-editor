@@ -11,6 +11,7 @@ export class HideClass implements PipeTransform {
 @Pipe({name: 'filterBy'})
 export class FilterBy implements PipeTransform {
     transform(items: Array<any> = [], [searchString, propName]): Array<any> {
+        if (searchString.length === 0) { return items; }
         return items.filter(item => (typeof(item[propName]) === 'string')
             ? item[propName].toLowerCase().indexOf(searchString.toLowerCase()) !== -1
             : item[propName] === searchString);
@@ -19,9 +20,7 @@ export class FilterBy implements PipeTransform {
 
 @Pipe({name: 'setToArray'})
 export class SetToArray implements PipeTransform {
-    transform(items: Set<any>): Array<any> {
-        return Array.from(items || []);
-    }
+    transform(items: Set<any>): Array<any> { return Array.from(items || {}); }
 }
 
 @Pipe({name: 'orderBy', pure: false})

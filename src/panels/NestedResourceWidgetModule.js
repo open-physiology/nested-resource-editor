@@ -29,23 +29,24 @@ import {HighlightService} from './HighlightService.js';
           </toolbar-propertySettings>
 
           <toolbar-filter [filter]="searchString" [options]="['Name', 'ID', 'Class']" (applied)="onFiltered($event)"></toolbar-filter>
-                    
-          <accordion class="list-group" [closeOthers]="true"> 
-            <!--dnd-sortable-container [dropZones]="zones" [sortableData]="items">-->
-          <accordion-group *ngFor="let item of items           
-          | hideClass : hiddenTypes
-          | orderBy : sortByMode 
-          | filterBy: [searchString, filterByMode]; let i = index">
-            <!--class="list-group-item" dnd-sortable [sortableIndex]="i"> -->
-            <div accordion-heading 
-              (click)="updateSelected(item)" 
+                   
+          <accordion [closeOthers]="true" 
+            dnd-sortable-container [dropZones]="zones" [sortableData]="items">
+
+          <accordion-group  *ngFor="let item of items 
+            | hideClass : hiddenTypes
+            | orderBy : sortByMode
+            | filterBy: [searchString, filterByMode]; let i = index" dnd-sortable [sortableIndex]="i"> 
+
+            <accordion-heading
+              (click)    ="updateSelected(item)" 
               (mouseover)="updateHighlighted(item)" (mouseout)="cleanHighlighted(item)"
-              [ngClass]="{highlighted: _highlightedItem === item}"
-              >
-              <item-header [item]="item" 
-                [selectedItem]  ="selectedItem" 
-                [isSelectedOpen]="isSelectedOpen" 
-                [icon]          ="getResourceIcon(item)">   
+              [ngClass]  ="{highlighted: _highlightedItem === item}">
+              
+              <item-header [item]= "item" 
+                [selectedItem]   = "selectedItem" 
+                [isSelectedOpen] = "isSelectedOpen" 
+                [icon]           = "getResourceIcon(item)">   
                 <!--<extra *ngIf="options?.showActive">-->
                   <!--<button type="button" class="btn btn-default btn-header" -->
                     <!--[ngClass]="{'active': activeItem === item}" (click)="updateActive(item)">-->
@@ -53,13 +54,13 @@ import {HighlightService} from './HighlightService.js';
                   <!--</button>-->
                 <!--</extra>-->
               </item-header>
-            </div>
+            </accordion-heading>
 
             <div *ngIf="!options?.headersOnly">
               <resource-panel *ngIf="item === selectedItem" [item]="item"
-                (saved)="onSaved(item, $event)" 
+                (saved)   ="onSaved(item, $event)" 
                 (canceled)="onCanceled($event)"
-                (removed)="onRemoved(item)"
+                (removed) ="onRemoved(item)"
                 (highlightedItemChange)="highlightedItemChange.emit($event)">
                </resource-panel>   
             </div>
@@ -69,7 +70,36 @@ import {HighlightService} from './HighlightService.js';
         </div>
       </div>
   `,
-    styles: ['.repo{ width: 100%}'],
+    styles: [        `
+        .repo{ 
+            width: 100%;
+            border: 0;
+            border-right:3px #eee solid;
+            min-width: 380px;
+            min-height: 300px;
+        }
+        .panel-body{
+          padding: 0px;
+        }
+        accordion-group{
+          padding: 0px;
+        }
+        .panel-heading{
+          padding: 2px;
+        }
+        .highlighted{
+          background-color: #e3d2d2;
+        }
+        .btn:focus,.btn:active {
+          outline: none !important;
+        }
+        
+        .btn-header{
+          width: 16px;
+          height: 16px;
+          padding: 0;
+        }
+    `],
     styleUrls: [
         '../../node_modules/bootstrap/dist/css/bootstrap.min.css'
     ]
@@ -79,6 +109,7 @@ export class NestedResourceWidget extends AbstractResourceList{
     @Input() highlightedItem: any = null;
 
     ignoreTypes = new Set([model.Border.name, model.Node.name]);
+
     typeOptions = [];
 
     constructor(highlightService: HighlightService){
@@ -89,9 +120,9 @@ export class NestedResourceWidget extends AbstractResourceList{
     ngOnInit(){
         super.ngOnInit();
         this.typeOptions = this.types.filter(x => x.class !== modelClassNames.LyphWithAxis).map(x => (
-        { selected: !this.ignoreTypes.has(x), value: x }
+            { selected: !this.ignoreTypes.has(x), value: x }
         ));
-        this.typeOptions.push({selected: !this.ignoreTypes.has("Type"), value: "Type"});
+        //this.typeOptions.push({selected: !this.ignoreTypes.has("Type"), value: "Type"});
     }
 
     ngOnChanges(changes: { [propName: string]: any }) {
@@ -103,13 +134,18 @@ export class NestedResourceWidget extends AbstractResourceList{
     }
 
     hiddenTypesChanged(option: any){
-        if ( this.ignoreTypes.has(option.value) &&  option.selected) this.ignoreTypes.delete(option.value);
-        if (!this.ignoreTypes.has(option.value) && !option.selected) this.ignoreTypes.add(option.value);
+        if ( this.ignoreTypes.has(option.value) &&  option.selected) {
+            this.ignoreTypes.delete(option.value);
+        }
+        if (!this.ignoreTypes.has(option.value) && !option.selected) {
+            this.ignoreTypes.add(option.value);
+        }
     }
 
     get hiddenTypes () {
         return Array.from(this.ignoreTypes);
     }
+
 }
 
 /**

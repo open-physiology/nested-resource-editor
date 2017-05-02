@@ -16,7 +16,21 @@ import {Component, Input} from '@angular/core';
           <img class="icon" src="{{icon}}"/>
           <ng-content select="extra"></ng-content>
         </span>
-  `
+  `,
+    styles: [`
+        .icon {
+          height: 16px;
+          width: 16px;
+          padding: 0px;
+        }
+        .imtip {
+          position: relative;
+          bottom: 2px;
+          left: 4px;
+          width: 24px;
+          height: 12px;
+        }
+    `]
 })
 export class ItemHeader {
     @Input() item: any;

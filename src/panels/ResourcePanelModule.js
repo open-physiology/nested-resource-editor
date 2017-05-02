@@ -1,5 +1,4 @@
 import {NgModule, Component, ViewChild, EventEmitter, Input, Output, forwardRef} from '@angular/core';
-import {BrowserModule} from '@angular/platform-browser';
 import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
 import {AccordionModule} from "ngx-accordion";
@@ -21,7 +20,7 @@ import {ItemHeader}            from "./ItemHeader";
 import {NestedResourceList}    from './NestedResourceList';
 import {ToolbarCommandsModule} from '../toolbars/commands';
 import {TemplateValueModule}   from '../components/templateValue';
-import {ModalWindowModule, ModalWindow} from "../components/modal";
+//import {ModalWindowModule, ModalWindow} from "../components/modal";
 
 @Component({
     selector: 'resource-panel',
@@ -39,10 +38,10 @@ import {ModalWindowModule, ModalWindow} from "../components/modal";
             [transform] = "getPropertyLabel"
             (selectionChanged) = "visibleFieldsChanged($event)">
           </toolbar-propertySettings>
-          <div *ngIf="!options?.hideCreateType && isTyped()" >
+          <div class="input-control" *ngIf="!options?.hideCreateType && isTyped()" >
             <input type="checkbox" [disabled]="typeCreated" [(ngModel)]="createType">Create type
           </div>
-          <div *ngIf="item.class === model.Lyph.name">
+          <div class="input-control" *ngIf="item.class === model.Lyph.name">
             <button type="button" class="btn btn-default btn-icon" 
               (click)="generateMeasurables()">
               <span class="glyphicon glyphicon-cog"></span>
@@ -52,7 +51,7 @@ import {ModalWindowModule, ModalWindow} from "../components/modal";
           <div class="panel-content"> 
             <div class="input-control" *ngFor="let property of fieldNames">
               <div *ngIf="!ignore.has(property)">
-          
+
                 <div class="input-control-lg" *ngIf="inputGroup.includes(property)">
                   <label for="comment">{{getPropertyLabel(property)}}: </label>
                   <input class="form-control" 
@@ -80,7 +79,7 @@ import {ModalWindowModule, ModalWindow} from "../components/modal";
                 <nested-resource-list *ngIf="relationGroup.includes(property)"
                   [caption]="getPropertyLabel(property)" 
                   [items]  ="item.p(property) | async | setToArray" 
-                  [types]  ="[item.constructor.relationshipShortcuts[property].codomain.resourceClass]"
+                  [types]  ="[item.constructor.relationshipShortcuts[property].codomain.resourceClass.name]"
                   (updated)="updateProperty(property, $event)" 
                   (highlightedItemChange)="highlightedItemChange.emit($event)">
                 </nested-resource-list>
@@ -102,14 +101,59 @@ import {ModalWindowModule, ModalWindow} from "../components/modal";
               </div>
             </div>
             
-            <modal-window *ngIf = "item.class === model.Lyph.name" [item] = item>
-            </modal-window>
+            <!--<modal-window *ngIf = "item.class === model.Lyph.name" [item] = item>-->
+            <!--</modal-window>-->
             
           </div>
         </div>
     </div>
     <!--<ng2-toasty></ng2-toasty>-->
-  `
+  `,
+    styles: [
+        `
+        input[type=number] {
+          text-align:right;
+        }
+        .panel-body{
+          padding: 0px;
+        }
+        .panel-content{
+          border: 1px solid #ccc;
+        }
+        .input-control{
+          margin-left: 4px;
+          padding: 2px;
+          display: inline-block;
+          vertical-align:top;
+        }
+        .input-control-lg{
+          width: 178px;
+        }
+        .form-control:focus {
+          border: 2px solid #ccc;
+          box-shadow: none!important;
+        }
+        fieldset {
+          border: 1px ridge #e3e3e3;
+          padding: 4px;
+          margin: 4px;
+        }
+        .btn-icon{
+          height: 30px;
+        }
+        .input-control label {
+          display: block;
+        }
+         legend{
+          font: inherit;
+          font-weight: bold;
+          padding: 4px;
+          margin-bottom: 0px;
+          border: 0;
+          width: auto;
+        }
+
+    `]
 })
 class ResourcePanel {
     @Input() item: any;
@@ -124,7 +168,7 @@ class ResourcePanel {
     getPropertyLabel = getPropertyLabel;
     model = model;
 
-    @ViewChild(ModalWindow) mGen: ModalWindow;
+    //@ViewChild(ModalWindow) mGen;
 
     ignore: Set<string> = new Set();
 
@@ -314,7 +358,7 @@ class ResourcePanel {
         TemplateValueModule,
         PipeTransformModule,
         CustomSelectModule,
-        ModalWindowModule /*, ToastyModule.forRoot()*/],
+        /*ModalWindowModule, ToastyModule.forRoot()*/],
     declarations: [ ResourcePanel, NestedResourceList, ItemHeader ],
     providers: [HighlightService],
     exports: [

@@ -84,7 +84,25 @@ import {FormsModule} from '@angular/forms';
         </fieldset>
       </div>
    `,
-    "styles": [`input {width: 60px;}`]
+    "styles": [`
+        input {width: 60px;}
+        .input-control{
+          margin-left: 4px;
+          padding: 2px;
+          display: inline-block;
+          vertical-align:top;
+        }
+        .input-control-sm{
+          width: 68px;
+        }
+        .input-control-md{
+          width: 124px;
+        }
+        .btn-icon{
+          height: 30px;
+        }
+
+    `],
 })
 /**
  * The TemplateValueComponent, provides fields for editing typedDistribution schema:

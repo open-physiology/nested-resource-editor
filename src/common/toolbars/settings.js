@@ -23,6 +23,11 @@ import {DropdownModule} from 'ngx-dropdown';
       </ul>
     </div>
     `,
+    styles: [`
+        .btn-icon{
+          height: 30px;
+        }
+    `],
     styleUrls: [
         '../../node_modules/bootstrap/dist/css/bootstrap.min.css'
     ]

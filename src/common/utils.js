@@ -1,13 +1,12 @@
 "use strict";
 
-import './loadRxjs.js';
+import './loadRxjs';
 
 import modelFactory, {ajaxBackend} from 'open-physiology-model';
-import najax from 'najax';
 
 let {backend} = ajaxBackend({
     baseURL:     'http://open-physiology.org:8880',
-    ajax:        najax
+    ajax:        $.ajax
 });
 
 export const modelRef = modelFactory(backend);

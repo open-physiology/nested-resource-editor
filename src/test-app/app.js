@@ -41,10 +41,12 @@ export class TestApp {
 				if (this.items.length > 0){
 					this.selectedItem = this.items[0];
 				}
-				console.log("DATA", data);
 			});
 		//model.Lyph.getAll(); //Fails!
 		model.Lyph.new({id: 1, name: "Kidney"});
+		model.Lyph.new({id: 2, name: "Heart"});
+		model.Lyph.new({id: 3, name: "Head"});
+
 	}
 
 	ngOnDestroy() { this.rs.unsubscribe(); }

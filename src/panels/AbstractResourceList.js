@@ -24,7 +24,6 @@ export class AbstractResourceList {
     _highlightedItem: any;
 
     zones: Array<string> = [];
-    ignore: Set<string> = new Set();
 
     sortByMode: string = "unsorted";
     filterByMode: string = "Name";
