@@ -1,7 +1,7 @@
 import {NgModule, Component, Input} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 
-import {PipeTransformModule} from '../common/pipes.js';
+import {PipeTransformModule} from '../common/PipeTransformModule.js';
 
 import {Subscription}   from 'rxjs/Subscription';
 

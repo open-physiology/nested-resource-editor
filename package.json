@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/open-physiology/nested-resource-editor#readme",
   "devDependencies": {
+    "autoprefixer-loader": "^3.2.0",
     "babel-cli": "6",
     "babel-core": "6",
     "babel-loader": "6",
@@ -43,6 +44,7 @@
     "chai-things": "0.2",
     "copy-webpack-plugin": "4",
     "cross-env": "3",
+    "css-loader": "^0.28.1",
     "esdoc": "0.5",
     "esdoc-babel-plugin": "0.1",
     "file-loader": "0.11",
@@ -57,6 +59,7 @@
     "sinon": "1",
     "sinon-chai": "2",
     "source-map-support": "0.4",
+    "style-loader": "^0.17.0",
     "url-loader": "0.5",
     "webpack": "2",
     "webpack-node-externals": "1.5"
@@ -79,6 +82,7 @@
     "jquery": "^3.2.1",
     "lodash-bound": "1",
     "ng2-bs3-modal": "^0.10.4",
+    "ng2-draggable": "^0.2.2",
     "ng2-select": "1.2.0",
     "ng2-toasty": "^4.0.0",
     "ngx-accordion": "0.0.17",

@@ -13,8 +13,8 @@ module.exports = {
 	output: {
 		path: __dirname + '/dist',
 		filename: '[name].js',
-		// library: 'ProjectName',
-		// libraryTarget: 'umd',
+		library: 'nested-resource-editor',
+		libraryTarget: 'umd',
 		sourceMapFilename: '[file].map',
 		/* source-map support for IntelliJ/WebStorm */
 		devtoolModuleFilenameTemplate:         '[absolute-resource-path]',
@@ -27,7 +27,7 @@ module.exports = {
 		new webpack.optimize.OccurrenceOrderPlugin(),
 		new CopyWebpackPlugin([
 			{ from: 'test-app/index.html', to: 'test-app/index.html' },
-			{ from: 'images/*.png', to: 'images' }
+			{ from: 'images/*.png', to: '' }
 		])
 	]
 };

@@ -1,142 +1,146 @@
-import {Injectable, Input, Output, EventEmitter} from '@angular/core';
-import {modelClassNames, getClassLabel, getResourceIcon, model} from "../common/utils";
+import {Input, Output, EventEmitter} from '@angular/core';
+import {modelClassNames, getClassLabel, model} from "../common/utils";
 import {Subscription}   from 'rxjs/Subscription';
-
 import {HighlightService} from './HighlightService.js';
 
+/**
+ * The AbstractResourceList class implements methods common for upper level and nested resource lists.
+ *
+ * @param {string} caption           - the header of the list
+ * @param {Array<Resource>} items    - the list of displayed resources
+ * @param {Array<string>} types      - the list of displayed item types (resource classes)
+ * @param {Object} options           - the configuration options for the list appearance
+ *      @example {headersOnly: false, readOnly: false, sortToolbar: true, filterToolbar: true, showActive: false}
+ * @param {Resource} selectedItem    - the selected resource
+ * @param {Resource} highlightedItem - the highlighted resource
+ *
+ * @emits added                 - a new item added to the list
+ * @emits removed               - an item removed from the list
+ * @emits updated               - an item in the list has been updated
+ * @emits selectedItemChange    - the selected item changed
+ * @emits highlightedItemChange - the highlighted item changed
+ */
 export class AbstractResourceList {
-    @Input() caption: string = "Resources";
-    @Input() selectedItem = null;
-    @Input() items: Array<any> = [];
-    @Input() types: Array<any> = [];
+    @Input() caption = "Resources";
+    @Input() items = [];
+    @Input() types = [];
     @Input() options = {};
-    @Input() selectionOptions;
+    @Input('selectedItem') set selectedItem(item) {
+        if (this._selectedItem !== item) {
+            this._selectedItem = item;
+            this.selectedItemChange.emit(item);
+        }
+    }
+    get selectedItem() { return this._selectedItem; }
+    @Input('highlightedItem') set highlightedItem(item) {
+        if (this._highlightedItem !== item) {
+            this._highlightedItem = item;
+            this.highlightedItemChange.emit(item);
+            this.highlightService.highlight(this._highlightedItem);
+        }
+    }
+    get highlightedItem() { return this._highlightedItem; }
 
     @Output() added = new EventEmitter();
     @Output() removed = new EventEmitter();
     @Output() updated = new EventEmitter();
     @Output() selectedItemChange = new EventEmitter();
-    @Output() activeItemChange = new EventEmitter();
     @Output() highlightedItemChange = new EventEmitter();
 
     _selectedItem;
-    _activeItem;
     _highlightedItem;
+    _openItem;
 
-    zones: Array<string> = [];
+    zones = [];
 
-    sortByMode: string = "unsorted";
-    filterByMode: string = "Name";
-    searchString: string = "";
-    isSelectedOpen: boolean = false;
+    sortByMode = "unsorted";
+    filterByMode = "Name";
+    searchString = "";
 
     hs: Subscription;
-
     getClassLabel = getClassLabel;
-    getResourceIcon = getResourceIcon;
 
-    constructor(highlightService: HighlightService){
-        this.hs = highlightService.highlightedItemChanged$.subscribe(item => {
-            if (this.items.indexOf(item) > -1){
-                if (this._highlightedItem !== item)
-                    this._highlightedItem = item;
+    constructor(highlightService: HighlightService) {
+        this.highlightService = highlightService;
+        this.hs = this.highlightService.highlightedItemChanged$.subscribe(item => {
+            if (this.items.includes(item) && this._highlightedItem !== item){
+                this._highlightedItem = item;
             }
         })
     }
 
-    ngOnDestroy() {
-        if (this.hs) this.hs.unsubscribe();
-    }
-
-    set selectedItem (item) {
-        if (this._selectedItem !== item){
-            this._selectedItem = item;
-            this.selectedItemChange.emit(item);
+    ngOnInit() {
+        if (!this.items) {
+            this.items = [];
         }
-    }
-
-     get selectedItem () {
-        return this._selectedItem;
-    }
-
-     set activeItem (item) {
-        if (this._activeItem !== item){
-            this._activeItem = item;
-            this.activeItemChange.emit(item);
-        }
-    }
-
-     get activeItem () {
-        return this._activeItem;
-    }
-
-     set highlightedItem (item) {
-        if (this.highlightedItem !== item){
-            this._highlightedItem = item;
-            this.highlightedItemChange.emit(item);
-        }
-    }
-
-     get highlightedItem () {
-        return this._highlightedItem;
-    }
-
-    unhighlight(item){
-        if (this.highlightedItem === item) {
-            this.highlightedItem = null;
-        }
-    }
-
-    ngOnInit(){
-        if (!this.items) this.items = [];
-        if (this.items[0] || !this.selectedItem)
+        if (this.items[0] || !this.selectedItem) {
             this.selectedItem = this.items[0];
-        //Resources
+        }
         if (this.types.length === 0) {
             this.types = Object.keys(modelClassNames);
         }
         this.zones = this.types.map(x => x + "_zone");
     }
 
-    updateSelected(item){
-        this.selectedItem = item;
-        this.isSelectedOpen = !this.isSelectedOpen;
+    ngOnDestroy() {
+        if (this.hs) {
+            this.hs.unsubscribe();
+        }
     }
 
-     onSorted(prop: string){
+    unhighlight(item) {
+        if (this.highlightedItem === item) {
+            this.highlightedItem = null;
+        }
+    }
+
+    //Open item
+    set openItem(item){
+        if (this._openItem !== item) {
+            this._openItem = item;
+        }
+    }
+
+    get openItem(){
+        return this._openItem;
+    }
+
+    /* Events */
+
+    onSorted(prop: string) {
         this.sortByMode = prop.toLowerCase();
     }
 
-     onFiltered(config){
+    onFiltered(config) {
         this.filterByMode = config.mode.toLowerCase();
         this.searchString = config.filter;
     }
 
-     onSaved(item, updatedItem){
+    onSaved(item, updatedItem) {
         this.updated.emit(this.items);
-        if (item === this.selectedItem){
+        if (item === this.selectedItem) {
             this.selectedItemChange.emit(this.selectedItem);
         }
     }
 
-     onCanceled(updatedItem){}
-
-     onRemoved(item){
+    onRemoved(item) {
         if (!this.items) return;
         let index = this.items.indexOf(item);
         if (index > -1) this.items.splice(index, 1);
-        if (item === this.selectedItem){
-            if (this.items.length > 0)
+        if (item === this.selectedItem) {
+            if (this.items.length > 0){
                 this.selectedItem = this.items[0];
-            else
+            }
+            else {
                 this.selectedItem = null;
+            }
         }
         item.delete();
         this.removed.emit(item);
         this.updated.emit(this.items);
     }
 
-     onAdded(clsName){
+    onAdded(clsName) {
         let options = {};
         if (clsName === modelClassNames.LyphWithAxis) {
             clsName = model.Lyph.name;

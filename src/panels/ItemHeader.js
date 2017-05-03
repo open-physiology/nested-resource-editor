@@ -1,19 +1,23 @@
-import {Component, Input, ElementRef} from '@angular/core';
+import {Component, Input, Output, EventEmitter, ElementRef} from '@angular/core';
 import $ from '../libs/jquery';
+import {getResourceIcon} from "../common/utils";
 
 @Component({
     selector: 'item-header',
     template: `
         <span class="pull-left glyphicon"
             [ngClass]="{
-              'glyphicon-chevron-down':  (item === selectedItem) && isSelectedOpen, 
-              'glyphicon-chevron-right': (item !== selectedItem) || !isSelectedOpen}">
+              'glyphicon-chevron-down':  isOpen, 
+              'glyphicon-chevron-right': !isOpen}">
         </span>&nbsp;
         {{(item.id)? item.id: "?"}}: {{item.name}}
         <span class="pull-right">
-          <img *ngIf="isType" class="imtip" src="src/images/type.png"/>
-          <img class="icon" src="{{icon}}"/>
-          <ng-content select="extra"></ng-content>
+          <img *ngIf="isType" class="imtip" src="../images/type.png"/>
+          <img class="icon" [src]="getResourceIcon(item)"/>
+          <button type="button" *ngIf="options?.showActive" class="btn btn-default btn-header" 
+            [ngClass]="{'active': isActive}" (click)="activeItemChanged.emit(item)">
+            <span class = "glyphicon" [ngClass]="{'glyphicon-pencil': isActive}"></span>
+          </button>
         </span>
   `,
     styles: [`
@@ -29,20 +33,27 @@ import $ from '../libs/jquery';
           width: 24px;
           height: 12px;
         } 
-        :host{display: block}
+        :host{
+            display: block;
+            padding: 2px;
+        }
     `]
 })
+/**
+ * The ItemHeader component configures accordion header
+ */
 export class ItemHeader {
     @Input() item;
-    @Input() selectedItem;
-    @Input() isSelectedOpen: boolean;
-    @Input() icon: string;
+    @Input() options: {};
+    @Input() isOpen;
+    @Input() isActive;
+    @Output() activeItemChanged = new EventEmitter();
 
     isType = false;
+    getResourceIcon = getResourceIcon;
 
     constructor(el: ElementRef) {
         this.el = $(el.nativeElement);
-
     }
 
     ngOnInit() {

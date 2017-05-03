@@ -9,21 +9,20 @@ import '../../node_modules/ng2-toasty/style.css';
 import '../../node_modules/ng2-toasty/style-bootstrap.css';
 
 //Common
-import {PipeTransformModule, SetToArray, HideClass} from "../common/pipes";
-import {ToolbarSettingsModule} from '../common/toolbars/settings';
-import {CustomSelectModule} from '../common/components/select';
+import {PipeTransformModule, SetToArray, HideClass} from "../common/PipeTransformModule";
+import {ToolbarSettingsModule} from '../common/toolbars/ToolbarSettingsModule';
+import {CustomSelectModule} from '../common/components/CustomSelectModule';
 import {model, getPropertyLabel} from "../common/utils";
 
 //Local
-import {ToolbarAddModule}      from '../toolbars/add';
-import {ToolbarFilterModule}   from '../toolbars/filter';
-import {ToolbarSortModule}     from '../toolbars/sort';
-import {HighlightService}      from './HighlightService.js';
+import {ToolbarAddModule}      from '../toolbars/ToolbarAddModule';
+import {ToolbarFilterModule}   from '../toolbars/ToolbarFilterModule';
+import {ToolbarSortModule}     from '../toolbars/ToolbarSortModule';
 import {ItemHeader}            from "./ItemHeader";
 import {NestedResourceList}    from './NestedResourceList';
-import {ToolbarCommandsModule} from '../toolbars/commands';
-import {TemplateValueModule}   from '../components/templateValue';
-import {ModalWindowModule, ModalWindow} from "../components/modal";
+import {ToolbarCommandsModule} from '../toolbars/ToolbarCommandsModule';
+import {TemplateValueModule}   from '../components/TemplateValueModule';
+import {MeasurableGeneratorModule, MeasurableGenerator} from "../components/MeasurableGeneratorModule";
 
 @Component({
     selector: 'resource-panel',
@@ -41,14 +40,14 @@ import {ModalWindowModule, ModalWindow} from "../components/modal";
             [transform] = "getPropertyLabel"
             (selectionChanged) = "visibleFieldsChanged($event)">
           </toolbar-propertySettings>
-          <div class="input-control" *ngIf="!options?.hideCreateType && isTyped()" >
-            <input type="checkbox" [disabled]="typeCreated" [(ngModel)]="createType">Create type
-          </div>
           <div class="input-control" *ngIf="item.class === model.Lyph.name">
             <button type="button" class="btn btn-default btn-icon" 
               (click)="generateMeasurables()">
               <span class="glyphicon glyphicon-cog"></span>
             </button>
+          </div>
+          <div class="input-control" *ngIf="!options?.hideCreateType && isTyped()" >
+            <input type="checkbox" [disabled]="typeCreated" [(ngModel)]="createType">Create type
           </div>
                     
           <div class="panel-content"> 
@@ -83,8 +82,7 @@ import {ModalWindowModule, ModalWindow} from "../components/modal";
                   [caption]="getPropertyLabel(property)" 
                   [items]  ="item.p(property) | async | setToArray" 
                   [types]  ="[item.constructor.relationshipShortcuts[property].codomain.resourceClass.name]"
-                  (updated)="updateProperty(property, $event)" 
-                  (highlightedItemChange)="highlightedItemChange.emit($event)">
+                  (updated)="updateProperty(property, $event)"> 
                 </nested-resource-list>
               
                 <template-value *ngIf="templateGroup.includes(property)" 
@@ -121,25 +119,25 @@ import {ModalWindowModule, ModalWindow} from "../components/modal";
         .panel-content{
           border: 1px solid #ccc;
         }
-        .input-control >>> {
+        >>> .input-control {
           margin-left: 4px;
           padding: 2px;
           display: inline-block;
           vertical-align:top;
         }
-        .input-control >>> label {
+        >>> .input-control >>> label {
           display: block;
         }
-        .input-control-sm >>> {
+        >>> .input-control-sm {
           width: 68px;
         }
-        .input-control-md >>> {
+        >>> .input-control-md {
           width: 124px;
         }
-        .input-control-lg >>> {
+        >>> .input-control-lg {
           width: 178px;
         }
-        fieldset >>> {
+        >>> fieldset {
           border: 1px ridge #e3e3e3;
           padding: 4px;
           margin: 4px;
@@ -152,16 +150,27 @@ import {ModalWindowModule, ModalWindow} from "../components/modal";
           border: 0;
           width: auto;
         }
-        .form-control >>> {
+        >>> .form-control {
           height: 30px;
           box-shadow: none!important;
         }
-        .form-control:focus >>> {
+        >>> .form-control:focus {
           border: 2px solid #ccc;
           box-shadow: none!important;
         }
     `]
 })
+/**
+ * The ResourcePanel component, generates fields for editting properties of a given resource.
+ *
+ * @param {Resource} item - the resource to show or edit
+ *
+ * @emits saved           - the changes saved
+ * @emits canceled        - the changes canceled
+ * @emits removed         - the item deleted
+ * @emits propertyUpdated - the item property changed
+ *
+ */
 class ResourcePanel {
     @Input() item;
     @Input() options;
@@ -170,12 +179,11 @@ class ResourcePanel {
     @Output() canceled = new EventEmitter();
     @Output() removed = new EventEmitter();
     @Output() propertyUpdated = new EventEmitter();
-    @Output() highlightedItemChange = new EventEmitter();
 
     getPropertyLabel = getPropertyLabel;
     model = model;
 
-    @ViewChild(ModalWindow) mGen;
+    @ViewChild(MeasurableGenerator) mGen;
 
     ignore: Set<string> = new Set();
 
@@ -201,8 +209,9 @@ class ResourcePanel {
 
     ngOnInit(){
         this.ignore = new Set(["id", "cardinalityBase", "cardinalityMultipliers", "definedType"]);
-        if (this.item instanceof model.Border){
-            this.ignore = this.ignore.add('externals').add('species').add('measurables').add('name').add('types').add('nodes');
+        if (this.item instanceof model.Border) {
+            ['externals', 'species', 'measurables', 'name', 'types', 'nodes'].map(propName =>
+                this.ignore.add(propName));
         }
 
         /*Auto-generated visual groups*/
@@ -271,7 +280,8 @@ class ResourcePanel {
     getDefaultValue(property, attribute){
         let propertySpec = this.item.constructor.properties[property];
         switch(attribute){
-            case "type": return ((propertySpec.type === "integer") || (propertySpec.type === "number"))? "number": "text";
+            case "type": return ((propertySpec.type === "integer")
+            || (propertySpec.type === "number"))? "number": "text";
             case "step": return (propertySpec.type === "number")? 0.1: 1;
         }
         return "";
@@ -347,6 +357,9 @@ class ResourcePanel {
     }
 }
 
+/**
+ * The ResourcePanelModule module, exports ResourcePanel component, toolbar modules and pipes.
+ */
 @NgModule({
     imports: [
         CommonModule,
@@ -362,9 +375,9 @@ class ResourcePanel {
         PipeTransformModule,
         CustomSelectModule,
         ToastyModule.forRoot(),
-        ModalWindowModule],
+        MeasurableGeneratorModule],
     declarations: [ ResourcePanel, NestedResourceList, ItemHeader ],
-    providers: [HighlightService, ToastyService],
+    providers: [ToastyService],
     exports: [
         //Existing
         AccordionModule,

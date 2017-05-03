@@ -69,7 +69,7 @@ export function getClassLabel(option: string): string{
 
 export function getResourceIcon(item): string{
     if (!item) { return ""; }
-    if (item.class === model.Lyph.name && item.axis) { return "src/images/lyphWithAxis.png"; }
+    if (item.class === model.Lyph.name && item.axis) { return "../images/lyphWithAxis.png"; }
     let clsName = item.class;
     if (item.class === model.Type.name){
         clsName = (item['<--DefinesType'] && item['<--DefinesType'][1])? item['<--DefinesType'][1].class: "Resource";

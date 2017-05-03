@@ -1,8 +1,8 @@
-import {Component} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {AbstractResourceList} from "./AbstractResourceList";
 import {HighlightService} from './HighlightService.js';
 import {ToastyService} from 'ng2-toasty';
-import {SetToArray, FilterBy} from "../common/pipes";
+import {SetToArray, FilterBy} from "../common/PipeTransformModule";
 import {model} from "../common/utils";
 
 @Component({
@@ -12,9 +12,10 @@ import {model} from "../common/utils";
       <div class="panel-heading"> <label>{{caption}}: </label></div>
       <div class="panel-body" >
         <span  *ngIf = "!(options?.readOnly || options?.headersOnly)">
-          <select-input-1 class="pull-left input-select" [item] = "itemToInclude"
-           (updated) = "updateItemToInclude($event)"    
-           [options] = "selectionOptions">
+          <select-input-1 class="pull-left input-select" 
+            [item] = "itemToInclude"
+            (updated) = "itemToInclude = $event"    
+            [options] = "possibleValues">
           </select-input-1>
           <button type="button" class="btn btn-default btn-icon" (click)="onIncluded(itemToInclude)">
             <span class="glyphicon glyphicon-save"></span>
@@ -30,20 +31,21 @@ import {model} from "../common/utils";
           <accordion-group *ngFor="let item of items 
             | orderBy : sortByMode
             | filterBy: [searchString, filterByMode]; let i = index" 
-            dnd-sortable (onDragStart)="onDragStart()" (onDragEnd)="onDragEnd()" [sortableIndex]="i">
-            <accordion-heading 
-              (click)    ="updateSelected(item)"> 
+                dnd-sortable (onDragStart)="onDragStart()" (onDragEnd)="onDragEnd()" [sortableIndex]="i"
+                (onOpen) ="openItem = item"
+                (onClose)="openItem = null">
+ 
+            <accordion-heading (click)  ="selectedItem = item">
               <item-header [item]="item" 
-                [selectedItem]  ="selectedItem" 
-                [isSelectedOpen]="isSelectedOpen" 
-                [icon]          ="getResourceIcon(item)"
-                (mouseover)="highlightedItem = item" (mouseout)="unhighlight(item)"
-                [ngClass]  ="{highlighted: highlightedItem === item}">
+                [isOpen]       = "item === openItem" 
+                (mouseover)    = "highlightedItem = item" 
+                (mouseout)     = "unhighlight(item)"
+                [ngClass] ="{highlighted: item === highlightedItem, active: item === selectedItem}">
               </item-header>
             </accordion-heading>
 
             <div *ngIf="!options?.headersOnly">
-              <resource-panel *ngIf="item === selectedItem" 
+              <resource-panel *ngIf="item === openItem" 
                 [item]    ="item" 
                 [options] ="options"
                 (saved)   ="onSaved(item, $event)" 
@@ -60,9 +62,23 @@ import {model} from "../common/utils";
         .input-select{
           min-width: 100px;
         }
+        .highlighted {
+          background-color: #e3d2d2;
+        }
+        .active {
+          border: 2px solid #ff9999;
+        }
     `]
 })
+/**
+ * The NestedResourceList component, provides functionality for editing lists of resources.
+ * Inherits input parameters and emitted events from AbstractResourceList
+ *
+ * @param {Array<Resource>} possibleValues - the list of resources that can be added to the current list
+ */
 export class NestedResourceList extends AbstractResourceList{
+    @Input() possibleValues;
+
     itemToInclude = null;
 
     constructor(toastyService: ToastyService, highlightService: HighlightService){
@@ -74,21 +90,18 @@ export class NestedResourceList extends AbstractResourceList{
         super.ngOnInit();
 
         //If selectionOptions are not provided by parent, subscribe and get all for given types
-        if (!this.selectionOptions) {
+        if (!this.possibleValues) {
             if (this.types.length === 1){
                 this.ts = model[this.types[0]].p('all').subscribe(
-                    (data) => {
-                        this.selectionOptions = data;
-                    });
+                    (data) => { this.possibleValues = data; });
             } else {
                 if (this.types.length > 1){
                     let setToArray = new SetToArray();
                     let filterByClass = new FilterBy();
 
                     this.ts = model.Template.p('all').subscribe(
-                        (data) => {this.selectionOptions = new Set(
-                            filterByClass.transform(
-                                setToArray.transform(data), [this.types, 'class']))});
+                        (data) => {this.possibleValues = new Set(
+                            filterByClass.transform( setToArray.transform(data), [this.types, 'class']))});
                 }
             }
         }
@@ -130,9 +143,5 @@ export class NestedResourceList extends AbstractResourceList{
                 this.toastyService.error("Selected resource is already included to the set!");
             }
         }
-    }
-
-    updateItemToInclude(item){
-        this.itemToInclude = item;
     }
 }

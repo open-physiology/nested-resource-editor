@@ -1,5 +1,8 @@
 import {Injectable, EventEmitter} from '@angular/core';
 
+/**
+ * The HighlightService service notifies nested components about currently highlighted item
+ */
 @Injectable()
 export class HighlightService {
     

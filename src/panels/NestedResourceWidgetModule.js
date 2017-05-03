@@ -1,4 +1,4 @@
-import {NgModule, Component, Input} from '@angular/core';
+import {NgModule, Component, Input, Output, EventEmitter} from '@angular/core';
 import {CommonModule} from '@angular/common';
 
 //external
@@ -36,32 +36,27 @@ import {HighlightService} from './HighlightService.js';
               <accordion-group *ngFor="let item of items 
                 | hideClass : hiddenTypes
                 | orderBy : sortByMode
-                | filterBy: [searchString, filterByMode]; let i = index" dnd-sortable [sortableIndex]="i"> 
+                | filterBy: [searchString, filterByMode]; let i = index" dnd-sortable [sortableIndex]="i"
+                (onOpen) ="openItem = item"
+                (onClose)="openItem = null">
     
-                <accordion-heading (click) ="updateSelected(item)" >
-                  
+                <accordion-heading (click)  ="selectedItem = item">                  
                   <item-header [item]= "item" 
-                    [selectedItem]   = "selectedItem" 
-                    [isSelectedOpen] = "isSelectedOpen" 
-                    [icon]           = "getResourceIcon(item)"
-                    (mouseover)="highlightedItem = item" (mouseout)="unhighlight(item)"
-                    [ngClass]  ="{highlighted: highlightedItem === item}"
-                    >   
-                    <!--<extra *ngIf="options?.showActive">-->
-                      <!--<button type="button" class="btn btn-default btn-header" -->
-                        <!--[ngClass]="{'active': activeItem === item}" (click)="activeItem = item">-->
-                        <!--<span class = "glyphicon" [ngClass]="{'glyphicon-pencil': activeItem === item}"></span>-->
-                      <!--</button>-->
-                    <!--</extra>-->
+                    [options]      = "options"
+                    [isActive]     = "item === activeItem"
+                    [isOpen]       = "item === openItem" 
+                    (mouseover)    = "highlightedItem = item" 
+                    (mouseout)     = "unhighlight(item)"
+                    (activeItemChanged) = "activeItem = item"
+                    [ngClass] ="{highlighted: item === highlightedItem, active: item === selectedItem}">   
                   </item-header>
                 </accordion-heading>
     
                 <div *ngIf="!options?.headersOnly">
-                  <resource-panel *ngIf="item === selectedItem" [item]="item"
+                  <resource-panel *ngIf="item === openItem" 
+                    [item]="item"
                     (saved)   ="onSaved(item, $event)" 
-                    (canceled)="onCanceled($event)"
-                    (removed) ="onRemoved(item)"
-                    (highlightedItemChange)="highlightedItemChange.emit($event)">
+                    (removed) ="onRemoved(item)">
                    </resource-panel>   
                 </div>
                     
@@ -70,7 +65,7 @@ import {HighlightService} from './HighlightService.js';
         </div>
       </div>
   `,
-    styles: [`
+    styles: [` 
         .repo{ 
             width: 100%;
             border: 0;
@@ -78,56 +73,70 @@ import {HighlightService} from './HighlightService.js';
             min-width: 380px;
             min-height: 300px;
         }
-        .btn-header{
+        .panel-heading{
+          padding: 2px;
+        }
+        .highlighted {
+          background-color: #e3d2d2;
+        }
+        .active {
+          border: 2px solid #ff9999;
+        }
+        >>> .btn-header{
           width: 16px;
           height: 16px;
           padding: 0;
         }
-        
-        .panel-body >>> {
+        >>> .btn-icon {
+            height: 30px;
+        }
+        >>> .panel-body {
           padding: 0;
         }
-        .panel-heading{
-          padding: 2px;
-        }
-        .highlighted >>> {
-          background-color: #e3d2d2;
-        }
-        .btn:focus >>>,.btn:active >>> {
+        >>> .btn:focus ,.btn:active {
           outline: none !important;
-        }
-        .btn-icon * {
-          height: 30px;
-        }
-        .dropdown-toggle >>> {
+        }    
+        >>> .dropdown-toggle {
           padding: 6px;
         }
-        
-        accordion-group [role="tab"] {
-          padding: 0;
-        }        
-
-        .accordion-toggle:hover >>> {
+        >>> .panel-heading{
+            padding: 0
+        }
+        >>> .accordion-toggle:hover {
           outline: none;
           text-decoration: none;
         }
-        .accordion-toggle:focus >>> {
+        >>> .accordion-toggle:focus {
           outline: none;
           text-decoration: none;
         }
     `]
 })
+/**
+ * The NestedResourceWidget component, provides functionality for editing lists of entities.
+ * Inherits input parameters and emitted events from AbstractResourceList
+ *
+ * @param {Resource} activeItem - the active item
+ * @emits activeItemChange      - the active item changed
+ *
+ */
 export class NestedResourceWidget extends AbstractResourceList{
-    @Input() activeItem = null;
-    @Input() highlightedItem = null;
+    @Input('activeItem') set activeItem(item) {
+        if (this._activeItem !== item) {
+            this._activeItem = item;
+            this.activeItemChange.emit(item);
+        }
+    }
+    get activeItem() { return this._activeItem; }
+    @Output() activeItemChange = new EventEmitter();
+
+    _activeItem;
 
     ignoreTypes = new Set([model.Border.name, model.Node.name]);
-
     typeOptions = [];
 
     constructor(highlightService: HighlightService){
         super(highlightService);
-        this.highlightService = highlightService;
     }
 
     ngOnInit(){
@@ -135,15 +144,6 @@ export class NestedResourceWidget extends AbstractResourceList{
         this.typeOptions = this.types.filter(x => x.class !== modelClassNames.LyphWithAxis).map(x => (
             { selected: !this.ignoreTypes.has(x), value: x }
         ));
-        //this.typeOptions.push({selected: !this.ignoreTypes.has("Type"), value: "Type"});
-    }
-
-    ngOnChanges(changes) {
-        if( changes['highlightedItem'] && changes['highlightedItem'].previousValue !== changes['highlightedItem'].currentValue ) {
-            if (this.highlightService){
-                this.highlightService.highlight(this.highightedItem);
-            }
-        }
     }
 
     hiddenTypesChanged(option){
@@ -158,7 +158,6 @@ export class NestedResourceWidget extends AbstractResourceList{
     get hiddenTypes () {
         return Array.from(this.ignoreTypes);
     }
-
 }
 
 /**
