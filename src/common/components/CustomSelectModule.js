@@ -20,7 +20,7 @@ import {SelectModule} from 'ng2-select';
     `,
     styles: [
         `
-        >>> .ui-select-container{
+        :host >>> .ui-select-container{
             height: 30px;
         }
         `
@@ -69,7 +69,7 @@ export class MultiSelectInput {
   `,
     styles: [
         `
-        >>> .ui-select-container{
+        :host >>> .ui-select-container{
             height: 30px;
         }
         `

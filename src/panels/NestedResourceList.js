@@ -67,6 +67,7 @@ import {model} from "../common/utils";
         }
         .active {
           border: 2px solid #ff9999;
+          padding: 2px;
         }
     `]
 })

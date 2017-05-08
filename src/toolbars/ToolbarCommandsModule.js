@@ -21,6 +21,17 @@ import {CommonModule} from '@angular/common';
     </div>
     `
 })
+/**
+ * The ToolbarCommands component, offers buttons to delete a resource, commit or rollback changes.
+ *
+ * @param {Object} options - a set of boolean options that indicate which buttons to show.
+ * By default all three buttons are shown: {hideRemove: false, hideSave: false, hideRestore: false}
+ * @param {string => string} transform - an optional function that can be used to transform option appearance
+
+ * @emits removed   - a user pressed the button to delete the item
+ * @emits canceled  - a user pressed the button to cancel changes (rollback)
+ * @emits saved     - a user pressed the button to save changes (commit)
+ */
 export class ToolbarCommands {
     @Input()  options  = {};
     @Output() removed  = new EventEmitter();

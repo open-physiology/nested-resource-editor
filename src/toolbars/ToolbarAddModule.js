@@ -23,6 +23,11 @@ import {DropdownModule} from 'ngx-dropdown';
 })
 /**
  * The ToolbarAdd component, offers a button to create a new resource from dropdown menu.
+ *
+ * @param {Array<string>} options - the list of item types (resource classes) to choose from
+ * @param {string => string} transform - an optional function that can be used to transform option appearance
+ *
+ * @emits added  - an item added
  */
 export class ToolbarAdd {
     @Input() options: Array<string> = [];

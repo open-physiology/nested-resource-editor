@@ -33,6 +33,13 @@ import {DropdownModule} from 'ngx-dropdown';
         }
     `]
 })
+/**
+ * The ToolbarFilter component, offers an input field to specify search string and a dropdown menu to choose properties to which the filter is applied.
+ *
+ * @param {string} filter         - initial search string
+ * @param {Array<string>} options - item properties to filter
+ * @emits applied                 - a user pressed the button to filter the list of resources
+ */
 export class ToolbarFilter {
     @Input() options: Array<string> = [];
     @Input() filter: string = "";
@@ -56,7 +63,9 @@ export class ToolbarFilter {
         this.applied.emit({filter: this.filter, mode: this.mode});
     }
 }
-
+/**
+ * The ToolbarFilterModule module, offers the ToolbarFilter component.
+ */
 @NgModule({
     imports: [ CommonModule, DropdownModule ],
     declarations: [ ToolbarFilter ],

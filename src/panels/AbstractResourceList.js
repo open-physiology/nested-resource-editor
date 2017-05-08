@@ -9,8 +9,8 @@ import {HighlightService} from './HighlightService.js';
  * @param {string} caption           - the header of the list
  * @param {Array<Resource>} items    - the list of displayed resources
  * @param {Array<string>} types      - the list of displayed item types (resource classes)
- * @param {Object} options           - the configuration options for the list appearance
- *      @example {headersOnly: false, readOnly: false, sortToolbar: true, filterToolbar: true, showActive: false}
+ * @param {Object} options           - an optional object with configuration options for the list appearance, i.e.,
+ *   {headersOnly: false, readOnly: false, sortToolbar: true, filterToolbar: true, showActive: false}
  * @param {Resource} selectedItem    - the selected resource
  * @param {Resource} highlightedItem - the highlighted resource
  *

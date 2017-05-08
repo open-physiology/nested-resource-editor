@@ -26,7 +26,14 @@ import {DropdownModule} from 'ngx-dropdown';
     `
 })
 /**
- * The ToolbarPropertySettings component, offers a button to choose visible properties from dropdown menu.
+ * The ToolbarPropertySettings component, offers a button to choose checkboxes with configuration properties from the drop-down menu.
+ *
+ * @param {Array<Object>} options - the list of properties to choose from, i.e., item types (resource classes)
+ *   A configuration option is an Object with the visible label and the initial value, i.e.,
+ * @param {string => string} transform - an optional function that can be used to transform option appearance
+ *
+ * @emits selectionChanged  - a user changed the value of a checkbox
+ *
  */
 export class ToolbarPropertySettings {
     @Input()  options = [];

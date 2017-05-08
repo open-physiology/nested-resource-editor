@@ -42,7 +42,9 @@ import {DropdownModule} from 'ngx-dropdown';
     `
 })
 /**
- * The ToolbarSort component, offers sorting modes according to given options in a dropdown menu.
+ * The ToolbarSort component, offers buttons to trigger sorting in ascending and descending order
+ * @param {Array<string>} options - item properties that define a sorting sort, e.g., ["Id", "Name", "Class"]
+ * @emits sorted                  - a user pressed the button to filter the list of resources
  */
 export class ToolbarSort {
     @Input() options: Array<string> = [];
@@ -56,6 +58,9 @@ export class ToolbarSort {
     }
 }
 
+/**
+ * The ToolbarSortModule module, offers the ToolbarSort component.
+ */
 @NgModule({
     imports: [ CommonModule, DropdownModule ],
     declarations: [ ToolbarSort ],

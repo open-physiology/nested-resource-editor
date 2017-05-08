@@ -30,7 +30,12 @@ import {Ng2Bs3ModalModule, ModalComponent} from '../libs/ng2-bs3-modal';
   `
 })
 /**
- * ModalWindow component, provides generation of measurables in a pop-up window.
+ * MeasurableGenerator component, provides generation of measurables in a pop-up window.
+ *
+ * @param {Resource} item - a resource, typically, lyph, which inherits measurables from its type
+ *
+ * @emits closed - a user closed the modal window
+ *
  */
 export class MeasurableGenerator{
     @Input()  item;
@@ -83,7 +88,7 @@ export class MeasurableGenerator{
 }
 
 /**
- * The ModalWindowModule module, offers the ModalWindow component.
+ * The MeasurableGeneratorModule module, offers the MeasurableGenerator component.
  */
 @NgModule({
     imports: [ CommonModule, FormsModule, Ng2Bs3ModalModule],

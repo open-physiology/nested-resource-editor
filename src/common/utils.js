@@ -15,9 +15,10 @@ export const model = modelRef.classes;
 window.module = modelRef;
 
 export const modelClassNames = {};
+const visualClasses = [...model.Artefact.allSubclasses()].map(x => x.name);
 
 for (let cls of Object.values(model)){
-    if (cls.isResource && !cls.abstract){
+    if (cls.isResource && !cls.abstract && !visualClasses.includes(cls.name)){
         modelClassNames[cls.name] = cls.name;
         if (cls.name === model.Lyph.name){
             modelClassNames["LyphWithAxis"] = "LyphWithAxis";
@@ -42,34 +43,60 @@ function intToRGB(i){
         .toUpperCase();
     return "00000".substring(0, 6 - c.length) + c;
 }
-
+/**
+ * The getColor function assigns a color given a string
+ * @param {string} str - the inpit string
+ * @returns {string} - the RGB color value
+ */
 export const getColor = (str) => intToRGB(hashCode(str));
 
+/**
+ * The getPropertyLabel function replaces field name with human readable labels
+ * @param {string} option - the open-physiology resource field name
+ * @returns {string} - the user readable label
+ */
 export function getPropertyLabel(option: string): string{
     let custom = {
         "externals": "Annotations",
         "locals": "Local resources"
     };
-    if (custom[option]) return custom[option];
 
-    if (["id", "uri"].includes(option)) return option.toUpperCase();
+    if (custom[option]) {
+        return custom[option];
+    }
+
+    if (["id", "uri"].includes(option)) {
+        return option.toUpperCase();
+    }
 
     let label = option.replace(/([a-z])([A-Z])/g, '$1 $2');
     label = label[0].toUpperCase() + label.substring(1).toLowerCase();
     return label;
 }
 
-export function getClassLabel(option: string): string{
-    if (!option) return "";
-    let label = option;
+/**
+ * The getClassLabel function provides an human readable label for open-physiology class
+ * @param {Resource} clsName - the resource class name
+ * @returns {string} - the human readable label
+ */
+export function getClassLabel(clsName: string): string{
+    if (!clsName) { return ""; }
+    let label = clsName;
     label = label.replace(/([a-z])([A-Z])/g, '$1 $2');
     label = label[0].toUpperCase() + label.substring(1).toLowerCase();
     return label;
 }
 
+/**
+ * The getResourceIcon function provides an icon for a given resource
+ * @param {Resource} item - the resource
+ * @returns {DataURI} - the icon for the resource class
+ */
 export function getResourceIcon(item): string{
     if (!item) { return ""; }
-    if (item.class === model.Lyph.name && item.axis) { return "../images/lyphWithAxis.png"; }
+    if (item.class === model.Lyph.name && item.axis) {
+        return "../images/lyphWithAxis.png";
+    }
     let clsName = item.class;
     if (item.class === model.Type.name){
         clsName = (item['<--DefinesType'] && item['<--DefinesType'][1])? item['<--DefinesType'][1].class: "Resource";

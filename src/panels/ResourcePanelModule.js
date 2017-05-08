@@ -119,25 +119,25 @@ import {MeasurableGeneratorModule, MeasurableGenerator} from "../components/Meas
         .panel-content{
           border: 1px solid #ccc;
         }
-        >>> .input-control {
+        :host >>> .input-control {
           margin-left: 4px;
           padding: 2px;
           display: inline-block;
           vertical-align:top;
         }
-        >>> .input-control >>> label {
+        :host >>> .input-control >>> label {
           display: block;
         }
-        >>> .input-control-sm {
+        :host >>> .input-control-sm {
           width: 68px;
         }
-        >>> .input-control-md {
+        :host >>> .input-control-md {
           width: 124px;
         }
-        >>> .input-control-lg {
+        :host >>> .input-control-lg {
           width: 178px;
         }
-        >>> fieldset {
+        :host >>> fieldset {
           border: 1px ridge #e3e3e3;
           padding: 4px;
           margin: 4px;
@@ -150,11 +150,11 @@ import {MeasurableGeneratorModule, MeasurableGenerator} from "../components/Meas
           border: 0;
           width: auto;
         }
-        >>> .form-control {
+        :host >>> .form-control {
           height: 30px;
           box-shadow: none!important;
         }
-        >>> .form-control:focus {
+        :host >>> .form-control:focus {
           border: 2px solid #ccc;
           box-shadow: none!important;
         }

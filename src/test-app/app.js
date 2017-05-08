@@ -2,7 +2,6 @@ import {NgModule, Component, Input} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 
 import {PipeTransformModule} from '../common/PipeTransformModule.js';
-
 import {Subscription}   from 'rxjs/Subscription';
 
 import {model} from "../common/utils";
@@ -11,18 +10,12 @@ import {NestedResourceWidgetModule} from '../index.js';
 @Component({
 	selector: 'test-app',
 	template: `
-        
         <nested-resource-widget id="repo"
 		  [items]="items | setToArray" 
 		  caption="Resources" 
+		  [options]="{showActive: true}"
 		  (selectedItemChange)="onItemSelected($event)">
 		</nested-resource-widget>
-		
-		<!--<template-value -->
-		  <!--[caption]="Test" -->
-		  <!--[item]="testValue"-->
-		  <!--[step]="1">-->
-		<!--</template-value>-->
 	`
 })
 /**
@@ -46,7 +39,6 @@ export class TestApp {
 		model.Lyph.new({id: 1, name: "Kidney"});
 		model.Lyph.new({id: 2, name: "Heart"});
 		model.Lyph.new({id: 3, name: "Head"});
-
 	}
 
 	ngOnDestroy() { this.rs.unsubscribe(); }

@@ -1,16 +1,101 @@
 {
-  "coverage": "100%",
-  "expectCount": 5,
-  "actualCount": 5,
+  "coverage": "85%",
+  "expectCount": 40,
+  "actualCount": 34,
   "files": {
+    "src/panels/AbstractResourceList.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/common/components/CustomSelectModule.js": {
+      "expectCount": 3,
+      "actualCount": 3,
+      "undocumentLines": []
+    },
+    "src/common/PipeTransformModule.js": {
+      "expectCount": 6,
+      "actualCount": 6,
+      "undocumentLines": []
+    },
+    "src/panels/HighlightService.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/panels/ItemHeader.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/components/MeasurableGeneratorModule.js": {
+      "expectCount": 2,
+      "actualCount": 2,
+      "undocumentLines": []
+    },
+    "src/panels/NestedResourceList.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/panels/NestedResourceWidgetModule.js": {
+      "expectCount": 2,
+      "actualCount": 1,
+      "undocumentLines": [
+        219
+      ]
+    },
+    "src/panels/ResourcePanelModule.js": {
+      "expectCount": 1,
+      "actualCount": 0,
+      "undocumentLines": [
+        445
+      ]
+    },
+    "src/components/TemplateValueModule.js": {
+      "expectCount": 2,
+      "actualCount": 2,
+      "undocumentLines": []
+    },
     "src/test-app/app.js": {
       "expectCount": 2,
       "actualCount": 2,
       "undocumentLines": []
     },
-    "src/index.js": {
-      "expectCount": 3,
-      "actualCount": 3,
+    "src/common/utils.js": {
+      "expectCount": 8,
+      "actualCount": 5,
+      "undocumentLines": [
+        14,
+        17,
+        13
+      ]
+    },
+    "src/toolbars/ToolbarAddModule.js": {
+      "expectCount": 2,
+      "actualCount": 2,
+      "undocumentLines": []
+    },
+    "src/toolbars/ToolbarCommandsModule.js": {
+      "expectCount": 2,
+      "actualCount": 1,
+      "undocumentLines": [
+        112
+      ]
+    },
+    "src/toolbars/ToolbarFilterModule.js": {
+      "expectCount": 2,
+      "actualCount": 2,
+      "undocumentLines": []
+    },
+    "src/common/toolbars/ToolbarSettingsModule.js": {
+      "expectCount": 2,
+      "actualCount": 2,
+      "undocumentLines": []
+    },
+    "src/toolbars/ToolbarSortModule.js": {
+      "expectCount": 2,
+      "actualCount": 2,
       "undocumentLines": []
     }
   }

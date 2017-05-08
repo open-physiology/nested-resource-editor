@@ -1,33 +1,237 @@
 window.esdocSearchIndex = [
   [
-    "nested-resource-editor/src/test-app/app.js~helloapp",
+    "nested-resource-editor/src/panels/abstractresourcelist.js~abstractresourcelist",
+    "variable/index.html#static-variable-AbstractResourceList",
+    "<span>AbstractResourceList</span> <span class=\"search-result-import-path\">nested-resource-editor/src/panels/AbstractResourceList.js</span>",
+    "variable"
+  ],
+  [
+    "nested-resource-editor/src/common/components/customselectmodule.js~customselectmodule",
+    "variable/index.html#static-variable-CustomSelectModule",
+    "<span>CustomSelectModule</span> <span class=\"search-result-import-path\">nested-resource-editor/src/common/components/CustomSelectModule.js</span>",
+    "variable"
+  ],
+  [
+    "nested-resource-editor/src/common/pipetransformmodule.js~filterby",
+    "variable/index.html#static-variable-FilterBy",
+    "<span>FilterBy</span> <span class=\"search-result-import-path\">nested-resource-editor/src/common/PipeTransformModule.js</span>",
+    "variable"
+  ],
+  [
+    "nested-resource-editor/src/common/pipetransformmodule.js~hideclass",
+    "class/src/common/PipeTransformModule.js~HideClass.html",
+    "<span>HideClass</span> <span class=\"search-result-import-path\">nested-resource-editor/src/common/PipeTransformModule.js</span>",
+    "class"
+  ],
+  [
+    "nested-resource-editor/src/panels/highlightservice.js~highlightservice",
+    "variable/index.html#static-variable-HighlightService",
+    "<span>HighlightService</span> <span class=\"search-result-import-path\">nested-resource-editor/src/panels/HighlightService.js</span>",
+    "variable"
+  ],
+  [
+    "nested-resource-editor/src/panels/itemheader.js~itemheader",
+    "variable/index.html#static-variable-ItemHeader",
+    "<span>ItemHeader</span> <span class=\"search-result-import-path\">nested-resource-editor/src/panels/ItemHeader.js</span>",
+    "variable"
+  ],
+  [
+    "nested-resource-editor/src/components/measurablegeneratormodule.js~measurablegenerator",
+    "variable/index.html#static-variable-MeasurableGenerator",
+    "<span>MeasurableGenerator</span> <span class=\"search-result-import-path\">nested-resource-editor/src/components/MeasurableGeneratorModule.js</span>",
+    "variable"
+  ],
+  [
+    "nested-resource-editor/src/components/measurablegeneratormodule.js~measurablegeneratormodule",
+    "variable/index.html#static-variable-MeasurableGeneratorModule",
+    "<span>MeasurableGeneratorModule</span> <span class=\"search-result-import-path\">nested-resource-editor/src/components/MeasurableGeneratorModule.js</span>",
+    "variable"
+  ],
+  [
+    "nested-resource-editor/src/common/components/customselectmodule.js~multiselectinput",
+    "variable/index.html#static-variable-MultiSelectInput",
+    "<span>MultiSelectInput</span> <span class=\"search-result-import-path\">nested-resource-editor/src/common/components/CustomSelectModule.js</span>",
+    "variable"
+  ],
+  [
+    "nested-resource-editor/src/panels/nestedresourcelist.js~nestedresourcelist",
+    "variable/index.html#static-variable-NestedResourceList",
+    "<span>NestedResourceList</span> <span class=\"search-result-import-path\">nested-resource-editor/src/panels/NestedResourceList.js</span>",
+    "variable"
+  ],
+  [
+    "nested-resource-editor/src/panels/nestedresourcewidgetmodule.js~nestedresourcewidget",
+    "variable/index.html#static-variable-NestedResourceWidget",
+    "<span>NestedResourceWidget</span> <span class=\"search-result-import-path\">nested-resource-editor/src/panels/NestedResourceWidgetModule.js</span>",
+    "variable"
+  ],
+  [
+    "nested-resource-editor/src/panels/nestedresourcewidgetmodule.js~nestedresourcewidgetmodule",
+    "variable/index.html#static-variable-NestedResourceWidgetModule",
+    "<span>NestedResourceWidgetModule</span> <span class=\"search-result-import-path\">nested-resource-editor/src/panels/NestedResourceWidgetModule.js</span>",
+    "variable"
+  ],
+  [
+    "nested-resource-editor/src/common/pipetransformmodule.js~orderby",
+    "variable/index.html#static-variable-OrderBy",
+    "<span>OrderBy</span> <span class=\"search-result-import-path\">nested-resource-editor/src/common/PipeTransformModule.js</span>",
+    "variable"
+  ],
+  [
+    "nested-resource-editor/src/common/pipetransformmodule.js~pipetransformmodule",
+    "variable/index.html#static-variable-PipeTransformModule",
+    "<span>PipeTransformModule</span> <span class=\"search-result-import-path\">nested-resource-editor/src/common/PipeTransformModule.js</span>",
+    "variable"
+  ],
+  [
+    "nested-resource-editor/src/panels/resourcepanelmodule.js~resourcepanelmodule",
+    "variable/index.html#static-variable-ResourcePanelModule",
+    "<span>ResourcePanelModule</span> <span class=\"search-result-import-path\">nested-resource-editor/src/panels/ResourcePanelModule.js</span>",
+    "variable"
+  ],
+  [
+    "nested-resource-editor/src/common/pipetransformmodule.js~settoarray",
+    "variable/index.html#static-variable-SetToArray",
+    "<span>SetToArray</span> <span class=\"search-result-import-path\">nested-resource-editor/src/common/PipeTransformModule.js</span>",
+    "variable"
+  ],
+  [
+    "nested-resource-editor/src/common/components/customselectmodule.js~singleselectinput",
+    "variable/index.html#static-variable-SingleSelectInput",
+    "<span>SingleSelectInput</span> <span class=\"search-result-import-path\">nested-resource-editor/src/common/components/CustomSelectModule.js</span>",
+    "variable"
+  ],
+  [
+    "nested-resource-editor/src/components/templatevaluemodule.js~templatevaluecomponent",
+    "variable/index.html#static-variable-TemplateValueComponent",
+    "<span>TemplateValueComponent</span> <span class=\"search-result-import-path\">nested-resource-editor/src/components/TemplateValueModule.js</span>",
+    "variable"
+  ],
+  [
+    "nested-resource-editor/src/components/templatevaluemodule.js~templatevaluemodule",
+    "variable/index.html#static-variable-TemplateValueModule",
+    "<span>TemplateValueModule</span> <span class=\"search-result-import-path\">nested-resource-editor/src/components/TemplateValueModule.js</span>",
+    "variable"
+  ],
+  [
+    "nested-resource-editor/src/test-app/app.js~testapp",
     "variable/index.html#static-variable-TestApp",
     "<span>TestApp</span> <span class=\"search-result-import-path\">nested-resource-editor/src/test-app/app.js</span>",
     "variable"
   ],
   [
-    "nested-resource-editor/src/test-app/app.js~helloappmodule",
-    "variable/index.html#static-variable-HelloAppModule",
-    "<span>HelloAppModule</span> <span class=\"search-result-import-path\">nested-resource-editor/src/test-app/app.js</span>",
+    "nested-resource-editor/src/test-app/app.js~testappmodule",
+    "variable/index.html#static-variable-TestAppModule",
+    "<span>TestAppModule</span> <span class=\"search-result-import-path\">nested-resource-editor/src/test-app/app.js</span>",
     "variable"
   ],
   [
-    "nested-resource-editor/src/index.js~hellocomponent",
-    "variable/index.html#static-variable-HelloComponent",
-    "<span>HelloComponent</span> <span class=\"search-result-import-path\">nested-resource-editor/src/index.js</span>",
+    "nested-resource-editor/src/common/utils.js~testclass",
+    "class/src/common/utils.js~TestClass.html",
+    "<span>TestClass</span> <span class=\"search-result-import-path\">nested-resource-editor/src/common/utils.js</span>",
+    "class"
+  ],
+  [
+    "nested-resource-editor/src/toolbars/toolbaraddmodule.js~toolbaradd",
+    "variable/index.html#static-variable-ToolbarAdd",
+    "<span>ToolbarAdd</span> <span class=\"search-result-import-path\">nested-resource-editor/src/toolbars/ToolbarAddModule.js</span>",
     "variable"
   ],
   [
-    "nested-resource-editor/src/index.js~hellomodule",
-    "variable/index.html#static-variable-TestModule",
-    "<span>TestModule</span> <span class=\"search-result-import-path\">nested-resource-editor/src/index.js</span>",
+    "nested-resource-editor/src/toolbars/toolbaraddmodule.js~toolbaraddmodule",
+    "variable/index.html#static-variable-ToolbarAddModule",
+    "<span>ToolbarAddModule</span> <span class=\"search-result-import-path\">nested-resource-editor/src/toolbars/ToolbarAddModule.js</span>",
     "variable"
   ],
   [
-    "nested-resource-editor/src/index.js~plus",
-    "function/index.html#static-function-plus",
-    "<span>plus</span> <span class=\"search-result-import-path\">nested-resource-editor/src/index.js</span>",
+    "nested-resource-editor/src/toolbars/toolbarcommandsmodule.js~toolbarcommands",
+    "variable/index.html#static-variable-ToolbarCommands",
+    "<span>ToolbarCommands</span> <span class=\"search-result-import-path\">nested-resource-editor/src/toolbars/ToolbarCommandsModule.js</span>",
+    "variable"
+  ],
+  [
+    "nested-resource-editor/src/toolbars/toolbarcommandsmodule.js~toolbarcommandsmodule",
+    "variable/index.html#static-variable-ToolbarCommandsModule",
+    "<span>ToolbarCommandsModule</span> <span class=\"search-result-import-path\">nested-resource-editor/src/toolbars/ToolbarCommandsModule.js</span>",
+    "variable"
+  ],
+  [
+    "nested-resource-editor/src/toolbars/toolbarfiltermodule.js~toolbarfilter",
+    "variable/index.html#static-variable-ToolbarFilter",
+    "<span>ToolbarFilter</span> <span class=\"search-result-import-path\">nested-resource-editor/src/toolbars/ToolbarFilterModule.js</span>",
+    "variable"
+  ],
+  [
+    "nested-resource-editor/src/toolbars/toolbarfiltermodule.js~toolbarfiltermodule",
+    "variable/index.html#static-variable-ToolbarFilterModule",
+    "<span>ToolbarFilterModule</span> <span class=\"search-result-import-path\">nested-resource-editor/src/toolbars/ToolbarFilterModule.js</span>",
+    "variable"
+  ],
+  [
+    "nested-resource-editor/src/common/toolbars/toolbarsettingsmodule.js~toolbarpropertysettings",
+    "variable/index.html#static-variable-ToolbarPropertySettings",
+    "<span>ToolbarPropertySettings</span> <span class=\"search-result-import-path\">nested-resource-editor/src/common/toolbars/ToolbarSettingsModule.js</span>",
+    "variable"
+  ],
+  [
+    "nested-resource-editor/src/common/toolbars/toolbarsettingsmodule.js~toolbarsettingsmodule",
+    "variable/index.html#static-variable-ToolbarSettingsModule",
+    "<span>ToolbarSettingsModule</span> <span class=\"search-result-import-path\">nested-resource-editor/src/common/toolbars/ToolbarSettingsModule.js</span>",
+    "variable"
+  ],
+  [
+    "nested-resource-editor/src/toolbars/toolbarsortmodule.js~toolbarsort",
+    "variable/index.html#static-variable-ToolbarSort",
+    "<span>ToolbarSort</span> <span class=\"search-result-import-path\">nested-resource-editor/src/toolbars/ToolbarSortModule.js</span>",
+    "variable"
+  ],
+  [
+    "nested-resource-editor/src/toolbars/toolbarsortmodule.js~toolbarsortmodule",
+    "variable/index.html#static-variable-ToolbarSortModule",
+    "<span>ToolbarSortModule</span> <span class=\"search-result-import-path\">nested-resource-editor/src/toolbars/ToolbarSortModule.js</span>",
+    "variable"
+  ],
+  [
+    "nested-resource-editor/src/common/utils.js~getclasslabel",
+    "function/index.html#static-function-getClassLabel",
+    "<span>getClassLabel</span> <span class=\"search-result-import-path\">nested-resource-editor/src/common/utils.js</span>",
     "function"
+  ],
+  [
+    "nested-resource-editor/src/common/utils.js~getcolor",
+    "function/index.html#static-function-getColor",
+    "<span>getColor</span> <span class=\"search-result-import-path\">nested-resource-editor/src/common/utils.js</span>",
+    "function"
+  ],
+  [
+    "nested-resource-editor/src/common/utils.js~getpropertylabel",
+    "function/index.html#static-function-getPropertyLabel",
+    "<span>getPropertyLabel</span> <span class=\"search-result-import-path\">nested-resource-editor/src/common/utils.js</span>",
+    "function"
+  ],
+  [
+    "nested-resource-editor/src/common/utils.js~getresourceicon",
+    "function/index.html#static-function-getResourceIcon",
+    "<span>getResourceIcon</span> <span class=\"search-result-import-path\">nested-resource-editor/src/common/utils.js</span>",
+    "function"
+  ],
+  [
+    "nested-resource-editor/src/common/utils.js~model",
+    "variable/index.html#static-variable-model",
+    "<span>model</span> <span class=\"search-result-import-path\">nested-resource-editor/src/common/utils.js</span>",
+    "variable"
+  ],
+  [
+    "nested-resource-editor/src/common/utils.js~modelclassnames",
+    "variable/index.html#static-variable-modelClassNames",
+    "<span>modelClassNames</span> <span class=\"search-result-import-path\">nested-resource-editor/src/common/utils.js</span>",
+    "variable"
+  ],
+  [
+    "nested-resource-editor/src/common/utils.js~modelref",
+    "variable/index.html#static-variable-modelRef",
+    "<span>modelRef</span> <span class=\"search-result-import-path\">nested-resource-editor/src/common/utils.js</span>",
+    "variable"
   ],
   [
     "builtinexternal/ecmascriptexternal.js~array",
@@ -360,9 +564,105 @@ window.esdocSearchIndex = [
     "external"
   ],
   [
+    "src/common/pipetransformmodule.js",
+    "file/src/common/PipeTransformModule.js.html",
+    "src/common/PipeTransformModule.js",
+    "file"
+  ],
+  [
+    "src/common/pipetransformmodule.js~hideclass#transform",
+    "class/src/common/PipeTransformModule.js~HideClass.html#instance-method-transform",
+    "src/common/PipeTransformModule.js~HideClass#transform",
+    "method"
+  ],
+  [
+    "src/common/components/customselectmodule.js",
+    "file/src/common/components/CustomSelectModule.js.html",
+    "src/common/components/CustomSelectModule.js",
+    "file"
+  ],
+  [
+    "src/common/toolbars/toolbarsettingsmodule.js",
+    "file/src/common/toolbars/ToolbarSettingsModule.js.html",
+    "src/common/toolbars/ToolbarSettingsModule.js",
+    "file"
+  ],
+  [
+    "src/common/utils.js",
+    "file/src/common/utils.js.html",
+    "src/common/utils.js",
+    "file"
+  ],
+  [
+    "src/components/measurablegeneratormodule.js",
+    "file/src/components/MeasurableGeneratorModule.js.html",
+    "src/components/MeasurableGeneratorModule.js",
+    "file"
+  ],
+  [
+    "src/components/templatevaluemodule.js",
+    "file/src/components/TemplateValueModule.js.html",
+    "src/components/TemplateValueModule.js",
+    "file"
+  ],
+  [
     "src/index.js",
     "file/src/index.js.html",
     "src/index.js",
+    "file"
+  ],
+  [
+    "src/libs/jquery.js",
+    "file/src/libs/jquery.js.html",
+    "src/libs/jquery.js",
+    "file"
+  ],
+  [
+    "src/libs/ng2-bs3-modal.js",
+    "file/src/libs/ng2-bs3-modal.js.html",
+    "src/libs/ng2-bs3-modal.js",
+    "file"
+  ],
+  [
+    "src/libs/rxjs.js",
+    "file/src/libs/rxjs.js.html",
+    "src/libs/rxjs.js",
+    "file"
+  ],
+  [
+    "src/panels/abstractresourcelist.js",
+    "file/src/panels/AbstractResourceList.js.html",
+    "src/panels/AbstractResourceList.js",
+    "file"
+  ],
+  [
+    "src/panels/highlightservice.js",
+    "file/src/panels/HighlightService.js.html",
+    "src/panels/HighlightService.js",
+    "file"
+  ],
+  [
+    "src/panels/itemheader.js",
+    "file/src/panels/ItemHeader.js.html",
+    "src/panels/ItemHeader.js",
+    "file"
+  ],
+  [
+    "src/panels/nestedresourcelist.js",
+    "file/src/panels/NestedResourceList.js.html",
+    "src/panels/NestedResourceList.js",
+    "file"
+  ],
+  [
+    "src/panels/nestedresourcewidgetmodule.js",
+    "file/src/panels/NestedResourceWidgetModule.js.html",
+    "src/panels/NestedResourceWidgetModule.js",
+    "file"
+  ],
+  [
+    "src/panels/resourcepanelmodule.js",
+    "file/src/panels/ResourcePanelModule.js.html",
+    "src/panels/ResourcePanelModule.js",
     "file"
   ],
   [
@@ -378,27 +678,33 @@ window.esdocSearchIndex = [
     "file"
   ],
   [
+    "src/toolbars/toolbaraddmodule.js",
+    "file/src/toolbars/ToolbarAddModule.js.html",
+    "src/toolbars/ToolbarAddModule.js",
+    "file"
+  ],
+  [
+    "src/toolbars/toolbarcommandsmodule.js",
+    "file/src/toolbars/ToolbarCommandsModule.js.html",
+    "src/toolbars/ToolbarCommandsModule.js",
+    "file"
+  ],
+  [
+    "src/toolbars/toolbarfiltermodule.js",
+    "file/src/toolbars/ToolbarFilterModule.js.html",
+    "src/toolbars/ToolbarFilterModule.js",
+    "file"
+  ],
+  [
+    "src/toolbars/toolbarsortmodule.js",
+    "file/src/toolbars/ToolbarSortModule.js.html",
+    "src/toolbars/ToolbarSortModule.js",
+    "file"
+  ],
+  [
     "test/index.spec.js",
     "test-file/test/index.spec.js.html",
     "test/index.spec.js",
     "testFile"
-  ],
-  [
-    "* *,*",
-    "test-file/test/index.spec.js.html#lineNumber6",
-    "the nested-resource-editor",
-    "test"
-  ],
-  [
-    "plus src/index.js~plus,plus",
-    "test-file/test/index.spec.js.html#lineNumber18",
-    "the nested-resource-editor can add two numbers",
-    "test"
-  ],
-  [
-    "",
-    "test-file/test/index.spec.js.html#lineNumber12",
-    "the nested-resource-editor can test things",
-    "test"
   ]
 ]

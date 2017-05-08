@@ -35,16 +35,25 @@ import {getResourceIcon} from "../common/utils";
         } 
         :host{
             display: block;
-            padding: 2px;
+            padding: 4px;
         }
     `]
 })
 /**
- * The ItemHeader component configures accordion header
+ * The ItemHeader component configures accordion header for a given resource. The header consists of a left side icon that indicates whether
+ * the accordion tab is open or closed, the title formed from the resource's id and name, and the right hand icon that shows
+ * the class of the resource. The is an option to include to the header a checkbox with an icon to mark the resource as active.
+ *
+ * @param {Resource} item    - the resource for which header will be created
+ * @param {Object} options   - an optional object with boolean options to configure header appearance, i.e., {showActive: true}
+ * @param {Boolean} isOpen   - a boolean flag to indicate whether the item editor panel is open to choose proper left side icon
+ * @param {Boolean} isActive - a boolean flag to indicate whether the item is active to draw or not the 'eye open' icon
+ *
+ * @emits activeItemChanged  - the item has been marked as active
  */
 export class ItemHeader {
     @Input() item;
-    @Input() options: {};
+    @Input() options = {};
     @Input() isOpen;
     @Input() isActive;
     @Output() activeItemChanged = new EventEmitter();

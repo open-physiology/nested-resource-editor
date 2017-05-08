@@ -81,32 +81,33 @@ import {HighlightService} from './HighlightService.js';
         }
         .active {
           border: 2px solid #ff9999;
+          padding: 2px;
         }
-        >>> .btn-header{
+        :host >>> .btn-header{
           width: 16px;
           height: 16px;
           padding: 0;
         }
-        >>> .btn-icon {
+        :host >>> .btn-icon {
             height: 30px;
         }
-        >>> .panel-body {
+        :host >>> .panel-body {
           padding: 0;
         }
-        >>> .btn:focus ,.btn:active {
+        :host >>> .btn:focus ,.btn:active {
           outline: none !important;
         }    
-        >>> .dropdown-toggle {
+        :host >>> .dropdown-toggle {
           padding: 6px;
         }
-        >>> .panel-heading{
+        :host >>> .panel-heading{
             padding: 0
         }
-        >>> .accordion-toggle:hover {
+        :host >>> .accordion-toggle:hover {
           outline: none;
           text-decoration: none;
         }
-        >>> .accordion-toggle:focus {
+        :host >>> .accordion-toggle:focus {
           outline: none;
           text-decoration: none;
         }
