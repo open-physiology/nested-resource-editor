@@ -1,9 +1,6 @@
 import {NgModule, Component, Input, Output, EventEmitter} from '@angular/core';
 import {CommonModule} from '@angular/common';
 
-//external
-import {modelClassNames, model} from "../common/utils";
-
 //internal
 import {ResourcePanelModule}  from "./ResourcePanelModule.js";
 import {AbstractResourceList} from "./AbstractResourceList.js";
@@ -16,7 +13,7 @@ import {HighlightService} from './HighlightService.js';
         <div class="panel-heading">{{caption}}
           <span class="pull-right" *ngIf="options?.showActive">
             <button type="button" class="btn btn-default btn-header" 
-              [ngClass]="{'active': activeItem === null}" (click)="activeItem = item">
+              [ngClass]="{'active': activeItem === null}" (click)="activeItem = null">
               <span class = "glyphicon" [ngClass]="{'glyphicon-pencil': activeItem === null}"></span>
             </button>
           </span>
@@ -55,6 +52,7 @@ import {HighlightService} from './HighlightService.js';
                 <div *ngIf="!options?.headersOnly">
                   <resource-panel *ngIf="item === openItem" 
                     [item]="item"
+                    [model]="model"
                     (saved)   ="onSaved(item, $event)" 
                     (removed) ="onRemoved(item)">
                    </resource-panel>   
@@ -131,9 +129,9 @@ export class NestedResourceWidget extends AbstractResourceList{
     get activeItem() { return this._activeItem; }
     @Output() activeItemChange = new EventEmitter();
 
-    _activeItem;
+    _activeItem = null;
 
-    ignoreTypes = new Set([model.Border.name, model.Node.name]);
+    ignoreTypes = new Set();
     typeOptions = [];
 
     constructor(highlightService: HighlightService){
@@ -142,9 +140,9 @@ export class NestedResourceWidget extends AbstractResourceList{
 
     ngOnInit(){
         super.ngOnInit();
-        this.typeOptions = this.types.filter(x => x.class !== modelClassNames.LyphWithAxis).map(x => (
-            { selected: !this.ignoreTypes.has(x), value: x }
-        ));
+        this.ignoreTypes.add(this.model.Border.name).add(this.model.Node.name);
+        this.typeOptions = this.types.filter(x => this.model[x])
+            .map(x => ({ selected: !this.ignoreTypes.has(x), value: x }));
     }
 
     hiddenTypesChanged(option){

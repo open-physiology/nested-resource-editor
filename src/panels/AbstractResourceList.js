@@ -1,5 +1,4 @@
 import {Input, Output, EventEmitter} from '@angular/core';
-import {modelClassNames, getClassLabel, model} from "../common/utils";
 import {Subscription}   from 'rxjs/Subscription';
 import {HighlightService} from './HighlightService.js';
 
@@ -7,6 +6,7 @@ import {HighlightService} from './HighlightService.js';
  * The AbstractResourceList class implements methods common for upper level and nested resource lists.
  *
  * @param {string} caption           - the header of the list
+ * @param {Object} model  - the open-physiology model
  * @param {Array<Resource>} items    - the list of displayed resources
  * @param {Array<string>} types      - the list of displayed item types (resource classes)
  * @param {Object} options           - an optional object with configuration options for the list appearance, i.e.,
@@ -22,6 +22,7 @@ import {HighlightService} from './HighlightService.js';
  */
 export class AbstractResourceList {
     @Input() caption = "Resources";
+    @Input() model;
     @Input() items = [];
     @Input() types = [];
     @Input() options = {};
@@ -47,18 +48,16 @@ export class AbstractResourceList {
     @Output() selectedItemChange = new EventEmitter();
     @Output() highlightedItemChange = new EventEmitter();
 
-    _selectedItem;
-    _highlightedItem;
-    _openItem;
+    _selectedItem    = null;
+    _highlightedItem = null;
+    _openItem        = null;
 
     zones = [];
 
     sortByMode = "unsorted";
     filterByMode = "Name";
     searchString = "";
-
     hs: Subscription;
-    getClassLabel = getClassLabel;
 
     constructor(highlightService: HighlightService) {
         this.highlightService = highlightService;
@@ -70,14 +69,21 @@ export class AbstractResourceList {
     }
 
     ngOnInit() {
-        if (!this.items) {
-            this.items = [];
-        }
+        if (!this.items) { this.items = []; }
+
         if (this.items[0] || !this.selectedItem) {
             this.selectedItem = this.items[0];
         }
+
         if (this.types.length === 0) {
-            this.types = Object.keys(modelClassNames);
+            //If no specific classes were specified, it works with any class
+            let visualClasses = [...this.model.Artefact.allSubclasses()].map(x => x.name);
+            for (let cls of Object.values(this.model)){
+                if (cls.isResource && !cls.abstract && !visualClasses.includes(cls.name)){
+                    this.types.push(cls.name);
+                    if (cls.name === this.model.Lyph.name){ this.types.push("LyphWithAxis"); }
+                }
+            }
         }
         this.zones = this.types.map(x => x + "_zone");
     }
@@ -142,18 +148,18 @@ export class AbstractResourceList {
 
     onAdded(clsName) {
         let options = {};
-        if (clsName === modelClassNames.LyphWithAxis) {
-            clsName = model.Lyph.name;
+        if (clsName === "LyphWithAxis") {
+            clsName = this.model.Lyph.name;
             options.createAxis = true;
         }
-        if (clsName === model.Lyph.name) {
+        if (clsName === this.model.Lyph.name) {
             options.createRadialBorders = true;
         }
 
-        let newItem = model[clsName].new({name: `New ${clsName}`}, options);
+        let newItem = this.model[clsName].new({name: `New ${clsName}`}, options);
 
-        if (clsName === model.Material.name) {
-            let newType = model.Type.new({name: newItem.name, definition: newItem});
+        if (clsName === this.model.Material.name) {
+            let newType = this.model.Type.new({name: newItem.name, definition: newItem});
             newItem.p('name').subscribe(newType.p('name'));
         }
 
@@ -162,4 +168,18 @@ export class AbstractResourceList {
         this.added.emit(newItem);
         this.selectedItem = newItem;
     }
+
+    /**
+     * The getClassLabel function provides an human readable label for open-physiology class
+     * @param {Resource} clsName - the resource class name
+     * @returns {string} - the human readable label
+     */
+    getClassLabel(clsName: string): string{
+        if (!clsName) { return ""; }
+        let label = clsName;
+        label = label.replace(/([a-z])([A-Z])/g, '$1 $2');
+        label = label[0].toUpperCase() + label.substring(1).toLowerCase();
+        return label;
+    }
+
 }

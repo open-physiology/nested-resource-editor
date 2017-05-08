@@ -1,6 +1,5 @@
 import {Component, Input, Output, EventEmitter, ElementRef} from '@angular/core';
 import $ from '../libs/jquery';
-import {getResourceIcon} from "../common/utils";
 
 @Component({
     selector: 'item-header',
@@ -13,7 +12,7 @@ import {getResourceIcon} from "../common/utils";
         {{(item.id)? item.id: "?"}}: {{item.name}}
         <span class="pull-right">
           <img *ngIf="isType" class="imtip" src="../images/type.png"/>
-          <img class="icon" [src]="getResourceIcon(item)"/>
+          <img class="icon" [src]="getResourceIcon()"/>
           <button type="button" *ngIf="options?.showActive" class="btn btn-default btn-header" 
             [ngClass]="{'active': isActive}" (click)="activeItemChanged.emit(item)">
             <span class = "glyphicon" [ngClass]="{'glyphicon-pencil': isActive}"></span>
@@ -59,7 +58,23 @@ export class ItemHeader {
     @Output() activeItemChanged = new EventEmitter();
 
     isType = false;
-    getResourceIcon = getResourceIcon;
+
+    /**
+     * The getResourceIcon function provides an icon for a given resource
+     * @param {Resource} item - the resource
+     * @returns {DataURI} - the icon for the resource class
+     */
+    getResourceIcon(): string{
+        if (this.item.class === "Lyph" && this.item.axis) {
+            return "../images/lyphWithAxis.png";
+        }
+        if (this.item.class === "Type"){
+            return this.item['<--DefinesType'] && this.item['<--DefinesType'][1]
+                ? this.item['<--DefinesType'][1].constructor.icon
+                : "../images/resource.png";
+        }
+        return this.item.constructor.icon;
+    }
 
     constructor(el: ElementRef) {
         this.el = $(el.nativeElement);

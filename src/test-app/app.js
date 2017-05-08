@@ -1,16 +1,19 @@
 import {NgModule, Component, Input} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 
+import '../libs/rxjs';
+import $ from '../libs/jquery';
+import modelFactory, {ajaxBackend} from 'open-physiology-model';
+
 import {PipeTransformModule} from '../common/PipeTransformModule.js';
 import {Subscription}   from 'rxjs/Subscription';
-
-import {model} from "../common/utils";
 import {NestedResourceWidgetModule} from '../index.js';
 
 @Component({
 	selector: 'test-app',
 	template: `
         <nested-resource-widget id="repo"
+		  [model]="model"
 		  [items]="items | setToArray" 
 		  caption="Resources" 
 		  [options]="{showActive: true}"
@@ -22,13 +25,21 @@ import {NestedResourceWidgetModule} from '../index.js';
  * The TestComponent component, showing off the nested resource editor!
  */
 export class TestApp {
-
-	items:Array<any>;
+	model;
+	items;
 	selectedItem;
 
 	rs: Subscription;
 	constructor() {
-		this.rs = model.Lyph.p('all').subscribe(
+		let {backend} = ajaxBackend({
+			baseURL:     'http://open-physiology.org:8880',
+			ajax:        $.ajax
+		});
+		let modelRef = modelFactory(backend);
+		window.module = modelRef;
+		this.model = modelRef.classes;
+
+		this.rs = this.model.Lyph.p('all').subscribe(
 			(data) => {
 				this.items = data;
 				if (this.items.length > 0){
@@ -36,9 +47,9 @@ export class TestApp {
 				}
 			});
 		//model.Lyph.getAll(); //Fails!
-		model.Lyph.new({id: 1, name: "Kidney"});
-		model.Lyph.new({id: 2, name: "Heart"});
-		model.Lyph.new({id: 3, name: "Head"});
+		this.model.Lyph.new({id: 1, name: "Kidney"});
+		this.model.Lyph.new({id: 2, name: "Heart"});
+		this.model.Lyph.new({id: 3, name: "Head"});
 	}
 
 	ngOnDestroy() { this.rs.unsubscribe(); }

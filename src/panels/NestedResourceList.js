@@ -3,7 +3,6 @@ import {AbstractResourceList} from "./AbstractResourceList";
 import {HighlightService} from './HighlightService.js';
 import {ToastyService} from 'ng2-toasty';
 import {SetToArray, FilterBy} from "../common/PipeTransformModule";
-import {model} from "../common/utils";
 
 @Component({
     selector: 'nested-resource-list',
@@ -47,6 +46,7 @@ import {model} from "../common/utils";
             <div *ngIf="!options?.headersOnly">
               <resource-panel *ngIf="item === openItem" 
                 [item]    ="item" 
+                [model]="model"
                 [options] ="options"
                 (saved)   ="onSaved(item, $event)" 
                 (removed) ="onRemoved(item)"
@@ -93,14 +93,14 @@ export class NestedResourceList extends AbstractResourceList{
         //If selectionOptions are not provided by parent, subscribe and get all for given types
         if (!this.possibleValues) {
             if (this.types.length === 1){
-                this.ts = model[this.types[0]].p('all').subscribe(
+                this.ts = this.model[this.types[0]].p('all').subscribe(
                     (data) => { this.possibleValues = data; });
             } else {
                 if (this.types.length > 1){
                     let setToArray = new SetToArray();
                     let filterByClass = new FilterBy();
 
-                    this.ts = model.Template.p('all').subscribe(
+                    this.ts = this.model.Template.p('all').subscribe(
                         (data) => {this.possibleValues = new Set(
                             filterByClass.transform( setToArray.transform(data), [this.types, 'class']))});
                 }

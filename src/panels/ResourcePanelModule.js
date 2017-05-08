@@ -12,7 +12,6 @@ import '../../node_modules/ng2-toasty/style-bootstrap.css';
 import {PipeTransformModule, SetToArray, HideClass} from "../common/PipeTransformModule";
 import {ToolbarSettingsModule} from '../common/toolbars/ToolbarSettingsModule';
 import {CustomSelectModule} from '../common/components/CustomSelectModule';
-import {model, getPropertyLabel} from "../common/utils";
 
 //Local
 import {ToolbarAddModule}      from '../toolbars/ToolbarAddModule';
@@ -80,6 +79,7 @@ import {MeasurableGeneratorModule, MeasurableGenerator} from "../components/Meas
                 
                 <nested-resource-list *ngIf="relationGroup.includes(property)"
                   [caption]="getPropertyLabel(property)" 
+                  [model]  ="model"
                   [items]  ="item.p(property) | async | setToArray" 
                   [types]  ="[item.constructor.relationshipShortcuts[property].codomain.resourceClass.name]"
                   (updated)="updateProperty(property, $event)"> 
@@ -103,7 +103,7 @@ import {MeasurableGeneratorModule, MeasurableGenerator} from "../components/Meas
               </div>
             </div>
             
-            <modal-window *ngIf = "item.class === model.Lyph.name" [item] = item>
+            <modal-window *ngIf = "item.class === model.Lyph.name" [item] = "item" [clsMeasurable] = "model.Measurable">
             </modal-window>
             
           </div>
@@ -164,6 +164,7 @@ import {MeasurableGeneratorModule, MeasurableGenerator} from "../components/Meas
  * The ResourcePanel component, generates fields for editting properties of a given resource.
  *
  * @param {Resource} item - the resource to show or edit
+ * @param {Object} model  - the open-physiology model
  *
  * @emits saved           - the changes saved
  * @emits canceled        - the changes canceled
@@ -173,15 +174,13 @@ import {MeasurableGeneratorModule, MeasurableGenerator} from "../components/Meas
  */
 class ResourcePanel {
     @Input() item;
+    @Input() model;
     @Input() options;
 
     @Output() saved = new EventEmitter();
     @Output() canceled = new EventEmitter();
     @Output() removed = new EventEmitter();
     @Output() propertyUpdated = new EventEmitter();
-
-    getPropertyLabel = getPropertyLabel;
-    model = model;
 
     @ViewChild(MeasurableGenerator) mGen;
 
@@ -209,7 +208,7 @@ class ResourcePanel {
 
     ngOnInit(){
         this.ignore = new Set(["id", "cardinalityBase", "cardinalityMultipliers", "definedType"]);
-        if (this.item instanceof model.Border) {
+        if (this.item instanceof this.model.Border) {
             ['externals', 'species', 'measurables', 'name', 'types', 'nodes'].map(propName =>
                 this.ignore.add(propName));
         }
@@ -243,7 +242,7 @@ class ResourcePanel {
                 (data) => {
                     this.possibleValues[key] = (key === "cardinalityMultipliers")?
                         new Set(new HideClass().transform( new SetToArray().transform(data),
-                            [model.Border.name, model.Node.name]))
+                            [this.model.Border.name, this.model.Node.name]))
                         : data;
                 });
         }
@@ -275,6 +274,25 @@ class ResourcePanel {
 
         /*"create type" check box enabled if type has not been defined */
         if (this.isTyped()){ this.typeCreated = !!this.item['-->DefinesType']; }
+    }
+
+    /**
+     * The getPropertyLabel function replaces field name with human readable labels
+     * @param {string} option - the open-physiology resource field name
+     * @returns {string} - the user readable label
+     */
+    getPropertyLabel(option: string): string{
+        let custom = { "externals": "Annotations",
+            "locals": "Local resources" };
+        if (custom[option]) { return custom[option]; }
+
+        if (["id", "uri"].includes(option)) {
+            return option.toUpperCase();
+        }
+
+        let label = option.replace(/([a-z])([A-Z])/g, '$1 $2');
+        label = label[0].toUpperCase() + label.substring(1).toLowerCase();
+        return label;
     }
 
     getDefaultValue(property, attribute){
@@ -316,7 +334,7 @@ class ResourcePanel {
     }
 
     isTyped(){
-        return this.item instanceof model.Template;
+        return this.item instanceof this.model.Template;
     }
 
     generateMeasurables(){
@@ -324,7 +342,7 @@ class ResourcePanel {
     }
 
     onSaved(event){
-        if (this.item.class === model.CoalescenceScenario.name){
+        if (this.item.class === this.model.CoalescenceScenario.name){
             if (this.item.lyphs && (this.item.lyphs.size !== 2)){
                 this.toastyService.error("Wrong number of lyphs", this.item.lyphs.size);
             }
@@ -340,7 +358,7 @@ class ResourcePanel {
             let template = this.item;
             if (!template['-->DefinesType']){
                 (async function() {
-                    let newType = model.Type.new({definition: template});
+                    let newType = this.model.Type.new({definition: template});
                     template.p('name').subscribe(newType.p('name'));
 
                     await newType.commit();
