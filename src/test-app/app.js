@@ -39,14 +39,14 @@ export class TestApp {
 		window.module = modelRef;
 		this.model = modelRef.classes;
 
-		this.rs = this.model.Lyph.p('all').subscribe(
+		this.rs = this.model.Resource.p('all').subscribe(
 			(data) => {
 				this.items = data;
 				if (this.items.length > 0){
 					this.selectedItem = this.items[0];
 				}
 			});
-		//model.Lyph.getAll(); //Fails!
+		//model.Resource.getAll(); //Fails!
 		this.model.Lyph.new({id: 1, name: "Kidney"});
 		this.model.Lyph.new({id: 2, name: "Heart"});
 		this.model.Lyph.new({id: 3, name: "Head"});
