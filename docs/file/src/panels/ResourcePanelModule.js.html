@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../../">
+  <title data-ice="title">src/panels/ResourcePanelModule.js | API Document</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  
+  
+  <script src="script/manual.js"></script>
+</head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  <a href="test.html" data-ice="testLink">Test</a>
+  <a data-ice="repoURL" href="https://github.com/open-physiology/nested-resource-editor" class="repo-url-github">Repository</a>
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+</header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">common</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/PipeTransformModule.js~FilterBy.html">FilterBy</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/PipeTransformModule.js~HideClass.html">HideClass</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/PipeTransformModule.js~OrderBy.html">OrderBy</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/PipeTransformModule.js~PipeTransformModule.html">PipeTransformModule</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/PipeTransformModule.js~SetToArray.html">SetToArray</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">common/components</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/components/CustomSelectModule.js~CustomSelectModule.html">CustomSelectModule</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/components/CustomSelectModule.js~MultiSelectInput.html">MultiSelectInput</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/components/CustomSelectModule.js~SingleSelectInput.html">SingleSelectInput</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">common/toolbars</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/toolbars/ToolbarSettingsModule.js~ToolbarPropertySettings.html">ToolbarPropertySettings</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/toolbars/ToolbarSettingsModule.js~ToolbarSettingsModule.html">ToolbarSettingsModule</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">components</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/components/MeasurableGeneratorModule.js~MeasurableGenerator.html">MeasurableGenerator</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/components/MeasurableGeneratorModule.js~MeasurableGeneratorModule.html">MeasurableGeneratorModule</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">panels</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/panels/AbstractResourceList.js~AbstractResourceList.html">AbstractResourceList</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/panels/HighlightService.js~HighlightService.html">HighlightService</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/panels/ItemHeader.js~ItemHeader.html">ItemHeader</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/panels/NestedResourceList.js~NestedResourceList.html">NestedResourceList</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/panels/NestedResourceWidgetModule.js~NestedResourceWidget.html">NestedResourceWidget</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/panels/NestedResourceWidgetModule.js~NestedResourceWidgetModule.html">NestedResourceWidgetModule</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/panels/ResourcePanelModule.js~ResourcePanel.html">ResourcePanel</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/panels/ResourcePanelModule.js~ResourcePanelModule.html">ResourcePanelModule</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">test-app</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/test-app/app.js~TestApp.html">TestApp</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/test-app/app.js~TestAppModule.html">TestAppModule</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-loadData">loadData</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">toolbars</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/toolbars/ToolbarAddModule.js~ToolbarAdd.html">ToolbarAdd</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/toolbars/ToolbarAddModule.js~ToolbarAddModule.html">ToolbarAddModule</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/toolbars/ToolbarCommandsModule.js~ToolbarCommands.html">ToolbarCommands</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/toolbars/ToolbarCommandsModule.js~ToolbarCommandsModule.html">ToolbarCommandsModule</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/toolbars/ToolbarFilterModule.js~ToolbarFilter.html">ToolbarFilter</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/toolbars/ToolbarFilterModule.js~ToolbarFilterModule.html">ToolbarFilterModule</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/toolbars/ToolbarSortModule.js~ToolbarSort.html">ToolbarSort</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/toolbars/ToolbarSortModule.js~ToolbarSortModule.html">ToolbarSortModule</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">src/panels/ResourcePanelModule.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import {NgModule, Component, ViewChild, EventEmitter, Input, Output, forwardRef} from &apos;@angular/core&apos;;
+import {CommonModule} from &apos;@angular/common&apos;;
+import {FormsModule} from &apos;@angular/forms&apos;;
+import {AccordionModule} from &quot;ngx-accordion&quot;;
+import {DndModule} from &apos;ngx-dnd&apos;;
+
+import {ToastyModule, ToastyService} from &apos;ng2-toasty&apos;;
+import &apos;../../node_modules/ng2-toasty/style.css&apos;;
+import &apos;../../node_modules/ng2-toasty/style-bootstrap.css&apos;;
+
+//Common
+import {PipeTransformModule, SetToArray, HideClass} from &quot;../common/PipeTransformModule&quot;;
+import {ToolbarSettingsModule} from &apos;../common/toolbars/ToolbarSettingsModule&apos;;
+import {CustomSelectModule} from &apos;../common/components/CustomSelectModule&apos;;
+
+//Local
+import {ToolbarAddModule}      from &apos;../toolbars/ToolbarAddModule&apos;;
+import {ToolbarFilterModule}   from &apos;../toolbars/ToolbarFilterModule&apos;;
+import {ToolbarSortModule}     from &apos;../toolbars/ToolbarSortModule&apos;;
+import {ItemHeader}            from &quot;./ItemHeader&quot;;
+import {NestedResourceList}    from &apos;./NestedResourceList&apos;;
+import {ToolbarCommandsModule} from &apos;../toolbars/ToolbarCommandsModule&apos;;
+import {TemplateValueModule}   from &apos;../components/TemplateValueModule&apos;;
+import {MeasurableGeneratorModule, MeasurableGenerator} from &quot;../components/MeasurableGeneratorModule&quot;;
+
+@Component({
+    selector: &apos;resource-panel&apos;,
+    template:`
+    &lt;div class=&quot;panel&quot;&gt;
+        &lt;div class=&quot;panel-body&quot;&gt;
+          &lt;toolbar-commands  
+            [options]  = &quot;options&quot;
+            (saved)    = &quot;onSaved(event)&quot;
+            (canceled) = &quot;onCanceled(event)&quot;
+            (removed)  = &quot;removed.emit($event)&quot;&gt;            
+          &lt;/toolbar-commands&gt;
+          &lt;toolbar-propertySettings  
+            [options] = &quot;fieldOptions&quot;
+            [transform] = &quot;getPropertyLabel&quot;
+            (selectionChanged) = &quot;visibleFieldsChanged($event)&quot;&gt;
+          &lt;/toolbar-propertySettings&gt;
+          &lt;div class=&quot;input-control&quot; *ngIf=&quot;item.class === model.Lyph.name&quot;&gt;
+            &lt;button type=&quot;button&quot; class=&quot;btn btn-default btn-icon&quot; 
+              (click)=&quot;generateMeasurables()&quot;&gt;
+              &lt;span class=&quot;glyphicon glyphicon-cog&quot;&gt;&lt;/span&gt;
+            &lt;/button&gt;
+          &lt;/div&gt;
+          &lt;div class=&quot;input-control&quot; *ngIf=&quot;!options?.hideCreateType &amp;&amp; isTyped()&quot; &gt;
+            &lt;input type=&quot;checkbox&quot; [disabled]=&quot;typeCreated&quot; [(ngModel)]=&quot;createType&quot;&gt;Create type
+          &lt;/div&gt;
+                    
+          &lt;div class=&quot;panel-content&quot;&gt; 
+            &lt;div class=&quot;input-control&quot; *ngFor=&quot;let property of fieldNames&quot;&gt;
+              &lt;div *ngIf=&quot;!ignore.has(property)&quot;&gt;
+
+                &lt;div class=&quot;input-control-lg&quot; *ngIf=&quot;inputGroup.includes(property)&quot;&gt;
+                  &lt;label for=&quot;comment&quot;&gt;{{getPropertyLabel(property)}}: &lt;/label&gt;
+                  &lt;input class=&quot;form-control&quot; 
+                    [type]=&quot;getDefaultValue(property, &apos;type&apos;)&quot; 
+                    [disabled]=&quot;item.constructor.properties[property].readOnly&quot;
+                    [(ngModel)]=&quot;item[property]&quot;&gt;
+                &lt;/div&gt;
+              
+                &lt;div *ngIf=&quot;selectGroup.includes(property)&quot;&gt;      
+                  &lt;label&gt;{{getPropertyLabel(property)}}: &lt;/label&gt;
+                  &lt;select-input-1 [item] = &quot;item.p(property) | async&quot; 
+                    (updated) = &quot;updateProperty(property, $event)&quot;  
+                    [options] = &quot;possibleValues[property]&quot;&gt;
+                  &lt;/select-input-1&gt;
+                &lt;/div&gt;
+                
+                &lt;div *ngIf=&quot;multiSelectGroup.includes(property)&quot;&gt;
+                    &lt;label&gt;{{getPropertyLabel(property)}}: &lt;/label&gt;
+                    &lt;select-input [items] = &quot;item.p(property) | async&quot;
+                     (updated) = &quot;updateProperty(property, $event)&quot;    
+                     [options] = &quot;possibleValues[property]&quot;&gt;
+                    &lt;/select-input&gt;
+                &lt;/div&gt;
+                
+                &lt;nested-resource-list *ngIf=&quot;relationGroup.includes(property)&quot;
+                  [caption]=&quot;getPropertyLabel(property)&quot; 
+                  [model]  =&quot;model&quot;
+                  [items]  =&quot;item.p(property) | async | setToArray&quot; 
+                  [types]  =&quot;[item.constructor.relationshipShortcuts[property].codomain.resourceClass.name]&quot;
+                  (updated)=&quot;updateProperty(property, $event)&quot;&gt; 
+                &lt;/nested-resource-list&gt;
+              
+                &lt;template-value *ngIf=&quot;templateGroup.includes(property)&quot; 
+                  [caption]=&quot;getPropertyLabel(property)&quot; 
+                  [item]   =&quot;item.p(property) | async&quot;
+                  [step]   =&quot;getDefaultValue(property, &apos;step&apos;)&quot;
+                  (updated)=&quot;updateProperty(property, $event)&quot;&gt;
+                &lt;/template-value&gt;
+                
+                &lt;fieldset *ngIf=&quot;checkboxGroup.includes(property)&quot;&gt;
+                  &lt;legend&gt;{{getPropertyLabel(property)}}:&lt;/legend&gt;
+                  &lt;p *ngFor = &quot;let option of possibleValues[property]; let i = index&quot;&gt;
+                     &lt;input type=&quot;checkbox&quot; [value]=&quot;option&quot; 
+                        [checked]=&quot;item[property].includes(option)&quot; 
+                        (change)=&quot;updateArray(property, option, $event)&quot;
+                     &gt;{{option}}&amp;nbsp;
+                  &lt;/p&gt;
+                &lt;/fieldset&gt;
+              &lt;/div&gt;
+            &lt;/div&gt;
+            
+            &lt;modal-window *ngIf = &quot;item.class === model.Lyph.name&quot; [item] = &quot;item&quot; [clsMeasurable] = &quot;model.Measurable&quot;&gt;
+            &lt;/modal-window&gt;
+            
+          &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;ng2-toasty&gt;&lt;/ng2-toasty&gt;
+  `,
+    styles: [
+        `
+        input[type=number] {
+          text-align:right;
+        }
+        .panel-content{
+          border: 1px solid #ccc;
+        }
+        :host &gt;&gt;&gt; .input-control {
+          margin-left: 4px;
+          padding: 2px;
+          display: inline-block;
+          vertical-align:top;
+        }
+        :host &gt;&gt;&gt; .input-control &gt;&gt;&gt; label {
+          display: block;
+        }
+        :host &gt;&gt;&gt; .input-control-sm {
+          width: 68px;
+        }
+        :host &gt;&gt;&gt; .input-control-md {
+          width: 124px;
+        }
+        :host &gt;&gt;&gt; .input-control-lg {
+          width: 178px;
+        }
+        :host &gt;&gt;&gt; fieldset {
+          border: 1px ridge #e3e3e3;
+          padding: 4px;
+          margin: 4px;
+        }
+        legend{
+          font: inherit;
+          font-weight: bold;
+          padding: 4px;
+          margin-bottom: 0;
+          border: 0;
+          width: auto;
+        }
+        :host &gt;&gt;&gt; .form-control {
+          height: 30px;
+          box-shadow: none!important;
+        }
+        :host &gt;&gt;&gt; .form-control:focus {
+          border: 2px solid #ccc;
+          box-shadow: none!important;
+        }
+    `]
+})
+/**
+ * The ResourcePanel component, generates fields for editting properties of a given resource.
+ */
+export class ResourcePanel {
+    /**
+     * @property {Resource} item - the resource to show or edit
+     */
+    @Input() item;
+    /**
+     * @property {Object} model  - the open-physiology model
+     */
+    @Input() model;
+    /**
+     * @property {Object} options - the visualization options for the panel&apos;s commands toolbar
+     */
+    @Input() options;
+
+    /**
+     * @emits saved           - the changes saved
+     */
+    @Output() saved = new EventEmitter();
+    /**
+     * @emits canceled        - the changes canceled
+     */
+    @Output() canceled = new EventEmitter();
+    /**
+     * @emits removed         - the item deleted
+     */
+    @Output() removed = new EventEmitter();
+    /**
+     * @emits propertyUpdated - the item property changed
+     */
+    @Output() propertyUpdated = new EventEmitter();
+
+    @ViewChild(MeasurableGenerator) _mGen;
+
+    ignore           = new Set();
+
+    fieldNames       = [];  //All fields
+    fieldOptions     = [];  //Field visibility configurations
+
+    checkboxGroup    = [];  //Properties in check-boxes
+    templateGroup    = [];  //Properties in value-range-distribution component
+    inputGroup       = [];  //Properties in input fields
+
+    selectGroup      = [];  //Relationships with max cardinality-1 in combo list
+    multiSelectGroup = [];  //Relationships in multi-combo lists
+    relationGroup    = [];  //Relationships in nested resource lists
+
+    /*Typed resources*/
+    createType = false;
+    typeCreated = false;
+
+    /*Selection options*/
+    possibleValues = {};
+
+    /**
+     * @param {ToastyService} toastyService - the service for showing notifications and error messages
+     */
+    constructor(toastyService:ToastyService){}
+
+    ngOnInit(){
+        this.ignore = new Set([&quot;id&quot;, &quot;cardinalityBase&quot;, &quot;cardinalityMultipliers&quot;, &quot;definedType&quot;]);
+        if (this.item instanceof this.model.Border) {
+            [&apos;externals&apos;, &apos;species&apos;, &apos;measurables&apos;, &apos;name&apos;, &apos;types&apos;, &apos;nodes&apos;].map(propName =&gt;
+                this.ignore.add(propName));
+        }
+
+        /*Auto-generated visual groups*/
+        let privateProperties = new Set([&quot;class&quot;, &quot;themes&quot;, &quot;parents&quot;, &quot;children&quot;]);
+
+        let fields = Object.assign({}, this.item.constructor.properties, this.item.constructor.relationshipShortcuts);
+        this.fieldNames = Object.keys(fields).filter(p =&gt; !privateProperties.has(p));
+        this.fieldOptions = this.fieldNames.map(field =&gt; ({value: field, selected: !this.ignore.has(field)}));
+
+        /*Properties in check-boxes*/
+        this.checkboxGroup = [&apos;transportPhenomenon&apos;, &apos;nature&apos;].filter(key =&gt; this.item.constructor.properties[key]);
+
+        /*Properties in value-range-distribution forms */
+        this.templateGroup = [&apos;cardinalityBase&apos;, &apos;thickness&apos;, &apos;length&apos;].filter(key =&gt; this.item.constructor.properties[key]);
+
+        /*Properties in input fields*/
+        this.inputGroup = Object.keys(this.item.constructor.properties)
+            .filter(key =&gt; !privateProperties.has(key)
+            &amp;&amp; !this.checkboxGroup.includes(key)
+            &amp;&amp; !this.templateGroup.includes(key));
+
+        /*Relationships*/
+        let relationships = Object.entries(this.item.constructor.relationshipShortcuts)
+            .filter(([key, value]) =&gt; !value.abstract &amp;&amp; !privateProperties.has(key));
+
+        //Filtered possible values for relationships
+        for (let [key, value] of relationships){
+            this.item.fields[key].p(&apos;possibleValues&apos;) .subscribe(
+                (data) =&gt; {
+                    this.possibleValues[key] = (key === &quot;cardinalityMultipliers&quot;)?
+                        new Set(new HideClass().transform( new SetToArray().transform(data),
+                            [this.model.Border.name, this.model.Node.name]))
+                        : data;
+                });
+        }
+
+        //Possible values for enumerations
+        for (let [key, propertySpec] of Object.entries(this.item.constructor.properties)){
+            if (propertySpec.items &amp;&amp; propertySpec.items.enum){
+                this.checkboxGroup.push(key);
+                this.possibleValues[key] = Object.values(propertySpec.items.enum);
+            } else {
+                this.possibleValues[key] = [];
+            }
+        }
+
+        let multiSelectProperties = new Set([
+            &apos;externals&apos;, &apos;subtypes&apos;, &apos;supertypes&apos;, &apos;clinicalIndices&apos;, &apos;correlations&apos;,
+            &apos;cardinalityMultipliers&apos;, &apos;types&apos;, &apos;materials&apos;, &apos;locations&apos;, &apos;causes&apos;,&apos;effects&apos;]);
+
+        /*Relationships in nested lists*/
+        this.relationGroup = relationships.filter(x =&gt;
+            ((x[1].cardinality.max !== 1) &amp;&amp; !multiSelectProperties.has(x[0]))).map(x =&gt; x[0]);
+
+        /*Relationships in multi-select combo lists*/
+        this.multiSelectGroup = relationships.filter(x =&gt;
+            ((x[1].cardinality.max !== 1) &amp;&amp; multiSelectProperties.has(x[0]))).map(x =&gt; x[0]);
+
+        //Relationships in single-select combo lists*/
+        this.selectGroup = relationships.filter(x =&gt; (x[1].cardinality.max === 1)).map(x =&gt; x[0]);
+
+        /*&quot;create type&quot; check box enabled if type has not been defined */
+        if (this.isTyped()){ this.typeCreated = !!this.item[&apos;--&gt;DefinesType&apos;]; }
+    }
+
+    /**
+     * The getPropertyLabel function replaces field name with human readable labels
+     * @param {string} option - the open-physiology resource field name
+     * @returns {string} - the user readable label
+     */
+    getPropertyLabel(option: string): string{
+        let custom = { &quot;externals&quot;: &quot;Annotations&quot;,
+            &quot;locals&quot;: &quot;Local resources&quot; };
+        if (custom[option]) { return custom[option]; }
+
+        if ([&quot;id&quot;, &quot;uri&quot;].includes(option)) {
+            return option.toUpperCase();
+        }
+
+        let label = option.replace(/([a-z])([A-Z])/g, &apos;$1 $2&apos;);
+        label = label[0].toUpperCase() + label.substring(1).toLowerCase();
+        return label;
+    }
+
+    /**
+     * @param {string} property  - the resource property name
+     * @param {string} attribute - the visual attribute name that needs the default value
+     * @returns {any}            - the initial (default) value for the visual attribute of the resource property
+     *
+     * @example getDefaultValue(&quot;width&quot;, &quot;step&quot;) = 1
+     */
+    getDefaultValue(property, attribute){
+        let propertySpec = this.item.constructor.properties[property];
+        switch(attribute){
+            case &quot;type&quot;: return ((propertySpec.type === &quot;integer&quot;)
+            || (propertySpec.type === &quot;number&quot;))? &quot;number&quot;: &quot;text&quot;;
+            case &quot;step&quot;: return (propertySpec.type === &quot;number&quot;)? 0.1: 1;
+        }
+        return &quot;&quot;;
+    }
+
+    visibleFieldsChanged(option){
+        if ( this.ignore.has(option.value) &amp;&amp;  option.selected) {
+            this.ignore.delete(option.value);
+        }
+        if (!this.ignore.has(option.value) &amp;&amp; !option.selected) {
+            this.ignore.add(option.value);
+        }
+    }
+
+    updateProperty(property, item){
+        if (this.item.fields[property] &amp;&amp; this.item.fields[property].readonly) { return; }
+        this.item[property] = item;
+        this.propertyUpdated.emit({property: property, values: item});
+    }
+
+    updateArray(property, option, event){
+        let newArray = [];
+        if (!event.target.checked){
+            newArray = this.item[property].filter(x =&gt; x !== option);
+        } else {
+            newArray = this.item[property].slice();
+            if (!newArray.includes(option)){
+                newArray.push(option);
+            }
+        }
+        this.updateProperty(property, newArray);
+    }
+
+    addItem(parent, property, item){
+        if (parent &amp;&amp; (parent[property])){
+            parent[property].add(item);
+            this.propertyUpdated.emit({property: property, values: parent[property]});
+        }
+    }
+
+    removeItem(parent, property, item){
+        item.delete();
+        this.updateProperty(property, parent[property]);
+    }
+
+    isTyped(){
+        return this.item instanceof this.model.Template;
+    }
+
+    generateMeasurables(){
+        this._mGen.generateMeasurables();
+    }
+
+    onSaved(event){
+        if (this.item.class === this.model.CoalescenceScenario.name){
+            if (this.item.lyphs &amp;&amp; (this.item.lyphs.size !== 2)){
+                this.toastyService.error(&quot;Wrong number of lyphs&quot;, this.item.lyphs.size);
+            }
+        }
+
+        this.item.commit()
+            .catch(reason =&gt; {
+                let errorMsg = &quot;Failed to commit resource: Relationship constraints violated! \n&quot; + reason;
+                this.toastyService.error(errorMsg);
+            });
+
+        if (event &amp;&amp; event.createType){
+            let template = this.item;
+            if (!template[&apos;--&gt;DefinesType&apos;]){
+                (async function() {
+                    let newType = this.model.Type.new({definition: template});
+                    template.p(&apos;name&apos;).subscribe(newType.p(&apos;name&apos;));
+
+                    await newType.commit();
+                })();
+            }
+        }
+
+        this.saved.emit(this.item);
+    }
+
+    onCanceled(event) {
+        this.item.rollback();
+        this.canceled.emit(event);
+    }
+}
+
+/**
+ * The ResourcePanelModule module, exports ResourcePanel component, toolbar modules and pipes.
+ */
+@NgModule({
+    imports: [
+        CommonModule,
+        FormsModule,
+        DndModule.forRoot(),
+        AccordionModule,
+        ToolbarSettingsModule,
+        ToolbarCommandsModule,
+        ToolbarAddModule,
+        ToolbarFilterModule,
+        ToolbarSortModule,
+        TemplateValueModule,
+        PipeTransformModule,
+        CustomSelectModule,
+        ToastyModule.forRoot(),
+        MeasurableGeneratorModule],
+    declarations: [ ResourcePanel, NestedResourceList, ItemHeader ],
+    providers: [ToastyService],
+    exports: [
+        //Existing
+        AccordionModule,
+        DndModule,
+        PipeTransformModule,
+        ToolbarSettingsModule,
+        ToolbarAddModule,
+        ToolbarFilterModule,
+        ToolbarSortModule,
+        //New
+        ResourcePanel,
+        ItemHeader]
+})
+export class ResourcePanelModule {}
+</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(0.5.2)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

@@ -1,0 +1,1492 @@
+{
+  "type": "File",
+  "start": 0,
+  "end": 840,
+  "loc": {
+    "start": {
+      "line": 1,
+      "column": 0
+    },
+    "end": {
+      "line": 17,
+      "column": 37
+    }
+  },
+  "program": {
+    "type": "Program",
+    "start": 0,
+    "end": 840,
+    "loc": {
+      "start": {
+        "line": 1,
+        "column": 0
+      },
+      "end": {
+        "line": 17,
+        "column": 37
+      }
+    },
+    "sourceType": "module",
+    "body": [
+      {
+        "type": "ImportDeclaration",
+        "start": 0,
+        "end": 81,
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 1,
+            "column": 81
+          }
+        },
+        "specifiers": [
+          {
+            "type": "ImportSpecifier",
+            "start": 9,
+            "end": 17,
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 9
+              },
+              "end": {
+                "line": 1,
+                "column": 17
+              }
+            },
+            "imported": {
+              "type": "Identifier",
+              "start": 9,
+              "end": 17,
+              "loc": {
+                "start": {
+                  "line": 1,
+                  "column": 9
+                },
+                "end": {
+                  "line": 1,
+                  "column": 17
+                },
+                "identifierName": "NgModule"
+              },
+              "name": "NgModule"
+            },
+            "local": {
+              "type": "Identifier",
+              "start": 9,
+              "end": 17,
+              "loc": {
+                "start": {
+                  "line": 1,
+                  "column": 9
+                },
+                "end": {
+                  "line": 1,
+                  "column": 17
+                },
+                "identifierName": "NgModule"
+              },
+              "name": "NgModule"
+            }
+          },
+          {
+            "type": "ImportSpecifier",
+            "start": 19,
+            "end": 28,
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 19
+              },
+              "end": {
+                "line": 1,
+                "column": 28
+              }
+            },
+            "imported": {
+              "type": "Identifier",
+              "start": 19,
+              "end": 28,
+              "loc": {
+                "start": {
+                  "line": 1,
+                  "column": 19
+                },
+                "end": {
+                  "line": 1,
+                  "column": 28
+                },
+                "identifierName": "Component"
+              },
+              "name": "Component"
+            },
+            "local": {
+              "type": "Identifier",
+              "start": 19,
+              "end": 28,
+              "loc": {
+                "start": {
+                  "line": 1,
+                  "column": 19
+                },
+                "end": {
+                  "line": 1,
+                  "column": 28
+                },
+                "identifierName": "Component"
+              },
+              "name": "Component"
+            }
+          },
+          {
+            "type": "ImportSpecifier",
+            "start": 30,
+            "end": 35,
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 30
+              },
+              "end": {
+                "line": 1,
+                "column": 35
+              }
+            },
+            "imported": {
+              "type": "Identifier",
+              "start": 30,
+              "end": 35,
+              "loc": {
+                "start": {
+                  "line": 1,
+                  "column": 30
+                },
+                "end": {
+                  "line": 1,
+                  "column": 35
+                },
+                "identifierName": "Input"
+              },
+              "name": "Input"
+            },
+            "local": {
+              "type": "Identifier",
+              "start": 30,
+              "end": 35,
+              "loc": {
+                "start": {
+                  "line": 1,
+                  "column": 30
+                },
+                "end": {
+                  "line": 1,
+                  "column": 35
+                },
+                "identifierName": "Input"
+              },
+              "name": "Input"
+            }
+          },
+          {
+            "type": "ImportSpecifier",
+            "start": 37,
+            "end": 43,
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 37
+              },
+              "end": {
+                "line": 1,
+                "column": 43
+              }
+            },
+            "imported": {
+              "type": "Identifier",
+              "start": 37,
+              "end": 43,
+              "loc": {
+                "start": {
+                  "line": 1,
+                  "column": 37
+                },
+                "end": {
+                  "line": 1,
+                  "column": 43
+                },
+                "identifierName": "Output"
+              },
+              "name": "Output"
+            },
+            "local": {
+              "type": "Identifier",
+              "start": 37,
+              "end": 43,
+              "loc": {
+                "start": {
+                  "line": 1,
+                  "column": 37
+                },
+                "end": {
+                  "line": 1,
+                  "column": 43
+                },
+                "identifierName": "Output"
+              },
+              "name": "Output"
+            }
+          },
+          {
+            "type": "ImportSpecifier",
+            "start": 45,
+            "end": 57,
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 45
+              },
+              "end": {
+                "line": 1,
+                "column": 57
+              }
+            },
+            "imported": {
+              "type": "Identifier",
+              "start": 45,
+              "end": 57,
+              "loc": {
+                "start": {
+                  "line": 1,
+                  "column": 45
+                },
+                "end": {
+                  "line": 1,
+                  "column": 57
+                },
+                "identifierName": "EventEmitter"
+              },
+              "name": "EventEmitter"
+            },
+            "local": {
+              "type": "Identifier",
+              "start": 45,
+              "end": 57,
+              "loc": {
+                "start": {
+                  "line": 1,
+                  "column": 45
+                },
+                "end": {
+                  "line": 1,
+                  "column": 57
+                },
+                "identifierName": "EventEmitter"
+              },
+              "name": "EventEmitter"
+            }
+          }
+        ],
+        "source": {
+          "type": "StringLiteral",
+          "start": 65,
+          "end": 80,
+          "loc": {
+            "start": {
+              "line": 1,
+              "column": 65
+            },
+            "end": {
+              "line": 1,
+              "column": 80
+            }
+          },
+          "extra": {
+            "rawValue": "@angular/core",
+            "raw": "'@angular/core'"
+          },
+          "value": "@angular/core"
+        }
+      },
+      {
+        "type": "ImportDeclaration",
+        "start": 82,
+        "end": 129,
+        "loc": {
+          "start": {
+            "line": 2,
+            "column": 0
+          },
+          "end": {
+            "line": 2,
+            "column": 47
+          }
+        },
+        "specifiers": [
+          {
+            "type": "ImportSpecifier",
+            "start": 91,
+            "end": 103,
+            "loc": {
+              "start": {
+                "line": 2,
+                "column": 9
+              },
+              "end": {
+                "line": 2,
+                "column": 21
+              }
+            },
+            "imported": {
+              "type": "Identifier",
+              "start": 91,
+              "end": 103,
+              "loc": {
+                "start": {
+                  "line": 2,
+                  "column": 9
+                },
+                "end": {
+                  "line": 2,
+                  "column": 21
+                },
+                "identifierName": "CommonModule"
+              },
+              "name": "CommonModule"
+            },
+            "local": {
+              "type": "Identifier",
+              "start": 91,
+              "end": 103,
+              "loc": {
+                "start": {
+                  "line": 2,
+                  "column": 9
+                },
+                "end": {
+                  "line": 2,
+                  "column": 21
+                },
+                "identifierName": "CommonModule"
+              },
+              "name": "CommonModule"
+            }
+          }
+        ],
+        "source": {
+          "type": "StringLiteral",
+          "start": 111,
+          "end": 128,
+          "loc": {
+            "start": {
+              "line": 2,
+              "column": 29
+            },
+            "end": {
+              "line": 2,
+              "column": 46
+            }
+          },
+          "extra": {
+            "rawValue": "@angular/common",
+            "raw": "'@angular/common'"
+          },
+          "value": "@angular/common"
+        },
+        "trailingComments": [
+          {
+            "type": "CommentBlock",
+            "value": "*\r\n * The ToolbarCommands component, offers buttons to delete a resource, commit or rollback changes.\r\n *\r\n * @param {Object} options - a set of boolean options that indicate which buttons to show.\r\n * By default all three buttons are shown: {hideRemove: false, hideSave: false, hideRestore: false}\r\n * @param {string => string} transform - an optional function that can be used to transform option appearance\r\n\r\n * @emits removed   - a user pressed the button to delete the item\r\n * @emits canceled  - a user pressed the button to cancel changes (rollback)\r\n * @emits saved     - a user pressed the button to save changes (commit)\r\n ",
+            "start": 131,
+            "end": 769,
+            "loc": {
+              "start": {
+                "line": 4,
+                "column": 0
+              },
+              "end": {
+                "line": 14,
+                "column": 3
+              }
+            }
+          }
+        ]
+      },
+      {
+        "type": "ExportNamedDeclaration",
+        "start": 770,
+        "end": 801,
+        "loc": {
+          "start": {
+            "line": 15,
+            "column": 0
+          },
+          "end": {
+            "line": 15,
+            "column": 31
+          }
+        },
+        "specifiers": [],
+        "source": null,
+        "declaration": {
+          "type": "ClassDeclaration",
+          "start": 777,
+          "end": 801,
+          "loc": {
+            "start": {
+              "line": 15,
+              "column": 7
+            },
+            "end": {
+              "line": 15,
+              "column": 31
+            }
+          },
+          "id": {
+            "type": "Identifier",
+            "start": 783,
+            "end": 798,
+            "loc": {
+              "start": {
+                "line": 15,
+                "column": 13
+              },
+              "end": {
+                "line": 15,
+                "column": 28
+              },
+              "identifierName": "ToolbarCommands"
+            },
+            "name": "ToolbarCommands",
+            "leadingComments": null
+          },
+          "superClass": null,
+          "body": {
+            "type": "ClassBody",
+            "start": 799,
+            "end": 801,
+            "loc": {
+              "start": {
+                "line": 15,
+                "column": 29
+              },
+              "end": {
+                "line": 15,
+                "column": 31
+              }
+            },
+            "body": []
+          },
+          "leadingComments": [
+            {
+              "type": "CommentBlock",
+              "value": "*\r\n * The ToolbarCommands component, offers buttons to delete a resource, commit or rollback changes.\r\n *\r\n * @param {Object} options - a set of boolean options that indicate which buttons to show.\r\n * By default all three buttons are shown: {hideRemove: false, hideSave: false, hideRestore: false}\r\n * @param {string => string} transform - an optional function that can be used to transform option appearance\r\n\r\n * @emits removed   - a user pressed the button to delete the item\r\n * @emits canceled  - a user pressed the button to cancel changes (rollback)\r\n * @emits saved     - a user pressed the button to save changes (commit)\r\n ",
+              "start": 131,
+              "end": 769,
+              "loc": {
+                "start": {
+                  "line": 4,
+                  "column": 0
+                },
+                "end": {
+                  "line": 14,
+                  "column": 3
+                }
+              }
+            }
+          ],
+          "trailingComments": []
+        },
+        "leadingComments": [
+          {
+            "type": "CommentBlock",
+            "value": "*\r\n * The ToolbarCommands component, offers buttons to delete a resource, commit or rollback changes.\r\n *\r\n * @param {Object} options - a set of boolean options that indicate which buttons to show.\r\n * By default all three buttons are shown: {hideRemove: false, hideSave: false, hideRestore: false}\r\n * @param {string => string} transform - an optional function that can be used to transform option appearance\r\n\r\n * @emits removed   - a user pressed the button to delete the item\r\n * @emits canceled  - a user pressed the button to cancel changes (rollback)\r\n * @emits saved     - a user pressed the button to save changes (commit)\r\n ",
+            "start": 131,
+            "end": 769,
+            "loc": {
+              "start": {
+                "line": 4,
+                "column": 0
+              },
+              "end": {
+                "line": 14,
+                "column": 3
+              }
+            }
+          }
+        ]
+      },
+      {
+        "type": "ExportNamedDeclaration",
+        "start": 803,
+        "end": 840,
+        "loc": {
+          "start": {
+            "line": 17,
+            "column": 0
+          },
+          "end": {
+            "line": 17,
+            "column": 37
+          }
+        },
+        "specifiers": [],
+        "source": null,
+        "declaration": {
+          "type": "ClassDeclaration",
+          "start": 810,
+          "end": 840,
+          "loc": {
+            "start": {
+              "line": 17,
+              "column": 7
+            },
+            "end": {
+              "line": 17,
+              "column": 37
+            }
+          },
+          "id": {
+            "type": "Identifier",
+            "start": 816,
+            "end": 837,
+            "loc": {
+              "start": {
+                "line": 17,
+                "column": 13
+              },
+              "end": {
+                "line": 17,
+                "column": 34
+              },
+              "identifierName": "ToolbarCommandsModule"
+            },
+            "name": "ToolbarCommandsModule"
+          },
+          "superClass": null,
+          "body": {
+            "type": "ClassBody",
+            "start": 838,
+            "end": 840,
+            "loc": {
+              "start": {
+                "line": 17,
+                "column": 35
+              },
+              "end": {
+                "line": 17,
+                "column": 37
+              }
+            },
+            "body": []
+          },
+          "leadingComments": [],
+          "trailingComments": []
+        }
+      }
+    ],
+    "directives": []
+  },
+  "comments": [
+    {
+      "type": "CommentBlock",
+      "value": "*\r\n * The ToolbarCommands component, offers buttons to delete a resource, commit or rollback changes.\r\n *\r\n * @param {Object} options - a set of boolean options that indicate which buttons to show.\r\n * By default all three buttons are shown: {hideRemove: false, hideSave: false, hideRestore: false}\r\n * @param {string => string} transform - an optional function that can be used to transform option appearance\r\n\r\n * @emits removed   - a user pressed the button to delete the item\r\n * @emits canceled  - a user pressed the button to cancel changes (rollback)\r\n * @emits saved     - a user pressed the button to save changes (commit)\r\n ",
+      "start": 131,
+      "end": 769,
+      "loc": {
+        "start": {
+          "line": 4,
+          "column": 0
+        },
+        "end": {
+          "line": 14,
+          "column": 3
+        }
+      }
+    }
+  ],
+  "tokens": [
+    {
+      "type": {
+        "label": "import",
+        "keyword": "import",
+        "beforeExpr": false,
+        "startsExpr": false,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null,
+        "updateContext": null
+      },
+      "value": "import",
+      "start": 0,
+      "end": 6,
+      "loc": {
+        "start": {
+          "line": 1,
+          "column": 0
+        },
+        "end": {
+          "line": 1,
+          "column": 6
+        }
+      }
+    },
+    {
+      "type": {
+        "label": "{",
+        "beforeExpr": true,
+        "startsExpr": true,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null
+      },
+      "start": 7,
+      "end": 8,
+      "loc": {
+        "start": {
+          "line": 1,
+          "column": 7
+        },
+        "end": {
+          "line": 1,
+          "column": 8
+        }
+      }
+    },
+    {
+      "type": {
+        "label": "name",
+        "beforeExpr": false,
+        "startsExpr": true,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null
+      },
+      "value": "NgModule",
+      "start": 9,
+      "end": 17,
+      "loc": {
+        "start": {
+          "line": 1,
+          "column": 9
+        },
+        "end": {
+          "line": 1,
+          "column": 17
+        }
+      }
+    },
+    {
+      "type": {
+        "label": ",",
+        "beforeExpr": true,
+        "startsExpr": false,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null,
+        "updateContext": null
+      },
+      "start": 17,
+      "end": 18,
+      "loc": {
+        "start": {
+          "line": 1,
+          "column": 17
+        },
+        "end": {
+          "line": 1,
+          "column": 18
+        }
+      }
+    },
+    {
+      "type": {
+        "label": "name",
+        "beforeExpr": false,
+        "startsExpr": true,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null
+      },
+      "value": "Component",
+      "start": 19,
+      "end": 28,
+      "loc": {
+        "start": {
+          "line": 1,
+          "column": 19
+        },
+        "end": {
+          "line": 1,
+          "column": 28
+        }
+      }
+    },
+    {
+      "type": {
+        "label": ",",
+        "beforeExpr": true,
+        "startsExpr": false,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null,
+        "updateContext": null
+      },
+      "start": 28,
+      "end": 29,
+      "loc": {
+        "start": {
+          "line": 1,
+          "column": 28
+        },
+        "end": {
+          "line": 1,
+          "column": 29
+        }
+      }
+    },
+    {
+      "type": {
+        "label": "name",
+        "beforeExpr": false,
+        "startsExpr": true,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null
+      },
+      "value": "Input",
+      "start": 30,
+      "end": 35,
+      "loc": {
+        "start": {
+          "line": 1,
+          "column": 30
+        },
+        "end": {
+          "line": 1,
+          "column": 35
+        }
+      }
+    },
+    {
+      "type": {
+        "label": ",",
+        "beforeExpr": true,
+        "startsExpr": false,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null,
+        "updateContext": null
+      },
+      "start": 35,
+      "end": 36,
+      "loc": {
+        "start": {
+          "line": 1,
+          "column": 35
+        },
+        "end": {
+          "line": 1,
+          "column": 36
+        }
+      }
+    },
+    {
+      "type": {
+        "label": "name",
+        "beforeExpr": false,
+        "startsExpr": true,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null
+      },
+      "value": "Output",
+      "start": 37,
+      "end": 43,
+      "loc": {
+        "start": {
+          "line": 1,
+          "column": 37
+        },
+        "end": {
+          "line": 1,
+          "column": 43
+        }
+      }
+    },
+    {
+      "type": {
+        "label": ",",
+        "beforeExpr": true,
+        "startsExpr": false,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null,
+        "updateContext": null
+      },
+      "start": 43,
+      "end": 44,
+      "loc": {
+        "start": {
+          "line": 1,
+          "column": 43
+        },
+        "end": {
+          "line": 1,
+          "column": 44
+        }
+      }
+    },
+    {
+      "type": {
+        "label": "name",
+        "beforeExpr": false,
+        "startsExpr": true,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null
+      },
+      "value": "EventEmitter",
+      "start": 45,
+      "end": 57,
+      "loc": {
+        "start": {
+          "line": 1,
+          "column": 45
+        },
+        "end": {
+          "line": 1,
+          "column": 57
+        }
+      }
+    },
+    {
+      "type": {
+        "label": "}",
+        "beforeExpr": false,
+        "startsExpr": false,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null
+      },
+      "start": 58,
+      "end": 59,
+      "loc": {
+        "start": {
+          "line": 1,
+          "column": 58
+        },
+        "end": {
+          "line": 1,
+          "column": 59
+        }
+      }
+    },
+    {
+      "type": {
+        "label": "name",
+        "beforeExpr": false,
+        "startsExpr": true,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null
+      },
+      "value": "from",
+      "start": 60,
+      "end": 64,
+      "loc": {
+        "start": {
+          "line": 1,
+          "column": 60
+        },
+        "end": {
+          "line": 1,
+          "column": 64
+        }
+      }
+    },
+    {
+      "type": {
+        "label": "string",
+        "beforeExpr": false,
+        "startsExpr": true,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null,
+        "updateContext": null
+      },
+      "value": "@angular/core",
+      "start": 65,
+      "end": 80,
+      "loc": {
+        "start": {
+          "line": 1,
+          "column": 65
+        },
+        "end": {
+          "line": 1,
+          "column": 80
+        }
+      }
+    },
+    {
+      "type": {
+        "label": ";",
+        "beforeExpr": true,
+        "startsExpr": false,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null,
+        "updateContext": null
+      },
+      "start": 80,
+      "end": 81,
+      "loc": {
+        "start": {
+          "line": 1,
+          "column": 80
+        },
+        "end": {
+          "line": 1,
+          "column": 81
+        }
+      }
+    },
+    {
+      "type": {
+        "label": "import",
+        "keyword": "import",
+        "beforeExpr": false,
+        "startsExpr": false,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null,
+        "updateContext": null
+      },
+      "value": "import",
+      "start": 82,
+      "end": 88,
+      "loc": {
+        "start": {
+          "line": 2,
+          "column": 0
+        },
+        "end": {
+          "line": 2,
+          "column": 6
+        }
+      }
+    },
+    {
+      "type": {
+        "label": "{",
+        "beforeExpr": true,
+        "startsExpr": true,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null
+      },
+      "start": 89,
+      "end": 90,
+      "loc": {
+        "start": {
+          "line": 2,
+          "column": 7
+        },
+        "end": {
+          "line": 2,
+          "column": 8
+        }
+      }
+    },
+    {
+      "type": {
+        "label": "name",
+        "beforeExpr": false,
+        "startsExpr": true,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null
+      },
+      "value": "CommonModule",
+      "start": 91,
+      "end": 103,
+      "loc": {
+        "start": {
+          "line": 2,
+          "column": 9
+        },
+        "end": {
+          "line": 2,
+          "column": 21
+        }
+      }
+    },
+    {
+      "type": {
+        "label": "}",
+        "beforeExpr": false,
+        "startsExpr": false,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null
+      },
+      "start": 104,
+      "end": 105,
+      "loc": {
+        "start": {
+          "line": 2,
+          "column": 22
+        },
+        "end": {
+          "line": 2,
+          "column": 23
+        }
+      }
+    },
+    {
+      "type": {
+        "label": "name",
+        "beforeExpr": false,
+        "startsExpr": true,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null
+      },
+      "value": "from",
+      "start": 106,
+      "end": 110,
+      "loc": {
+        "start": {
+          "line": 2,
+          "column": 24
+        },
+        "end": {
+          "line": 2,
+          "column": 28
+        }
+      }
+    },
+    {
+      "type": {
+        "label": "string",
+        "beforeExpr": false,
+        "startsExpr": true,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null,
+        "updateContext": null
+      },
+      "value": "@angular/common",
+      "start": 111,
+      "end": 128,
+      "loc": {
+        "start": {
+          "line": 2,
+          "column": 29
+        },
+        "end": {
+          "line": 2,
+          "column": 46
+        }
+      }
+    },
+    {
+      "type": {
+        "label": ";",
+        "beforeExpr": true,
+        "startsExpr": false,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null,
+        "updateContext": null
+      },
+      "start": 128,
+      "end": 129,
+      "loc": {
+        "start": {
+          "line": 2,
+          "column": 46
+        },
+        "end": {
+          "line": 2,
+          "column": 47
+        }
+      }
+    },
+    {
+      "type": "CommentBlock",
+      "value": "*\r\n * The ToolbarCommands component, offers buttons to delete a resource, commit or rollback changes.\r\n *\r\n * @param {Object} options - a set of boolean options that indicate which buttons to show.\r\n * By default all three buttons are shown: {hideRemove: false, hideSave: false, hideRestore: false}\r\n * @param {string => string} transform - an optional function that can be used to transform option appearance\r\n\r\n * @emits removed   - a user pressed the button to delete the item\r\n * @emits canceled  - a user pressed the button to cancel changes (rollback)\r\n * @emits saved     - a user pressed the button to save changes (commit)\r\n ",
+      "start": 131,
+      "end": 769,
+      "loc": {
+        "start": {
+          "line": 4,
+          "column": 0
+        },
+        "end": {
+          "line": 14,
+          "column": 3
+        }
+      }
+    },
+    {
+      "type": {
+        "label": "export",
+        "keyword": "export",
+        "beforeExpr": false,
+        "startsExpr": false,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null,
+        "updateContext": null
+      },
+      "value": "export",
+      "start": 770,
+      "end": 776,
+      "loc": {
+        "start": {
+          "line": 15,
+          "column": 0
+        },
+        "end": {
+          "line": 15,
+          "column": 6
+        }
+      }
+    },
+    {
+      "type": {
+        "label": "class",
+        "keyword": "class",
+        "beforeExpr": false,
+        "startsExpr": false,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null,
+        "updateContext": null
+      },
+      "value": "class",
+      "start": 777,
+      "end": 782,
+      "loc": {
+        "start": {
+          "line": 15,
+          "column": 7
+        },
+        "end": {
+          "line": 15,
+          "column": 12
+        }
+      }
+    },
+    {
+      "type": {
+        "label": "name",
+        "beforeExpr": false,
+        "startsExpr": true,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null
+      },
+      "value": "ToolbarCommands",
+      "start": 783,
+      "end": 798,
+      "loc": {
+        "start": {
+          "line": 15,
+          "column": 13
+        },
+        "end": {
+          "line": 15,
+          "column": 28
+        }
+      }
+    },
+    {
+      "type": {
+        "label": "{",
+        "beforeExpr": true,
+        "startsExpr": true,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null
+      },
+      "start": 799,
+      "end": 800,
+      "loc": {
+        "start": {
+          "line": 15,
+          "column": 29
+        },
+        "end": {
+          "line": 15,
+          "column": 30
+        }
+      }
+    },
+    {
+      "type": {
+        "label": "}",
+        "beforeExpr": false,
+        "startsExpr": false,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null
+      },
+      "start": 800,
+      "end": 801,
+      "loc": {
+        "start": {
+          "line": 15,
+          "column": 30
+        },
+        "end": {
+          "line": 15,
+          "column": 31
+        }
+      }
+    },
+    {
+      "type": {
+        "label": "export",
+        "keyword": "export",
+        "beforeExpr": false,
+        "startsExpr": false,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null,
+        "updateContext": null
+      },
+      "value": "export",
+      "start": 803,
+      "end": 809,
+      "loc": {
+        "start": {
+          "line": 17,
+          "column": 0
+        },
+        "end": {
+          "line": 17,
+          "column": 6
+        }
+      }
+    },
+    {
+      "type": {
+        "label": "class",
+        "keyword": "class",
+        "beforeExpr": false,
+        "startsExpr": false,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null,
+        "updateContext": null
+      },
+      "value": "class",
+      "start": 810,
+      "end": 815,
+      "loc": {
+        "start": {
+          "line": 17,
+          "column": 7
+        },
+        "end": {
+          "line": 17,
+          "column": 12
+        }
+      }
+    },
+    {
+      "type": {
+        "label": "name",
+        "beforeExpr": false,
+        "startsExpr": true,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null
+      },
+      "value": "ToolbarCommandsModule",
+      "start": 816,
+      "end": 837,
+      "loc": {
+        "start": {
+          "line": 17,
+          "column": 13
+        },
+        "end": {
+          "line": 17,
+          "column": 34
+        }
+      }
+    },
+    {
+      "type": {
+        "label": "{",
+        "beforeExpr": true,
+        "startsExpr": true,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null
+      },
+      "start": 838,
+      "end": 839,
+      "loc": {
+        "start": {
+          "line": 17,
+          "column": 35
+        },
+        "end": {
+          "line": 17,
+          "column": 36
+        }
+      }
+    },
+    {
+      "type": {
+        "label": "}",
+        "beforeExpr": false,
+        "startsExpr": false,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null
+      },
+      "start": 839,
+      "end": 840,
+      "loc": {
+        "start": {
+          "line": 17,
+          "column": 36
+        },
+        "end": {
+          "line": 17,
+          "column": 37
+        }
+      }
+    },
+    {
+      "type": {
+        "label": "eof",
+        "beforeExpr": false,
+        "startsExpr": false,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null,
+        "updateContext": null
+      },
+      "start": 840,
+      "end": 840,
+      "loc": {
+        "start": {
+          "line": 17,
+          "column": 37
+        },
+        "end": {
+          "line": 17,
+          "column": 37
+        }
+      }
+    }
+  ]
+}

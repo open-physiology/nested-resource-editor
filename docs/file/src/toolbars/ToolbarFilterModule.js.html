@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../../">
+  <title data-ice="title">src/toolbars/ToolbarFilterModule.js | API Document</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  
+  
+  <script src="script/manual.js"></script>
+</head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  <a href="test.html" data-ice="testLink">Test</a>
+  <a data-ice="repoURL" href="https://github.com/open-physiology/nested-resource-editor" class="repo-url-github">Repository</a>
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+</header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">common</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/PipeTransformModule.js~FilterBy.html">FilterBy</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/PipeTransformModule.js~HideClass.html">HideClass</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/PipeTransformModule.js~OrderBy.html">OrderBy</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/PipeTransformModule.js~PipeTransformModule.html">PipeTransformModule</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/PipeTransformModule.js~SetToArray.html">SetToArray</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">common/components</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/components/CustomSelectModule.js~CustomSelectModule.html">CustomSelectModule</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/components/CustomSelectModule.js~MultiSelectInput.html">MultiSelectInput</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/components/CustomSelectModule.js~SingleSelectInput.html">SingleSelectInput</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">common/toolbars</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/toolbars/ToolbarSettingsModule.js~ToolbarPropertySettings.html">ToolbarPropertySettings</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/toolbars/ToolbarSettingsModule.js~ToolbarSettingsModule.html">ToolbarSettingsModule</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">components</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/components/MeasurableGeneratorModule.js~MeasurableGenerator.html">MeasurableGenerator</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/components/MeasurableGeneratorModule.js~MeasurableGeneratorModule.html">MeasurableGeneratorModule</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">panels</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/panels/AbstractResourceList.js~AbstractResourceList.html">AbstractResourceList</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/panels/HighlightService.js~HighlightService.html">HighlightService</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/panels/ItemHeader.js~ItemHeader.html">ItemHeader</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/panels/NestedResourceList.js~NestedResourceList.html">NestedResourceList</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/panels/NestedResourceWidgetModule.js~NestedResourceWidget.html">NestedResourceWidget</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/panels/NestedResourceWidgetModule.js~NestedResourceWidgetModule.html">NestedResourceWidgetModule</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/panels/ResourcePanelModule.js~ResourcePanel.html">ResourcePanel</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/panels/ResourcePanelModule.js~ResourcePanelModule.html">ResourcePanelModule</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">test-app</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/test-app/app.js~TestApp.html">TestApp</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/test-app/app.js~TestAppModule.html">TestAppModule</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-loadData">loadData</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">toolbars</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/toolbars/ToolbarAddModule.js~ToolbarAdd.html">ToolbarAdd</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/toolbars/ToolbarAddModule.js~ToolbarAddModule.html">ToolbarAddModule</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/toolbars/ToolbarCommandsModule.js~ToolbarCommands.html">ToolbarCommands</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/toolbars/ToolbarCommandsModule.js~ToolbarCommandsModule.html">ToolbarCommandsModule</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/toolbars/ToolbarFilterModule.js~ToolbarFilter.html">ToolbarFilter</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/toolbars/ToolbarFilterModule.js~ToolbarFilterModule.html">ToolbarFilterModule</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/toolbars/ToolbarSortModule.js~ToolbarSort.html">ToolbarSort</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/toolbars/ToolbarSortModule.js~ToolbarSortModule.html">ToolbarSortModule</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">src/toolbars/ToolbarFilterModule.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import {NgModule, Component, Input, Output, EventEmitter} from &apos;@angular/core&apos;;
+import {CommonModule} from &apos;@angular/common&apos;;
+import {DropdownModule} from &apos;ngx-dropdown&apos;;
+
+@Component({
+    selector: &apos;toolbar-filter&apos;,
+    template: `
+     &lt;div class=&quot;input-group input-group-sm&quot; style=&quot;width: 220px;&quot;&gt;
+        &lt;input type=&quot;text&quot; class=&quot;form-control&quot; 
+        [value]=&quot;filter&quot; (input)=&quot;updateValue($event)&quot; (keyup.enter)=&quot;applied.emit({filter: filter, mode: mode});&quot;/&gt;
+        &lt;div class=&quot;input-group-btn&quot; dropdown&gt;
+          &lt;button type=&quot;button&quot; class=&quot;btn btn-secondary dropdown-toggle&quot; aria-label=&quot;Filter&quot; dropdown-open
+            aria-haspopup=&quot;true&quot; aria-expanded=&quot;false&quot;&gt;
+             &lt;span class=&quot;glyphicon glyphicon-filter&quot; aria-hidden=&quot;true&quot;&gt;&lt;/span&gt;
+          &lt;/button&gt;
+          &lt;ul class=&quot;dropdown-menu dropdown-menu-right&quot; role=&quot;menu&quot; aria-labelledby=&quot;Filter&quot;&gt;
+            &lt;li *ngFor=&quot;let option of options; let i = index&quot; (click)=&quot;updateMode(option)&quot;&gt;
+              &lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt; &lt;span *ngIf=&quot;mode === option&quot;&gt;&amp;#10004;&lt;/span&gt;{{option}}&lt;/a&gt;
+            &lt;/li&gt;            
+          &lt;/ul&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    `,
+    styles: [`
+        :host {float: right;}
+        .form-control {
+          height: 30px;
+          box-shadow: none!important;
+        }
+        .form-control:focus  {
+          border: 2px solid #ccc;
+          box-shadow: none!important;
+        }
+    `]
+})
+/**
+ * The ToolbarFilter component, offers an input field to specify search string and a dropdown menu to choose properties to which the filter is applied.
+ *
+ * @param {string} filter         - initial search string
+ * @param {Array&lt;string&gt;} options - item properties to filter
+ * @emits applied                 - a user pressed the button to filter the list of resources
+ */
+export class ToolbarFilter {
+    @Input() options: Array&lt;string&gt; = [];
+    @Input() filter: string = &quot;&quot;;
+    @Output() applied = new EventEmitter();
+
+    mode: string;
+
+    ngOnInit(){
+        if (this.options &amp;&amp; (this.options.length &gt; 0)) {
+            this.mode = this.options[0];
+        }
+    }
+
+    updateMode(option: string){
+        this.mode = option;
+        this.applied.emit({filter: this.filter, mode: this.mode});
+    }
+
+    updateValue(event){
+        this.filter = event.target.value;
+        this.applied.emit({filter: this.filter, mode: this.mode});
+    }
+}
+/**
+ * The ToolbarFilterModule module, offers the ToolbarFilter component.
+ */
+@NgModule({
+    imports: [ CommonModule, DropdownModule ],
+    declarations: [ ToolbarFilter ],
+    exports: [ ToolbarFilter ]
+})
+export class ToolbarFilterModule {}
+
+
+
+
+</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(0.5.2)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

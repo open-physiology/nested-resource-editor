@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../../">
+  <title data-ice="title">src/components/MeasurableGeneratorModule.js | API Document</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  
+  
+  <script src="script/manual.js"></script>
+</head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  <a href="test.html" data-ice="testLink">Test</a>
+  <a data-ice="repoURL" href="https://github.com/open-physiology/nested-resource-editor" class="repo-url-github">Repository</a>
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+</header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">common</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/PipeTransformModule.js~FilterBy.html">FilterBy</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/PipeTransformModule.js~HideClass.html">HideClass</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/PipeTransformModule.js~OrderBy.html">OrderBy</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/PipeTransformModule.js~PipeTransformModule.html">PipeTransformModule</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/PipeTransformModule.js~SetToArray.html">SetToArray</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">common/components</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/components/CustomSelectModule.js~CustomSelectModule.html">CustomSelectModule</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/components/CustomSelectModule.js~MultiSelectInput.html">MultiSelectInput</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/components/CustomSelectModule.js~SingleSelectInput.html">SingleSelectInput</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">common/toolbars</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/toolbars/ToolbarSettingsModule.js~ToolbarPropertySettings.html">ToolbarPropertySettings</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/toolbars/ToolbarSettingsModule.js~ToolbarSettingsModule.html">ToolbarSettingsModule</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">components</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/components/MeasurableGeneratorModule.js~MeasurableGenerator.html">MeasurableGenerator</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/components/MeasurableGeneratorModule.js~MeasurableGeneratorModule.html">MeasurableGeneratorModule</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">panels</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/panels/AbstractResourceList.js~AbstractResourceList.html">AbstractResourceList</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/panels/HighlightService.js~HighlightService.html">HighlightService</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/panels/ItemHeader.js~ItemHeader.html">ItemHeader</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/panels/NestedResourceList.js~NestedResourceList.html">NestedResourceList</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/panels/NestedResourceWidgetModule.js~NestedResourceWidget.html">NestedResourceWidget</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/panels/NestedResourceWidgetModule.js~NestedResourceWidgetModule.html">NestedResourceWidgetModule</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/panels/ResourcePanelModule.js~ResourcePanel.html">ResourcePanel</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/panels/ResourcePanelModule.js~ResourcePanelModule.html">ResourcePanelModule</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">test-app</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/test-app/app.js~TestApp.html">TestApp</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/test-app/app.js~TestAppModule.html">TestAppModule</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-loadData">loadData</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">toolbars</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/toolbars/ToolbarAddModule.js~ToolbarAdd.html">ToolbarAdd</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/toolbars/ToolbarAddModule.js~ToolbarAddModule.html">ToolbarAddModule</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/toolbars/ToolbarCommandsModule.js~ToolbarCommands.html">ToolbarCommands</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/toolbars/ToolbarCommandsModule.js~ToolbarCommandsModule.html">ToolbarCommandsModule</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/toolbars/ToolbarFilterModule.js~ToolbarFilter.html">ToolbarFilter</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/toolbars/ToolbarFilterModule.js~ToolbarFilterModule.html">ToolbarFilterModule</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/toolbars/ToolbarSortModule.js~ToolbarSort.html">ToolbarSort</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/toolbars/ToolbarSortModule.js~ToolbarSortModule.html">ToolbarSortModule</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">src/components/MeasurableGeneratorModule.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import {NgModule, Component, ViewChild, EventEmitter, Input, Output} from &apos;@angular/core&apos;;
+import {CommonModule} from &apos;@angular/common&apos;;
+import {FormsModule} from &apos;@angular/forms&apos;;
+import &apos;../libs/jquery&apos;;
+
+import {Ng2Bs3ModalModule, ModalComponent} from &apos;../libs/ng2-bs3-modal&apos;;
+
+@Component({
+    selector: &apos;modal-window&apos;,
+    template:`
+      &lt;modal #myModal&gt;
+        &lt;modal-header [show-close]=&quot;true&quot;&gt;
+            &lt;h4 class=&quot;modal-title&quot;&gt;Select supertype measurables to replicate&lt;/h4&gt;
+        &lt;/modal-header&gt;
+        &lt;modal-body&gt;
+            &lt;li *ngFor=&quot;let option of supertypeMeasurables; let i = index&quot;&gt;
+              &lt;a class=&quot;small&quot; href=&quot;#&quot;&gt;
+              &lt;input type=&quot;checkbox&quot; 
+                [(ngModel)]=&quot;option.selected&quot; 
+                (ngModelChange)=&quot;updateValue(option)&quot;/&gt;&amp;nbsp;
+              {{option.value.name}}&lt;/a&gt;
+            &lt;/li&gt;
+        &lt;/modal-body&gt;
+        &lt;modal-footer&gt;
+          &lt;button type=&quot;button&quot; class=&quot;btn btn-default&quot; data-dismiss=&quot;modal&quot;&gt;Cancel&lt;/button&gt;
+          &lt;button type=&quot;button&quot; class=&quot;btn btn-primary&quot; (click)=&quot;close($event)&quot;&gt;Ok&lt;/button&gt;
+        &lt;/modal-footer&gt;
+      &lt;/modal&gt;
+  `
+})
+/**
+ * MeasurableGenerator component, provides generation of measurables in a pop-up window.
+ *
+ * @param {Resource} item - a resource, typically, lyph, which inherits measurables from its type
+ * @param {Object} clsMeasurable - the Measurable resource class to create new measurables
+ * @emits closed - a user closed the modal window
+ *
+ */
+export class MeasurableGenerator{
+    @Input()  item;
+    @Input()  clsMeasurable;
+    @Output() closed = new EventEmitter();
+
+    //Measurable replication
+    supertypeMeasurables : Array &lt;any&gt; = [];
+    measurablesToReplicate: Set&lt;any&gt; = new Set();
+
+    @ViewChild(&apos;myModal&apos;)
+    modal: ModalComponent;
+
+    generateMeasurables() {
+        let allSupertypeMeasurables = [];
+        for (let type of this.item.types) {
+            for (let supertype of type.supertypes) {
+                if (supertype.definition &amp;&amp; supertype.definition.measurables) {
+                    let supertypeMeasurables = Array.from(new Set(supertype.definition.measurables.map((item) =&gt; item.type)));
+                    for (let supertypeMeasurable of supertypeMeasurables) {
+                        if (allSupertypeMeasurables.indexOf(supertypeMeasurable) &lt; 0)
+                            allSupertypeMeasurables.push(supertypeMeasurable);
+                    }
+                }
+            }
+        }
+        this.supertypeMeasurables = allSupertypeMeasurables.map(x =&gt; {
+            return {value: x, selected: this.measurablesToReplicate.has(x)}
+        });
+        this.modal.open();
+    }
+
+    close(event) {
+        if (this.measurablesToReplicate.size &gt; 0){
+            let protoMeasurables = Array.from(this.measurablesToReplicate);
+            for (let protoMeasurable of protoMeasurables){
+                let newMeasurable = this.clsMeasurable.new(protoMeasurable);
+                newMeasurable.location = this.item;
+            }
+        }
+        this.modal.close();
+        this.closed.emit(event);
+    }
+
+    updateValue(option){
+        if ( this.measurablesToReplicate.has(option.value) &amp;&amp; !option.selected)
+            this.measurablesToReplicate.delete(option.value);
+        if (!this.measurablesToReplicate.has(option.value) &amp;&amp; option.selected)
+            this.measurablesToReplicate.add(option.value);
+    }
+}
+
+/**
+ * The MeasurableGeneratorModule module, offers the MeasurableGenerator component.
+ */
+@NgModule({
+    imports: [ CommonModule, FormsModule, Ng2Bs3ModalModule],
+    declarations: [ MeasurableGenerator ],
+    exports: [ MeasurableGenerator ]
+})
+export class MeasurableGeneratorModule {}
+
+
+</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(0.5.2)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>
