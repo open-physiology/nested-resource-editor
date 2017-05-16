@@ -30,8 +30,8 @@ import {MeasurableGeneratorModule, MeasurableGenerator} from "../components/Meas
         <div class="panel-body">
           <toolbar-commands  
             [options]  = "options"
-            (saved)    = "onSaved(event)"
-            (canceled) = "onCanceled(event)"
+            (saved)    = "onSaved($event)"
+            (canceled) = "onCanceled($event)"
             (removed)  = "removed.emit($event)">            
           </toolbar-commands>
           <toolbar-propertySettings  
@@ -87,8 +87,8 @@ import {MeasurableGeneratorModule, MeasurableGenerator} from "../components/Meas
               
                 <template-value *ngIf="templateGroup.includes(property)" 
                   [caption]="getPropertyLabel(property)" 
-                  [item]="item.p(property) | async"
-                  [step]="getDefaultValue(property, 'step')"
+                  [item]   ="item.p(property) | async"
+                  [step]   ="getDefaultValue(property, 'step')"
                   (updated)="updateProperty(property, $event)">
                 </template-value>
                 
@@ -96,7 +96,8 @@ import {MeasurableGeneratorModule, MeasurableGenerator} from "../components/Meas
                   <legend>{{getPropertyLabel(property)}}:</legend>
                   <p *ngFor = "let option of possibleValues[property]; let i = index">
                      <input type="checkbox" [value]="option" 
-                        [(ngModel)]="item[property][i]" (ngModelChange)="updateArray(property, item[property])"
+                        [checked]="item[property].includes(option)" 
+                        (change)="updateArray(property, option, $event)"
                      >{{option}}&nbsp;
                   </p>
                 </fieldset>
@@ -162,29 +163,41 @@ import {MeasurableGeneratorModule, MeasurableGenerator} from "../components/Meas
 })
 /**
  * The ResourcePanel component, generates fields for editting properties of a given resource.
- *
- * @param {Resource} item - the resource to show or edit
- * @param {Object} model  - the open-physiology model
- *
- * @emits saved           - the changes saved
- * @emits canceled        - the changes canceled
- * @emits removed         - the item deleted
- * @emits propertyUpdated - the item property changed
- *
  */
-class ResourcePanel {
+export class ResourcePanel {
+    /**
+     * @property {Resource} item - the resource to show or edit
+     */
     @Input() item;
+    /**
+     * @property {Object} model  - the open-physiology model
+     */
     @Input() model;
+    /**
+     * @property {Object} options - the visualization options for the panel's commands toolbar
+     */
     @Input() options;
 
+    /**
+     * @emits saved           - the changes saved
+     */
     @Output() saved = new EventEmitter();
+    /**
+     * @emits canceled        - the changes canceled
+     */
     @Output() canceled = new EventEmitter();
+    /**
+     * @emits removed         - the item deleted
+     */
     @Output() removed = new EventEmitter();
+    /**
+     * @emits propertyUpdated - the item property changed
+     */
     @Output() propertyUpdated = new EventEmitter();
 
-    @ViewChild(MeasurableGenerator) mGen;
+    @ViewChild(MeasurableGenerator) _mGen;
 
-    ignore: Set<string> = new Set();
+    ignore           = new Set();
 
     fieldNames       = [];  //All fields
     fieldOptions     = [];  //Field visibility configurations
@@ -204,6 +217,9 @@ class ResourcePanel {
     /*Selection options*/
     possibleValues = {};
 
+    /**
+     * @param {ToastyService} toastyService - the service for showing notifications and error messages
+     */
     constructor(toastyService:ToastyService){}
 
     ngOnInit(){
@@ -295,6 +311,13 @@ class ResourcePanel {
         return label;
     }
 
+    /**
+     * @param {string} property  - the resource property name
+     * @param {string} attribute - the visual attribute name that needs the default value
+     * @returns {any}            - the initial (default) value for the visual attribute of the resource property
+     *
+     * @example getDefaultValue("width", "step") = 1
+     */
     getDefaultValue(property, attribute){
         let propertySpec = this.item.constructor.properties[property];
         switch(attribute){
@@ -306,8 +329,12 @@ class ResourcePanel {
     }
 
     visibleFieldsChanged(option){
-        if ( this.ignore.has(option.value) &&  option.selected) this.ignore.delete(option.value);
-        if (!this.ignore.has(option.value) && !option.selected) this.ignore.add(option.value);
+        if ( this.ignore.has(option.value) &&  option.selected) {
+            this.ignore.delete(option.value);
+        }
+        if (!this.ignore.has(option.value) && !option.selected) {
+            this.ignore.add(option.value);
+        }
     }
 
     updateProperty(property, item){
@@ -316,8 +343,16 @@ class ResourcePanel {
         this.propertyUpdated.emit({property: property, values: item});
     }
 
-    updateArray(property, value){
-        let newArray = (Array.isArray(value))? value.slice(): value;
+    updateArray(property, option, event){
+        let newArray = [];
+        if (!event.target.checked){
+            newArray = this.item[property].filter(x => x !== option);
+        } else {
+            newArray = this.item[property].slice();
+            if (!newArray.includes(option)){
+                newArray.push(option);
+            }
+        }
         this.updateProperty(property, newArray);
     }
 
@@ -338,7 +373,7 @@ class ResourcePanel {
     }
 
     generateMeasurables(){
-        this.mGen.generateMeasurables();
+        this._mGen.generateMeasurables();
     }
 
     onSaved(event){

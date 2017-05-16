@@ -1,74 +1,133 @@
 {
-  "coverage": "85%",
-  "expectCount": 40,
-  "actualCount": 34,
+  "coverage": "39.53%",
+  "expectCount": 129,
+  "actualCount": 51,
   "files": {
     "src/panels/AbstractResourceList.js": {
-      "expectCount": 1,
-      "actualCount": 1,
-      "undocumentLines": []
+      "expectCount": 18,
+      "actualCount": 5,
+      "undocumentLines": [
+        28,
+        35,
+        82,
+        104,
+        80,
+        161,
+        133,
+        145,
+        138,
+        129,
+        117,
+        123,
+        110
+      ]
     },
     "src/common/components/CustomSelectModule.js": {
-      "expectCount": 3,
+      "expectCount": 14,
       "actualCount": 3,
-      "undocumentLines": []
+      "undocumentLines": [
+        12,
+        40,
+        11,
+        39,
+        41,
+        13,
+        58,
+        16,
+        44,
+        28,
+        56
+      ]
     },
     "src/common/PipeTransformModule.js": {
-      "expectCount": 6,
-      "actualCount": 6,
+      "expectCount": 9,
+      "actualCount": 9,
       "undocumentLines": []
     },
     "src/panels/HighlightService.js": {
-      "expectCount": 1,
-      "actualCount": 1,
-      "undocumentLines": []
+      "expectCount": 4,
+      "actualCount": 2,
+      "undocumentLines": [
+        9,
+        10
+      ]
     },
     "src/panels/ItemHeader.js": {
-      "expectCount": 1,
-      "actualCount": 1,
-      "undocumentLines": []
+      "expectCount": 5,
+      "actualCount": 3,
+      "undocumentLines": [
+        50,
+        53
+      ]
     },
     "src/components/MeasurableGeneratorModule.js": {
-      "expectCount": 2,
+      "expectCount": 8,
       "actualCount": 2,
-      "undocumentLines": []
+      "undocumentLines": [
+        43,
+        17,
+        25,
+        19,
+        18,
+        55
+      ]
     },
     "src/panels/NestedResourceList.js": {
-      "expectCount": 1,
-      "actualCount": 1,
-      "undocumentLines": []
+      "expectCount": 7,
+      "actualCount": 3,
+      "undocumentLines": [
+        49,
+        27,
+        34,
+        86
+      ]
     },
     "src/panels/NestedResourceWidgetModule.js": {
-      "expectCount": 2,
-      "actualCount": 1,
+      "expectCount": 8,
+      "actualCount": 6,
       "undocumentLines": [
-        219
+        14,
+        48
       ]
     },
     "src/panels/ResourcePanelModule.js": {
-      "expectCount": 1,
-      "actualCount": 0,
+      "expectCount": 27,
+      "actualCount": 6,
       "undocumentLines": [
-        445
+        216,
+        56,
+        62,
+        54,
+        55,
+        232,
+        53,
+        58,
+        228,
+        60,
+        263,
+        236,
+        64,
+        61,
+        223,
+        59,
+        57,
+        63,
+        203,
+        195,
+        186
       ]
     },
-    "src/components/TemplateValueModule.js": {
-      "expectCount": 2,
-      "actualCount": 2,
-      "undocumentLines": []
-    },
     "src/test-app/app.js": {
-      "expectCount": 2,
+      "expectCount": 9,
       "actualCount": 2,
-      "undocumentLines": []
-    },
-    "src/common/utils.js": {
-      "expectCount": 8,
-      "actualCount": 5,
       "undocumentLines": [
-        14,
         17,
-        13
+        27,
+        24,
+        40,
+        44,
+        26,
+        29
       ]
     },
     "src/toolbars/ToolbarAddModule.js": {
@@ -80,22 +139,39 @@
       "expectCount": 2,
       "actualCount": 1,
       "undocumentLines": [
-        112
+        17
       ]
     },
     "src/toolbars/ToolbarFilterModule.js": {
-      "expectCount": 2,
+      "expectCount": 7,
       "actualCount": 2,
-      "undocumentLines": []
+      "undocumentLines": [
+        26,
+        16,
+        14,
+        20,
+        25
+      ]
     },
     "src/common/toolbars/ToolbarSettingsModule.js": {
-      "expectCount": 2,
+      "expectCount": 3,
       "actualCount": 2,
-      "undocumentLines": []
+      "undocumentLines": [
+        18
+      ]
     },
     "src/toolbars/ToolbarSortModule.js": {
-      "expectCount": 2,
+      "expectCount": 5,
       "actualCount": 2,
+      "undocumentLines": [
+        11,
+        15,
+        12
+      ]
+    },
+    "src/test-app/loadData.js": {
+      "expectCount": 1,
+      "actualCount": 1,
       "undocumentLines": []
     }
   }

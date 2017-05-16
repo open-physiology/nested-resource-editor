@@ -21,19 +21,19 @@ import {HighlightService} from './HighlightService.js';
         <div class="panel-body">
           <toolbar-sort  [options]="['Name', 'ID', 'Class']" (sorted)="onSorted($event)"></toolbar-sort>
           <toolbar-add   [options]="types" [transform]="getClassLabel" (added)="onAdded($event)"></toolbar-add>
-          <toolbar-propertySettings  [options] = "typeOptions" [transform] = "getClassLabel" 
+          <toolbar-propertySettings  [options] = "_typeOptions" [transform] = "getClassLabel" 
             (selectionChanged) = "hiddenTypesChanged($event)">
           </toolbar-propertySettings>
 
-          <toolbar-filter [filter]="searchString" [options]="['Name', 'ID', 'Class']" (applied)="onFiltered($event)"></toolbar-filter>
+          <toolbar-filter [filter]="_searchString" [options]="['Name', 'ID', 'Class']" (applied)="onFiltered($event)"></toolbar-filter>
                    
           <accordion [closeOthers]="true" 
-            dnd-sortable-container [dropZones]="zones" [sortableData]="items">
+            dnd-sortable-container [dropZones]="_zones" [sortableData]="items">
 
               <accordion-group *ngFor="let item of items 
                 | hideClass : hiddenTypes
-                | orderBy : sortByMode
-                | filterBy: [searchString, filterByMode]; let i = index" dnd-sortable [sortableIndex]="i"
+                | orderBy : _sortByMode
+                | filterBy: [_searchString, _filterByMode]; let i = index" dnd-sortable [sortableIndex]="i"
                 (onOpen) ="openItem = item"
                 (onClose)="openItem = null">
     
@@ -43,7 +43,7 @@ import {HighlightService} from './HighlightService.js';
                     [isActive]     = "item === activeItem"
                     [isOpen]       = "item === openItem" 
                     (mouseover)    = "highlightedItem = item" 
-                    (mouseout)     = "unhighlight(item)"
+                    (mouseout)     = "_unhighlight(item)"
                     (activeItemChanged) = "activeItem = item"
                     [ngClass] ="{highlighted: item === highlightedItem, active: item === selectedItem}">   
                   </item-header>
@@ -53,7 +53,7 @@ import {HighlightService} from './HighlightService.js';
                   <resource-panel *ngIf="item === openItem" 
                     [item]="item"
                     [model]="model"
-                    (saved)   ="onSaved(item, $event)" 
+                    (saved)   ="onSaved(item)" 
                     (removed) ="onRemoved(item)">
                    </resource-panel>   
                 </div>
@@ -113,49 +113,67 @@ import {HighlightService} from './HighlightService.js';
 })
 /**
  * The NestedResourceWidget component, provides functionality for editing lists of entities.
- * Inherits input parameters and emitted events from AbstractResourceList
- *
- * @param {Resource} activeItem - the active item
- * @emits activeItemChange      - the active item changed
- *
+ * @extends {AbstractResourceList}
  */
 export class NestedResourceWidget extends AbstractResourceList{
+
+    /**
+     * @param {Resource} item - the active item
+     */
     @Input('activeItem') set activeItem(item) {
         if (this._activeItem !== item) {
             this._activeItem = item;
             this.activeItemChange.emit(item);
         }
     }
+    /**
+     * @returns {Resource} - the active item
+     */
     get activeItem() { return this._activeItem; }
+    /**
+     * @emits activeItemChange      - the active item changed
+     */
     @Output() activeItemChange = new EventEmitter();
 
+    /**
+     * @returns {Array<string>} - the set of hidden resource classes
+     */
+    get hiddenTypes () {
+        return Array.from(this._ignoreTypes);
+    }
+
     _activeItem = null;
+    _ignoreTypes = new Set();
+    _typeOptions = [];
 
-    ignoreTypes = new Set();
-    typeOptions = [];
-
+    /**
+     * @param {HighlightService} highlightService - the service that notifies nested components about currently highlighted item
+     */
     constructor(highlightService: HighlightService){
         super(highlightService);
     }
 
+    /**
+     * Initialize the nested resource list component: set invisible by default classes
+     */
     ngOnInit(){
         super.ngOnInit();
-        this.ignoreTypes.add(this.model.Border.name).add(this.model.Node.name);
-        this.typeOptions = this.types.filter(x => this.model[x])
-            .map(x => ({ selected: !this.ignoreTypes.has(x), value: x }));
+        this._ignoreTypes.add(this.model.Border.name).add(this.model.Node.name);
+        this._typeOptions = this.types.filter(x => this.model[x])
+            .map(x => ({ selected: !this._ignoreTypes.has(x), value: x }));
     }
 
+    /**
+     * @param {Object} option - the object with the field "value" that defines the resource class and
+     *  the boolean field "selected" that indicates whether the value is selected or not.
+     */
     hiddenTypesChanged(option){
-        if ( this.ignoreTypes.has(option.value) &&  option.selected) {
-            this.ignoreTypes.delete(option.value);
+        if ( this._ignoreTypes.has(option.value) &&  option.selected) {
+            this._ignoreTypes.delete(option.value);
         }
-        if (!this.ignoreTypes.has(option.value) && !option.selected) {
-            this.ignoreTypes.add(option.value);
+        if (!this._ignoreTypes.has(option.value) && !option.selected) {
+            this._ignoreTypes.add(option.value);
         }
-    }
-
-    get hiddenTypes () {
-        return Array.from(this.ignoreTypes);
     }
 }
 

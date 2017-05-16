@@ -9,6 +9,10 @@ module.exports = [
 		loader: 'json-loader'
 	},
 	{
+		test: /\.txt$/,
+		loader: 'raw-loader'
+	},
+	{
 		test: /\.css$/,
 		loader: [ 'style-loader', 'css-loader', 'autoprefixer-loader' ]
 	},

@@ -5,13 +5,20 @@ import {Injectable, EventEmitter} from '@angular/core';
  */
 @Injectable()
 export class HighlightService {
-    
-    highlightedItemChanged$: EventEmitter<any>;
-    
+
+    /**
+     * @emits {EventEmitter} highlightedItemChanged$ - the event that the service emits when
+     * a new item is highlighted in a nested resource widget
+     */
+    highlightedItemChanged$: EventEmitter;
+
     constructor() {
         this.highlightedItemChanged$ = new EventEmitter();
     }
-    
+
+    /**
+     * @param {Resource} item - the highlighted item
+     */
     highlight(item): void {
         this.highlightedItemChanged$.emit(item);
     }

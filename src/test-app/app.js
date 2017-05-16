@@ -1,4 +1,4 @@
-import {NgModule, Component, Input} from '@angular/core';
+import {NgModule, Component} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 
 import '../libs/rxjs';
@@ -8,6 +8,7 @@ import modelFactory, {ajaxBackend} from 'open-physiology-model';
 import {PipeTransformModule} from '../common/PipeTransformModule.js';
 import {Subscription}   from 'rxjs/Subscription';
 import {NestedResourceWidgetModule} from '../index.js';
+import {loadData} from './loadData';
 
 @Component({
 	selector: 'test-app',
@@ -47,9 +48,12 @@ export class TestApp {
 				}
 			});
 		//model.Resource.getAll(); //Fails!
-		this.model.Lyph.new({id: 1, name: "Kidney"});
-		this.model.Lyph.new({id: 2, name: "Heart"});
-		this.model.Lyph.new({id: 3, name: "Head"});
+		// this.model.Lyph.new({id: 1, name: "Kidney"});
+		// this.model.Lyph.new({id: 2, name: "Heart"});
+		// this.model.Lyph.new({id: 3, name: "Head"});
+
+		loadData(this.model);
+
 	}
 
 	ngOnDestroy() { this.rs.unsubscribe(); }
@@ -58,6 +62,7 @@ export class TestApp {
 		setTimeout(() => { this.selectedItem = null; }, 0);
 		setTimeout(() => { this.selectedItem = item; }, 0);
 	}
+
 }
 
 /**

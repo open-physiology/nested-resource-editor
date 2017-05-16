@@ -9,8 +9,8 @@
     "name": "esdoc-babel-plugin",
     "option": {
       "plugins": [
-        "angular2-annotations",
-        "transform-decorators-legacy",
+        "syntax-decorators",
+        "remove-decorator",
         "transform-flow-strip-types",
         "transform-class-properties"
       ]

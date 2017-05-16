@@ -1,21 +1,21 @@
 window.esdocSearchIndex = [
   [
     "nested-resource-editor/src/panels/abstractresourcelist.js~abstractresourcelist",
-    "variable/index.html#static-variable-AbstractResourceList",
+    "class/src/panels/AbstractResourceList.js~AbstractResourceList.html",
     "<span>AbstractResourceList</span> <span class=\"search-result-import-path\">nested-resource-editor/src/panels/AbstractResourceList.js</span>",
-    "variable"
+    "class"
   ],
   [
     "nested-resource-editor/src/common/components/customselectmodule.js~customselectmodule",
-    "variable/index.html#static-variable-CustomSelectModule",
+    "class/src/common/components/CustomSelectModule.js~CustomSelectModule.html",
     "<span>CustomSelectModule</span> <span class=\"search-result-import-path\">nested-resource-editor/src/common/components/CustomSelectModule.js</span>",
-    "variable"
+    "class"
   ],
   [
     "nested-resource-editor/src/common/pipetransformmodule.js~filterby",
-    "variable/index.html#static-variable-FilterBy",
+    "class/src/common/PipeTransformModule.js~FilterBy.html",
     "<span>FilterBy</span> <span class=\"search-result-import-path\">nested-resource-editor/src/common/PipeTransformModule.js</span>",
-    "variable"
+    "class"
   ],
   [
     "nested-resource-editor/src/common/pipetransformmodule.js~hideclass",
@@ -25,213 +25,165 @@ window.esdocSearchIndex = [
   ],
   [
     "nested-resource-editor/src/panels/highlightservice.js~highlightservice",
-    "variable/index.html#static-variable-HighlightService",
+    "class/src/panels/HighlightService.js~HighlightService.html",
     "<span>HighlightService</span> <span class=\"search-result-import-path\">nested-resource-editor/src/panels/HighlightService.js</span>",
-    "variable"
+    "class"
   ],
   [
     "nested-resource-editor/src/panels/itemheader.js~itemheader",
-    "variable/index.html#static-variable-ItemHeader",
+    "class/src/panels/ItemHeader.js~ItemHeader.html",
     "<span>ItemHeader</span> <span class=\"search-result-import-path\">nested-resource-editor/src/panels/ItemHeader.js</span>",
-    "variable"
+    "class"
   ],
   [
     "nested-resource-editor/src/components/measurablegeneratormodule.js~measurablegenerator",
-    "variable/index.html#static-variable-MeasurableGenerator",
+    "class/src/components/MeasurableGeneratorModule.js~MeasurableGenerator.html",
     "<span>MeasurableGenerator</span> <span class=\"search-result-import-path\">nested-resource-editor/src/components/MeasurableGeneratorModule.js</span>",
-    "variable"
+    "class"
   ],
   [
     "nested-resource-editor/src/components/measurablegeneratormodule.js~measurablegeneratormodule",
-    "variable/index.html#static-variable-MeasurableGeneratorModule",
+    "class/src/components/MeasurableGeneratorModule.js~MeasurableGeneratorModule.html",
     "<span>MeasurableGeneratorModule</span> <span class=\"search-result-import-path\">nested-resource-editor/src/components/MeasurableGeneratorModule.js</span>",
-    "variable"
+    "class"
   ],
   [
     "nested-resource-editor/src/common/components/customselectmodule.js~multiselectinput",
-    "variable/index.html#static-variable-MultiSelectInput",
+    "class/src/common/components/CustomSelectModule.js~MultiSelectInput.html",
     "<span>MultiSelectInput</span> <span class=\"search-result-import-path\">nested-resource-editor/src/common/components/CustomSelectModule.js</span>",
-    "variable"
+    "class"
   ],
   [
     "nested-resource-editor/src/panels/nestedresourcelist.js~nestedresourcelist",
-    "variable/index.html#static-variable-NestedResourceList",
+    "class/src/panels/NestedResourceList.js~NestedResourceList.html",
     "<span>NestedResourceList</span> <span class=\"search-result-import-path\">nested-resource-editor/src/panels/NestedResourceList.js</span>",
-    "variable"
+    "class"
   ],
   [
     "nested-resource-editor/src/panels/nestedresourcewidgetmodule.js~nestedresourcewidget",
-    "variable/index.html#static-variable-NestedResourceWidget",
+    "class/src/panels/NestedResourceWidgetModule.js~NestedResourceWidget.html",
     "<span>NestedResourceWidget</span> <span class=\"search-result-import-path\">nested-resource-editor/src/panels/NestedResourceWidgetModule.js</span>",
-    "variable"
+    "class"
   ],
   [
     "nested-resource-editor/src/panels/nestedresourcewidgetmodule.js~nestedresourcewidgetmodule",
-    "variable/index.html#static-variable-NestedResourceWidgetModule",
+    "class/src/panels/NestedResourceWidgetModule.js~NestedResourceWidgetModule.html",
     "<span>NestedResourceWidgetModule</span> <span class=\"search-result-import-path\">nested-resource-editor/src/panels/NestedResourceWidgetModule.js</span>",
-    "variable"
+    "class"
   ],
   [
     "nested-resource-editor/src/common/pipetransformmodule.js~orderby",
-    "variable/index.html#static-variable-OrderBy",
+    "class/src/common/PipeTransformModule.js~OrderBy.html",
     "<span>OrderBy</span> <span class=\"search-result-import-path\">nested-resource-editor/src/common/PipeTransformModule.js</span>",
-    "variable"
+    "class"
   ],
   [
     "nested-resource-editor/src/common/pipetransformmodule.js~pipetransformmodule",
-    "variable/index.html#static-variable-PipeTransformModule",
+    "class/src/common/PipeTransformModule.js~PipeTransformModule.html",
     "<span>PipeTransformModule</span> <span class=\"search-result-import-path\">nested-resource-editor/src/common/PipeTransformModule.js</span>",
-    "variable"
+    "class"
+  ],
+  [
+    "nested-resource-editor/src/panels/resourcepanelmodule.js~resourcepanel",
+    "class/src/panels/ResourcePanelModule.js~ResourcePanel.html",
+    "<span>ResourcePanel</span> <span class=\"search-result-import-path\">nested-resource-editor/src/panels/ResourcePanelModule.js</span>",
+    "class"
   ],
   [
     "nested-resource-editor/src/panels/resourcepanelmodule.js~resourcepanelmodule",
-    "variable/index.html#static-variable-ResourcePanelModule",
+    "class/src/panels/ResourcePanelModule.js~ResourcePanelModule.html",
     "<span>ResourcePanelModule</span> <span class=\"search-result-import-path\">nested-resource-editor/src/panels/ResourcePanelModule.js</span>",
-    "variable"
+    "class"
   ],
   [
     "nested-resource-editor/src/common/pipetransformmodule.js~settoarray",
-    "variable/index.html#static-variable-SetToArray",
+    "class/src/common/PipeTransformModule.js~SetToArray.html",
     "<span>SetToArray</span> <span class=\"search-result-import-path\">nested-resource-editor/src/common/PipeTransformModule.js</span>",
-    "variable"
+    "class"
   ],
   [
     "nested-resource-editor/src/common/components/customselectmodule.js~singleselectinput",
-    "variable/index.html#static-variable-SingleSelectInput",
+    "class/src/common/components/CustomSelectModule.js~SingleSelectInput.html",
     "<span>SingleSelectInput</span> <span class=\"search-result-import-path\">nested-resource-editor/src/common/components/CustomSelectModule.js</span>",
-    "variable"
-  ],
-  [
-    "nested-resource-editor/src/components/templatevaluemodule.js~templatevaluecomponent",
-    "variable/index.html#static-variable-TemplateValueComponent",
-    "<span>TemplateValueComponent</span> <span class=\"search-result-import-path\">nested-resource-editor/src/components/TemplateValueModule.js</span>",
-    "variable"
-  ],
-  [
-    "nested-resource-editor/src/components/templatevaluemodule.js~templatevaluemodule",
-    "variable/index.html#static-variable-TemplateValueModule",
-    "<span>TemplateValueModule</span> <span class=\"search-result-import-path\">nested-resource-editor/src/components/TemplateValueModule.js</span>",
-    "variable"
+    "class"
   ],
   [
     "nested-resource-editor/src/test-app/app.js~testapp",
-    "variable/index.html#static-variable-TestApp",
+    "class/src/test-app/app.js~TestApp.html",
     "<span>TestApp</span> <span class=\"search-result-import-path\">nested-resource-editor/src/test-app/app.js</span>",
-    "variable"
+    "class"
   ],
   [
     "nested-resource-editor/src/test-app/app.js~testappmodule",
-    "variable/index.html#static-variable-TestAppModule",
+    "class/src/test-app/app.js~TestAppModule.html",
     "<span>TestAppModule</span> <span class=\"search-result-import-path\">nested-resource-editor/src/test-app/app.js</span>",
-    "variable"
-  ],
-  [
-    "nested-resource-editor/src/common/utils.js~testclass",
-    "class/src/common/utils.js~TestClass.html",
-    "<span>TestClass</span> <span class=\"search-result-import-path\">nested-resource-editor/src/common/utils.js</span>",
     "class"
   ],
   [
     "nested-resource-editor/src/toolbars/toolbaraddmodule.js~toolbaradd",
-    "variable/index.html#static-variable-ToolbarAdd",
+    "class/src/toolbars/ToolbarAddModule.js~ToolbarAdd.html",
     "<span>ToolbarAdd</span> <span class=\"search-result-import-path\">nested-resource-editor/src/toolbars/ToolbarAddModule.js</span>",
-    "variable"
+    "class"
   ],
   [
     "nested-resource-editor/src/toolbars/toolbaraddmodule.js~toolbaraddmodule",
-    "variable/index.html#static-variable-ToolbarAddModule",
+    "class/src/toolbars/ToolbarAddModule.js~ToolbarAddModule.html",
     "<span>ToolbarAddModule</span> <span class=\"search-result-import-path\">nested-resource-editor/src/toolbars/ToolbarAddModule.js</span>",
-    "variable"
+    "class"
   ],
   [
     "nested-resource-editor/src/toolbars/toolbarcommandsmodule.js~toolbarcommands",
-    "variable/index.html#static-variable-ToolbarCommands",
+    "class/src/toolbars/ToolbarCommandsModule.js~ToolbarCommands.html",
     "<span>ToolbarCommands</span> <span class=\"search-result-import-path\">nested-resource-editor/src/toolbars/ToolbarCommandsModule.js</span>",
-    "variable"
+    "class"
   ],
   [
     "nested-resource-editor/src/toolbars/toolbarcommandsmodule.js~toolbarcommandsmodule",
-    "variable/index.html#static-variable-ToolbarCommandsModule",
+    "class/src/toolbars/ToolbarCommandsModule.js~ToolbarCommandsModule.html",
     "<span>ToolbarCommandsModule</span> <span class=\"search-result-import-path\">nested-resource-editor/src/toolbars/ToolbarCommandsModule.js</span>",
-    "variable"
+    "class"
   ],
   [
     "nested-resource-editor/src/toolbars/toolbarfiltermodule.js~toolbarfilter",
-    "variable/index.html#static-variable-ToolbarFilter",
+    "class/src/toolbars/ToolbarFilterModule.js~ToolbarFilter.html",
     "<span>ToolbarFilter</span> <span class=\"search-result-import-path\">nested-resource-editor/src/toolbars/ToolbarFilterModule.js</span>",
-    "variable"
+    "class"
   ],
   [
     "nested-resource-editor/src/toolbars/toolbarfiltermodule.js~toolbarfiltermodule",
-    "variable/index.html#static-variable-ToolbarFilterModule",
+    "class/src/toolbars/ToolbarFilterModule.js~ToolbarFilterModule.html",
     "<span>ToolbarFilterModule</span> <span class=\"search-result-import-path\">nested-resource-editor/src/toolbars/ToolbarFilterModule.js</span>",
-    "variable"
+    "class"
   ],
   [
     "nested-resource-editor/src/common/toolbars/toolbarsettingsmodule.js~toolbarpropertysettings",
-    "variable/index.html#static-variable-ToolbarPropertySettings",
+    "class/src/common/toolbars/ToolbarSettingsModule.js~ToolbarPropertySettings.html",
     "<span>ToolbarPropertySettings</span> <span class=\"search-result-import-path\">nested-resource-editor/src/common/toolbars/ToolbarSettingsModule.js</span>",
-    "variable"
+    "class"
   ],
   [
     "nested-resource-editor/src/common/toolbars/toolbarsettingsmodule.js~toolbarsettingsmodule",
-    "variable/index.html#static-variable-ToolbarSettingsModule",
+    "class/src/common/toolbars/ToolbarSettingsModule.js~ToolbarSettingsModule.html",
     "<span>ToolbarSettingsModule</span> <span class=\"search-result-import-path\">nested-resource-editor/src/common/toolbars/ToolbarSettingsModule.js</span>",
-    "variable"
+    "class"
   ],
   [
     "nested-resource-editor/src/toolbars/toolbarsortmodule.js~toolbarsort",
-    "variable/index.html#static-variable-ToolbarSort",
+    "class/src/toolbars/ToolbarSortModule.js~ToolbarSort.html",
     "<span>ToolbarSort</span> <span class=\"search-result-import-path\">nested-resource-editor/src/toolbars/ToolbarSortModule.js</span>",
-    "variable"
+    "class"
   ],
   [
     "nested-resource-editor/src/toolbars/toolbarsortmodule.js~toolbarsortmodule",
-    "variable/index.html#static-variable-ToolbarSortModule",
+    "class/src/toolbars/ToolbarSortModule.js~ToolbarSortModule.html",
     "<span>ToolbarSortModule</span> <span class=\"search-result-import-path\">nested-resource-editor/src/toolbars/ToolbarSortModule.js</span>",
-    "variable"
+    "class"
   ],
   [
-    "nested-resource-editor/src/common/utils.js~getclasslabel",
-    "function/index.html#static-function-getClassLabel",
-    "<span>getClassLabel</span> <span class=\"search-result-import-path\">nested-resource-editor/src/common/utils.js</span>",
+    "nested-resource-editor/src/test-app/loaddata.js~loaddata",
+    "function/index.html#static-function-loadData",
+    "<span>loadData</span> <span class=\"search-result-import-path\">nested-resource-editor/src/test-app/loadData.js</span>",
     "function"
-  ],
-  [
-    "nested-resource-editor/src/common/utils.js~getcolor",
-    "function/index.html#static-function-getColor",
-    "<span>getColor</span> <span class=\"search-result-import-path\">nested-resource-editor/src/common/utils.js</span>",
-    "function"
-  ],
-  [
-    "nested-resource-editor/src/common/utils.js~getpropertylabel",
-    "function/index.html#static-function-getPropertyLabel",
-    "<span>getPropertyLabel</span> <span class=\"search-result-import-path\">nested-resource-editor/src/common/utils.js</span>",
-    "function"
-  ],
-  [
-    "nested-resource-editor/src/common/utils.js~getresourceicon",
-    "function/index.html#static-function-getResourceIcon",
-    "<span>getResourceIcon</span> <span class=\"search-result-import-path\">nested-resource-editor/src/common/utils.js</span>",
-    "function"
-  ],
-  [
-    "nested-resource-editor/src/common/utils.js~model",
-    "variable/index.html#static-variable-model",
-    "<span>model</span> <span class=\"search-result-import-path\">nested-resource-editor/src/common/utils.js</span>",
-    "variable"
-  ],
-  [
-    "nested-resource-editor/src/common/utils.js~modelclassnames",
-    "variable/index.html#static-variable-modelClassNames",
-    "<span>modelClassNames</span> <span class=\"search-result-import-path\">nested-resource-editor/src/common/utils.js</span>",
-    "variable"
-  ],
-  [
-    "nested-resource-editor/src/common/utils.js~modelref",
-    "variable/index.html#static-variable-modelRef",
-    "<span>modelRef</span> <span class=\"search-result-import-path\">nested-resource-editor/src/common/utils.js</span>",
-    "variable"
   ],
   [
     "builtinexternal/ecmascriptexternal.js~array",
@@ -570,9 +522,27 @@ window.esdocSearchIndex = [
     "file"
   ],
   [
+    "src/common/pipetransformmodule.js~filterby#transform",
+    "class/src/common/PipeTransformModule.js~FilterBy.html#instance-method-transform",
+    "src/common/PipeTransformModule.js~FilterBy#transform",
+    "method"
+  ],
+  [
     "src/common/pipetransformmodule.js~hideclass#transform",
     "class/src/common/PipeTransformModule.js~HideClass.html#instance-method-transform",
     "src/common/PipeTransformModule.js~HideClass#transform",
+    "method"
+  ],
+  [
+    "src/common/pipetransformmodule.js~orderby#transform",
+    "class/src/common/PipeTransformModule.js~OrderBy.html#instance-method-transform",
+    "src/common/PipeTransformModule.js~OrderBy#transform",
+    "method"
+  ],
+  [
+    "src/common/pipetransformmodule.js~settoarray#transform",
+    "class/src/common/PipeTransformModule.js~SetToArray.html#instance-method-transform",
+    "src/common/PipeTransformModule.js~SetToArray#transform",
     "method"
   ],
   [
@@ -582,16 +552,82 @@ window.esdocSearchIndex = [
     "file"
   ],
   [
+    "src/common/components/customselectmodule.js~multiselectinput#active",
+    "class/src/common/components/CustomSelectModule.js~MultiSelectInput.html#instance-member-active",
+    "src/common/components/CustomSelectModule.js~MultiSelectInput#active",
+    "member"
+  ],
+  [
+    "src/common/components/customselectmodule.js~multiselectinput#constructor",
+    "class/src/common/components/CustomSelectModule.js~MultiSelectInput.html#instance-constructor-constructor",
+    "src/common/components/CustomSelectModule.js~MultiSelectInput#constructor",
+    "method"
+  ],
+  [
+    "src/common/components/customselectmodule.js~multiselectinput#externalchange",
+    "class/src/common/components/CustomSelectModule.js~MultiSelectInput.html#instance-member-externalChange",
+    "src/common/components/CustomSelectModule.js~MultiSelectInput#externalChange",
+    "member"
+  ],
+  [
+    "src/common/components/customselectmodule.js~multiselectinput#ngonchanges",
+    "class/src/common/components/CustomSelectModule.js~MultiSelectInput.html#instance-method-ngOnChanges",
+    "src/common/components/CustomSelectModule.js~MultiSelectInput#ngOnChanges",
+    "method"
+  ],
+  [
+    "src/common/components/customselectmodule.js~multiselectinput#refreshvalue",
+    "class/src/common/components/CustomSelectModule.js~MultiSelectInput.html#instance-method-refreshValue",
+    "src/common/components/CustomSelectModule.js~MultiSelectInput#refreshValue",
+    "method"
+  ],
+  [
+    "src/common/components/customselectmodule.js~singleselectinput#active",
+    "class/src/common/components/CustomSelectModule.js~SingleSelectInput.html#instance-member-active",
+    "src/common/components/CustomSelectModule.js~SingleSelectInput#active",
+    "member"
+  ],
+  [
+    "src/common/components/customselectmodule.js~singleselectinput#constructor",
+    "class/src/common/components/CustomSelectModule.js~SingleSelectInput.html#instance-constructor-constructor",
+    "src/common/components/CustomSelectModule.js~SingleSelectInput#constructor",
+    "method"
+  ],
+  [
+    "src/common/components/customselectmodule.js~singleselectinput#externalchange",
+    "class/src/common/components/CustomSelectModule.js~SingleSelectInput.html#instance-member-externalChange",
+    "src/common/components/CustomSelectModule.js~SingleSelectInput#externalChange",
+    "member"
+  ],
+  [
+    "src/common/components/customselectmodule.js~singleselectinput#item",
+    "class/src/common/components/CustomSelectModule.js~SingleSelectInput.html#instance-member-item",
+    "src/common/components/CustomSelectModule.js~SingleSelectInput#item",
+    "member"
+  ],
+  [
+    "src/common/components/customselectmodule.js~singleselectinput#ngonchanges",
+    "class/src/common/components/CustomSelectModule.js~SingleSelectInput.html#instance-method-ngOnChanges",
+    "src/common/components/CustomSelectModule.js~SingleSelectInput#ngOnChanges",
+    "method"
+  ],
+  [
+    "src/common/components/customselectmodule.js~singleselectinput#refreshvalue",
+    "class/src/common/components/CustomSelectModule.js~SingleSelectInput.html#instance-method-refreshValue",
+    "src/common/components/CustomSelectModule.js~SingleSelectInput#refreshValue",
+    "method"
+  ],
+  [
     "src/common/toolbars/toolbarsettingsmodule.js",
     "file/src/common/toolbars/ToolbarSettingsModule.js.html",
     "src/common/toolbars/ToolbarSettingsModule.js",
     "file"
   ],
   [
-    "src/common/utils.js",
-    "file/src/common/utils.js.html",
-    "src/common/utils.js",
-    "file"
+    "src/common/toolbars/toolbarsettingsmodule.js~toolbarpropertysettings#updatevalue",
+    "class/src/common/toolbars/ToolbarSettingsModule.js~ToolbarPropertySettings.html#instance-method-updateValue",
+    "src/common/toolbars/ToolbarSettingsModule.js~ToolbarPropertySettings#updateValue",
+    "method"
   ],
   [
     "src/components/measurablegeneratormodule.js",
@@ -600,10 +636,40 @@ window.esdocSearchIndex = [
     "file"
   ],
   [
-    "src/components/templatevaluemodule.js",
-    "file/src/components/TemplateValueModule.js.html",
-    "src/components/TemplateValueModule.js",
-    "file"
+    "src/components/measurablegeneratormodule.js~measurablegenerator#close",
+    "class/src/components/MeasurableGeneratorModule.js~MeasurableGenerator.html#instance-method-close",
+    "src/components/MeasurableGeneratorModule.js~MeasurableGenerator#close",
+    "method"
+  ],
+  [
+    "src/components/measurablegeneratormodule.js~measurablegenerator#constructor",
+    "class/src/components/MeasurableGeneratorModule.js~MeasurableGenerator.html#instance-constructor-constructor",
+    "src/components/MeasurableGeneratorModule.js~MeasurableGenerator#constructor",
+    "method"
+  ],
+  [
+    "src/components/measurablegeneratormodule.js~measurablegenerator#generatemeasurables",
+    "class/src/components/MeasurableGeneratorModule.js~MeasurableGenerator.html#instance-method-generateMeasurables",
+    "src/components/MeasurableGeneratorModule.js~MeasurableGenerator#generateMeasurables",
+    "method"
+  ],
+  [
+    "src/components/measurablegeneratormodule.js~measurablegenerator#measurablestoreplicate",
+    "class/src/components/MeasurableGeneratorModule.js~MeasurableGenerator.html#instance-member-measurablesToReplicate",
+    "src/components/MeasurableGeneratorModule.js~MeasurableGenerator#measurablesToReplicate",
+    "member"
+  ],
+  [
+    "src/components/measurablegeneratormodule.js~measurablegenerator#supertypemeasurables",
+    "class/src/components/MeasurableGeneratorModule.js~MeasurableGenerator.html#instance-member-supertypeMeasurables",
+    "src/components/MeasurableGeneratorModule.js~MeasurableGenerator#supertypeMeasurables",
+    "member"
+  ],
+  [
+    "src/components/measurablegeneratormodule.js~measurablegenerator#updatevalue",
+    "class/src/components/MeasurableGeneratorModule.js~MeasurableGenerator.html#instance-method-updateValue",
+    "src/components/MeasurableGeneratorModule.js~MeasurableGenerator#updateValue",
+    "method"
   ],
   [
     "src/index.js",
@@ -636,10 +702,130 @@ window.esdocSearchIndex = [
     "file"
   ],
   [
+    "src/panels/abstractresourcelist.js~abstractresourcelist#constructor",
+    "class/src/panels/AbstractResourceList.js~AbstractResourceList.html#instance-constructor-constructor",
+    "src/panels/AbstractResourceList.js~AbstractResourceList#constructor",
+    "method"
+  ],
+  [
+    "src/panels/abstractresourcelist.js~abstractresourcelist#getclasslabel",
+    "class/src/panels/AbstractResourceList.js~AbstractResourceList.html#instance-method-getClassLabel",
+    "src/panels/AbstractResourceList.js~AbstractResourceList#getClassLabel",
+    "method"
+  ],
+  [
+    "src/panels/abstractresourcelist.js~abstractresourcelist#highlighteditem",
+    "class/src/panels/AbstractResourceList.js~AbstractResourceList.html#instance-get-highlightedItem",
+    "src/panels/AbstractResourceList.js~AbstractResourceList#highlightedItem",
+    "member"
+  ],
+  [
+    "src/panels/abstractresourcelist.js~abstractresourcelist#highlighteditem",
+    "class/src/panels/AbstractResourceList.js~AbstractResourceList.html#instance-set-highlightedItem",
+    "src/panels/AbstractResourceList.js~AbstractResourceList#highlightedItem",
+    "member"
+  ],
+  [
+    "src/panels/abstractresourcelist.js~abstractresourcelist#items",
+    "class/src/panels/AbstractResourceList.js~AbstractResourceList.html#instance-member-items",
+    "src/panels/AbstractResourceList.js~AbstractResourceList#items",
+    "member"
+  ],
+  [
+    "src/panels/abstractresourcelist.js~abstractresourcelist#ngondestroy",
+    "class/src/panels/AbstractResourceList.js~AbstractResourceList.html#instance-method-ngOnDestroy",
+    "src/panels/AbstractResourceList.js~AbstractResourceList#ngOnDestroy",
+    "method"
+  ],
+  [
+    "src/panels/abstractresourcelist.js~abstractresourcelist#ngoninit",
+    "class/src/panels/AbstractResourceList.js~AbstractResourceList.html#instance-method-ngOnInit",
+    "src/panels/AbstractResourceList.js~AbstractResourceList#ngOnInit",
+    "method"
+  ],
+  [
+    "src/panels/abstractresourcelist.js~abstractresourcelist#onadded",
+    "class/src/panels/AbstractResourceList.js~AbstractResourceList.html#instance-method-onAdded",
+    "src/panels/AbstractResourceList.js~AbstractResourceList#onAdded",
+    "method"
+  ],
+  [
+    "src/panels/abstractresourcelist.js~abstractresourcelist#onfiltered",
+    "class/src/panels/AbstractResourceList.js~AbstractResourceList.html#instance-method-onFiltered",
+    "src/panels/AbstractResourceList.js~AbstractResourceList#onFiltered",
+    "method"
+  ],
+  [
+    "src/panels/abstractresourcelist.js~abstractresourcelist#onremoved",
+    "class/src/panels/AbstractResourceList.js~AbstractResourceList.html#instance-method-onRemoved",
+    "src/panels/AbstractResourceList.js~AbstractResourceList#onRemoved",
+    "method"
+  ],
+  [
+    "src/panels/abstractresourcelist.js~abstractresourcelist#onsaved",
+    "class/src/panels/AbstractResourceList.js~AbstractResourceList.html#instance-method-onSaved",
+    "src/panels/AbstractResourceList.js~AbstractResourceList#onSaved",
+    "method"
+  ],
+  [
+    "src/panels/abstractresourcelist.js~abstractresourcelist#onsorted",
+    "class/src/panels/AbstractResourceList.js~AbstractResourceList.html#instance-method-onSorted",
+    "src/panels/AbstractResourceList.js~AbstractResourceList#onSorted",
+    "method"
+  ],
+  [
+    "src/panels/abstractresourcelist.js~abstractresourcelist#openitem",
+    "class/src/panels/AbstractResourceList.js~AbstractResourceList.html#instance-set-openItem",
+    "src/panels/AbstractResourceList.js~AbstractResourceList#openItem",
+    "member"
+  ],
+  [
+    "src/panels/abstractresourcelist.js~abstractresourcelist#openitem",
+    "class/src/panels/AbstractResourceList.js~AbstractResourceList.html#instance-get-openItem",
+    "src/panels/AbstractResourceList.js~AbstractResourceList#openItem",
+    "member"
+  ],
+  [
+    "src/panels/abstractresourcelist.js~abstractresourcelist#selecteditem",
+    "class/src/panels/AbstractResourceList.js~AbstractResourceList.html#instance-get-selectedItem",
+    "src/panels/AbstractResourceList.js~AbstractResourceList#selectedItem",
+    "member"
+  ],
+  [
+    "src/panels/abstractresourcelist.js~abstractresourcelist#selecteditem",
+    "class/src/panels/AbstractResourceList.js~AbstractResourceList.html#instance-set-selectedItem",
+    "src/panels/AbstractResourceList.js~AbstractResourceList#selectedItem",
+    "member"
+  ],
+  [
+    "src/panels/abstractresourcelist.js~abstractresourcelist#unhighlight",
+    "class/src/panels/AbstractResourceList.js~AbstractResourceList.html#instance-method-unhighlight",
+    "src/panels/AbstractResourceList.js~AbstractResourceList#unhighlight",
+    "method"
+  ],
+  [
     "src/panels/highlightservice.js",
     "file/src/panels/HighlightService.js.html",
     "src/panels/HighlightService.js",
     "file"
+  ],
+  [
+    "src/panels/highlightservice.js~highlightservice#constructor",
+    "class/src/panels/HighlightService.js~HighlightService.html#instance-constructor-constructor",
+    "src/panels/HighlightService.js~HighlightService#constructor",
+    "method"
+  ],
+  [
+    "src/panels/highlightservice.js~highlightservice#highlight",
+    "class/src/panels/HighlightService.js~HighlightService.html#instance-method-highlight",
+    "src/panels/HighlightService.js~HighlightService#highlight",
+    "method"
+  ],
+  [
+    "src/panels/highlightservice.js~highlightservice#highlighteditemchanged$",
+    "class/src/panels/HighlightService.js~HighlightService.html#instance-member-highlightedItemChanged$",
+    "src/panels/HighlightService.js~HighlightService#highlightedItemChanged$",
+    "member"
   ],
   [
     "src/panels/itemheader.js",
@@ -648,10 +834,70 @@ window.esdocSearchIndex = [
     "file"
   ],
   [
+    "src/panels/itemheader.js~itemheader#constructor",
+    "class/src/panels/ItemHeader.js~ItemHeader.html#instance-constructor-constructor",
+    "src/panels/ItemHeader.js~ItemHeader#constructor",
+    "method"
+  ],
+  [
+    "src/panels/itemheader.js~itemheader#el",
+    "class/src/panels/ItemHeader.js~ItemHeader.html#instance-member-el",
+    "src/panels/ItemHeader.js~ItemHeader#el",
+    "member"
+  ],
+  [
+    "src/panels/itemheader.js~itemheader#getresourceicon",
+    "class/src/panels/ItemHeader.js~ItemHeader.html#instance-method-getResourceIcon",
+    "src/panels/ItemHeader.js~ItemHeader#getResourceIcon",
+    "method"
+  ],
+  [
+    "src/panels/itemheader.js~itemheader#ngoninit",
+    "class/src/panels/ItemHeader.js~ItemHeader.html#instance-method-ngOnInit",
+    "src/panels/ItemHeader.js~ItemHeader#ngOnInit",
+    "method"
+  ],
+  [
     "src/panels/nestedresourcelist.js",
     "file/src/panels/NestedResourceList.js.html",
     "src/panels/NestedResourceList.js",
     "file"
+  ],
+  [
+    "src/panels/nestedresourcelist.js~nestedresourcelist#constructor",
+    "class/src/panels/NestedResourceList.js~NestedResourceList.html#instance-constructor-constructor",
+    "src/panels/NestedResourceList.js~NestedResourceList#constructor",
+    "method"
+  ],
+  [
+    "src/panels/nestedresourcelist.js~nestedresourcelist#ngondestroy",
+    "class/src/panels/NestedResourceList.js~NestedResourceList.html#instance-method-ngOnDestroy",
+    "src/panels/NestedResourceList.js~NestedResourceList#ngOnDestroy",
+    "method"
+  ],
+  [
+    "src/panels/nestedresourcelist.js~nestedresourcelist#ngoninit",
+    "class/src/panels/NestedResourceList.js~NestedResourceList.html#instance-method-ngOnInit",
+    "src/panels/NestedResourceList.js~NestedResourceList#ngOnInit",
+    "method"
+  ],
+  [
+    "src/panels/nestedresourcelist.js~nestedresourcelist#onincluded",
+    "class/src/panels/NestedResourceList.js~NestedResourceList.html#instance-method-onIncluded",
+    "src/panels/NestedResourceList.js~NestedResourceList#onIncluded",
+    "method"
+  ],
+  [
+    "src/panels/nestedresourcelist.js~nestedresourcelist#possiblevalues",
+    "class/src/panels/NestedResourceList.js~NestedResourceList.html#instance-member-possibleValues",
+    "src/panels/NestedResourceList.js~NestedResourceList#possibleValues",
+    "member"
+  ],
+  [
+    "src/panels/nestedresourcelist.js~nestedresourcelist#selecteditem",
+    "class/src/panels/NestedResourceList.js~NestedResourceList.html#instance-member-selectedItem",
+    "src/panels/NestedResourceList.js~NestedResourceList#selectedItem",
+    "member"
   ],
   [
     "src/panels/nestedresourcewidgetmodule.js",
@@ -660,10 +906,196 @@ window.esdocSearchIndex = [
     "file"
   ],
   [
+    "src/panels/nestedresourcewidgetmodule.js~nestedresourcewidget#activeitem",
+    "class/src/panels/NestedResourceWidgetModule.js~NestedResourceWidget.html#instance-get-activeItem",
+    "src/panels/NestedResourceWidgetModule.js~NestedResourceWidget#activeItem",
+    "member"
+  ],
+  [
+    "src/panels/nestedresourcewidgetmodule.js~nestedresourcewidget#activeitem",
+    "class/src/panels/NestedResourceWidgetModule.js~NestedResourceWidget.html#instance-set-activeItem",
+    "src/panels/NestedResourceWidgetModule.js~NestedResourceWidget#activeItem",
+    "member"
+  ],
+  [
+    "src/panels/nestedresourcewidgetmodule.js~nestedresourcewidget#constructor",
+    "class/src/panels/NestedResourceWidgetModule.js~NestedResourceWidget.html#instance-constructor-constructor",
+    "src/panels/NestedResourceWidgetModule.js~NestedResourceWidget#constructor",
+    "method"
+  ],
+  [
+    "src/panels/nestedresourcewidgetmodule.js~nestedresourcewidget#hiddentypes",
+    "class/src/panels/NestedResourceWidgetModule.js~NestedResourceWidget.html#instance-get-hiddenTypes",
+    "src/panels/NestedResourceWidgetModule.js~NestedResourceWidget#hiddenTypes",
+    "member"
+  ],
+  [
+    "src/panels/nestedresourcewidgetmodule.js~nestedresourcewidget#hiddentypeschanged",
+    "class/src/panels/NestedResourceWidgetModule.js~NestedResourceWidget.html#instance-method-hiddenTypesChanged",
+    "src/panels/NestedResourceWidgetModule.js~NestedResourceWidget#hiddenTypesChanged",
+    "method"
+  ],
+  [
+    "src/panels/nestedresourcewidgetmodule.js~nestedresourcewidget#ngoninit",
+    "class/src/panels/NestedResourceWidgetModule.js~NestedResourceWidget.html#instance-method-ngOnInit",
+    "src/panels/NestedResourceWidgetModule.js~NestedResourceWidget#ngOnInit",
+    "method"
+  ],
+  [
     "src/panels/resourcepanelmodule.js",
     "file/src/panels/ResourcePanelModule.js.html",
     "src/panels/ResourcePanelModule.js",
     "file"
+  ],
+  [
+    "src/panels/resourcepanelmodule.js~resourcepanel#additem",
+    "class/src/panels/ResourcePanelModule.js~ResourcePanel.html#instance-method-addItem",
+    "src/panels/ResourcePanelModule.js~ResourcePanel#addItem",
+    "method"
+  ],
+  [
+    "src/panels/resourcepanelmodule.js~resourcepanel#checkboxgroup",
+    "class/src/panels/ResourcePanelModule.js~ResourcePanel.html#instance-member-checkboxGroup",
+    "src/panels/ResourcePanelModule.js~ResourcePanel#checkboxGroup",
+    "member"
+  ],
+  [
+    "src/panels/resourcepanelmodule.js~resourcepanel#constructor",
+    "class/src/panels/ResourcePanelModule.js~ResourcePanel.html#instance-constructor-constructor",
+    "src/panels/ResourcePanelModule.js~ResourcePanel#constructor",
+    "method"
+  ],
+  [
+    "src/panels/resourcepanelmodule.js~resourcepanel#createtype",
+    "class/src/panels/ResourcePanelModule.js~ResourcePanel.html#instance-member-createType",
+    "src/panels/ResourcePanelModule.js~ResourcePanel#createType",
+    "member"
+  ],
+  [
+    "src/panels/resourcepanelmodule.js~resourcepanel#fieldnames",
+    "class/src/panels/ResourcePanelModule.js~ResourcePanel.html#instance-member-fieldNames",
+    "src/panels/ResourcePanelModule.js~ResourcePanel#fieldNames",
+    "member"
+  ],
+  [
+    "src/panels/resourcepanelmodule.js~resourcepanel#fieldoptions",
+    "class/src/panels/ResourcePanelModule.js~ResourcePanel.html#instance-member-fieldOptions",
+    "src/panels/ResourcePanelModule.js~ResourcePanel#fieldOptions",
+    "member"
+  ],
+  [
+    "src/panels/resourcepanelmodule.js~resourcepanel#generatemeasurables",
+    "class/src/panels/ResourcePanelModule.js~ResourcePanel.html#instance-method-generateMeasurables",
+    "src/panels/ResourcePanelModule.js~ResourcePanel#generateMeasurables",
+    "method"
+  ],
+  [
+    "src/panels/resourcepanelmodule.js~resourcepanel#getdefaultvalue",
+    "class/src/panels/ResourcePanelModule.js~ResourcePanel.html#instance-method-getDefaultValue",
+    "src/panels/ResourcePanelModule.js~ResourcePanel#getDefaultValue",
+    "method"
+  ],
+  [
+    "src/panels/resourcepanelmodule.js~resourcepanel#getpropertylabel",
+    "class/src/panels/ResourcePanelModule.js~ResourcePanel.html#instance-method-getPropertyLabel",
+    "src/panels/ResourcePanelModule.js~ResourcePanel#getPropertyLabel",
+    "method"
+  ],
+  [
+    "src/panels/resourcepanelmodule.js~resourcepanel#ignore",
+    "class/src/panels/ResourcePanelModule.js~ResourcePanel.html#instance-member-ignore",
+    "src/panels/ResourcePanelModule.js~ResourcePanel#ignore",
+    "member"
+  ],
+  [
+    "src/panels/resourcepanelmodule.js~resourcepanel#inputgroup",
+    "class/src/panels/ResourcePanelModule.js~ResourcePanel.html#instance-member-inputGroup",
+    "src/panels/ResourcePanelModule.js~ResourcePanel#inputGroup",
+    "member"
+  ],
+  [
+    "src/panels/resourcepanelmodule.js~resourcepanel#istyped",
+    "class/src/panels/ResourcePanelModule.js~ResourcePanel.html#instance-method-isTyped",
+    "src/panels/ResourcePanelModule.js~ResourcePanel#isTyped",
+    "method"
+  ],
+  [
+    "src/panels/resourcepanelmodule.js~resourcepanel#multiselectgroup",
+    "class/src/panels/ResourcePanelModule.js~ResourcePanel.html#instance-member-multiSelectGroup",
+    "src/panels/ResourcePanelModule.js~ResourcePanel#multiSelectGroup",
+    "member"
+  ],
+  [
+    "src/panels/resourcepanelmodule.js~resourcepanel#ngoninit",
+    "class/src/panels/ResourcePanelModule.js~ResourcePanel.html#instance-method-ngOnInit",
+    "src/panels/ResourcePanelModule.js~ResourcePanel#ngOnInit",
+    "method"
+  ],
+  [
+    "src/panels/resourcepanelmodule.js~resourcepanel#oncanceled",
+    "class/src/panels/ResourcePanelModule.js~ResourcePanel.html#instance-method-onCanceled",
+    "src/panels/ResourcePanelModule.js~ResourcePanel#onCanceled",
+    "method"
+  ],
+  [
+    "src/panels/resourcepanelmodule.js~resourcepanel#onsaved",
+    "class/src/panels/ResourcePanelModule.js~ResourcePanel.html#instance-method-onSaved",
+    "src/panels/ResourcePanelModule.js~ResourcePanel#onSaved",
+    "method"
+  ],
+  [
+    "src/panels/resourcepanelmodule.js~resourcepanel#possiblevalues",
+    "class/src/panels/ResourcePanelModule.js~ResourcePanel.html#instance-member-possibleValues",
+    "src/panels/ResourcePanelModule.js~ResourcePanel#possibleValues",
+    "member"
+  ],
+  [
+    "src/panels/resourcepanelmodule.js~resourcepanel#relationgroup",
+    "class/src/panels/ResourcePanelModule.js~ResourcePanel.html#instance-member-relationGroup",
+    "src/panels/ResourcePanelModule.js~ResourcePanel#relationGroup",
+    "member"
+  ],
+  [
+    "src/panels/resourcepanelmodule.js~resourcepanel#removeitem",
+    "class/src/panels/ResourcePanelModule.js~ResourcePanel.html#instance-method-removeItem",
+    "src/panels/ResourcePanelModule.js~ResourcePanel#removeItem",
+    "method"
+  ],
+  [
+    "src/panels/resourcepanelmodule.js~resourcepanel#selectgroup",
+    "class/src/panels/ResourcePanelModule.js~ResourcePanel.html#instance-member-selectGroup",
+    "src/panels/ResourcePanelModule.js~ResourcePanel#selectGroup",
+    "member"
+  ],
+  [
+    "src/panels/resourcepanelmodule.js~resourcepanel#templategroup",
+    "class/src/panels/ResourcePanelModule.js~ResourcePanel.html#instance-member-templateGroup",
+    "src/panels/ResourcePanelModule.js~ResourcePanel#templateGroup",
+    "member"
+  ],
+  [
+    "src/panels/resourcepanelmodule.js~resourcepanel#typecreated",
+    "class/src/panels/ResourcePanelModule.js~ResourcePanel.html#instance-member-typeCreated",
+    "src/panels/ResourcePanelModule.js~ResourcePanel#typeCreated",
+    "member"
+  ],
+  [
+    "src/panels/resourcepanelmodule.js~resourcepanel#updatearray",
+    "class/src/panels/ResourcePanelModule.js~ResourcePanel.html#instance-method-updateArray",
+    "src/panels/ResourcePanelModule.js~ResourcePanel#updateArray",
+    "method"
+  ],
+  [
+    "src/panels/resourcepanelmodule.js~resourcepanel#updateproperty",
+    "class/src/panels/ResourcePanelModule.js~ResourcePanel.html#instance-method-updateProperty",
+    "src/panels/ResourcePanelModule.js~ResourcePanel#updateProperty",
+    "method"
+  ],
+  [
+    "src/panels/resourcepanelmodule.js~resourcepanel#visiblefieldschanged",
+    "class/src/panels/ResourcePanelModule.js~ResourcePanel.html#instance-method-visibleFieldsChanged",
+    "src/panels/ResourcePanelModule.js~ResourcePanel#visibleFieldsChanged",
+    "method"
   ],
   [
     "src/test-app/app.js",
@@ -672,9 +1104,57 @@ window.esdocSearchIndex = [
     "file"
   ],
   [
+    "src/test-app/app.js~testapp#constructor",
+    "class/src/test-app/app.js~TestApp.html#instance-constructor-constructor",
+    "src/test-app/app.js~TestApp#constructor",
+    "method"
+  ],
+  [
+    "src/test-app/app.js~testapp#items",
+    "class/src/test-app/app.js~TestApp.html#instance-member-items",
+    "src/test-app/app.js~TestApp#items",
+    "member"
+  ],
+  [
+    "src/test-app/app.js~testapp#model",
+    "class/src/test-app/app.js~TestApp.html#instance-member-model",
+    "src/test-app/app.js~TestApp#model",
+    "member"
+  ],
+  [
+    "src/test-app/app.js~testapp#ngondestroy",
+    "class/src/test-app/app.js~TestApp.html#instance-method-ngOnDestroy",
+    "src/test-app/app.js~TestApp#ngOnDestroy",
+    "method"
+  ],
+  [
+    "src/test-app/app.js~testapp#onitemselected",
+    "class/src/test-app/app.js~TestApp.html#instance-method-onItemSelected",
+    "src/test-app/app.js~TestApp#onItemSelected",
+    "method"
+  ],
+  [
+    "src/test-app/app.js~testapp#rs",
+    "class/src/test-app/app.js~TestApp.html#instance-member-rs",
+    "src/test-app/app.js~TestApp#rs",
+    "member"
+  ],
+  [
+    "src/test-app/app.js~testapp#selecteditem",
+    "class/src/test-app/app.js~TestApp.html#instance-member-selectedItem",
+    "src/test-app/app.js~TestApp#selectedItem",
+    "member"
+  ],
+  [
     "src/test-app/index.js",
     "file/src/test-app/index.js.html",
     "src/test-app/index.js",
+    "file"
+  ],
+  [
+    "src/test-app/loaddata.js",
+    "file/src/test-app/loadData.js.html",
+    "src/test-app/loadData.js",
     "file"
   ],
   [
@@ -696,10 +1176,58 @@ window.esdocSearchIndex = [
     "file"
   ],
   [
+    "src/toolbars/toolbarfiltermodule.js~toolbarfilter#filter",
+    "class/src/toolbars/ToolbarFilterModule.js~ToolbarFilter.html#instance-member-filter",
+    "src/toolbars/ToolbarFilterModule.js~ToolbarFilter#filter",
+    "member"
+  ],
+  [
+    "src/toolbars/toolbarfiltermodule.js~toolbarfilter#mode",
+    "class/src/toolbars/ToolbarFilterModule.js~ToolbarFilter.html#instance-member-mode",
+    "src/toolbars/ToolbarFilterModule.js~ToolbarFilter#mode",
+    "member"
+  ],
+  [
+    "src/toolbars/toolbarfiltermodule.js~toolbarfilter#ngoninit",
+    "class/src/toolbars/ToolbarFilterModule.js~ToolbarFilter.html#instance-method-ngOnInit",
+    "src/toolbars/ToolbarFilterModule.js~ToolbarFilter#ngOnInit",
+    "method"
+  ],
+  [
+    "src/toolbars/toolbarfiltermodule.js~toolbarfilter#updatemode",
+    "class/src/toolbars/ToolbarFilterModule.js~ToolbarFilter.html#instance-method-updateMode",
+    "src/toolbars/ToolbarFilterModule.js~ToolbarFilter#updateMode",
+    "method"
+  ],
+  [
+    "src/toolbars/toolbarfiltermodule.js~toolbarfilter#updatevalue",
+    "class/src/toolbars/ToolbarFilterModule.js~ToolbarFilter.html#instance-method-updateValue",
+    "src/toolbars/ToolbarFilterModule.js~ToolbarFilter#updateValue",
+    "method"
+  ],
+  [
     "src/toolbars/toolbarsortmodule.js",
     "file/src/toolbars/ToolbarSortModule.js.html",
     "src/toolbars/ToolbarSortModule.js",
     "file"
+  ],
+  [
+    "src/toolbars/toolbarsortmodule.js~toolbarsort#constructor",
+    "class/src/toolbars/ToolbarSortModule.js~ToolbarSort.html#instance-constructor-constructor",
+    "src/toolbars/ToolbarSortModule.js~ToolbarSort#constructor",
+    "method"
+  ],
+  [
+    "src/toolbars/toolbarsortmodule.js~toolbarsort#onclick",
+    "class/src/toolbars/ToolbarSortModule.js~ToolbarSort.html#instance-method-onClick",
+    "src/toolbars/ToolbarSortModule.js~ToolbarSort#onClick",
+    "method"
+  ],
+  [
+    "src/toolbars/toolbarsortmodule.js~toolbarsort#sortbymode",
+    "class/src/toolbars/ToolbarSortModule.js~ToolbarSort.html#instance-member-sortByMode",
+    "src/toolbars/ToolbarSortModule.js~ToolbarSort#sortByMode",
+    "member"
   ],
   [
     "test/index.spec.js",

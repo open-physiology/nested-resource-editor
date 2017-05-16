@@ -1,31 +1,29 @@
 import {Input, Output, EventEmitter} from '@angular/core';
-import {Subscription}   from 'rxjs/Subscription';
 import {HighlightService} from './HighlightService.js';
 
 /**
  * The AbstractResourceList class implements methods common for upper level and nested resource lists.
- *
- * @param {string} caption           - the header of the list
- * @param {Object} model  - the open-physiology model
- * @param {Array<Resource>} items    - the list of displayed resources
- * @param {Array<string>} types      - the list of displayed item types (resource classes)
- * @param {Object} options           - an optional object with configuration options for the list appearance, i.e.,
- *   {headersOnly: false, readOnly: false, sortToolbar: true, filterToolbar: true, showActive: false}
- * @param {Resource} selectedItem    - the selected resource
- * @param {Resource} highlightedItem - the highlighted resource
- *
- * @emits added                 - a new item added to the list
- * @emits removed               - an item removed from the list
- * @emits updated               - an item in the list has been updated
- * @emits selectedItemChange    - the selected item changed
- * @emits highlightedItemChange - the highlighted item changed
  */
 export class AbstractResourceList {
+    /**
+     * @property {string} caption           - the header of the list
+     */
     @Input() caption = "Resources";
+    /**
+     * @property {Object} model  - the open-physiology model
+     */
     @Input() model;
+    /**
+     * @property {Array<Resource>} items    - the list of displayed resources
+     */
     @Input() items = [];
+    /**
+     * @property {Array<string>} types      - the list of displayed item types (resource classes)
+     */
     @Input() types = [];
+
     @Input() options = {};
+
     @Input('selectedItem') set selectedItem(item) {
         if (this._selectedItem !== item) {
             this._selectedItem = item;
@@ -37,37 +35,57 @@ export class AbstractResourceList {
         if (this._highlightedItem !== item) {
             this._highlightedItem = item;
             this.highlightedItemChange.emit(item);
-            this.highlightService.highlight(this._highlightedItem);
+            this._highlightService.highlight(this._highlightedItem);
         }
     }
     get highlightedItem() { return this._highlightedItem; }
 
+    /**
+     * @emits added                 - a new item added to the list
+     */
     @Output() added = new EventEmitter();
+    /**
+     * @emits removed               - an item removed from the list
+     */
     @Output() removed = new EventEmitter();
+    /**
+     * @emits updated               - an item in the list has been updated
+     */
     @Output() updated = new EventEmitter();
+    /**
+     * @emits selectedItemChange    - the selected item changed
+     */
     @Output() selectedItemChange = new EventEmitter();
+    /**
+     * @emits highlightedItemChange - the highlighted item changed
+     */
     @Output() highlightedItemChange = new EventEmitter();
 
     _selectedItem    = null;
     _highlightedItem = null;
     _openItem        = null;
 
-    zones = [];
+    _zones = [];
 
-    sortByMode = "unsorted";
-    filterByMode = "Name";
-    searchString = "";
-    hs: Subscription;
+    _sortByMode   = "unsorted";
+    _filterByMode = "Name";
+    _searchString = "";
 
+    /**
+     * @param {HighlightService} highlightService - the service that notifies nested components about currently highlighted item
+     */
     constructor(highlightService: HighlightService) {
-        this.highlightService = highlightService;
-        this.hs = this.highlightService.highlightedItemChanged$.subscribe(item => {
+        this._highlightService = highlightService;
+        this._hs = this._highlightService.highlightedItemChanged$.subscribe(item => {
             if (this.items.includes(item) && this._highlightedItem !== item){
                 this._highlightedItem = item;
             }
         })
     }
 
+    /**
+     * Initialize the nested resource list: choose selected item and default parameters (e.g., visible classes)
+     */
     ngOnInit() {
         if (!this.items) { this.items = []; }
 
@@ -85,50 +103,75 @@ export class AbstractResourceList {
                 }
             }
         }
-        this.zones = this.types.map(x => x + "_zone");
+        this._zones = this.types.map(x => x + "_zone");
     }
 
+    /**
+     * On component destroy, unsubscribe from model library data handling events
+     */
     ngOnDestroy() {
-        if (this.hs) {
-            this.hs.unsubscribe();
+        if (this._hs) {
+            this._hs.unsubscribe();
         }
     }
 
-    unhighlight(item) {
+    _unhighlight(item) {
         if (this.highlightedItem === item) {
             this.highlightedItem = null;
         }
     }
 
-    //Open item
+    /**
+     * Set resource with the open editor
+     * @param {Resource} item - the resource with the open editor
+     */
     set openItem(item){
         if (this._openItem !== item) {
             this._openItem = item;
         }
     }
 
+    /**
+     * @returns {Resource} - the resource with the open editor
+     */
     get openItem(){
         return this._openItem;
     }
 
-    /* Events */
+    /* Event processing */
 
-    onSorted(prop: string) {
-        this.sortByMode = prop.toLowerCase();
+    /**
+     * Change sorting mode
+     * @param {string} prop - the sorting mode
+     */
+    onSorted(prop) {
+        this._sortByMode = prop.toLowerCase();
     }
 
+    /**
+     * Change filter settings
+     * @param {Object} config - the parameters for filtering, mode and search string.
+     */
     onFiltered(config) {
-        this.filterByMode = config.mode.toLowerCase();
-        this.searchString = config.filter;
+        this._filterByMode = config.mode.toLowerCase();
+        this._searchString = config.filter;
     }
 
-    onSaved(item, updatedItem) {
+    /**
+     * Save (commit) a given resource
+     * @param {Resource} item - the resource to save (commit)
+     */
+    onSaved(item) {
         this.updated.emit(this.items);
         if (item === this.selectedItem) {
             this.selectedItemChange.emit(this.selectedItem);
         }
     }
 
+    /**
+     * Delete a given resource
+     * @param {Resource} item - he resource to delete
+     */
     onRemoved(item) {
         if (!this.items) return;
         let index = this.items.indexOf(item);
@@ -146,6 +189,10 @@ export class AbstractResourceList {
         this.updated.emit(this.items);
     }
 
+    /**
+     * Create new resource
+     * @param {string} clsName - the type of the resource to create
+     */
     onAdded(clsName) {
         let options = {};
         if (clsName === "LyphWithAxis") {

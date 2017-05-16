@@ -8,10 +8,10 @@ import $ from '../libs/jquery';
             [ngClass]="{
               'glyphicon-chevron-down':  isOpen, 
               'glyphicon-chevron-right': !isOpen}">
-        </span>&nbsp;
+        </span>
         {{(item.id)? item.id: "?"}}: {{item.name}}
         <span class="pull-right">
-          <img *ngIf="isType" class="imtip" src="../images/type.png"/>
+          <img *ngIf="_isType" class="imtip" src="../images/type.png"/>
           <img class="icon" [src]="getResourceIcon()"/>
           <button type="button" *ngIf="options?.showActive" class="btn btn-default btn-header" 
             [ngClass]="{'active': isActive}" (click)="activeItemChanged.emit(item)">
@@ -42,22 +42,31 @@ import $ from '../libs/jquery';
  * The ItemHeader component configures accordion header for a given resource. The header consists of a left side icon that indicates whether
  * the accordion tab is open or closed, the title formed from the resource's id and name, and the right hand icon that shows
  * the class of the resource. The is an option to include to the header a checkbox with an icon to mark the resource as active.
- *
- * @param {Resource} item    - the resource for which header will be created
- * @param {Object} options   - an optional object with boolean options to configure header appearance, i.e., {showActive: true}
- * @param {Boolean} isOpen   - a boolean flag to indicate whether the item editor panel is open to choose proper left side icon
- * @param {Boolean} isActive - a boolean flag to indicate whether the item is active to draw or not the 'eye open' icon
- *
- * @emits activeItemChanged  - the item has been marked as active
  */
 export class ItemHeader {
+    /**
+     * {Resource} item    - the resource for which header will be created
+     */
     @Input() item;
+    /**
+     *  {Object} options   - an optional object with boolean options to configure header appearance, i.e., {showActive: true}
+     */
     @Input() options = {};
+    /**
+     *  {Boolean} isOpen   - a boolean flag to indicate whether the item editor panel is open to choose proper left side icon
+     */
     @Input() isOpen;
+    /**
+     * {Boolean} isActive - a boolean flag to indicate whether the item is active to draw or not the 'eye open' icon
+     */
     @Input() isActive;
+
+    /**
+     * @emits activeItemChanged  - the item has been marked as active
+     */
     @Output() activeItemChanged = new EventEmitter();
 
-    isType = false;
+    _isType = false;
 
     /**
      * The getResourceIcon function provides an icon for a given resource
@@ -76,12 +85,16 @@ export class ItemHeader {
         return this.item.constructor.icon;
     }
 
+    /**
+     *
+     * @param {ElementRef} el - the components's underlying native element
+     */
     constructor(el: ElementRef) {
         this.el = $(el.nativeElement);
     }
 
     ngOnInit() {
-        this.isType = this.item && (this.item.class === "Type");
+        this._isType = this.item && (this.item.class === "Type");
         this.el.parent().parent().parent().css("padding", 0);
     }
 }

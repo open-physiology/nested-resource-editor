@@ -46,7 +46,7 @@ export class MultiSelectInput {
         this.externalChange = true;
     }
 
-    refreshValue(value: Array<any>):void {
+    refreshValue(value):void {
         this.externalChange = false;
         let newItems = value.map(x => x.id);
         this.updated.emit(new Set(newItems));
