@@ -86,15 +86,13 @@ export class OrderBy implements PipeTransform {
 @Pipe({name: 'mapToOptions'})
 class MapToOptions implements PipeTransform {
     /**
-     *
      * @param {Array<Resource>} items -  the array of resources to convert to the array of selection options
      * which are objects with fields "id" and "text".
      * @returns {Array<{id: string, text: string}>} - the array of drop-down list selection options
      */
     transform(items = []) {
         return items.filter(x => (x.name && (x.name !== ""))).map((entry) => ({
-            id: entry,
-            text: entry.name? entry.name: "(Unnamed) " + entry.class
+            id: entry, text: entry.name? entry.name: "(Unnamed) " + entry.class
         }))
     }
 }

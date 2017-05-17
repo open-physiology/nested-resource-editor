@@ -14,10 +14,9 @@ import {loadData} from './loadData';
 	selector: 'test-app',
 	template: `
         <nested-resource-widget id="repo"
+		  caption="Resources" 
 		  [model]="model"
 		  [items]="items | setToArray" 
-		  caption="Resources" 
-		  [options]="{showActive: true}"
 		  (selectedItemChange)="onItemSelected($event)">
 		</nested-resource-widget>
 	`
