@@ -1,25 +1,15 @@
 {
-  "coverage": "39.53%",
-  "expectCount": 129,
-  "actualCount": 51,
+  "coverage": "46.45%",
+  "expectCount": 127,
+  "actualCount": 59,
   "files": {
     "src/panels/AbstractResourceList.js": {
-      "expectCount": 18,
-      "actualCount": 5,
+      "expectCount": 17,
+      "actualCount": 14,
       "undocumentLines": [
-        28,
-        35,
-        82,
-        104,
-        80,
-        161,
-        133,
-        145,
-        138,
-        129,
-        117,
-        123,
-        110
+        34,
+        41,
+        91
       ]
     },
     "src/common/components/CustomSelectModule.js": {
@@ -33,8 +23,8 @@
         41,
         13,
         58,
-        16,
         44,
+        16,
         28,
         56
       ]
@@ -53,11 +43,11 @@
       ]
     },
     "src/panels/ItemHeader.js": {
-      "expectCount": 5,
-      "actualCount": 3,
+      "expectCount": 4,
+      "actualCount": 2,
       "undocumentLines": [
-        50,
-        53
+        9,
+        45
       ]
     },
     "src/components/MeasurableGeneratorModule.js": {
@@ -73,21 +63,21 @@
       ]
     },
     "src/panels/NestedResourceList.js": {
-      "expectCount": 7,
+      "expectCount": 8,
       "actualCount": 3,
       "undocumentLines": [
-        49,
-        27,
-        34,
-        86
+        51,
+        45,
+        23,
+        30,
+        94
       ]
     },
     "src/panels/NestedResourceWidgetModule.js": {
       "expectCount": 8,
-      "actualCount": 6,
+      "actualCount": 7,
       "undocumentLines": [
-        14,
-        48
+        14
       ]
     },
     "src/panels/ResourcePanelModule.js": {
@@ -121,13 +111,13 @@
       "expectCount": 9,
       "actualCount": 2,
       "undocumentLines": [
-        17,
-        27,
-        24,
-        40,
-        44,
+        16,
         26,
-        29
+        23,
+        37,
+        41,
+        25,
+        28
       ]
     },
     "src/toolbars/ToolbarAddModule.js": {
@@ -168,11 +158,6 @@
         15,
         12
       ]
-    },
-    "src/test-app/loadData.js": {
-      "expectCount": 1,
-      "actualCount": 1,
-      "undocumentLines": []
     }
   }
 }

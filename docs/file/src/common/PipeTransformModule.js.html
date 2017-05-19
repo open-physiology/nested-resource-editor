@@ -54,7 +54,6 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/panels/ResourcePanelModule.js~ResourcePanelModule.html">ResourcePanelModule</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">test-app</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/test-app/app.js~TestApp.html">TestApp</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/test-app/app.js~TestAppModule.html">TestAppModule</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-loadData">loadData</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">toolbars</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/toolbars/ToolbarAddModule.js~ToolbarAdd.html">ToolbarAdd</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/toolbars/ToolbarAddModule.js~ToolbarAddModule.html">ToolbarAddModule</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/toolbars/ToolbarCommandsModule.js~ToolbarCommands.html">ToolbarCommands</a></span></span></li>
@@ -156,15 +155,13 @@ export class OrderBy implements PipeTransform {
 @Pipe({name: &apos;mapToOptions&apos;})
 class MapToOptions implements PipeTransform {
     /**
-     *
      * @param {Array&lt;Resource&gt;} items -  the array of resources to convert to the array of selection options
      * which are objects with fields &quot;id&quot; and &quot;text&quot;.
      * @returns {Array&lt;{id: string, text: string}&gt;} - the array of drop-down list selection options
      */
     transform(items = []) {
         return items.filter(x =&gt; (x.name &amp;&amp; (x.name !== &quot;&quot;))).map((entry) =&gt; ({
-            id: entry,
-            text: entry.name? entry.name: &quot;(Unnamed) &quot; + entry.class
+            id: entry, text: entry.name? entry.name: &quot;(Unnamed) &quot; + entry.class
         }))
     }
 }

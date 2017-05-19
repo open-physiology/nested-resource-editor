@@ -515,7 +515,7 @@
     "__docId__": 23,
     "kind": "file",
     "name": "src/common/PipeTransformModule.js",
-    "content": "import {NgModule, Pipe, PipeTransform} from '@angular/core';\r\n\r\n@Pipe({name: 'hideClass'})\r\n/**\r\n * The HideClass pipe, hides resources of given classes.\r\n */\r\nexport class HideClass implements PipeTransform {\r\n    /**\r\n     * @param {Array<Resource>} items - the array of resources to filter\r\n     * @param {Array<string>} classNames - the array of resource classes to hide\r\n     *\r\n     * @returns {Array<Resource>} - the array of filtered resources\r\n     */\r\n    transform(items, classNames = []) {\r\n        return items.filter(x => !classNames.includes(x.class));\r\n    }\r\n}\r\n\r\n/**\r\n * The FilterBy pipe, filters resources to select those that contain a given string in a given field.\r\n */\r\n@Pipe({name: 'filterBy'})\r\nexport class FilterBy implements PipeTransform {\r\n    /**\r\n     * @param {Array<Resource>} items - the array of resources to filter\r\n     * @param {string} searchString - the string that the resource field must contain\r\n     * @param {string} propName - the resource field name\r\n     * @returns {Array<Resource>} - the array of filtered resources\r\n     */\r\n    transform(items = [], [searchString, propName]) {\r\n        if (searchString.length === 0) { return items; }\r\n        return items.filter(item => (typeof(item[propName]) === 'string')\r\n            ? item[propName].toLowerCase().indexOf(searchString.toLowerCase()) !== -1\r\n            : item[propName] === searchString);\r\n    }\r\n}\r\n\r\n/**\r\n * The SetToArray pipe, converts a given set to an array.\r\n */\r\n@Pipe({name: 'setToArray'})\r\nexport class SetToArray implements PipeTransform {\r\n    /**\r\n     * @param {Set} items - the set of items\r\n     * @returns {Array} - the array of items\r\n     */\r\n    transform(items) { return Array.from(items || {}); }\r\n}\r\n\r\n/**\r\n * The OrderBy pipe, sorts given array according to the given sort mode\r\n */\r\n@Pipe({name: 'orderBy', pure: false})\r\nexport class OrderBy implements PipeTransform {\r\n    /**\r\n     *\r\n     * @param {Array} items - the array of items to sort\r\n     * @param {string} sortMode - the sort mode, the property of the item used for sorting\r\n     *  with optional \"-\" prefix to sort in the descending order.\r\n     * @returns {Array} - the sorted array. If sortedMode equals \"unsorted\", the function returns the input array without changes.\r\n     */\r\n    transform(items, sortMode: string) {\r\n        let propName = (sortMode[0] === '-')? sortMode.substring(1): sortMode;\r\n        if (propName === \"unsorted\") {\r\n            return items;\r\n        } else {\r\n            return items.sort((a, b) => {\r\n                if ((sortMode[0] === '-')) {//desc\r\n                    if (a[propName] > b[propName]) return -1;\r\n                    if (a[propName] < b[propName]) return 1;\r\n                    return 0;\r\n                } else {//asc\r\n                    if (a[propName] > b[propName]) return 1;\r\n                    if (a[propName] < b[propName]) return -1;\r\n                    return 0;\r\n                }\r\n            });\r\n        }\r\n\r\n    }\r\n}\r\n\r\n/**\r\n * The MapToOptions pipe, maps resources into objects for drop-down lists\r\n */\r\n@Pipe({name: 'mapToOptions'})\r\nclass MapToOptions implements PipeTransform {\r\n    /**\r\n     *\r\n     * @param {Array<Resource>} items -  the array of resources to convert to the array of selection options\r\n     * which are objects with fields \"id\" and \"text\".\r\n     * @returns {Array<{id: string, text: string}>} - the array of drop-down list selection options\r\n     */\r\n    transform(items = []) {\r\n        return items.filter(x => (x.name && (x.name !== \"\"))).map((entry) => ({\r\n            id: entry,\r\n            text: entry.name? entry.name: \"(Unnamed) \" + entry.class\r\n        }))\r\n    }\r\n}\r\n\r\n/**\r\n * The MapToCategories pipe, maps resources into categorized objects for drop-down lists\r\n */\r\n@Pipe({name: 'mapToCategories'})\r\nclass MapToCategories implements PipeTransform {\r\n    /**\r\n     * @param {Array<Resource>} items - the array of resources to convert to an array of categorized selection options\r\n     * which are objects with fields \"text\" and \"children\".\r\n     * @returns {Array<{text: string, children: Array}>} - the array of categorized drop-down list selection options\r\n     */\r\n    transform(items = []) {\r\n        let types = Array.from(new Set(items.map(item => item.type)));\r\n        let typedItems = [];\r\n        for (let type of types){\r\n            let typed = items.filter(item => (item.type === type));\r\n            typedItems.push({text: type, children: typed});\r\n        }\r\n        return typedItems;\r\n    }\r\n}\r\n\r\n/**\r\n * The PipeTransformModule module, exports open-physiology helper pipes\r\n */\r\n@NgModule({\r\n    declarations: [ OrderBy, FilterBy, SetToArray, HideClass, MapToOptions, MapToCategories ],\r\n    exports: [ OrderBy, FilterBy, SetToArray, HideClass, MapToOptions, MapToCategories ]\r\n})\r\nexport class PipeTransformModule {}\r\n\r\n\r\n",
+    "content": "import {NgModule, Pipe, PipeTransform} from '@angular/core';\r\n\r\n@Pipe({name: 'hideClass'})\r\n/**\r\n * The HideClass pipe, hides resources of given classes.\r\n */\r\nexport class HideClass implements PipeTransform {\r\n    /**\r\n     * @param {Array<Resource>} items - the array of resources to filter\r\n     * @param {Array<string>} classNames - the array of resource classes to hide\r\n     *\r\n     * @returns {Array<Resource>} - the array of filtered resources\r\n     */\r\n    transform(items, classNames = []) {\r\n        return items.filter(x => !classNames.includes(x.class));\r\n    }\r\n}\r\n\r\n/**\r\n * The FilterBy pipe, filters resources to select those that contain a given string in a given field.\r\n */\r\n@Pipe({name: 'filterBy'})\r\nexport class FilterBy implements PipeTransform {\r\n    /**\r\n     * @param {Array<Resource>} items - the array of resources to filter\r\n     * @param {string} searchString - the string that the resource field must contain\r\n     * @param {string} propName - the resource field name\r\n     * @returns {Array<Resource>} - the array of filtered resources\r\n     */\r\n    transform(items = [], [searchString, propName]) {\r\n        if (searchString.length === 0) { return items; }\r\n        return items.filter(item => (typeof(item[propName]) === 'string')\r\n            ? item[propName].toLowerCase().indexOf(searchString.toLowerCase()) !== -1\r\n            : item[propName] === searchString);\r\n    }\r\n}\r\n\r\n/**\r\n * The SetToArray pipe, converts a given set to an array.\r\n */\r\n@Pipe({name: 'setToArray'})\r\nexport class SetToArray implements PipeTransform {\r\n    /**\r\n     * @param {Set} items - the set of items\r\n     * @returns {Array} - the array of items\r\n     */\r\n    transform(items) { return Array.from(items || {}); }\r\n}\r\n\r\n/**\r\n * The OrderBy pipe, sorts given array according to the given sort mode\r\n */\r\n@Pipe({name: 'orderBy', pure: false})\r\nexport class OrderBy implements PipeTransform {\r\n    /**\r\n     *\r\n     * @param {Array} items - the array of items to sort\r\n     * @param {string} sortMode - the sort mode, the property of the item used for sorting\r\n     *  with optional \"-\" prefix to sort in the descending order.\r\n     * @returns {Array} - the sorted array. If sortedMode equals \"unsorted\", the function returns the input array without changes.\r\n     */\r\n    transform(items, sortMode: string) {\r\n        let propName = (sortMode[0] === '-')? sortMode.substring(1): sortMode;\r\n        if (propName === \"unsorted\") {\r\n            return items;\r\n        } else {\r\n            return items.sort((a, b) => {\r\n                if ((sortMode[0] === '-')) {//desc\r\n                    if (a[propName] > b[propName]) return -1;\r\n                    if (a[propName] < b[propName]) return 1;\r\n                    return 0;\r\n                } else {//asc\r\n                    if (a[propName] > b[propName]) return 1;\r\n                    if (a[propName] < b[propName]) return -1;\r\n                    return 0;\r\n                }\r\n            });\r\n        }\r\n\r\n    }\r\n}\r\n\r\n/**\r\n * The MapToOptions pipe, maps resources into objects for drop-down lists\r\n */\r\n@Pipe({name: 'mapToOptions'})\r\nclass MapToOptions implements PipeTransform {\r\n    /**\r\n     * @param {Array<Resource>} items -  the array of resources to convert to the array of selection options\r\n     * which are objects with fields \"id\" and \"text\".\r\n     * @returns {Array<{id: string, text: string}>} - the array of drop-down list selection options\r\n     */\r\n    transform(items = []) {\r\n        return items.filter(x => (x.name && (x.name !== \"\"))).map((entry) => ({\r\n            id: entry, text: entry.name? entry.name: \"(Unnamed) \" + entry.class\r\n        }))\r\n    }\r\n}\r\n\r\n/**\r\n * The MapToCategories pipe, maps resources into categorized objects for drop-down lists\r\n */\r\n@Pipe({name: 'mapToCategories'})\r\nclass MapToCategories implements PipeTransform {\r\n    /**\r\n     * @param {Array<Resource>} items - the array of resources to convert to an array of categorized selection options\r\n     * which are objects with fields \"text\" and \"children\".\r\n     * @returns {Array<{text: string, children: Array}>} - the array of categorized drop-down list selection options\r\n     */\r\n    transform(items = []) {\r\n        let types = Array.from(new Set(items.map(item => item.type)));\r\n        let typedItems = [];\r\n        for (let type of types){\r\n            let typed = items.filter(item => (item.type === type));\r\n            typedItems.push({text: type, children: typed});\r\n        }\r\n        return typedItems;\r\n    }\r\n}\r\n\r\n/**\r\n * The PipeTransformModule module, exports open-physiology helper pipes\r\n */\r\n@NgModule({\r\n    declarations: [ OrderBy, FilterBy, SetToArray, HideClass, MapToOptions, MapToCategories ],\r\n    exports: [ OrderBy, FilterBy, SetToArray, HideClass, MapToOptions, MapToCategories ]\r\n})\r\nexport class PipeTransformModule {}\r\n\r\n\r\n",
     "static": true,
     "longname": "src/common/PipeTransformModule.js",
     "access": null,
@@ -804,7 +804,7 @@
     "longname": "src/common/PipeTransformModule.js~MapToOptions#transform",
     "access": null,
     "description": "",
-    "lineNumber": 96,
+    "lineNumber": 95,
     "unknown": [
       {
         "tagName": "@returns",
@@ -844,7 +844,7 @@
     "importPath": "nested-resource-editor/src/common/PipeTransformModule.js",
     "importStyle": null,
     "description": "The MapToCategories pipe, maps resources into categorized objects for drop-down lists",
-    "lineNumber": 108,
+    "lineNumber": 106,
     "interface": false
   },
   {
@@ -858,7 +858,7 @@
     "longname": "src/common/PipeTransformModule.js~MapToCategories#transform",
     "access": null,
     "description": "",
-    "lineNumber": 114,
+    "lineNumber": 112,
     "unknown": [
       {
         "tagName": "@returns",
@@ -898,7 +898,7 @@
     "importPath": "nested-resource-editor/src/common/PipeTransformModule.js",
     "importStyle": "{PipeTransformModule}",
     "description": "The PipeTransformModule module, exports open-physiology helper pipes",
-    "lineNumber": 129,
+    "lineNumber": 127,
     "interface": false
   },
   {
@@ -1292,7 +1292,7 @@
     "__docId__": 55,
     "kind": "file",
     "name": "src/panels/AbstractResourceList.js",
-    "content": "import {Input, Output, EventEmitter} from '@angular/core';\r\nimport {HighlightService} from './HighlightService.js';\r\n\r\n/**\r\n * The AbstractResourceList class implements methods common for upper level and nested resource lists.\r\n */\r\nexport class AbstractResourceList {\r\n    /**\r\n     * @property {string} caption           - the header of the list\r\n     */\r\n    @Input() caption = \"Resources\";\r\n    /**\r\n     * @property {Object} model  - the open-physiology model\r\n     */\r\n    @Input() model;\r\n    /**\r\n     * @property {Array<Resource>} items    - the list of displayed resources\r\n     */\r\n    @Input() items = [];\r\n    /**\r\n     * @property {Array<string>} types      - the list of displayed item types (resource classes)\r\n     */\r\n    @Input() types = [];\r\n\r\n    @Input() options = {};\r\n\r\n    @Input('selectedItem') set selectedItem(item) {\r\n        if (this._selectedItem !== item) {\r\n            this._selectedItem = item;\r\n            this.selectedItemChange.emit(item);\r\n        }\r\n    }\r\n    get selectedItem() { return this._selectedItem; }\r\n    @Input('highlightedItem') set highlightedItem(item) {\r\n        if (this._highlightedItem !== item) {\r\n            this._highlightedItem = item;\r\n            this.highlightedItemChange.emit(item);\r\n            this._highlightService.highlight(this._highlightedItem);\r\n        }\r\n    }\r\n    get highlightedItem() { return this._highlightedItem; }\r\n\r\n    /**\r\n     * @emits added                 - a new item added to the list\r\n     */\r\n    @Output() added = new EventEmitter();\r\n    /**\r\n     * @emits removed               - an item removed from the list\r\n     */\r\n    @Output() removed = new EventEmitter();\r\n    /**\r\n     * @emits updated               - an item in the list has been updated\r\n     */\r\n    @Output() updated = new EventEmitter();\r\n    /**\r\n     * @emits selectedItemChange    - the selected item changed\r\n     */\r\n    @Output() selectedItemChange = new EventEmitter();\r\n    /**\r\n     * @emits highlightedItemChange - the highlighted item changed\r\n     */\r\n    @Output() highlightedItemChange = new EventEmitter();\r\n\r\n    _selectedItem    = null;\r\n    _highlightedItem = null;\r\n    _openItem        = null;\r\n\r\n    _zones = [];\r\n\r\n    _sortByMode   = \"unsorted\";\r\n    _filterByMode = \"Name\";\r\n    _searchString = \"\";\r\n\r\n    /**\r\n     * @param {HighlightService} highlightService - the service that notifies nested components about currently highlighted item\r\n     */\r\n    constructor(highlightService: HighlightService) {\r\n        this._highlightService = highlightService;\r\n        this._hs = this._highlightService.highlightedItemChanged$.subscribe(item => {\r\n            if (this.items.includes(item) && this._highlightedItem !== item){\r\n                this._highlightedItem = item;\r\n            }\r\n        })\r\n    }\r\n\r\n    ngOnInit() {\r\n        if (!this.items) { this.items = []; }\r\n\r\n        if (this.items[0] || !this.selectedItem) {\r\n            this.selectedItem = this.items[0];\r\n        }\r\n\r\n        if (this.types.length === 0) {\r\n            //If no specific classes were specified, it works with any class\r\n            let visualClasses = [...this.model.Artefact.allSubclasses()].map(x => x.name);\r\n            for (let cls of Object.values(this.model)){\r\n                if (cls.isResource && !cls.abstract && !visualClasses.includes(cls.name)){\r\n                    this.types.push(cls.name);\r\n                    if (cls.name === this.model.Lyph.name){ this.types.push(\"LyphWithAxis\"); }\r\n                }\r\n            }\r\n        }\r\n        this._zones = this.types.map(x => x + \"_zone\");\r\n    }\r\n\r\n    ngOnDestroy() {\r\n        if (this._hs) {\r\n            this._hs.unsubscribe();\r\n        }\r\n    }\r\n\r\n    unhighlight(item) {\r\n        if (this.highlightedItem === item) {\r\n            this.highlightedItem = null;\r\n        }\r\n    }\r\n\r\n    //Open item\r\n    set openItem(item){\r\n        if (this._openItem !== item) {\r\n            this._openItem = item;\r\n        }\r\n    }\r\n\r\n    get openItem(){\r\n        return this._openItem;\r\n    }\r\n\r\n    /* Events */\r\n\r\n    onSorted(prop: string) {\r\n        this._sortByMode = prop.toLowerCase();\r\n    }\r\n\r\n    onFiltered(config) {\r\n        this._filterByMode = config.mode.toLowerCase();\r\n        this._searchString = config.filter;\r\n    }\r\n\r\n    onSaved(item, updatedItem) {\r\n        this.updated.emit(this.items);\r\n        if (item === this.selectedItem) {\r\n            this.selectedItemChange.emit(this.selectedItem);\r\n        }\r\n    }\r\n\r\n    onRemoved(item) {\r\n        if (!this.items) return;\r\n        let index = this.items.indexOf(item);\r\n        if (index > -1) this.items.splice(index, 1);\r\n        if (item === this.selectedItem) {\r\n            if (this.items.length > 0){\r\n                this.selectedItem = this.items[0];\r\n            }\r\n            else {\r\n                this.selectedItem = null;\r\n            }\r\n        }\r\n        item.delete();\r\n        this.removed.emit(item);\r\n        this.updated.emit(this.items);\r\n    }\r\n\r\n    onAdded(clsName) {\r\n        let options = {};\r\n        if (clsName === \"LyphWithAxis\") {\r\n            clsName = this.model.Lyph.name;\r\n            options.createAxis = true;\r\n        }\r\n        if (clsName === this.model.Lyph.name) {\r\n            options.createRadialBorders = true;\r\n        }\r\n\r\n        let newItem = this.model[clsName].new({name: `New ${clsName}`}, options);\r\n\r\n        if (clsName === this.model.Material.name) {\r\n            let newType = this.model.Type.new({name: newItem.name, definition: newItem});\r\n            newItem.p('name').subscribe(newType.p('name'));\r\n        }\r\n\r\n        this.items.push(newItem);\r\n        this.updated.emit(this.items);\r\n        this.added.emit(newItem);\r\n        this.selectedItem = newItem;\r\n    }\r\n\r\n    /**\r\n     * The getClassLabel function provides an human readable label for open-physiology class\r\n     * @param {Resource} clsName - the resource class name\r\n     * @returns {string} - the human readable label\r\n     */\r\n    getClassLabel(clsName: string): string{\r\n        if (!clsName) { return \"\"; }\r\n        let label = clsName;\r\n        label = label.replace(/([a-z])([A-Z])/g, '$1 $2');\r\n        label = label[0].toUpperCase() + label.substring(1).toLowerCase();\r\n        return label;\r\n    }\r\n\r\n}\r\n",
+    "content": "import {Input, Output, EventEmitter} from '@angular/core';\r\nimport {HighlightService} from './HighlightService.js';\r\n\r\n/**\r\n * The AbstractResourceList class implements methods common for upper level and nested resource lists.\r\n */\r\nexport class AbstractResourceList {\r\n    /**\r\n     * @type {string} caption           - the header of the list\r\n     */\r\n    @Input() caption = \"Resources\";\r\n    /**\r\n     * @type {Object} model  - the open-physiology model\r\n     */\r\n    @Input() model;\r\n    /**\r\n     * @type {Array<Resource>} items    - the list of displayed resources\r\n     */\r\n    @Input() items = [];\r\n    /**\r\n     * @type {Array<string>} types      - the list of displayed item types (resource classes)\r\n     */\r\n    @Input() types = [];\r\n\r\n    /**\r\n     * @type {Object} - visualization options\r\n     * @property {boolean} options.ordered -\r\n     */\r\n    @Input() options = {};\r\n\r\n    @Input('selectedItem') set selectedItem(item) {\r\n        if (this._selectedItem !== item) {\r\n            this._selectedItem = item;\r\n            this.selectedItemChange.emit(item);\r\n        }\r\n    }\r\n    get selectedItem() { return this._selectedItem; }\r\n    @Input('highlightedItem') set highlightedItem(item) {\r\n        if (this._highlightedItem !== item) {\r\n            this._highlightedItem = item;\r\n            this.highlightedItemChange.emit(item);\r\n            this._highlightService.highlight(this._highlightedItem);\r\n        }\r\n    }\r\n    get highlightedItem() { return this._highlightedItem; }\r\n\r\n    /**\r\n     * @emits added                 - a new item added to the list\r\n     */\r\n    @Output() added = new EventEmitter();\r\n    /**\r\n     * @emits removed               - an item removed from the list\r\n     */\r\n    @Output() removed = new EventEmitter();\r\n    /**\r\n     * @emits updated               - an item in the list has been updated\r\n     */\r\n    @Output() updated = new EventEmitter();\r\n    /**\r\n     * @emits selectedItemChange    - the selected item changed\r\n     */\r\n    @Output() selectedItemChange = new EventEmitter();\r\n    /**\r\n     * @emits highlightedItemChange - the highlighted item changed\r\n     */\r\n    @Output() highlightedItemChange = new EventEmitter();\r\n\r\n    _selectedItem    = null;\r\n    _highlightedItem = null;\r\n    _openItem        = null;\r\n\r\n    _zones = [];\r\n\r\n    _sortByMode   = \"unsorted\";\r\n    _filterByMode = \"Name\";\r\n    _searchString = \"\";\r\n\r\n    /**\r\n     * @param {HighlightService} highlightService - the service that notifies nested components about currently highlighted item\r\n     */\r\n    constructor(highlightService: HighlightService) {\r\n        this._highlightService = highlightService;\r\n        this._hs = this._highlightService.highlightedItemChanged$.subscribe(item => {\r\n            if (this.items.includes(item) && this._highlightedItem !== item){\r\n                this._highlightedItem = item;\r\n            }\r\n        })\r\n    }\r\n\r\n    /**\r\n     * Initialize the nested resource list: choose selected item and default parameters (e.g., visible classes)\r\n     */\r\n    ngOnInit() {\r\n        if (!this.items) { this.items = []; }\r\n\r\n        if (this.items[0] || !this.selectedItem) {\r\n            this.selectedItem = this.items[0];\r\n        }\r\n\r\n        if (this.types.length === 0) {\r\n            //If no specific classes were specified, it works with any class\r\n            let visualClasses = [...this.model.Artefact.allSubclasses()].map(x => x.name);\r\n            for (let cls of Object.values(this.model)){\r\n                if (cls.isResource && !cls.abstract && !visualClasses.includes(cls.name)){\r\n                    this.types.push(cls.name);\r\n                    if (cls.name === this.model.Lyph.name){ this.types.push(\"LyphWithAxis\"); }\r\n                }\r\n            }\r\n        }\r\n        this._zones = this.types.map(x => x + \"_zone\");\r\n    }\r\n\r\n    /**\r\n     * On component destroy, unsubscribe from model library data handling events\r\n     */\r\n    ngOnDestroy() {\r\n        if (this._hs) {\r\n            this._hs.unsubscribe();\r\n        }\r\n    }\r\n\r\n    _unhighlight(item) {\r\n        if (this.highlightedItem === item) {\r\n            this.highlightedItem = null;\r\n        }\r\n    }\r\n\r\n    /**\r\n     * Set resource with the open editor\r\n     * @param {Resource} item - the resource with the open editor\r\n     */\r\n    set openItem(item){\r\n        if (this._openItem !== item) {\r\n            this._openItem = item;\r\n        }\r\n    }\r\n\r\n    /**\r\n     * @returns {Resource} - the resource with the open editor\r\n     */\r\n    get openItem(){\r\n        return this._openItem;\r\n    }\r\n\r\n    /* Event processing */\r\n\r\n    /**\r\n     * Change sorting mode\r\n     * @param {string} prop - the sorting mode\r\n     */\r\n    onSorted(prop) {\r\n        this._sortByMode = prop.toLowerCase();\r\n    }\r\n\r\n    /**\r\n     * Change filter settings\r\n     * @param {Object} config - the parameters for filtering, mode and search string.\r\n     */\r\n    onFiltered(config) {\r\n        this._filterByMode = config.mode.toLowerCase();\r\n        this._searchString = config.filter;\r\n    }\r\n\r\n    /**\r\n     * Save (commit) a given resource\r\n     * @param {Resource} item - the resource to save (commit)\r\n     */\r\n    onSaved(item) {\r\n        this.updated.emit(this.items);\r\n        if (item === this.selectedItem) {\r\n            this.selectedItemChange.emit(this.selectedItem);\r\n        }\r\n    }\r\n\r\n    /**\r\n     * Delete a given resource\r\n     * @param {Resource} item - he resource to delete\r\n     */\r\n    onRemoved(item) {\r\n        if (!this.items) return;\r\n        let index = this.items.indexOf(item);\r\n        if (index > -1) this.items.splice(index, 1);\r\n        if (item === this.selectedItem) {\r\n            if (this.items.length > 0){\r\n                this.selectedItem = this.items[0];\r\n            }\r\n            else {\r\n                this.selectedItem = null;\r\n            }\r\n        }\r\n        item.delete();\r\n        this.removed.emit(item);\r\n        this.updated.emit(this.items);\r\n    }\r\n\r\n    /**\r\n     * Create new resource\r\n     * @param {string} clsName - the type of the resource to create\r\n     */\r\n    onAdded(clsName) {\r\n        let options = {};\r\n        if (clsName === \"LyphWithAxis\") {\r\n            clsName = this.model.Lyph.name;\r\n            options.createAxis = true;\r\n        }\r\n        if (clsName === this.model.Lyph.name) {\r\n            options.createRadialBorders = true;\r\n        }\r\n\r\n        let newItem = this.model[clsName].new({name: `New ${clsName}`}, options);\r\n\r\n        if (clsName === this.model.Material.name) {\r\n            let newType = this.model.Type.new({name: newItem.name, definition: newItem});\r\n            newItem.p('name').subscribe(newType.p('name'));\r\n        }\r\n\r\n        this.items.push(newItem);\r\n        this.updated.emit(this.items);\r\n        this.added.emit(newItem);\r\n        this.selectedItem = newItem;\r\n    }\r\n\r\n    /**\r\n     * The getClassLabel function provides an human readable label for open-physiology class\r\n     * @param {Resource} clsName - the resource class name\r\n     * @returns {string} - the human readable label\r\n     */\r\n    getClassLabel(clsName: string): string{\r\n        if (!clsName) { return \"\"; }\r\n        let label = clsName;\r\n        label = label.replace(/([a-z])([A-Z])/g, '$1 $2');\r\n        label = label[0].toUpperCase() + label.substring(1).toLowerCase();\r\n        return label;\r\n    }\r\n\r\n}\r\n",
     "static": true,
     "longname": "src/panels/AbstractResourceList.js",
     "access": null,
@@ -1326,22 +1326,13 @@
     "access": null,
     "description": "",
     "lineNumber": 11,
-    "properties": [
-      {
-        "nullable": null,
-        "types": [
-          "Array<string>"
-        ],
-        "spread": false,
-        "optional": false,
-        "name": "types",
-        "description": "the list of displayed item types (resource classes)"
-      }
-    ],
     "type": {
+      "nullable": null,
       "types": [
-        "*"
-      ]
+        "Array<string>"
+      ],
+      "spread": false,
+      "description": null
     }
   },
   {
@@ -1378,23 +1369,14 @@
     "longname": "src/panels/AbstractResourceList.js~AbstractResourceList#selectedItem",
     "access": null,
     "description": "",
-    "lineNumber": 25,
-    "properties": [
-      {
-        "nullable": null,
-        "types": [
-          "Object"
-        ],
-        "spread": false,
-        "optional": false,
-        "name": "model",
-        "description": "the open-physiology model"
-      }
-    ],
+    "lineNumber": 31,
     "type": {
+      "nullable": null,
       "types": [
-        "*"
-      ]
+        "Object"
+      ],
+      "spread": false,
+      "description": null
     }
   },
   {
@@ -1408,7 +1390,7 @@
     "longname": "src/panels/AbstractResourceList.js~AbstractResourceList#highlightedItem",
     "access": null,
     "description": null,
-    "lineNumber": 28,
+    "lineNumber": 34,
     "undocument": true,
     "unknown": [
       {
@@ -1431,7 +1413,7 @@
     "longname": "src/panels/AbstractResourceList.js~AbstractResourceList#_highlightedItem",
     "access": null,
     "description": null,
-    "lineNumber": 30,
+    "lineNumber": 36,
     "undocument": true,
     "unknown": [
       {
@@ -1456,7 +1438,7 @@
     "longname": "src/panels/AbstractResourceList.js~AbstractResourceList#highlightedItem",
     "access": null,
     "description": null,
-    "lineNumber": 35,
+    "lineNumber": 41,
     "undocument": true,
     "unknown": [
       {
@@ -1481,7 +1463,7 @@
     "longname": "src/panels/AbstractResourceList.js~AbstractResourceList#constructor",
     "access": null,
     "description": "",
-    "lineNumber": 63,
+    "lineNumber": 69,
     "params": [
       {
         "nullable": null,
@@ -1504,7 +1486,7 @@
     "longname": "src/panels/AbstractResourceList.js~AbstractResourceList#_selectedItem",
     "access": null,
     "description": null,
-    "lineNumber": 64,
+    "lineNumber": 70,
     "undocument": true,
     "unknown": [
       {
@@ -1527,7 +1509,7 @@
     "longname": "src/panels/AbstractResourceList.js~AbstractResourceList#_highlightedItem",
     "access": null,
     "description": null,
-    "lineNumber": 65,
+    "lineNumber": 71,
     "undocument": true,
     "unknown": [
       {
@@ -1550,7 +1532,7 @@
     "longname": "src/panels/AbstractResourceList.js~AbstractResourceList#_openItem",
     "access": null,
     "description": null,
-    "lineNumber": 66,
+    "lineNumber": 72,
     "undocument": true,
     "unknown": [
       {
@@ -1573,7 +1555,7 @@
     "longname": "src/panels/AbstractResourceList.js~AbstractResourceList#_zones",
     "access": null,
     "description": null,
-    "lineNumber": 67,
+    "lineNumber": 73,
     "undocument": true,
     "unknown": [
       {
@@ -1596,7 +1578,7 @@
     "longname": "src/panels/AbstractResourceList.js~AbstractResourceList#_sortByMode",
     "access": null,
     "description": null,
-    "lineNumber": 68,
+    "lineNumber": 74,
     "undocument": true,
     "unknown": [
       {
@@ -1619,7 +1601,7 @@
     "longname": "src/panels/AbstractResourceList.js~AbstractResourceList#_filterByMode",
     "access": null,
     "description": null,
-    "lineNumber": 69,
+    "lineNumber": 75,
     "undocument": true,
     "unknown": [
       {
@@ -1642,7 +1624,7 @@
     "longname": "src/panels/AbstractResourceList.js~AbstractResourceList#_searchString",
     "access": null,
     "description": null,
-    "lineNumber": 70,
+    "lineNumber": 76,
     "undocument": true,
     "unknown": [
       {
@@ -1665,7 +1647,7 @@
     "longname": "src/panels/AbstractResourceList.js~AbstractResourceList#_highlightService",
     "access": null,
     "description": null,
-    "lineNumber": 72,
+    "lineNumber": 78,
     "undocument": true,
     "unknown": [
       {
@@ -1688,7 +1670,7 @@
     "longname": "src/panels/AbstractResourceList.js~AbstractResourceList#_hs",
     "access": null,
     "description": null,
-    "lineNumber": 73,
+    "lineNumber": 79,
     "undocument": true,
     "unknown": [
       {
@@ -1711,7 +1693,7 @@
     "longname": "src/panels/AbstractResourceList.js~AbstractResourceList#_highlightedItem",
     "access": null,
     "description": null,
-    "lineNumber": 75,
+    "lineNumber": 81,
     "undocument": true,
     "unknown": [
       {
@@ -1735,15 +1717,8 @@
     "static": false,
     "longname": "src/panels/AbstractResourceList.js~AbstractResourceList#ngOnInit",
     "access": null,
-    "description": null,
-    "lineNumber": 80,
-    "undocument": true,
-    "unknown": [
-      {
-        "tagName": "@_undocument",
-        "tagValue": ""
-      }
-    ],
+    "description": "Initialize the nested resource list: choose selected item and default parameters (e.g., visible classes)",
+    "lineNumber": 89,
     "params": []
   },
   {
@@ -1755,7 +1730,7 @@
     "longname": "src/panels/AbstractResourceList.js~AbstractResourceList#items",
     "access": null,
     "description": null,
-    "lineNumber": 82,
+    "lineNumber": 91,
     "undocument": true,
     "unknown": [
       {
@@ -1778,7 +1753,7 @@
     "longname": "src/panels/AbstractResourceList.js~AbstractResourceList#selectedItem",
     "access": null,
     "description": null,
-    "lineNumber": 86,
+    "lineNumber": 95,
     "undocument": true,
     "unknown": [
       {
@@ -1801,7 +1776,7 @@
     "longname": "src/panels/AbstractResourceList.js~AbstractResourceList#_zones",
     "access": null,
     "description": null,
-    "lineNumber": 101,
+    "lineNumber": 110,
     "undocument": true,
     "unknown": [
       {
@@ -1825,29 +1800,22 @@
     "static": false,
     "longname": "src/panels/AbstractResourceList.js~AbstractResourceList#ngOnDestroy",
     "access": null,
-    "description": null,
-    "lineNumber": 104,
-    "undocument": true,
-    "unknown": [
-      {
-        "tagName": "@_undocument",
-        "tagValue": ""
-      }
-    ],
+    "description": "On component destroy, unsubscribe from model library data handling events",
+    "lineNumber": 116,
     "params": []
   },
   {
     "__docId__": 79,
     "kind": "method",
-    "name": "unhighlight",
+    "name": "_unhighlight",
     "memberof": "src/panels/AbstractResourceList.js~AbstractResourceList",
     "generator": false,
     "async": false,
     "static": false,
-    "longname": "src/panels/AbstractResourceList.js~AbstractResourceList#unhighlight",
+    "longname": "src/panels/AbstractResourceList.js~AbstractResourceList#_unhighlight",
     "access": null,
     "description": null,
-    "lineNumber": 110,
+    "lineNumber": 122,
     "undocument": true,
     "unknown": [
       {
@@ -1873,7 +1841,7 @@
     "longname": "src/panels/AbstractResourceList.js~AbstractResourceList#highlightedItem",
     "access": null,
     "description": null,
-    "lineNumber": 112,
+    "lineNumber": 124,
     "undocument": true,
     "unknown": [
       {
@@ -1897,13 +1865,18 @@
     "static": false,
     "longname": "src/panels/AbstractResourceList.js~AbstractResourceList#openItem",
     "access": null,
-    "description": null,
-    "lineNumber": 117,
-    "undocument": true,
-    "unknown": [
+    "description": "Set resource with the open editor",
+    "lineNumber": 132,
+    "params": [
       {
-        "tagName": "@_undocument",
-        "tagValue": ""
+        "nullable": null,
+        "types": [
+          "Resource"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "item",
+        "description": "the resource with the open editor"
       }
     ],
     "type": {
@@ -1921,7 +1894,7 @@
     "longname": "src/panels/AbstractResourceList.js~AbstractResourceList#_openItem",
     "access": null,
     "description": null,
-    "lineNumber": 119,
+    "lineNumber": 134,
     "undocument": true,
     "unknown": [
       {
@@ -1945,15 +1918,22 @@
     "static": false,
     "longname": "src/panels/AbstractResourceList.js~AbstractResourceList#openItem",
     "access": null,
-    "description": null,
-    "lineNumber": 123,
-    "undocument": true,
+    "description": "",
+    "lineNumber": 141,
     "unknown": [
       {
-        "tagName": "@_undocument",
-        "tagValue": ""
+        "tagName": "@returns",
+        "tagValue": "{Resource} - the resource with the open editor"
       }
     ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Resource"
+      ],
+      "spread": false,
+      "description": "the resource with the open editor"
+    },
     "type": {
       "types": [
         "*"
@@ -1970,21 +1950,18 @@
     "static": false,
     "longname": "src/panels/AbstractResourceList.js~AbstractResourceList#onSorted",
     "access": null,
-    "description": null,
-    "lineNumber": 129,
-    "undocument": true,
-    "unknown": [
-      {
-        "tagName": "@_undocument",
-        "tagValue": ""
-      }
-    ],
+    "description": "Change sorting mode",
+    "lineNumber": 151,
     "params": [
       {
-        "name": "prop",
+        "nullable": null,
         "types": [
-          "*"
-        ]
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "prop",
+        "description": "the sorting mode"
       }
     ]
   },
@@ -1997,7 +1974,7 @@
     "longname": "src/panels/AbstractResourceList.js~AbstractResourceList#_sortByMode",
     "access": null,
     "description": null,
-    "lineNumber": 130,
+    "lineNumber": 152,
     "undocument": true,
     "unknown": [
       {
@@ -2021,21 +1998,18 @@
     "static": false,
     "longname": "src/panels/AbstractResourceList.js~AbstractResourceList#onFiltered",
     "access": null,
-    "description": null,
-    "lineNumber": 133,
-    "undocument": true,
-    "unknown": [
-      {
-        "tagName": "@_undocument",
-        "tagValue": ""
-      }
-    ],
+    "description": "Change filter settings",
+    "lineNumber": 159,
     "params": [
       {
-        "name": "config",
+        "nullable": null,
         "types": [
-          "*"
-        ]
+          "Object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "config",
+        "description": "the parameters for filtering, mode and search string."
       }
     ]
   },
@@ -2048,7 +2022,7 @@
     "longname": "src/panels/AbstractResourceList.js~AbstractResourceList#_filterByMode",
     "access": null,
     "description": null,
-    "lineNumber": 134,
+    "lineNumber": 160,
     "undocument": true,
     "unknown": [
       {
@@ -2071,7 +2045,7 @@
     "longname": "src/panels/AbstractResourceList.js~AbstractResourceList#_searchString",
     "access": null,
     "description": null,
-    "lineNumber": 135,
+    "lineNumber": 161,
     "undocument": true,
     "unknown": [
       {
@@ -2095,27 +2069,18 @@
     "static": false,
     "longname": "src/panels/AbstractResourceList.js~AbstractResourceList#onSaved",
     "access": null,
-    "description": null,
-    "lineNumber": 138,
-    "undocument": true,
-    "unknown": [
-      {
-        "tagName": "@_undocument",
-        "tagValue": ""
-      }
-    ],
+    "description": "Save (commit) a given resource",
+    "lineNumber": 168,
     "params": [
       {
+        "nullable": null,
+        "types": [
+          "Resource"
+        ],
+        "spread": false,
+        "optional": false,
         "name": "item",
-        "types": [
-          "*"
-        ]
-      },
-      {
-        "name": "updatedItem",
-        "types": [
-          "*"
-        ]
+        "description": "the resource to save (commit)"
       }
     ]
   },
@@ -2129,21 +2094,18 @@
     "static": false,
     "longname": "src/panels/AbstractResourceList.js~AbstractResourceList#onRemoved",
     "access": null,
-    "description": null,
-    "lineNumber": 145,
-    "undocument": true,
-    "unknown": [
-      {
-        "tagName": "@_undocument",
-        "tagValue": ""
-      }
-    ],
+    "description": "Delete a given resource",
+    "lineNumber": 179,
     "params": [
       {
-        "name": "item",
+        "nullable": null,
         "types": [
-          "*"
-        ]
+          "Resource"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "item",
+        "description": "he resource to delete"
       }
     ]
   },
@@ -2156,7 +2118,7 @@
     "longname": "src/panels/AbstractResourceList.js~AbstractResourceList#selectedItem",
     "access": null,
     "description": null,
-    "lineNumber": 151,
+    "lineNumber": 185,
     "undocument": true,
     "unknown": [
       {
@@ -2179,7 +2141,7 @@
     "longname": "src/panels/AbstractResourceList.js~AbstractResourceList#selectedItem",
     "access": null,
     "description": null,
-    "lineNumber": 153,
+    "lineNumber": 187,
     "undocument": true,
     "unknown": [
       {
@@ -2203,21 +2165,18 @@
     "static": false,
     "longname": "src/panels/AbstractResourceList.js~AbstractResourceList#onAdded",
     "access": null,
-    "description": null,
-    "lineNumber": 161,
-    "undocument": true,
-    "unknown": [
-      {
-        "tagName": "@_undocument",
-        "tagValue": ""
-      }
-    ],
+    "description": "Create new resource",
+    "lineNumber": 199,
     "params": [
       {
-        "name": "clsName",
+        "nullable": null,
         "types": [
-          "*"
-        ]
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "clsName",
+        "description": "the type of the resource to create"
       }
     ]
   },
@@ -2230,7 +2189,7 @@
     "longname": "src/panels/AbstractResourceList.js~AbstractResourceList#selectedItem",
     "access": null,
     "description": null,
-    "lineNumber": 181,
+    "lineNumber": 219,
     "undocument": true,
     "unknown": [
       {
@@ -2255,7 +2214,7 @@
     "longname": "src/panels/AbstractResourceList.js~AbstractResourceList#getClassLabel",
     "access": null,
     "description": "The getClassLabel function provides an human readable label for open-physiology class",
-    "lineNumber": 189,
+    "lineNumber": 227,
     "unknown": [
       {
         "tagName": "@returns",
@@ -2386,7 +2345,7 @@
     "__docId__": 101,
     "kind": "file",
     "name": "src/panels/ItemHeader.js",
-    "content": "import {Component, Input, Output, EventEmitter, ElementRef} from '@angular/core';\r\nimport $ from '../libs/jquery';\r\n\r\n@Component({\r\n    selector: 'item-header',\r\n    template: `\r\n        <span class=\"pull-left glyphicon\"\r\n            [ngClass]=\"{\r\n              'glyphicon-chevron-down':  isOpen, \r\n              'glyphicon-chevron-right': !isOpen}\">\r\n        </span>\r\n        {{(item.id)? item.id: \"?\"}}: {{item.name}}\r\n        <span class=\"pull-right\">\r\n          <img *ngIf=\"_isType\" class=\"imtip\" src=\"../images/type.png\"/>\r\n          <img class=\"icon\" [src]=\"getResourceIcon()\"/>\r\n          <button type=\"button\" *ngIf=\"options?.showActive\" class=\"btn btn-default btn-header\" \r\n            [ngClass]=\"{'active': isActive}\" (click)=\"activeItemChanged.emit(item)\">\r\n            <span class = \"glyphicon\" [ngClass]=\"{'glyphicon-pencil': isActive}\"></span>\r\n          </button>\r\n        </span>\r\n  `,\r\n    styles: [`\r\n        .icon {\r\n          height: 16px;\r\n          width: 16px;\r\n          padding: 0;\r\n        }\r\n        .imtip {\r\n          position: relative;\r\n          bottom: 2px;\r\n          left: 4px;\r\n          width: 24px;\r\n          height: 12px;\r\n        } \r\n        :host{\r\n            display: block;\r\n            padding: 4px;\r\n        }\r\n    `]\r\n})\r\n/**\r\n * The ItemHeader component configures accordion header for a given resource. The header consists of a left side icon that indicates whether\r\n * the accordion tab is open or closed, the title formed from the resource's id and name, and the right hand icon that shows\r\n * the class of the resource. The is an option to include to the header a checkbox with an icon to mark the resource as active.\r\n */\r\nexport class ItemHeader {\r\n    /**\r\n     * {Resource} item    - the resource for which header will be created\r\n     */\r\n    @Input() item;\r\n    /**\r\n     *  {Object} options   - an optional object with boolean options to configure header appearance, i.e., {showActive: true}\r\n     */\r\n    @Input() options = {};\r\n    /**\r\n     *  {Boolean} isOpen   - a boolean flag to indicate whether the item editor panel is open to choose proper left side icon\r\n     */\r\n    @Input() isOpen;\r\n    /**\r\n     * {Boolean} isActive - a boolean flag to indicate whether the item is active to draw or not the 'eye open' icon\r\n     */\r\n    @Input() isActive;\r\n\r\n    /**\r\n     * @emits activeItemChanged  - the item has been marked as active\r\n     */\r\n    @Output() activeItemChanged = new EventEmitter();\r\n\r\n    _isType = false;\r\n\r\n    /**\r\n     * The getResourceIcon function provides an icon for a given resource\r\n     * @param {Resource} item - the resource\r\n     * @returns {DataURI} - the icon for the resource class\r\n     */\r\n    getResourceIcon(): string{\r\n        if (this.item.class === \"Lyph\" && this.item.axis) {\r\n            return \"../images/lyphWithAxis.png\";\r\n        }\r\n        if (this.item.class === \"Type\"){\r\n            return this.item['<--DefinesType'] && this.item['<--DefinesType'][1]\r\n                ? this.item['<--DefinesType'][1].constructor.icon\r\n                : \"../images/resource.png\";\r\n        }\r\n        return this.item.constructor.icon;\r\n    }\r\n\r\n    /**\r\n     *\r\n     * @param {ElementRef} el - the components's underlying native element\r\n     */\r\n    constructor(el: ElementRef) {\r\n        this.el = $(el.nativeElement);\r\n    }\r\n\r\n    ngOnInit() {\r\n        this._isType = this.item && (this.item.class === \"Type\");\r\n        this.el.parent().parent().parent().css(\"padding\", 0);\r\n    }\r\n}\r\n\r\n\r\n\r\n",
+    "content": "import {Component, Input, Output, EventEmitter, ElementRef} from '@angular/core';\r\n\r\n@Component({\r\n    selector: 'item-header',\r\n    template: `\r\n        <span class=\"pull-left glyphicon\"\r\n            [ngClass]=\"{\r\n              'glyphicon-chevron-down':  isOpen, \r\n              'glyphicon-chevron-right': !isOpen}\">\r\n        </span>\r\n        {{(item.id)? item.id: \"?\"}}: {{item.name}}\r\n        <span class=\"pull-right\">\r\n          <img *ngIf=\"_isType\" class=\"imtip\" src=\"../images/type.png\"/>\r\n          <img class=\"icon\" [src]=\"getResourceIcon()\"/>\r\n          <button type=\"button\" *ngIf=\"options?.showActive\" class=\"btn btn-default btn-header\" \r\n            [ngClass]=\"{'active': isActive}\" (click)=\"activeItemChanged.emit(item)\">\r\n            <span class = \"glyphicon\" [ngClass]=\"{'glyphicon-pencil': isActive}\"></span>\r\n          </button>\r\n        </span>\r\n  `,\r\n    styles: [`\r\n        .icon {\r\n          height: 16px;\r\n          width: 16px;\r\n          padding: 0;\r\n        }\r\n        .imtip {\r\n          position: relative;\r\n          bottom: 2px;\r\n          left: 4px;\r\n          width: 24px;\r\n          height: 12px;\r\n        } \r\n        :host{\r\n            display: block;\r\n            padding: 4px;\r\n        }\r\n    `]\r\n})\r\n/**\r\n * The ItemHeader component configures accordion header for a given resource. The header consists of a left side icon that indicates whether\r\n * the accordion tab is open or closed, the title formed from the resource's id and name, and the right hand icon that shows\r\n * the class of the resource. The is an option to include to the header a checkbox with an icon to mark the resource as active.\r\n */\r\nexport class ItemHeader {\r\n    /**\r\n     * {Resource} item    - the resource for which header will be created\r\n     */\r\n    @Input() item;\r\n    /**\r\n     *  {Object} options   - an optional object with boolean options to configure header appearance, i.e., {showActive: true}\r\n     */\r\n    @Input() options = {};\r\n    /**\r\n     *  {Boolean} isOpen   - a boolean flag to indicate whether the item editor panel is open to choose proper left side icon\r\n     */\r\n    @Input() isOpen;\r\n    /**\r\n     * {Boolean} isActive - a boolean flag to indicate whether the item is active to draw or not the 'eye open' icon\r\n     */\r\n    @Input() isActive;\r\n\r\n    /**\r\n     * @emits activeItemChanged  - the item has been marked as active\r\n     */\r\n    @Output() activeItemChanged = new EventEmitter();\r\n\r\n    _isType = false;\r\n\r\n    /**\r\n     * The getResourceIcon function provides an icon for a given resource\r\n     * @param {Resource} item - the resource\r\n     * @returns {DataURI} - the icon for the resource class\r\n     */\r\n    getResourceIcon(): string{\r\n        if (this.item.class === \"Lyph\" && this.item.axis) {\r\n            return \"../images/lyphWithAxis.png\";\r\n        }\r\n        if (this.item.class === \"Type\"){\r\n            return this.item['<--DefinesType'] && this.item['<--DefinesType'][1]\r\n                ? this.item['<--DefinesType'][1].constructor.icon\r\n                : \"../images/resource.png\";\r\n        }\r\n        return this.item.constructor.icon;\r\n    }\r\n\r\n    ngOnInit() {\r\n        this._isType = this.item && (this.item.class === \"Type\");\r\n    }\r\n}\r\n\r\n\r\n\r\n",
     "static": true,
     "longname": "src/panels/ItemHeader.js",
     "access": null,
@@ -2405,30 +2364,11 @@
     "importPath": "nested-resource-editor/src/panels/ItemHeader.js",
     "importStyle": "{ItemHeader}",
     "description": "The ItemHeader component configures accordion header for a given resource. The header consists of a left side icon that indicates whether\nthe accordion tab is open or closed, the title formed from the resource's id and name, and the right hand icon that shows\nthe class of the resource. The is an option to include to the header a checkbox with an icon to mark the resource as active.",
-    "lineNumber": 9,
+    "lineNumber": 8,
     "interface": false
   },
   {
     "__docId__": 103,
-    "kind": "method",
-    "name": "getResourceIcon",
-    "memberof": "src/panels/ItemHeader.js~ItemHeader",
-    "generator": false,
-    "async": false,
-    "static": false,
-    "longname": "src/panels/ItemHeader.js~ItemHeader#getResourceIcon",
-    "access": null,
-    "description": "{Boolean} isActive - a boolean flag to indicate whether the item is active to draw or not the 'eye open' icon",
-    "lineNumber": 29,
-    "params": [],
-    "return": {
-      "types": [
-        "*"
-      ]
-    }
-  },
-  {
-    "__docId__": 104,
     "kind": "constructor",
     "name": "constructor",
     "memberof": "src/panels/ItemHeader.js~ItemHeader",
@@ -2437,19 +2377,19 @@
     "static": false,
     "longname": "src/panels/ItemHeader.js~ItemHeader#constructor",
     "access": null,
-    "description": " {Object} options   - an optional object with boolean options to configure header appearance, i.e., {showActive: true}",
-    "lineNumber": 47,
-    "params": [
+    "description": null,
+    "lineNumber": 9,
+    "undocument": true,
+    "unknown": [
       {
-        "name": "el",
-        "types": [
-          "*"
-        ]
+        "tagName": "@_undocument",
+        "tagValue": ""
       }
-    ]
+    ],
+    "params": []
   },
   {
-    "__docId__": 105,
+    "__docId__": 104,
     "kind": "member",
     "name": "_isType",
     "memberof": "src/panels/ItemHeader.js~ItemHeader",
@@ -2457,7 +2397,7 @@
     "longname": "src/panels/ItemHeader.js~ItemHeader#_isType",
     "access": null,
     "description": null,
-    "lineNumber": 48,
+    "lineNumber": 10,
     "undocument": true,
     "unknown": [
       {
@@ -2472,30 +2412,46 @@
     }
   },
   {
-    "__docId__": 106,
-    "kind": "member",
-    "name": "el",
+    "__docId__": 105,
+    "kind": "method",
+    "name": "getResourceIcon",
     "memberof": "src/panels/ItemHeader.js~ItemHeader",
+    "generator": false,
+    "async": false,
     "static": false,
-    "longname": "src/panels/ItemHeader.js~ItemHeader#el",
+    "longname": "src/panels/ItemHeader.js~ItemHeader#getResourceIcon",
     "access": null,
-    "description": null,
-    "lineNumber": 50,
-    "undocument": true,
+    "description": "The getResourceIcon function provides an icon for a given resource",
+    "lineNumber": 35,
     "unknown": [
       {
-        "tagName": "@_undocument",
-        "tagValue": ""
+        "tagName": "@returns",
+        "tagValue": "{DataURI} - the icon for the resource class"
       }
     ],
-    "type": {
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Resource"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "item",
+        "description": "the resource"
+      }
+    ],
+    "return": {
+      "nullable": null,
       "types": [
-        "*"
-      ]
+        "DataURI"
+      ],
+      "spread": false,
+      "description": "the icon for the resource class"
     }
   },
   {
-    "__docId__": 107,
+    "__docId__": 106,
     "kind": "method",
     "name": "ngOnInit",
     "memberof": "src/panels/ItemHeader.js~ItemHeader",
@@ -2505,7 +2461,7 @@
     "longname": "src/panels/ItemHeader.js~ItemHeader#ngOnInit",
     "access": null,
     "description": null,
-    "lineNumber": 53,
+    "lineNumber": 45,
     "undocument": true,
     "unknown": [
       {
@@ -2516,7 +2472,7 @@
     "params": []
   },
   {
-    "__docId__": 108,
+    "__docId__": 107,
     "kind": "member",
     "name": "_isType",
     "memberof": "src/panels/ItemHeader.js~ItemHeader",
@@ -2524,7 +2480,7 @@
     "longname": "src/panels/ItemHeader.js~ItemHeader#_isType",
     "access": null,
     "description": null,
-    "lineNumber": 54,
+    "lineNumber": 46,
     "undocument": true,
     "unknown": [
       {
@@ -2539,10 +2495,10 @@
     }
   },
   {
-    "__docId__": 109,
+    "__docId__": 108,
     "kind": "file",
     "name": "src/panels/NestedResourceList.js",
-    "content": "import {Component, Input} from '@angular/core';\r\nimport {AbstractResourceList} from \"./AbstractResourceList\";\r\nimport {HighlightService} from './HighlightService.js';\r\nimport {ToastyService} from 'ng2-toasty';\r\nimport {SetToArray, FilterBy} from \"../common/PipeTransformModule\";\r\n\r\n@Component({\r\n    selector: 'nested-resource-list',\r\n    template:`\r\n    <div class=\"panel repo-nested\">\r\n      <div class=\"panel-heading\"> <label>{{caption}}: </label></div>\r\n      <div class=\"panel-body\" >\r\n        <span  *ngIf = \"!(options?.readOnly || options?.headersOnly)\">\r\n          <select-input-1 class=\"pull-left input-select\" \r\n            [item] = \"_itemToInclude\"\r\n            (updated) = \"_itemToInclude = $event\"    \r\n            [options] = \"possibleValues\">\r\n          </select-input-1>\r\n          <button type=\"button\" class=\"btn btn-default btn-icon\" (click)=\"onIncluded(_itemToInclude)\">\r\n            <span class=\"glyphicon glyphicon-save\"></span>\r\n          </button>\r\n        </span>\r\n        \r\n        <toolbar-sort   *ngIf =  \"options?.sortToolbar\"  [options]=\"['Name', 'ID', 'Class']\" (sorted)=\"onSorted($event)\"></toolbar-sort>\r\n        <toolbar-add    *ngIf = \"!(options?.readOnly || options?.headersOnly)\"  [options]=\"types\" [transform]=\"getClassLabel\" (added)=\"onAdded($event)\"></toolbar-add>\r\n        <toolbar-filter *ngIf =  \"options?.filterToolbar\" [options]=\"['Name', 'ID', 'Class']\" [filter]=\"_searchString\" (applied)=\"onFiltered($event)\"></toolbar-filter>\r\n          \r\n        <accordion [closeOthers]=\"true\"\r\n          dnd-sortable-container [dropZones]=\"_zones\" [sortableData]=\"items\">\r\n          <accordion-group *ngFor=\"let item of items \r\n            | orderBy : _sortByMode\r\n            | filterBy: [_searchString, _filterByMode]; let i = index\" \r\n                dnd-sortable (onDragStart)=\"_onDragStart()\" (onDragEnd)=\"_onDragEnd()\" [sortableIndex]=\"i\"\r\n                (onOpen) =\"openItem = item\"\r\n                (onClose)=\"openItem = null\">\r\n \r\n            <accordion-heading (click)  =\"selectedItem = item\">\r\n              <item-header [item]=\"item\" \r\n                [isOpen]       = \"item === openItem\" \r\n                (mouseover)    = \"highlightedItem = item\" \r\n                (mouseout)     = \"unhighlight(item)\"\r\n                [ngClass] =\"{highlighted: item === highlightedItem, active: item === selectedItem}\">\r\n              </item-header>\r\n            </accordion-heading>\r\n\r\n            <div *ngIf=\"!options?.headersOnly\">\r\n              <resource-panel *ngIf=\"item === openItem\" \r\n                [item]    =\"item\" \r\n                [model]=\"model\"\r\n                [options] =\"options\"\r\n                (saved)   =\"onSaved(item, $event)\" \r\n                (removed) =\"onRemoved(item)\"\r\n                (highlightedItemChange)=\"highlightedItemChange.emit($event)\"\r\n                ></resource-panel>            \r\n            </div>\r\n          </accordion-group>        \r\n        </accordion>       \r\n      </div>\r\n    </div>\r\n  `,\r\n    styles: [`\r\n        .input-select{\r\n          min-width: 100px;\r\n        }\r\n        .highlighted {\r\n          background-color: #e3d2d2;\r\n        }\r\n        .active {\r\n          border: 2px solid #ff9999;\r\n          padding: 2px;\r\n        }\r\n    `]\r\n})\r\n/**\r\n * The NestedResourceList component, provides functionality for editing lists of resources.\r\n * @extends {AbstractResourceList}\r\n */\r\nexport class NestedResourceList extends AbstractResourceList{\r\n    @Input()\r\n    /**\r\n     *  the list of resources that can be added to the current list\r\n     */\r\n    possibleValues;\r\n\r\n    _itemToInclude = null;\r\n\r\n    /**\r\n     * @param {ToastyService} toastyService - the service for showing notifications and error messages\r\n     * @param {HighlightService} highlightService - the service that notifies nested components about currently highlighted item\r\n     */\r\n    constructor(toastyService: ToastyService, highlightService: HighlightService){\r\n        super(highlightService);\r\n        this._toastyService = toastyService;\r\n    }\r\n\r\n    ngOnInit(){\r\n        super.ngOnInit();\r\n\r\n        //If selectionOptions are not provided by parent, subscribe and get all for given types\r\n        if (!this.possibleValues) {\r\n            if (this.types.length === 1){\r\n                this._ts = this.model[this.types[0]].p('all').subscribe(\r\n                    (data) => { this.possibleValues = data; });\r\n            } else {\r\n                if (this.types.length > 1){\r\n                    let setToArray = new SetToArray();\r\n                    let filterByClass = new FilterBy();\r\n\r\n                    this._ts = this.model.Template.p('all').subscribe(\r\n                        (data) => {this.possibleValues = new Set(\r\n                            filterByClass.transform( setToArray.transform(data), [this.types, 'class']))});\r\n                }\r\n            }\r\n        }\r\n    }\r\n\r\n    ngOnDestroy() {\r\n        if (this._ts) { this._ts.unsubscribe(); }\r\n    }\r\n\r\n    // ngOnChanges(changes) {\r\n    //     if (this.items) {\r\n    //         if (this.options.ordered) {\r\n    //             this.items.sort((a, b) => {\r\n    //                 return (a['-->HasLayer'].relativePosition - b['-->HasLayer'].relativePosition)\r\n    //             });\r\n    //         }\r\n    //     }\r\n    // }\r\n\r\n    _onDragStart(index: number){ }\r\n\r\n    //TODO: update new \"Follows\" relationship\r\n    _onDragEnd(index: number){\r\n        // if (this.options.ordered){\r\n        //     for (let i = 0; i < this.items.length; i++){\r\n        //         this.items[i]['-->HasLayer'].relativePosition = i;\r\n        //     }\r\n        //     this.updated.emit(this.items);\r\n        // }\r\n    }\r\n\r\n    /**\r\n     * @param {Resource} newItem - an existing resource included to the current list\r\n     */\r\n    onIncluded(newItem){\r\n        if (newItem){\r\n            if (this.items.indexOf(newItem) < 0){\r\n                this.items.push(newItem);\r\n                this.updated.emit(this.items);\r\n                this.added.emit(newItem);\r\n                this.selectedItem = newItem;\r\n            } else {\r\n                this._toastyService.error(\"Selected resource is already included to the set!\");\r\n            }\r\n        }\r\n    }\r\n}\r\n",
+    "content": "import {Component, Input} from '@angular/core';\r\nimport {AbstractResourceList} from \"./AbstractResourceList\";\r\nimport {HighlightService} from './HighlightService.js';\r\nimport {ToastyService} from 'ng2-toasty';\r\nimport {SetToArray, FilterBy} from \"../common/PipeTransformModule\";\r\n\r\n@Component({\r\n    selector: 'nested-resource-list',\r\n    template:`       \r\n    <div class=\"panel repo-nested\">\r\n      <div class=\"panel-heading\"> <label>{{caption}}: </label></div>\r\n      <div class=\"panel-body\" >\r\n        <span  *ngIf = \"!(options?.readOnly || options?.headersOnly)\">\r\n          <select-input-1 class=\"pull-left input-select\" \r\n            [item] = \"_itemToInclude\"\r\n            (updated) = \"_itemToInclude = $event\"    \r\n            [options] = \"possibleValues\">\r\n          </select-input-1>\r\n          <button type=\"button\" class=\"btn btn-default btn-icon\" (click)=\"onIncluded(_itemToInclude)\">\r\n            <span class=\"glyphicon glyphicon-save\"></span>\r\n          </button>\r\n        </span>\r\n        \r\n        <toolbar-sort   *ngIf =  \"options?.sortToolbar\"  [options]=\"['Name', 'ID', 'Class']\" (sorted)=\"onSorted($event)\"></toolbar-sort>\r\n        <toolbar-add    *ngIf = \"!(options?.readOnly || options?.headersOnly)\"  [options]=\"types\" [transform]=\"getClassLabel\" (added)=\"onAdded($event)\"></toolbar-add>\r\n        <toolbar-filter *ngIf =  \"options?.filterToolbar\" [options]=\"['Name', 'ID', 'Class']\" [filter]=\"_searchString\" (applied)=\"onFiltered($event)\"></toolbar-filter>\r\n\r\n          <!--| orderBy : _sortByMode-->\r\n\r\n          <accordion [closeOthers]=\"true\"\r\n          dnd-sortable-container [dropZones]=\"_zones\" [sortableData]=\"items\">\r\n          <accordion-group *ngFor=\"let item of items \r\n            | filterBy: [_searchString, _filterByMode]; let i = index\" class=\"list-group-item\"\r\n               dnd-sortable [dragEnabled] = true\r\n               [sortableIndex]=\"i\"\r\n               (onDragEnd)=\"_onDragEnd(i)\"\r\n\r\n               (onOpen) =\"openItem = item\" \r\n               (onClose)=\"openItem = null\">\r\n \r\n            <accordion-heading (click)  =\"selectedItem = item\">\r\n              <item-header [item]=\"item\" \r\n                [isOpen]       = \"item === openItem\" \r\n                (mouseover)    = \"highlightedItem = item\" \r\n                (mouseout)     = \"_unhighlight(item)\"\r\n                [ngClass] =\"{highlighted: item === highlightedItem, active: item === selectedItem}\">\r\n              </item-header>\r\n            </accordion-heading>\r\n\r\n            <div *ngIf=\"!options?.headersOnly\">\r\n              <resource-panel *ngIf=\"item === openItem\" \r\n                [item]    =\"item\" \r\n                [model]=\"model\"\r\n                [options] =\"options\"\r\n                (saved)   =\"onSaved(item)\" \r\n                (removed) =\"onRemoved(item)\"\r\n                (highlightedItemChange)=\"highlightedItemChange.emit($event)\"\r\n                ></resource-panel>            \r\n            </div>\r\n          </accordion-group>        \r\n        </accordion>       \r\n      </div>\r\n    </div>\r\n  `,\r\n    styles: [`\r\n        .input-select{\r\n          min-width: 100px;\r\n        }\r\n        .highlighted {\r\n          background-color: #e3d2d2;\r\n        }\r\n        .active {\r\n          border: 2px solid #ff9999;\r\n          padding: 2px;\r\n        }\r\n    `]\r\n})\r\n/**\r\n * The NestedResourceList component, provides functionality for editing lists of resources.\r\n * @extends {AbstractResourceList}\r\n */\r\nexport class NestedResourceList extends AbstractResourceList{\r\n    /**\r\n     *  the list of resources that can be added to the current list\r\n     */\r\n    @Input() possibleValues;\r\n\r\n    _itemToInclude = null;\r\n\r\n    /**\r\n     * @param {ToastyService} toastyService - the service for showing notifications and error messages\r\n     * @param {HighlightService} highlightService - the service that notifies nested components about currently highlighted item\r\n     */\r\n    constructor(toastyService: ToastyService, highlightService: HighlightService){\r\n        super(highlightService);\r\n        this._toastyService = toastyService;\r\n    }\r\n\r\n    ngOnInit(){\r\n        super.ngOnInit();\r\n\r\n        //If selectionOptions are not provided by parent, subscribe and get all for given types\r\n        if (!this.possibleValues) {\r\n            if (this.types.length === 1){\r\n                this._ts = this.model[this.types[0]].p('all').subscribe(\r\n                    (data) => { this.possibleValues = data; });\r\n            } else {\r\n                if (this.types.length > 1){\r\n                    let setToArray = new SetToArray();\r\n                    let filterByClass = new FilterBy();\r\n\r\n                    this._ts = this.model.Template.p('all').subscribe(\r\n                        (data) => {this.possibleValues = new Set(\r\n                            filterByClass.transform( setToArray.transform(data), [this.types, 'class']))});\r\n                }\r\n            }\r\n        }\r\n    }\r\n\r\n    ngOnDestroy() {\r\n        if (this._ts) { this._ts.unsubscribe(); }\r\n    }\r\n\r\n    ngOnChanges(changes) {\r\n        if (this.items && this.options.ordered) {\r\n            this.items.sort((a, b) => {\r\n                return (a['-->IsRadiallyAdjacent'] && (a['-->IsRadiallyAdjacent'][2] === b))\r\n            });\r\n        }\r\n    }\r\n\r\n    //TODO: update new \"Follows\" relationship\r\n    _onDragEnd(index){\r\n        if (!this.options.ordered) { return; }\r\n\r\n        for (let i = 1; i < this.items.length; i++){\r\n            if (this.items[i]['-->IsRadiallyAdjacent']){\r\n                if (this.items[i]['-->IsRadiallyAdjacent'][2] !== this.items[i - 1]){\r\n                    this.items[i]['-->IsRadiallyAdjacent'][2] = this.items[i - 1];\r\n                }\r\n            } else {\r\n                model.isRadiallyAdjacent.new({1: this.items[i - 1], 2: this.items[i]});\r\n            }\r\n        }\r\n        if (this.items.length > 1) {\r\n            if (this.items[this.items.length - 1]['-->IsRadiallyAdjacent'] !== null){\r\n                //TODO uncomment when model library implements delete operation\r\n                //this.items[i]['-->IsRadiallyAdjacent'].delete();\r\n                this.items[this.items.length - 1]['-->IsRadiallyAdjacent'] = null;\r\n            }\r\n        }\r\n        this.updated.emit(this.items);\r\n    }\r\n\r\n    /**\r\n     * Include a selected resource to the current list\r\n     * @param {Resource} newItem - the selected resource to include to the current list\r\n     */\r\n    onIncluded(newItem){\r\n        if (newItem){\r\n            if (this.items.indexOf(newItem) < 0){\r\n                this.items.push(newItem);\r\n                this.updated.emit(this.items);\r\n                this.added.emit(newItem);\r\n                this.selectedItem = newItem;\r\n            } else {\r\n                this._toastyService.error(\"Selected resource is already included to the set!\");\r\n            }\r\n        }\r\n    }\r\n}\r\n",
     "static": true,
     "longname": "src/panels/NestedResourceList.js",
     "access": null,
@@ -2550,7 +2506,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 110,
+    "__docId__": 109,
     "kind": "class",
     "name": "NestedResourceList",
     "memberof": "src/panels/NestedResourceList.js",
@@ -2568,7 +2524,7 @@
     ]
   },
   {
-    "__docId__": 111,
+    "__docId__": 110,
     "kind": "constructor",
     "name": "constructor",
     "memberof": "src/panels/NestedResourceList.js~NestedResourceList",
@@ -2577,25 +2533,33 @@
     "static": false,
     "longname": "src/panels/NestedResourceList.js~NestedResourceList#constructor",
     "access": null,
-    "description": " the list of resources that can be added to the current list",
-    "lineNumber": 21,
+    "description": "",
+    "lineNumber": 17,
     "params": [
       {
-        "name": "toastyService",
+        "nullable": null,
         "types": [
-          "*"
-        ]
+          "ToastyService"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "toastyService",
+        "description": "the service for showing notifications and error messages"
       },
       {
-        "name": "highlightService",
+        "nullable": null,
         "types": [
-          "*"
-        ]
+          "HighlightService"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "highlightService",
+        "description": "the service that notifies nested components about currently highlighted item"
       }
     ]
   },
   {
-    "__docId__": 112,
+    "__docId__": 111,
     "kind": "member",
     "name": "_itemToInclude",
     "memberof": "src/panels/NestedResourceList.js~NestedResourceList",
@@ -2603,7 +2567,30 @@
     "longname": "src/panels/NestedResourceList.js~NestedResourceList#_itemToInclude",
     "access": null,
     "description": null,
-    "lineNumber": 23,
+    "lineNumber": 19,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 112,
+    "kind": "member",
+    "name": "_toastyService",
+    "memberof": "src/panels/NestedResourceList.js~NestedResourceList",
+    "static": false,
+    "longname": "src/panels/NestedResourceList.js~NestedResourceList#_toastyService",
+    "access": null,
+    "description": null,
+    "lineNumber": 20,
     "undocument": true,
     "unknown": [
       {
@@ -2619,14 +2606,35 @@
   },
   {
     "__docId__": 113,
-    "kind": "member",
-    "name": "_toastyService",
+    "kind": "method",
+    "name": "ngOnInit",
     "memberof": "src/panels/NestedResourceList.js~NestedResourceList",
+    "generator": false,
+    "async": false,
     "static": false,
-    "longname": "src/panels/NestedResourceList.js~NestedResourceList#_toastyService",
+    "longname": "src/panels/NestedResourceList.js~NestedResourceList#ngOnInit",
     "access": null,
     "description": null,
-    "lineNumber": 24,
+    "lineNumber": 23,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "params": []
+  },
+  {
+    "__docId__": 114,
+    "kind": "member",
+    "name": "_ts",
+    "memberof": "src/panels/NestedResourceList.js~NestedResourceList",
+    "static": false,
+    "longname": "src/panels/NestedResourceList.js~NestedResourceList#_ts",
+    "access": null,
+    "description": null,
+    "lineNumber": 29,
     "undocument": true,
     "unknown": [
       {
@@ -2641,36 +2649,15 @@
     }
   },
   {
-    "__docId__": 114,
-    "kind": "method",
-    "name": "ngOnInit",
-    "memberof": "src/panels/NestedResourceList.js~NestedResourceList",
-    "generator": false,
-    "async": false,
-    "static": false,
-    "longname": "src/panels/NestedResourceList.js~NestedResourceList#ngOnInit",
-    "access": null,
-    "description": null,
-    "lineNumber": 27,
-    "undocument": true,
-    "unknown": [
-      {
-        "tagName": "@_undocument",
-        "tagValue": ""
-      }
-    ],
-    "params": []
-  },
-  {
     "__docId__": 115,
     "kind": "member",
-    "name": "_ts",
+    "name": "possibleValues",
     "memberof": "src/panels/NestedResourceList.js~NestedResourceList",
     "static": false,
-    "longname": "src/panels/NestedResourceList.js~NestedResourceList#_ts",
+    "longname": "src/panels/NestedResourceList.js~NestedResourceList#possibleValues",
     "access": null,
     "description": null,
-    "lineNumber": 33,
+    "lineNumber": 30,
     "undocument": true,
     "unknown": [
       {
@@ -2687,13 +2674,13 @@
   {
     "__docId__": 116,
     "kind": "member",
-    "name": "possibleValues",
+    "name": "_ts",
     "memberof": "src/panels/NestedResourceList.js~NestedResourceList",
     "static": false,
-    "longname": "src/panels/NestedResourceList.js~NestedResourceList#possibleValues",
+    "longname": "src/panels/NestedResourceList.js~NestedResourceList#_ts",
     "access": null,
     "description": null,
-    "lineNumber": 34,
+    "lineNumber": 37,
     "undocument": true,
     "unknown": [
       {
@@ -2710,13 +2697,13 @@
   {
     "__docId__": 117,
     "kind": "member",
-    "name": "_ts",
+    "name": "possibleValues",
     "memberof": "src/panels/NestedResourceList.js~NestedResourceList",
     "static": false,
-    "longname": "src/panels/NestedResourceList.js~NestedResourceList#_ts",
+    "longname": "src/panels/NestedResourceList.js~NestedResourceList#possibleValues",
     "access": null,
     "description": null,
-    "lineNumber": 41,
+    "lineNumber": 38,
     "undocument": true,
     "unknown": [
       {
@@ -2732,29 +2719,6 @@
   },
   {
     "__docId__": 118,
-    "kind": "member",
-    "name": "possibleValues",
-    "memberof": "src/panels/NestedResourceList.js~NestedResourceList",
-    "static": false,
-    "longname": "src/panels/NestedResourceList.js~NestedResourceList#possibleValues",
-    "access": null,
-    "description": null,
-    "lineNumber": 42,
-    "undocument": true,
-    "unknown": [
-      {
-        "tagName": "@_undocument",
-        "tagValue": ""
-      }
-    ],
-    "type": {
-      "types": [
-        "*"
-      ]
-    }
-  },
-  {
-    "__docId__": 119,
     "kind": "method",
     "name": "ngOnDestroy",
     "memberof": "src/panels/NestedResourceList.js~NestedResourceList",
@@ -2764,7 +2728,7 @@
     "longname": "src/panels/NestedResourceList.js~NestedResourceList#ngOnDestroy",
     "access": null,
     "description": null,
-    "lineNumber": 49,
+    "lineNumber": 45,
     "undocument": true,
     "unknown": [
       {
@@ -2775,17 +2739,45 @@
     "params": []
   },
   {
-    "__docId__": 120,
+    "__docId__": 119,
     "kind": "method",
-    "name": "_onDragStart",
+    "name": "ngOnChanges",
     "memberof": "src/panels/NestedResourceList.js~NestedResourceList",
     "generator": false,
     "async": false,
     "static": false,
-    "longname": "src/panels/NestedResourceList.js~NestedResourceList#_onDragStart",
+    "longname": "src/panels/NestedResourceList.js~NestedResourceList#ngOnChanges",
     "access": null,
     "description": null,
-    "lineNumber": 65,
+    "lineNumber": 51,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "params": [
+      {
+        "name": "changes",
+        "types": [
+          "*"
+        ]
+      }
+    ]
+  },
+  {
+    "__docId__": 120,
+    "kind": "method",
+    "name": "_onDragEnd",
+    "memberof": "src/panels/NestedResourceList.js~NestedResourceList",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/panels/NestedResourceList.js~NestedResourceList#_onDragEnd",
+    "access": null,
+    "description": null,
+    "lineNumber": 60,
     "undocument": true,
     "unknown": [
       {
@@ -2805,34 +2797,6 @@
   {
     "__docId__": 121,
     "kind": "method",
-    "name": "_onDragEnd",
-    "memberof": "src/panels/NestedResourceList.js~NestedResourceList",
-    "generator": false,
-    "async": false,
-    "static": false,
-    "longname": "src/panels/NestedResourceList.js~NestedResourceList#_onDragEnd",
-    "access": null,
-    "description": null,
-    "lineNumber": 68,
-    "undocument": true,
-    "unknown": [
-      {
-        "tagName": "@_undocument",
-        "tagValue": ""
-      }
-    ],
-    "params": [
-      {
-        "name": "index",
-        "types": [
-          "*"
-        ]
-      }
-    ]
-  },
-  {
-    "__docId__": 122,
-    "kind": "method",
     "name": "onIncluded",
     "memberof": "src/panels/NestedResourceList.js~NestedResourceList",
     "generator": false,
@@ -2840,8 +2804,8 @@
     "static": false,
     "longname": "src/panels/NestedResourceList.js~NestedResourceList#onIncluded",
     "access": null,
-    "description": "",
-    "lineNumber": 80,
+    "description": "Include a selected resource to the current list",
+    "lineNumber": 88,
     "params": [
       {
         "nullable": null,
@@ -2851,12 +2815,12 @@
         "spread": false,
         "optional": false,
         "name": "newItem",
-        "description": "an existing resource included to the current list"
+        "description": "the selected resource to include to the current list"
       }
     ]
   },
   {
-    "__docId__": 123,
+    "__docId__": 122,
     "kind": "member",
     "name": "selectedItem",
     "memberof": "src/panels/NestedResourceList.js~NestedResourceList",
@@ -2864,7 +2828,7 @@
     "longname": "src/panels/NestedResourceList.js~NestedResourceList#selectedItem",
     "access": null,
     "description": null,
-    "lineNumber": 86,
+    "lineNumber": 94,
     "undocument": true,
     "unknown": [
       {
@@ -2879,10 +2843,10 @@
     }
   },
   {
-    "__docId__": 124,
+    "__docId__": 123,
     "kind": "file",
     "name": "src/panels/NestedResourceWidgetModule.js",
-    "content": "import {NgModule, Component, Input, Output, EventEmitter} from '@angular/core';\r\nimport {CommonModule} from '@angular/common';\r\n\r\n//internal\r\nimport {ResourcePanelModule}  from \"./ResourcePanelModule.js\";\r\nimport {AbstractResourceList} from \"./AbstractResourceList.js\";\r\nimport {HighlightService} from './HighlightService.js';\r\n\r\n@Component({\r\n    selector: 'nested-resource-widget',\r\n    template:`\r\n     <div class=\"panel panel-info repo\">\r\n        <div class=\"panel-heading\">{{caption}}\r\n          <span class=\"pull-right\" *ngIf=\"options?.showActive\">\r\n            <button type=\"button\" class=\"btn btn-default btn-header\" \r\n              [ngClass]=\"{'active': activeItem === null}\" (click)=\"activeItem = null\">\r\n              <span class = \"glyphicon\" [ngClass]=\"{'glyphicon-pencil': activeItem === null}\"></span>\r\n            </button>\r\n          </span>\r\n        </div>\r\n        <div class=\"panel-body\">\r\n          <toolbar-sort  [options]=\"['Name', 'ID', 'Class']\" (sorted)=\"onSorted($event)\"></toolbar-sort>\r\n          <toolbar-add   [options]=\"types\" [transform]=\"getClassLabel\" (added)=\"onAdded($event)\"></toolbar-add>\r\n          <toolbar-propertySettings  [options] = \"_typeOptions\" [transform] = \"getClassLabel\" \r\n            (selectionChanged) = \"hiddenTypesChanged($event)\">\r\n          </toolbar-propertySettings>\r\n\r\n          <toolbar-filter [filter]=\"_searchString\" [options]=\"['Name', 'ID', 'Class']\" (applied)=\"onFiltered($event)\"></toolbar-filter>\r\n                   \r\n          <accordion [closeOthers]=\"true\" \r\n            dnd-sortable-container [dropZones]=\"_zones\" [sortableData]=\"items\">\r\n\r\n              <accordion-group *ngFor=\"let item of items \r\n                | hideClass : hiddenTypes\r\n                | orderBy : _sortByMode\r\n                | filterBy: [_searchString, _filterByMode]; let i = index\" dnd-sortable [sortableIndex]=\"i\"\r\n                (onOpen) =\"openItem = item\"\r\n                (onClose)=\"openItem = null\">\r\n    \r\n                <accordion-heading (click)  =\"selectedItem = item\">                  \r\n                  <item-header [item]= \"item\" \r\n                    [options]      = \"options\"\r\n                    [isActive]     = \"item === activeItem\"\r\n                    [isOpen]       = \"item === openItem\" \r\n                    (mouseover)    = \"highlightedItem = item\" \r\n                    (mouseout)     = \"unhighlight(item)\"\r\n                    (activeItemChanged) = \"activeItem = item\"\r\n                    [ngClass] =\"{highlighted: item === highlightedItem, active: item === selectedItem}\">   \r\n                  </item-header>\r\n                </accordion-heading>\r\n    \r\n                <div *ngIf=\"!options?.headersOnly\">\r\n                  <resource-panel *ngIf=\"item === openItem\" \r\n                    [item]=\"item\"\r\n                    [model]=\"model\"\r\n                    (saved)   =\"onSaved(item, $event)\" \r\n                    (removed) =\"onRemoved(item)\">\r\n                   </resource-panel>   \r\n                </div>\r\n                    \r\n              </accordion-group>        \r\n          </accordion>       \r\n        </div>\r\n      </div>\r\n  `,\r\n    styles: [` \r\n        .repo{ \r\n            width: 100%;\r\n            border: 0;\r\n            border-right:3px #eee solid;\r\n            min-width: 380px;\r\n            min-height: 300px;\r\n        }\r\n        .panel-heading{\r\n          padding: 2px;\r\n        }\r\n        .highlighted {\r\n          background-color: #e3d2d2;\r\n        }\r\n        .active {\r\n          border: 2px solid #ff9999;\r\n          padding: 2px;\r\n        }\r\n        :host >>> .btn-header{\r\n          width: 16px;\r\n          height: 16px;\r\n          padding: 0;\r\n        }\r\n        :host >>> .btn-icon {\r\n            height: 30px;\r\n        }\r\n        :host >>> .panel-body {\r\n          padding: 0;\r\n        }\r\n        :host >>> .btn:focus ,.btn:active {\r\n          outline: none !important;\r\n        }    \r\n        :host >>> .dropdown-toggle {\r\n          padding: 6px;\r\n        }\r\n        :host >>> .panel-heading{\r\n            padding: 0\r\n        }\r\n        :host >>> .accordion-toggle:hover {\r\n          outline: none;\r\n          text-decoration: none;\r\n        }\r\n        :host >>> .accordion-toggle:focus {\r\n          outline: none;\r\n          text-decoration: none;\r\n        }\r\n    `]\r\n})\r\n/**\r\n * The NestedResourceWidget component, provides functionality for editing lists of entities.\r\n * @extends {AbstractResourceList}\r\n */\r\nexport class NestedResourceWidget extends AbstractResourceList{\r\n\r\n    /**\r\n     * @param {Resource} item - the active item\r\n     */\r\n    @Input('activeItem') set activeItem(item) {\r\n        if (this._activeItem !== item) {\r\n            this._activeItem = item;\r\n            this.activeItemChange.emit(item);\r\n        }\r\n    }\r\n    /**\r\n     * @returns {Resource} - the active item\r\n     */\r\n    get activeItem() { return this._activeItem; }\r\n    /**\r\n     * @emits activeItemChange      - the active item changed\r\n     */\r\n    @Output() activeItemChange = new EventEmitter();\r\n\r\n    /**\r\n     * @returns {Array<string>} - the set of hidden resource classes\r\n     */\r\n    get hiddenTypes () {\r\n        return Array.from(this._ignoreTypes);\r\n    }\r\n\r\n    _activeItem = null;\r\n    _ignoreTypes = new Set();\r\n    _typeOptions = [];\r\n\r\n    /**\r\n     * @param {HighlightService} highlightService - the service that notifies nested components about currently highlighted item\r\n     */\r\n    constructor(highlightService: HighlightService){\r\n        super(highlightService);\r\n    }\r\n\r\n    ngOnInit(){\r\n        super.ngOnInit();\r\n        this._ignoreTypes.add(this.model.Border.name).add(this.model.Node.name);\r\n        this._typeOptions = this.types.filter(x => this.model[x])\r\n            .map(x => ({ selected: !this._ignoreTypes.has(x), value: x }));\r\n    }\r\n\r\n    /**\r\n     * @param {Object} option - the object with the field \"value\" that defines the resource class and\r\n     *  the boolean field \"selected\" that indicates whether the value is selected or not.\r\n     */\r\n    hiddenTypesChanged(option){\r\n        if ( this._ignoreTypes.has(option.value) &&  option.selected) {\r\n            this._ignoreTypes.delete(option.value);\r\n        }\r\n        if (!this._ignoreTypes.has(option.value) && !option.selected) {\r\n            this._ignoreTypes.add(option.value);\r\n        }\r\n    }\r\n}\r\n\r\n/**\r\n * The NestedResourceModule module, offers the NestedResourceWidget panel.\r\n */\r\n@NgModule({\r\n    imports:      [ CommonModule, ResourcePanelModule  ],\r\n    declarations: [ NestedResourceWidget ],\r\n    providers:    [ HighlightService ],\r\n    exports:      [ NestedResourceWidget ]\r\n})\r\nexport class NestedResourceWidgetModule {}\r\n\r\n\r\n",
+    "content": "import {NgModule, Component, Input, Output, EventEmitter} from '@angular/core';\r\nimport {CommonModule} from '@angular/common';\r\n\r\n//internal\r\nimport {ResourcePanelModule}  from \"./ResourcePanelModule.js\";\r\nimport {AbstractResourceList} from \"./AbstractResourceList.js\";\r\nimport {HighlightService} from './HighlightService.js';\r\n\r\n@Component({\r\n    selector: 'nested-resource-widget',\r\n    template:`\r\n        <div class=\"panel panel-info repo\">\r\n        <div class=\"panel-heading\">{{caption}}\r\n          <span class=\"pull-right\" *ngIf=\"options?.showActive\">\r\n            <button type=\"button\" class=\"btn btn-default btn-header\" \r\n              [ngClass]=\"{'active': activeItem === null}\" (click)=\"activeItem = null\">\r\n              <span class = \"glyphicon\" [ngClass]=\"{'glyphicon-pencil': activeItem === null}\"></span>\r\n            </button>\r\n          </span>\r\n        </div>\r\n        <div class=\"panel-body\">\r\n          <toolbar-sort  [options]=\"['Name', 'ID', 'Class']\" (sorted)=\"onSorted($event)\"></toolbar-sort>\r\n          <toolbar-add   [options]=\"types\" [transform]=\"getClassLabel\" (added)=\"onAdded($event)\"></toolbar-add>\r\n          <toolbar-propertySettings  [options] = \"_typeOptions\" [transform] = \"getClassLabel\" \r\n            (selectionChanged) = \"hiddenTypesChanged($event)\">\r\n          </toolbar-propertySettings>\r\n\r\n          <toolbar-filter [filter]=\"_searchString\" [options]=\"['Name', 'ID', 'Class']\" (applied)=\"onFiltered($event)\"></toolbar-filter>\r\n            \r\n          <accordion [closeOthers]=\"true\" \r\n                     dnd-sortable-container [dropZones]=\"_zones\" [sortableData]=\"items\">\r\n              <accordion-group *ngFor=\"let item of items \r\n              | hideClass : hiddenTypes\r\n              | orderBy : _sortByMode\r\n              | filterBy: [_searchString, _filterByMode]\r\n              ; let i = index\" class=\"list-group-item\"\r\n                dnd-sortable [sortableIndex]=\"i\"\r\n               (onOpen) =\"openItem = item\"\r\n               (onClose)=\"openItem = null\"\r\n              >\r\n                  <accordion-heading (click)  =\"selectedItem = item\">                  \r\n                  <item-header [item]= \"item\" \r\n                    [options]      = \"options\"\r\n                    [isActive]     = \"item === activeItem\"\r\n                    [isOpen]       = \"item === openItem\" \r\n                    (mouseover)    = \"highlightedItem = item\" \r\n                    (mouseout)     = \"_unhighlight(item)\"\r\n                    (activeItemChanged) = \"activeItem = item\"\r\n                    [ngClass] =\"{highlighted: item === highlightedItem, active: item === selectedItem}\">   \r\n                  </item-header>\r\n                </accordion-heading>\r\n                <div *ngIf=\"!options?.headersOnly\">\r\n                  <resource-panel *ngIf=\"item === openItem\" \r\n                    [item]=\"item\"\r\n                    [model]=\"model\"\r\n                    (saved)   =\"onSaved(item)\" \r\n                    (removed) =\"onRemoved(item)\">\r\n                   </resource-panel>   \r\n                </div>\r\n              </accordion-group>        \r\n          </accordion>       \r\n        </div>\r\n      </div>\r\n  `,\r\n    styles: [` \r\n        .repo{ \r\n            width: 100%;\r\n            border: 0;\r\n            border-right:3px #eee solid;\r\n            min-width: 380px;\r\n            min-height: 300px;\r\n        }\r\n        .panel-heading{\r\n          padding: 2px;\r\n        }\r\n        .highlighted {\r\n          background-color: #e3d2d2;\r\n        }\r\n        .active {\r\n          border: 2px solid #ff9999;\r\n          padding: 2px;\r\n        }\r\n        :host >>> .btn-header{\r\n          width: 16px;\r\n          height: 16px;\r\n          padding: 0;\r\n        }\r\n        :host >>> .btn-icon {\r\n            height: 30px;\r\n        }\r\n        :host >>> .panel-body {\r\n          padding: 0;\r\n        }\r\n        :host >>> .btn:focus ,.btn:active {\r\n          outline: none !important;\r\n        }    \r\n        :host >>> .dropdown-toggle {\r\n          padding: 6px;\r\n        }\r\n        :host >>> .panel-heading{\r\n            padding: 0\r\n        }\r\n        :host >>> .accordion-toggle:hover {\r\n          outline: none;\r\n          text-decoration: none;\r\n        }\r\n        :host >>> .accordion-toggle:focus {\r\n          outline: none;\r\n          text-decoration: none;\r\n        }\r\n        :host >>> .list-group-item {\r\n            padding: 0;\r\n        }\r\n\r\n    `]\r\n})\r\n/**\r\n * The NestedResourceWidget component, provides functionality for editing lists of entities.\r\n * @extends {AbstractResourceList}\r\n */\r\nexport class NestedResourceWidget extends AbstractResourceList{\r\n    /**\r\n     * @param {Resource} item - the active item\r\n     */\r\n    @Input('activeItem') set activeItem(item) {\r\n        if (this._activeItem !== item) {\r\n            this._activeItem = item;\r\n            this.activeItemChange.emit(item);\r\n        }\r\n    }\r\n    /**\r\n     * @returns {Resource} - the active item\r\n     */\r\n    get activeItem() { return this._activeItem; }\r\n    /**\r\n     * @emits activeItemChange      - the active item changed\r\n     */\r\n    @Output() activeItemChange = new EventEmitter();\r\n\r\n    /**\r\n     * @returns {Array<string>} - the set of hidden resource classes\r\n     */\r\n    get hiddenTypes () {\r\n        return Array.from(this._ignoreTypes);\r\n    }\r\n\r\n    _activeItem = null;\r\n    _ignoreTypes = new Set();\r\n    _typeOptions = [];\r\n\r\n    /**\r\n     * @param {HighlightService} highlightService - the service that notifies nested components about currently highlighted item\r\n     */\r\n    constructor(highlightService: HighlightService){\r\n        super(highlightService);\r\n    }\r\n\r\n    /**\r\n     * Initialize the nested resource list component: set invisible by default classes\r\n     */\r\n    ngOnInit(){\r\n        super.ngOnInit();\r\n        this._ignoreTypes.add(this.model.Border.name).add(this.model.Node.name);\r\n        this._typeOptions = this.types.filter(x => this.model[x])\r\n            .map(x => ({ selected: !this._ignoreTypes.has(x), value: x }));\r\n    }\r\n\r\n    /**\r\n     * @param {Object} option - the object with the field \"value\" that defines the resource class and\r\n     *  the boolean field \"selected\" that indicates whether the value is selected or not.\r\n     */\r\n    hiddenTypesChanged(option){\r\n        if ( this._ignoreTypes.has(option.value) &&  option.selected) {\r\n            this._ignoreTypes.delete(option.value);\r\n        }\r\n        if (!this._ignoreTypes.has(option.value) && !option.selected) {\r\n            this._ignoreTypes.add(option.value);\r\n        }\r\n    }\r\n}\r\n\r\n/**\r\n * The NestedResourceModule module, offers the NestedResourceWidget panel.\r\n */\r\n@NgModule({\r\n    imports:      [ CommonModule, ResourcePanelModule  ],\r\n    declarations: [ NestedResourceWidget ],\r\n    providers:    [ HighlightService ],\r\n    exports:      [ NestedResourceWidget ]\r\n})\r\nexport class NestedResourceWidgetModule {}\r\n\r\n\r\n",
     "static": true,
     "longname": "src/panels/NestedResourceWidgetModule.js",
     "access": null,
@@ -2890,7 +2854,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 125,
+    "__docId__": 124,
     "kind": "class",
     "name": "NestedResourceWidget",
     "memberof": "src/panels/NestedResourceWidgetModule.js",
@@ -2908,7 +2872,7 @@
     ]
   },
   {
-    "__docId__": 126,
+    "__docId__": 125,
     "kind": "set",
     "name": "activeItem",
     "memberof": "src/panels/NestedResourceWidgetModule.js~NestedResourceWidget",
@@ -2933,7 +2897,7 @@
     }
   },
   {
-    "__docId__": 127,
+    "__docId__": 126,
     "kind": "member",
     "name": "_activeItem",
     "memberof": "src/panels/NestedResourceWidgetModule.js~NestedResourceWidget",
@@ -2956,7 +2920,7 @@
     }
   },
   {
-    "__docId__": 128,
+    "__docId__": 127,
     "kind": "get",
     "name": "activeItem",
     "memberof": "src/panels/NestedResourceWidgetModule.js~NestedResourceWidget",
@@ -2988,7 +2952,7 @@
     }
   },
   {
-    "__docId__": 129,
+    "__docId__": 128,
     "kind": "get",
     "name": "hiddenTypes",
     "memberof": "src/panels/NestedResourceWidgetModule.js~NestedResourceWidget",
@@ -3020,7 +2984,7 @@
     }
   },
   {
-    "__docId__": 130,
+    "__docId__": 129,
     "kind": "constructor",
     "name": "constructor",
     "memberof": "src/panels/NestedResourceWidgetModule.js~NestedResourceWidget",
@@ -3045,7 +3009,7 @@
     ]
   },
   {
-    "__docId__": 131,
+    "__docId__": 130,
     "kind": "member",
     "name": "_activeItem",
     "memberof": "src/panels/NestedResourceWidgetModule.js~NestedResourceWidget",
@@ -3068,7 +3032,7 @@
     }
   },
   {
-    "__docId__": 132,
+    "__docId__": 131,
     "kind": "member",
     "name": "_ignoreTypes",
     "memberof": "src/panels/NestedResourceWidgetModule.js~NestedResourceWidget",
@@ -3091,7 +3055,7 @@
     }
   },
   {
-    "__docId__": 133,
+    "__docId__": 132,
     "kind": "member",
     "name": "_typeOptions",
     "memberof": "src/panels/NestedResourceWidgetModule.js~NestedResourceWidget",
@@ -3114,7 +3078,7 @@
     }
   },
   {
-    "__docId__": 134,
+    "__docId__": 133,
     "kind": "method",
     "name": "ngOnInit",
     "memberof": "src/panels/NestedResourceWidgetModule.js~NestedResourceWidget",
@@ -3123,19 +3087,12 @@
     "static": false,
     "longname": "src/panels/NestedResourceWidgetModule.js~NestedResourceWidget#ngOnInit",
     "access": null,
-    "description": null,
-    "lineNumber": 48,
-    "undocument": true,
-    "unknown": [
-      {
-        "tagName": "@_undocument",
-        "tagValue": ""
-      }
-    ],
+    "description": "Initialize the nested resource list component: set invisible by default classes",
+    "lineNumber": 51,
     "params": []
   },
   {
-    "__docId__": 135,
+    "__docId__": 134,
     "kind": "member",
     "name": "_typeOptions",
     "memberof": "src/panels/NestedResourceWidgetModule.js~NestedResourceWidget",
@@ -3143,7 +3100,7 @@
     "longname": "src/panels/NestedResourceWidgetModule.js~NestedResourceWidget#_typeOptions",
     "access": null,
     "description": null,
-    "lineNumber": 51,
+    "lineNumber": 54,
     "undocument": true,
     "unknown": [
       {
@@ -3158,7 +3115,7 @@
     }
   },
   {
-    "__docId__": 136,
+    "__docId__": 135,
     "kind": "method",
     "name": "hiddenTypesChanged",
     "memberof": "src/panels/NestedResourceWidgetModule.js~NestedResourceWidget",
@@ -3168,7 +3125,7 @@
     "longname": "src/panels/NestedResourceWidgetModule.js~NestedResourceWidget#hiddenTypesChanged",
     "access": null,
     "description": "",
-    "lineNumber": 58,
+    "lineNumber": 61,
     "params": [
       {
         "nullable": null,
@@ -3183,7 +3140,7 @@
     ]
   },
   {
-    "__docId__": 137,
+    "__docId__": 136,
     "kind": "class",
     "name": "NestedResourceWidgetModule",
     "memberof": "src/panels/NestedResourceWidgetModule.js",
@@ -3194,14 +3151,14 @@
     "importPath": "nested-resource-editor/src/panels/NestedResourceWidgetModule.js",
     "importStyle": "{NestedResourceWidgetModule}",
     "description": "The NestedResourceModule module, offers the NestedResourceWidget panel.",
-    "lineNumber": 72,
+    "lineNumber": 75,
     "interface": false
   },
   {
-    "__docId__": 138,
+    "__docId__": 137,
     "kind": "file",
     "name": "src/panels/ResourcePanelModule.js",
-    "content": "import {NgModule, Component, ViewChild, EventEmitter, Input, Output, forwardRef} from '@angular/core';\r\nimport {CommonModule} from '@angular/common';\r\nimport {FormsModule} from '@angular/forms';\r\nimport {AccordionModule} from \"ngx-accordion\";\r\nimport {DndModule} from 'ngx-dnd';\r\n\r\nimport {ToastyModule, ToastyService} from 'ng2-toasty';\r\nimport '../../node_modules/ng2-toasty/style.css';\r\nimport '../../node_modules/ng2-toasty/style-bootstrap.css';\r\n\r\n//Common\r\nimport {PipeTransformModule, SetToArray, HideClass} from \"../common/PipeTransformModule\";\r\nimport {ToolbarSettingsModule} from '../common/toolbars/ToolbarSettingsModule';\r\nimport {CustomSelectModule} from '../common/components/CustomSelectModule';\r\n\r\n//Local\r\nimport {ToolbarAddModule}      from '../toolbars/ToolbarAddModule';\r\nimport {ToolbarFilterModule}   from '../toolbars/ToolbarFilterModule';\r\nimport {ToolbarSortModule}     from '../toolbars/ToolbarSortModule';\r\nimport {ItemHeader}            from \"./ItemHeader\";\r\nimport {NestedResourceList}    from './NestedResourceList';\r\nimport {ToolbarCommandsModule} from '../toolbars/ToolbarCommandsModule';\r\nimport {TemplateValueModule}   from '../components/TemplateValueModule';\r\nimport {MeasurableGeneratorModule, MeasurableGenerator} from \"../components/MeasurableGeneratorModule\";\r\n\r\n@Component({\r\n    selector: 'resource-panel',\r\n    template:`\r\n    <div class=\"panel\">\r\n        <div class=\"panel-body\">\r\n          <toolbar-commands  \r\n            [options]  = \"options\"\r\n            (saved)    = \"onSaved(event)\"\r\n            (canceled) = \"onCanceled(event)\"\r\n            (removed)  = \"removed.emit($event)\">            \r\n          </toolbar-commands>\r\n          <toolbar-propertySettings  \r\n            [options] = \"fieldOptions\"\r\n            [transform] = \"getPropertyLabel\"\r\n            (selectionChanged) = \"visibleFieldsChanged($event)\">\r\n          </toolbar-propertySettings>\r\n          <div class=\"input-control\" *ngIf=\"item.class === model.Lyph.name\">\r\n            <button type=\"button\" class=\"btn btn-default btn-icon\" \r\n              (click)=\"generateMeasurables()\">\r\n              <span class=\"glyphicon glyphicon-cog\"></span>\r\n            </button>\r\n          </div>\r\n          <div class=\"input-control\" *ngIf=\"!options?.hideCreateType && isTyped()\" >\r\n            <input type=\"checkbox\" [disabled]=\"typeCreated\" [(ngModel)]=\"createType\">Create type\r\n          </div>\r\n                    \r\n          <div class=\"panel-content\"> \r\n            <div class=\"input-control\" *ngFor=\"let property of fieldNames\">\r\n              <div *ngIf=\"!ignore.has(property)\">\r\n\r\n                <div class=\"input-control-lg\" *ngIf=\"inputGroup.includes(property)\">\r\n                  <label for=\"comment\">{{getPropertyLabel(property)}}: </label>\r\n                  <input class=\"form-control\" \r\n                    [type]=\"getDefaultValue(property, 'type')\" \r\n                    [disabled]=\"item.constructor.properties[property].readOnly\"\r\n                    [(ngModel)]=\"item[property]\">\r\n                </div>\r\n              \r\n                <div *ngIf=\"selectGroup.includes(property)\">      \r\n                  <label>{{getPropertyLabel(property)}}: </label>\r\n                  <select-input-1 [item] = \"item.p(property) | async\" \r\n                    (updated) = \"updateProperty(property, $event)\"  \r\n                    [options] = \"possibleValues[property]\">\r\n                  </select-input-1>\r\n                </div>\r\n                \r\n                <div *ngIf=\"multiSelectGroup.includes(property)\">\r\n                    <label>{{getPropertyLabel(property)}}: </label>\r\n                    <select-input [items] = \"item.p(property) | async\"\r\n                     (updated) = \"updateProperty(property, $event)\"    \r\n                     [options] = \"possibleValues[property]\">\r\n                    </select-input>\r\n                </div>\r\n                \r\n                <nested-resource-list *ngIf=\"relationGroup.includes(property)\"\r\n                  [caption]=\"getPropertyLabel(property)\" \r\n                  [model]  =\"model\"\r\n                  [items]  =\"item.p(property) | async | setToArray\" \r\n                  [types]  =\"[item.constructor.relationshipShortcuts[property].codomain.resourceClass.name]\"\r\n                  (updated)=\"updateProperty(property, $event)\"> \r\n                </nested-resource-list>\r\n              \r\n                <template-value *ngIf=\"templateGroup.includes(property)\" \r\n                  [caption]=\"getPropertyLabel(property)\" \r\n                  [item]   =\"item.p(property) | async\"\r\n                  [step]   =\"getDefaultValue(property, 'step')\"\r\n                  (updated)=\"updateProperty(property, $event)\">\r\n                </template-value>\r\n                \r\n                <fieldset *ngIf=\"checkboxGroup.includes(property)\">\r\n                  <legend>{{getPropertyLabel(property)}}:</legend>\r\n                  <p *ngFor = \"let option of possibleValues[property]; let i = index\">\r\n                     <input type=\"checkbox\" [value]=\"option\" \r\n                        [checked]=\"item[property].includes(option)\" \r\n                        (change)=\"updateArray(property, option, $event)\"\r\n                     >{{option}}&nbsp;\r\n                  </p>\r\n                </fieldset>\r\n              </div>\r\n            </div>\r\n            \r\n            <modal-window *ngIf = \"item.class === model.Lyph.name\" [item] = \"item\" [clsMeasurable] = \"model.Measurable\">\r\n            </modal-window>\r\n            \r\n          </div>\r\n        </div>\r\n    </div>\r\n    <ng2-toasty></ng2-toasty>\r\n  `,\r\n    styles: [\r\n        `\r\n        input[type=number] {\r\n          text-align:right;\r\n        }\r\n        .panel-content{\r\n          border: 1px solid #ccc;\r\n        }\r\n        :host >>> .input-control {\r\n          margin-left: 4px;\r\n          padding: 2px;\r\n          display: inline-block;\r\n          vertical-align:top;\r\n        }\r\n        :host >>> .input-control >>> label {\r\n          display: block;\r\n        }\r\n        :host >>> .input-control-sm {\r\n          width: 68px;\r\n        }\r\n        :host >>> .input-control-md {\r\n          width: 124px;\r\n        }\r\n        :host >>> .input-control-lg {\r\n          width: 178px;\r\n        }\r\n        :host >>> fieldset {\r\n          border: 1px ridge #e3e3e3;\r\n          padding: 4px;\r\n          margin: 4px;\r\n        }\r\n        legend{\r\n          font: inherit;\r\n          font-weight: bold;\r\n          padding: 4px;\r\n          margin-bottom: 0;\r\n          border: 0;\r\n          width: auto;\r\n        }\r\n        :host >>> .form-control {\r\n          height: 30px;\r\n          box-shadow: none!important;\r\n        }\r\n        :host >>> .form-control:focus {\r\n          border: 2px solid #ccc;\r\n          box-shadow: none!important;\r\n        }\r\n    `]\r\n})\r\n/**\r\n * The ResourcePanel component, generates fields for editting properties of a given resource.\r\n */\r\nexport class ResourcePanel {\r\n    /**\r\n     * @property {Resource} item - the resource to show or edit\r\n     */\r\n    @Input() item;\r\n    /**\r\n     * @property {Object} model  - the open-physiology model\r\n     */\r\n    @Input() model;\r\n    /**\r\n     * @property {Object} options - the visualization options for the panel's commands toolbar\r\n     */\r\n    @Input() options;\r\n\r\n    /**\r\n     * @emits saved           - the changes saved\r\n     */\r\n    @Output() saved = new EventEmitter();\r\n    /**\r\n     * @emits canceled        - the changes canceled\r\n     */\r\n    @Output() canceled = new EventEmitter();\r\n    /**\r\n     * @emits removed         - the item deleted\r\n     */\r\n    @Output() removed = new EventEmitter();\r\n    /**\r\n     * @emits propertyUpdated - the item property changed\r\n     */\r\n    @Output() propertyUpdated = new EventEmitter();\r\n\r\n    @ViewChild(MeasurableGenerator) _mGen;\r\n\r\n    ignore           = new Set();\r\n\r\n    fieldNames       = [];  //All fields\r\n    fieldOptions     = [];  //Field visibility configurations\r\n\r\n    checkboxGroup    = [];  //Properties in check-boxes\r\n    templateGroup    = [];  //Properties in value-range-distribution component\r\n    inputGroup       = [];  //Properties in input fields\r\n\r\n    selectGroup      = [];  //Relationships with max cardinality-1 in combo list\r\n    multiSelectGroup = [];  //Relationships in multi-combo lists\r\n    relationGroup    = [];  //Relationships in nested resource lists\r\n\r\n    /*Typed resources*/\r\n    createType = false;\r\n    typeCreated = false;\r\n\r\n    /*Selection options*/\r\n    possibleValues = {};\r\n\r\n    /**\r\n     * @param {ToastyService} toastyService - the service for showing notifications and error messages\r\n     */\r\n    constructor(toastyService:ToastyService){}\r\n\r\n    ngOnInit(){\r\n        this.ignore = new Set([\"id\", \"cardinalityBase\", \"cardinalityMultipliers\", \"definedType\"]);\r\n        if (this.item instanceof this.model.Border) {\r\n            ['externals', 'species', 'measurables', 'name', 'types', 'nodes'].map(propName =>\r\n                this.ignore.add(propName));\r\n        }\r\n\r\n        /*Auto-generated visual groups*/\r\n        let privateProperties = new Set([\"class\", \"themes\", \"parents\", \"children\"]);\r\n\r\n        let fields = Object.assign({}, this.item.constructor.properties, this.item.constructor.relationshipShortcuts);\r\n        this.fieldNames = Object.keys(fields).filter(p => !privateProperties.has(p));\r\n        this.fieldOptions = this.fieldNames.map(field => ({value: field, selected: !this.ignore.has(field)}));\r\n\r\n        /*Properties in check-boxes*/\r\n        this.checkboxGroup = ['transportPhenomenon', 'nature'].filter(key => this.item.constructor.properties[key]);\r\n\r\n        /*Properties in value-range-distribution forms */\r\n        this.templateGroup = ['cardinalityBase', 'thickness', 'length'].filter(key => this.item.constructor.properties[key]);\r\n\r\n        /*Properties in input fields*/\r\n        this.inputGroup = Object.keys(this.item.constructor.properties)\r\n            .filter(key => !privateProperties.has(key)\r\n            && !this.checkboxGroup.includes(key)\r\n            && !this.templateGroup.includes(key));\r\n\r\n        /*Relationships*/\r\n        let relationships = Object.entries(this.item.constructor.relationshipShortcuts)\r\n            .filter(([key, value]) => !value.abstract && !privateProperties.has(key));\r\n\r\n        //Filtered possible values for relationships\r\n        for (let [key, value] of relationships){\r\n            this.item.fields[key].p('possibleValues') .subscribe(\r\n                (data) => {\r\n                    this.possibleValues[key] = (key === \"cardinalityMultipliers\")?\r\n                        new Set(new HideClass().transform( new SetToArray().transform(data),\r\n                            [this.model.Border.name, this.model.Node.name]))\r\n                        : data;\r\n                });\r\n        }\r\n\r\n        //Possible values for enumerations\r\n        for (let [key, propertySpec] of Object.entries(this.item.constructor.properties)){\r\n            if (propertySpec.items && propertySpec.items.enum){\r\n                this.checkboxGroup.push(key);\r\n                this.possibleValues[key] = Object.values(propertySpec.items.enum);\r\n            } else {\r\n                this.possibleValues[key] = [];\r\n            }\r\n        }\r\n\r\n        let multiSelectProperties = new Set([\r\n            'externals', 'subtypes', 'supertypes', 'clinicalIndices', 'correlations',\r\n            'cardinalityMultipliers', 'types', 'materials', 'locations', 'causes','effects']);\r\n\r\n        /*Relationships in nested lists*/\r\n        this.relationGroup = relationships.filter(x =>\r\n            ((x[1].cardinality.max !== 1) && !multiSelectProperties.has(x[0]))).map(x => x[0]);\r\n\r\n        /*Relationships in multi-select combo lists*/\r\n        this.multiSelectGroup = relationships.filter(x =>\r\n            ((x[1].cardinality.max !== 1) && multiSelectProperties.has(x[0]))).map(x => x[0]);\r\n\r\n        //Relationships in single-select combo lists*/\r\n        this.selectGroup = relationships.filter(x => (x[1].cardinality.max === 1)).map(x => x[0]);\r\n\r\n        /*\"create type\" check box enabled if type has not been defined */\r\n        if (this.isTyped()){ this.typeCreated = !!this.item['-->DefinesType']; }\r\n    }\r\n\r\n    /**\r\n     * The getPropertyLabel function replaces field name with human readable labels\r\n     * @param {string} option - the open-physiology resource field name\r\n     * @returns {string} - the user readable label\r\n     */\r\n    getPropertyLabel(option: string): string{\r\n        let custom = { \"externals\": \"Annotations\",\r\n            \"locals\": \"Local resources\" };\r\n        if (custom[option]) { return custom[option]; }\r\n\r\n        if ([\"id\", \"uri\"].includes(option)) {\r\n            return option.toUpperCase();\r\n        }\r\n\r\n        let label = option.replace(/([a-z])([A-Z])/g, '$1 $2');\r\n        label = label[0].toUpperCase() + label.substring(1).toLowerCase();\r\n        return label;\r\n    }\r\n\r\n    /**\r\n     * @param {string} property  - the resource property name\r\n     * @param {string} attribute - the visual attribute name that needs the default value\r\n     * @returns {any}            - the initial (default) value for the visual attribute of the resource property\r\n     *\r\n     * @example getDefaultValue(\"width\", \"step\") = 1\r\n     */\r\n    getDefaultValue(property, attribute){\r\n        let propertySpec = this.item.constructor.properties[property];\r\n        switch(attribute){\r\n            case \"type\": return ((propertySpec.type === \"integer\")\r\n            || (propertySpec.type === \"number\"))? \"number\": \"text\";\r\n            case \"step\": return (propertySpec.type === \"number\")? 0.1: 1;\r\n        }\r\n        return \"\";\r\n    }\r\n\r\n    visibleFieldsChanged(option){\r\n        if ( this.ignore.has(option.value) &&  option.selected) {\r\n            this.ignore.delete(option.value);\r\n        }\r\n        if (!this.ignore.has(option.value) && !option.selected) {\r\n            this.ignore.add(option.value);\r\n        }\r\n    }\r\n\r\n    updateProperty(property, item){\r\n        if (this.item.fields[property] && this.item.fields[property].readonly) { return; }\r\n        this.item[property] = item;\r\n        this.propertyUpdated.emit({property: property, values: item});\r\n    }\r\n\r\n    updateArray(property, option, event){\r\n        let newArray = [];\r\n        if (!event.target.checked){\r\n            newArray = this.item[property].filter(x => x !== option);\r\n        } else {\r\n            newArray = this.item[property].slice();\r\n            if (!newArray.includes(option)){\r\n                newArray.push(option);\r\n            }\r\n        }\r\n        this.updateProperty(property, newArray);\r\n    }\r\n\r\n    addItem(parent, property, item){\r\n        if (parent && (parent[property])){\r\n            parent[property].add(item);\r\n            this.propertyUpdated.emit({property: property, values: parent[property]});\r\n        }\r\n    }\r\n\r\n    removeItem(parent, property, item){\r\n        item.delete();\r\n        this.updateProperty(property, parent[property]);\r\n    }\r\n\r\n    isTyped(){\r\n        return this.item instanceof this.model.Template;\r\n    }\r\n\r\n    generateMeasurables(){\r\n        this._mGen.generateMeasurables();\r\n    }\r\n\r\n    onSaved(event){\r\n        if (this.item.class === this.model.CoalescenceScenario.name){\r\n            if (this.item.lyphs && (this.item.lyphs.size !== 2)){\r\n                this.toastyService.error(\"Wrong number of lyphs\", this.item.lyphs.size);\r\n            }\r\n        }\r\n\r\n        this.item.commit()\r\n            .catch(reason => {\r\n                let errorMsg = \"Failed to commit resource: Relationship constraints violated! \\n\" + reason;\r\n                this.toastyService.error(errorMsg);\r\n            });\r\n\r\n        if (event && event.createType){\r\n            let template = this.item;\r\n            if (!template['-->DefinesType']){\r\n                (async function() {\r\n                    let newType = this.model.Type.new({definition: template});\r\n                    template.p('name').subscribe(newType.p('name'));\r\n\r\n                    await newType.commit();\r\n                })();\r\n            }\r\n        }\r\n\r\n        this.saved.emit(this.item);\r\n    }\r\n\r\n    onCanceled(event) {\r\n        this.item.rollback();\r\n        this.canceled.emit(event);\r\n    }\r\n}\r\n\r\n/**\r\n * The ResourcePanelModule module, exports ResourcePanel component, toolbar modules and pipes.\r\n */\r\n@NgModule({\r\n    imports: [\r\n        CommonModule,\r\n        FormsModule,\r\n        DndModule.forRoot(),\r\n        AccordionModule,\r\n        ToolbarSettingsModule,\r\n        ToolbarCommandsModule,\r\n        ToolbarAddModule,\r\n        ToolbarFilterModule,\r\n        ToolbarSortModule,\r\n        TemplateValueModule,\r\n        PipeTransformModule,\r\n        CustomSelectModule,\r\n        ToastyModule.forRoot(),\r\n        MeasurableGeneratorModule],\r\n    declarations: [ ResourcePanel, NestedResourceList, ItemHeader ],\r\n    providers: [ToastyService],\r\n    exports: [\r\n        //Existing\r\n        AccordionModule,\r\n        DndModule,\r\n        PipeTransformModule,\r\n        ToolbarSettingsModule,\r\n        ToolbarAddModule,\r\n        ToolbarFilterModule,\r\n        ToolbarSortModule,\r\n        //New\r\n        ResourcePanel,\r\n        ItemHeader]\r\n})\r\nexport class ResourcePanelModule {}\r\n",
+    "content": "import {NgModule, Component, ViewChild, EventEmitter, Input, Output} from '@angular/core';\r\nimport {CommonModule} from '@angular/common';\r\nimport {FormsModule} from '@angular/forms';\r\nimport {AccordionModule} from \"ngx-accordion\";\r\nimport {DndModule} from 'ngx-dnd';\r\n\r\nimport {ToastyModule, ToastyService} from 'ng2-toasty';\r\nimport '../../node_modules/ng2-toasty/style.css';\r\nimport '../../node_modules/ng2-toasty/style-bootstrap.css';\r\n\r\n//Common\r\nimport {PipeTransformModule, SetToArray, HideClass} from \"../common/PipeTransformModule\";\r\nimport {ToolbarSettingsModule} from '../common/toolbars/ToolbarSettingsModule';\r\nimport {CustomSelectModule} from '../common/components/CustomSelectModule';\r\n\r\n//Local\r\nimport {ToolbarAddModule}      from '../toolbars/ToolbarAddModule';\r\nimport {ToolbarFilterModule}   from '../toolbars/ToolbarFilterModule';\r\nimport {ToolbarSortModule}     from '../toolbars/ToolbarSortModule';\r\nimport {ItemHeader}            from \"./ItemHeader\";\r\nimport {NestedResourceList}    from './NestedResourceList';\r\nimport {ToolbarCommandsModule} from '../toolbars/ToolbarCommandsModule';\r\nimport {TemplateValueModule}   from '../components/TemplateValueModule';\r\nimport {MeasurableGeneratorModule, MeasurableGenerator} from \"../components/MeasurableGeneratorModule\";\r\n\r\n@Component({\r\n    selector: 'resource-panel',\r\n    template:`\r\n      <div class=\"panel\">\r\n        <div class=\"panel-body\">\r\n          <toolbar-commands  \r\n            [options]  = \"options\"\r\n            (saved)    = \"onSaved($event)\"\r\n            (canceled) = \"onCanceled($event)\"\r\n            (removed)  = \"removed.emit($event)\">            \r\n          </toolbar-commands>\r\n          <toolbar-propertySettings  \r\n            [options] = \"fieldOptions\"\r\n            [transform] = \"getPropertyLabel\"\r\n            (selectionChanged) = \"visibleFieldsChanged($event)\">\r\n          </toolbar-propertySettings>\r\n          <div class=\"input-control\" *ngIf=\"item.class === model.Lyph.name\">\r\n            <button type=\"button\" class=\"btn btn-default btn-icon\" \r\n              (click)=\"generateMeasurables()\">\r\n              <span class=\"glyphicon glyphicon-cog\"></span>\r\n            </button>\r\n          </div>\r\n          <div class=\"input-control\" *ngIf=\"!options?.hideCreateType && isTyped()\" >\r\n            <input type=\"checkbox\" [disabled]=\"typeCreated\" [(ngModel)]=\"createType\">Create type\r\n          </div>\r\n                    \r\n          <div class=\"panel-content\"> \r\n            <div class=\"input-control\" *ngFor=\"let property of fieldNames\">\r\n              <div *ngIf=\"!ignore.has(property)\">\r\n\r\n                <div class=\"input-control-lg\" *ngIf=\"inputGroup.includes(property)\">\r\n                  <label for=\"comment\">{{getPropertyLabel(property)}}: </label>\r\n                  <input class=\"form-control\" \r\n                    [type]=\"getDefaultValue(property, 'type')\" \r\n                    [disabled]=\"item.constructor.properties[property].readOnly\"\r\n                    [(ngModel)]=\"item[property]\">\r\n                </div>\r\n              \r\n                <div *ngIf=\"selectGroup.includes(property)\">      \r\n                  <label>{{getPropertyLabel(property)}}: </label>\r\n                  <select-input-1 [item] = \"item.p(property) | async\" \r\n                    (updated) = \"updateProperty(property, $event)\"  \r\n                    [options] = \"possibleValues[property]\">\r\n                  </select-input-1>\r\n                </div>\r\n                \r\n                <div *ngIf=\"multiSelectGroup.includes(property)\">\r\n                    <label>{{getPropertyLabel(property)}}: </label>\r\n                    <select-input [items] = \"item.p(property) | async\"\r\n                     (updated) = \"updateProperty(property, $event)\"    \r\n                     [options] = \"possibleValues[property]\">\r\n                    </select-input>\r\n                </div>\r\n                \r\n                <nested-resource-list *ngIf=\"relationGroup.includes(property)\"\r\n                  [caption]=\"getPropertyLabel(property)\" \r\n                  [model]  =\"model\"\r\n                  [items]  =\"item.p(property) | async | setToArray\" \r\n                  [options]=\"{ordered: ['layers', 'segments'].includes(property)}\"\r\n                  [types]  =\"[item.constructor.relationshipShortcuts[property].codomain.resourceClass.name]\"\r\n                  (updated)=\"updateProperty(property, $event)\"> \r\n                </nested-resource-list>\r\n              \r\n                <template-value *ngIf=\"templateGroup.includes(property)\" \r\n                  [caption]=\"getPropertyLabel(property)\" \r\n                  [item]   =\"item.p(property) | async\"\r\n                  [step]   =\"getDefaultValue(property, 'step')\"\r\n                  (updated)=\"updateProperty(property, $event)\">\r\n                </template-value>\r\n                \r\n                <fieldset *ngIf=\"checkboxGroup.includes(property)\">\r\n                  <legend>{{getPropertyLabel(property)}}:</legend>\r\n                  <p *ngFor = \"let option of possibleValues[property]; let i = index\">\r\n                     <input type=\"checkbox\" [value]=\"option\" \r\n                        [checked]=\"item[property].includes(option)\" \r\n                        (change)=\"updateArray(property, option, $event)\"\r\n                     >{{option}}&nbsp;\r\n                  </p>\r\n                </fieldset>\r\n              </div>\r\n            </div>\r\n            \r\n            <modal-window *ngIf = \"item.class === model.Lyph.name\" [item] = \"item\" [clsMeasurable] = \"model.Measurable\">\r\n            </modal-window>\r\n            \r\n          </div>\r\n        </div>\r\n    </div>\r\n    <ng2-toasty></ng2-toasty>\r\n  `,\r\n    styles: [\r\n        `\r\n        input[type=number] {\r\n          text-align:right;\r\n        }\r\n        .panel-content{\r\n          border: 1px solid #ccc;\r\n        }\r\n        :host >>> .input-control {\r\n          margin-left: 4px;\r\n          padding: 2px;\r\n          display: inline-block;\r\n          vertical-align:top;\r\n        }\r\n        :host >>> .input-control >>> label {\r\n          display: block;\r\n        }\r\n        :host >>> .input-control-sm {\r\n          width: 68px;\r\n        }\r\n        :host >>> .input-control-md {\r\n          width: 124px;\r\n        }\r\n        :host >>> .input-control-lg {\r\n          width: 178px;\r\n        }\r\n        :host >>> fieldset {\r\n          border: 1px ridge #e3e3e3;\r\n          padding: 4px;\r\n          margin: 4px;\r\n        }\r\n        legend{\r\n          font: inherit;\r\n          font-weight: bold;\r\n          padding: 4px;\r\n          margin-bottom: 0;\r\n          border: 0;\r\n          width: auto;\r\n        }\r\n        :host >>> .form-control {\r\n          height: 30px;\r\n          box-shadow: none!important;\r\n        }\r\n        :host >>> .form-control:focus {\r\n          border: 2px solid #ccc;\r\n          box-shadow: none!important;\r\n        }\r\n    `]\r\n})\r\n/**\r\n * The ResourcePanel component, generates fields for editting properties of a given resource.\r\n */\r\nexport class ResourcePanel {\r\n    /**\r\n     * @property {Resource} item - the resource to show or edit\r\n     */\r\n    @Input() item;\r\n    /**\r\n     * @property {Object} model  - the open-physiology model\r\n     */\r\n    @Input() model;\r\n    /**\r\n     * @property {Object} options - the visualization options for the panel's commands toolbar\r\n     */\r\n    @Input() options;\r\n\r\n    /**\r\n     * @emits saved           - the changes saved\r\n     */\r\n    @Output() saved = new EventEmitter();\r\n    /**\r\n     * @emits canceled        - the changes canceled\r\n     */\r\n    @Output() canceled = new EventEmitter();\r\n    /**\r\n     * @emits removed         - the item deleted\r\n     */\r\n    @Output() removed = new EventEmitter();\r\n    /**\r\n     * @emits propertyUpdated - the item property changed\r\n     */\r\n    @Output() propertyUpdated = new EventEmitter();\r\n\r\n    @ViewChild(MeasurableGenerator) _mGen;\r\n\r\n    ignore           = new Set();\r\n\r\n    fieldNames       = [];  //All fields\r\n    fieldOptions     = [];  //Field visibility configurations\r\n\r\n    checkboxGroup    = [];  //Properties in check-boxes\r\n    templateGroup    = [];  //Properties in value-range-distribution component\r\n    inputGroup       = [];  //Properties in input fields\r\n\r\n    selectGroup      = [];  //Relationships with max cardinality-1 in combo list\r\n    multiSelectGroup = [];  //Relationships in multi-combo lists\r\n    relationGroup    = [];  //Relationships in nested resource lists\r\n\r\n    /*Typed resources*/\r\n    createType = false;\r\n    typeCreated = false;\r\n\r\n    /*Selection options*/\r\n    possibleValues = {};\r\n\r\n    /**\r\n     * @param {ToastyService} toastyService - the service for showing notifications and error messages\r\n     */\r\n    constructor(toastyService:ToastyService){}\r\n\r\n    ngOnInit(){\r\n        this.ignore = new Set([\"id\", \"cardinalityBase\", \"cardinalityMultipliers\", \"definedType\"]);\r\n        if (this.item instanceof this.model.Border) {\r\n            ['externals', 'species', 'measurables', 'name', 'types', 'nodes'].map(propName =>\r\n                this.ignore.add(propName));\r\n        }\r\n\r\n        /*Auto-generated visual groups*/\r\n        let privateProperties = new Set([\"class\", \"themes\", \"parents\", \"children\"]);\r\n\r\n        let fields = Object.assign({}, this.item.constructor.properties, this.item.constructor.relationshipShortcuts);\r\n        this.fieldNames = Object.keys(fields).filter(p => !privateProperties.has(p));\r\n        this.fieldOptions = this.fieldNames.map(field => ({value: field, selected: !this.ignore.has(field)}));\r\n\r\n        /*Properties in check-boxes*/\r\n        this.checkboxGroup = ['transportPhenomenon', 'nature'].filter(key => this.item.constructor.properties[key]);\r\n\r\n        /*Properties in value-range-distribution forms */\r\n        this.templateGroup = ['cardinalityBase', 'thickness', 'length'].filter(key => this.item.constructor.properties[key]);\r\n\r\n        /*Properties in input fields*/\r\n        this.inputGroup = Object.keys(this.item.constructor.properties)\r\n            .filter(key => !privateProperties.has(key)\r\n            && !this.checkboxGroup.includes(key)\r\n            && !this.templateGroup.includes(key));\r\n\r\n        /*Relationships*/\r\n        let relationships = Object.entries(this.item.constructor.relationshipShortcuts)\r\n            .filter(([key, value]) => !value.abstract && !privateProperties.has(key));\r\n\r\n        //Filtered possible values for relationships\r\n        for (let [key, value] of relationships){\r\n            this.item.fields[key].p('possibleValues') .subscribe(\r\n                (data) => {\r\n                    this.possibleValues[key] = (key === \"cardinalityMultipliers\")?\r\n                        new Set(new HideClass().transform( new SetToArray().transform(data),\r\n                            [this.model.Border.name, this.model.Node.name]))\r\n                        : data;\r\n                });\r\n        }\r\n\r\n        //Possible values for enumerations\r\n        for (let [key, propertySpec] of Object.entries(this.item.constructor.properties)){\r\n            if (propertySpec.items && propertySpec.items.enum){\r\n                this.checkboxGroup.push(key);\r\n                this.possibleValues[key] = Object.values(propertySpec.items.enum);\r\n            } else {\r\n                this.possibleValues[key] = [];\r\n            }\r\n        }\r\n\r\n        let multiSelectProperties = new Set([\r\n            'externals', 'subtypes', 'supertypes', 'clinicalIndices', 'correlations',\r\n            'cardinalityMultipliers', 'types', 'materials', 'locations', 'causes','effects']);\r\n\r\n        /*Relationships in nested lists*/\r\n        this.relationGroup = relationships.filter(x =>\r\n            ((x[1].cardinality.max !== 1) && !multiSelectProperties.has(x[0]))).map(x => x[0]);\r\n\r\n        /*Relationships in multi-select combo lists*/\r\n        this.multiSelectGroup = relationships.filter(x =>\r\n            ((x[1].cardinality.max !== 1) && multiSelectProperties.has(x[0]))).map(x => x[0]);\r\n\r\n        //Relationships in single-select combo lists*/\r\n        this.selectGroup = relationships.filter(x => (x[1].cardinality.max === 1)).map(x => x[0]);\r\n\r\n        /*\"create type\" check box enabled if type has not been defined */\r\n        if (this.isTyped()){ this.typeCreated = !!this.item['-->DefinesType']; }\r\n    }\r\n\r\n    /**\r\n     * The getPropertyLabel function replaces field name with human readable labels\r\n     * @param {string} option - the open-physiology resource field name\r\n     * @returns {string} - the user readable label\r\n     */\r\n    getPropertyLabel(option: string): string{\r\n        let custom = { \"externals\": \"Annotations\",\r\n            \"locals\": \"Local resources\" };\r\n        if (custom[option]) { return custom[option]; }\r\n\r\n        if ([\"id\", \"uri\"].includes(option)) {\r\n            return option.toUpperCase();\r\n        }\r\n\r\n        let label = option.replace(/([a-z])([A-Z])/g, '$1 $2');\r\n        label = label[0].toUpperCase() + label.substring(1).toLowerCase();\r\n        return label;\r\n    }\r\n\r\n    /**\r\n     * @param {string} property  - the resource property name\r\n     * @param {string} attribute - the visual attribute name that needs the default value\r\n     * @returns {any}            - the initial (default) value for the visual attribute of the resource property\r\n     *\r\n     * @example getDefaultValue(\"width\", \"step\") = 1\r\n     */\r\n    getDefaultValue(property, attribute){\r\n        let propertySpec = this.item.constructor.properties[property];\r\n        switch(attribute){\r\n            case \"type\": return ((propertySpec.type === \"integer\")\r\n            || (propertySpec.type === \"number\"))? \"number\": \"text\";\r\n            case \"step\": return (propertySpec.type === \"number\")? 0.1: 1;\r\n        }\r\n        return \"\";\r\n    }\r\n\r\n    visibleFieldsChanged(option){\r\n        if ( this.ignore.has(option.value) &&  option.selected) {\r\n            this.ignore.delete(option.value);\r\n        }\r\n        if (!this.ignore.has(option.value) && !option.selected) {\r\n            this.ignore.add(option.value);\r\n        }\r\n    }\r\n\r\n    updateProperty(property, item){\r\n        if (this.item.fields[property] && this.item.fields[property].readonly) { return; }\r\n        this.item[property] = item;\r\n        this.propertyUpdated.emit({property: property, values: item});\r\n    }\r\n\r\n    updateArray(property, option, event){\r\n        let newArray = [];\r\n        if (!event.target.checked){\r\n            newArray = this.item[property].filter(x => x !== option);\r\n        } else {\r\n            newArray = this.item[property].slice();\r\n            if (!newArray.includes(option)){\r\n                newArray.push(option);\r\n            }\r\n        }\r\n        this.updateProperty(property, newArray);\r\n    }\r\n\r\n    addItem(parent, property, item){\r\n        if (parent && (parent[property])){\r\n            parent[property].add(item);\r\n            this.propertyUpdated.emit({property: property, values: parent[property]});\r\n        }\r\n    }\r\n\r\n    removeItem(parent, property, item){\r\n        item.delete();\r\n        this.updateProperty(property, parent[property]);\r\n    }\r\n\r\n    isTyped(){\r\n        return this.item instanceof this.model.Template;\r\n    }\r\n\r\n    generateMeasurables(){\r\n        this._mGen.generateMeasurables();\r\n    }\r\n\r\n    onSaved(event){\r\n        if (this.item.class === this.model.CoalescenceScenario.name){\r\n            if (this.item.lyphs && (this.item.lyphs.size !== 2)){\r\n                this.toastyService.error(\"Wrong number of lyphs\", this.item.lyphs.size);\r\n            }\r\n        }\r\n\r\n        this.item.commit()\r\n            .catch(reason => {\r\n                let errorMsg = \"Failed to commit resource: Relationship constraints violated! \\n\" + reason;\r\n                this.toastyService.error(errorMsg);\r\n            });\r\n\r\n        if (event && event.createType){\r\n            let template = this.item;\r\n            if (!template['-->DefinesType']){\r\n                (async function() {\r\n                    let newType = this.model.Type.new({definition: template});\r\n                    template.p('name').subscribe(newType.p('name'));\r\n\r\n                    await newType.commit();\r\n                })();\r\n            }\r\n        }\r\n\r\n        this.saved.emit(this.item);\r\n    }\r\n\r\n    onCanceled(event) {\r\n        this.item.rollback();\r\n        this.canceled.emit(event);\r\n    }\r\n}\r\n\r\n/**\r\n * The ResourcePanelModule module, exports ResourcePanel component, toolbar modules and pipes.\r\n */\r\n@NgModule({\r\n    imports: [\r\n        CommonModule,\r\n        FormsModule,\r\n        DndModule.forRoot(),\r\n        AccordionModule,\r\n        ToolbarSettingsModule,\r\n        ToolbarCommandsModule,\r\n        ToolbarAddModule,\r\n        ToolbarFilterModule,\r\n        ToolbarSortModule,\r\n        TemplateValueModule,\r\n        PipeTransformModule,\r\n        CustomSelectModule,\r\n        ToastyModule.forRoot(),\r\n        MeasurableGeneratorModule],\r\n    declarations: [ ResourcePanel, NestedResourceList, ItemHeader ],\r\n    providers: [ToastyService],\r\n    exports: [\r\n        //Existing\r\n        AccordionModule,\r\n        DndModule,\r\n        PipeTransformModule,\r\n        ToolbarSettingsModule,\r\n        ToolbarAddModule,\r\n        ToolbarFilterModule,\r\n        ToolbarSortModule,\r\n        //New\r\n        ResourcePanel,\r\n        ItemHeader]\r\n})\r\nexport class ResourcePanelModule {}\r\n",
     "static": true,
     "longname": "src/panels/ResourcePanelModule.js",
     "access": null,
@@ -3209,7 +3166,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 139,
+    "__docId__": 138,
     "kind": "class",
     "name": "ResourcePanel",
     "memberof": "src/panels/ResourcePanelModule.js",
@@ -3224,7 +3181,7 @@
     "interface": false
   },
   {
-    "__docId__": 140,
+    "__docId__": 139,
     "kind": "constructor",
     "name": "constructor",
     "memberof": "src/panels/ResourcePanelModule.js~ResourcePanel",
@@ -3257,7 +3214,7 @@
     ]
   },
   {
-    "__docId__": 141,
+    "__docId__": 140,
     "kind": "member",
     "name": "ignore",
     "memberof": "src/panels/ResourcePanelModule.js~ResourcePanel",
@@ -3280,7 +3237,7 @@
     }
   },
   {
-    "__docId__": 142,
+    "__docId__": 141,
     "kind": "member",
     "name": "fieldNames",
     "memberof": "src/panels/ResourcePanelModule.js~ResourcePanel",
@@ -3303,7 +3260,7 @@
     }
   },
   {
-    "__docId__": 143,
+    "__docId__": 142,
     "kind": "member",
     "name": "fieldOptions",
     "memberof": "src/panels/ResourcePanelModule.js~ResourcePanel",
@@ -3326,7 +3283,7 @@
     }
   },
   {
-    "__docId__": 144,
+    "__docId__": 143,
     "kind": "member",
     "name": "checkboxGroup",
     "memberof": "src/panels/ResourcePanelModule.js~ResourcePanel",
@@ -3349,7 +3306,7 @@
     }
   },
   {
-    "__docId__": 145,
+    "__docId__": 144,
     "kind": "member",
     "name": "templateGroup",
     "memberof": "src/panels/ResourcePanelModule.js~ResourcePanel",
@@ -3372,7 +3329,7 @@
     }
   },
   {
-    "__docId__": 146,
+    "__docId__": 145,
     "kind": "member",
     "name": "inputGroup",
     "memberof": "src/panels/ResourcePanelModule.js~ResourcePanel",
@@ -3395,7 +3352,7 @@
     }
   },
   {
-    "__docId__": 147,
+    "__docId__": 146,
     "kind": "member",
     "name": "selectGroup",
     "memberof": "src/panels/ResourcePanelModule.js~ResourcePanel",
@@ -3418,7 +3375,7 @@
     }
   },
   {
-    "__docId__": 148,
+    "__docId__": 147,
     "kind": "member",
     "name": "multiSelectGroup",
     "memberof": "src/panels/ResourcePanelModule.js~ResourcePanel",
@@ -3441,7 +3398,7 @@
     }
   },
   {
-    "__docId__": 149,
+    "__docId__": 148,
     "kind": "member",
     "name": "relationGroup",
     "memberof": "src/panels/ResourcePanelModule.js~ResourcePanel",
@@ -3464,7 +3421,7 @@
     }
   },
   {
-    "__docId__": 150,
+    "__docId__": 149,
     "kind": "member",
     "name": "createType",
     "memberof": "src/panels/ResourcePanelModule.js~ResourcePanel",
@@ -3487,7 +3444,7 @@
     }
   },
   {
-    "__docId__": 151,
+    "__docId__": 150,
     "kind": "member",
     "name": "typeCreated",
     "memberof": "src/panels/ResourcePanelModule.js~ResourcePanel",
@@ -3510,7 +3467,7 @@
     }
   },
   {
-    "__docId__": 152,
+    "__docId__": 151,
     "kind": "member",
     "name": "possibleValues",
     "memberof": "src/panels/ResourcePanelModule.js~ResourcePanel",
@@ -3533,7 +3490,7 @@
     }
   },
   {
-    "__docId__": 153,
+    "__docId__": 152,
     "kind": "method",
     "name": "ngOnInit",
     "memberof": "src/panels/ResourcePanelModule.js~ResourcePanel",
@@ -3559,7 +3516,7 @@
     ]
   },
   {
-    "__docId__": 154,
+    "__docId__": 153,
     "kind": "member",
     "name": "ignore",
     "memberof": "src/panels/ResourcePanelModule.js~ResourcePanel",
@@ -3582,7 +3539,7 @@
     }
   },
   {
-    "__docId__": 155,
+    "__docId__": 154,
     "kind": "member",
     "name": "fieldNames",
     "memberof": "src/panels/ResourcePanelModule.js~ResourcePanel",
@@ -3605,7 +3562,7 @@
     }
   },
   {
-    "__docId__": 156,
+    "__docId__": 155,
     "kind": "member",
     "name": "fieldOptions",
     "memberof": "src/panels/ResourcePanelModule.js~ResourcePanel",
@@ -3628,7 +3585,7 @@
     }
   },
   {
-    "__docId__": 157,
+    "__docId__": 156,
     "kind": "member",
     "name": "checkboxGroup",
     "memberof": "src/panels/ResourcePanelModule.js~ResourcePanel",
@@ -3651,7 +3608,7 @@
     }
   },
   {
-    "__docId__": 158,
+    "__docId__": 157,
     "kind": "member",
     "name": "templateGroup",
     "memberof": "src/panels/ResourcePanelModule.js~ResourcePanel",
@@ -3674,7 +3631,7 @@
     }
   },
   {
-    "__docId__": 159,
+    "__docId__": 158,
     "kind": "member",
     "name": "inputGroup",
     "memberof": "src/panels/ResourcePanelModule.js~ResourcePanel",
@@ -3697,7 +3654,7 @@
     }
   },
   {
-    "__docId__": 160,
+    "__docId__": 159,
     "kind": "member",
     "name": "relationGroup",
     "memberof": "src/panels/ResourcePanelModule.js~ResourcePanel",
@@ -3720,7 +3677,7 @@
     }
   },
   {
-    "__docId__": 161,
+    "__docId__": 160,
     "kind": "member",
     "name": "multiSelectGroup",
     "memberof": "src/panels/ResourcePanelModule.js~ResourcePanel",
@@ -3743,7 +3700,7 @@
     }
   },
   {
-    "__docId__": 162,
+    "__docId__": 161,
     "kind": "member",
     "name": "selectGroup",
     "memberof": "src/panels/ResourcePanelModule.js~ResourcePanel",
@@ -3766,7 +3723,7 @@
     }
   },
   {
-    "__docId__": 163,
+    "__docId__": 162,
     "kind": "member",
     "name": "typeCreated",
     "memberof": "src/panels/ResourcePanelModule.js~ResourcePanel",
@@ -3789,7 +3746,7 @@
     }
   },
   {
-    "__docId__": 164,
+    "__docId__": 163,
     "kind": "method",
     "name": "getPropertyLabel",
     "memberof": "src/panels/ResourcePanelModule.js~ResourcePanel",
@@ -3828,7 +3785,7 @@
     }
   },
   {
-    "__docId__": 165,
+    "__docId__": 164,
     "kind": "method",
     "name": "getDefaultValue",
     "memberof": "src/panels/ResourcePanelModule.js~ResourcePanel",
@@ -3880,7 +3837,7 @@
     }
   },
   {
-    "__docId__": 166,
+    "__docId__": 165,
     "kind": "method",
     "name": "visibleFieldsChanged",
     "memberof": "src/panels/ResourcePanelModule.js~ResourcePanel",
@@ -3908,7 +3865,7 @@
     ]
   },
   {
-    "__docId__": 167,
+    "__docId__": 166,
     "kind": "method",
     "name": "updateProperty",
     "memberof": "src/panels/ResourcePanelModule.js~ResourcePanel",
@@ -3942,7 +3899,7 @@
     ]
   },
   {
-    "__docId__": 168,
+    "__docId__": 167,
     "kind": "method",
     "name": "updateArray",
     "memberof": "src/panels/ResourcePanelModule.js~ResourcePanel",
@@ -3982,7 +3939,7 @@
     ]
   },
   {
-    "__docId__": 169,
+    "__docId__": 168,
     "kind": "method",
     "name": "addItem",
     "memberof": "src/panels/ResourcePanelModule.js~ResourcePanel",
@@ -4022,7 +3979,7 @@
     ]
   },
   {
-    "__docId__": 170,
+    "__docId__": 169,
     "kind": "method",
     "name": "removeItem",
     "memberof": "src/panels/ResourcePanelModule.js~ResourcePanel",
@@ -4062,7 +4019,7 @@
     ]
   },
   {
-    "__docId__": 171,
+    "__docId__": 170,
     "kind": "method",
     "name": "isTyped",
     "memberof": "src/panels/ResourcePanelModule.js~ResourcePanel",
@@ -4088,7 +4045,7 @@
     }
   },
   {
-    "__docId__": 172,
+    "__docId__": 171,
     "kind": "method",
     "name": "generateMeasurables",
     "memberof": "src/panels/ResourcePanelModule.js~ResourcePanel",
@@ -4109,7 +4066,7 @@
     "params": []
   },
   {
-    "__docId__": 173,
+    "__docId__": 172,
     "kind": "method",
     "name": "onSaved",
     "memberof": "src/panels/ResourcePanelModule.js~ResourcePanel",
@@ -4137,7 +4094,7 @@
     ]
   },
   {
-    "__docId__": 174,
+    "__docId__": 173,
     "kind": "method",
     "name": "onCanceled",
     "memberof": "src/panels/ResourcePanelModule.js~ResourcePanel",
@@ -4165,7 +4122,7 @@
     ]
   },
   {
-    "__docId__": 175,
+    "__docId__": 174,
     "kind": "class",
     "name": "ResourcePanelModule",
     "memberof": "src/panels/ResourcePanelModule.js",
@@ -4180,10 +4137,10 @@
     "interface": false
   },
   {
-    "__docId__": 176,
+    "__docId__": 175,
     "kind": "file",
     "name": "src/test-app/app.js",
-    "content": "import {NgModule, Component} from '@angular/core';\r\nimport {BrowserModule} from '@angular/platform-browser';\r\n\r\nimport '../libs/rxjs';\r\nimport $ from '../libs/jquery';\r\nimport modelFactory, {ajaxBackend} from 'open-physiology-model';\r\n\r\nimport {PipeTransformModule} from '../common/PipeTransformModule.js';\r\nimport {Subscription}   from 'rxjs/Subscription';\r\nimport {NestedResourceWidgetModule} from '../index.js';\r\nimport {loadData} from './loadData';\r\n\r\n@Component({\r\n\tselector: 'test-app',\r\n\ttemplate: `\r\n        <nested-resource-widget id=\"repo\"\r\n\t\t  [model]=\"model\"\r\n\t\t  [items]=\"items | setToArray\" \r\n\t\t  caption=\"Resources\" \r\n\t\t  [options]=\"{showActive: true}\"\r\n\t\t  (selectedItemChange)=\"onItemSelected($event)\">\r\n\t\t</nested-resource-widget>\r\n\t`\r\n})\r\n/**\r\n * The TestComponent component, showing off the nested resource editor!\r\n */\r\nexport class TestApp {\r\n\tmodel;\r\n\titems;\r\n\tselectedItem;\r\n\r\n\trs: Subscription;\r\n\tconstructor() {\r\n\t\tlet {backend} = ajaxBackend({\r\n\t\t\tbaseURL:     'http://open-physiology.org:8880',\r\n\t\t\tajax:        $.ajax\r\n\t\t});\r\n\t\tlet modelRef = modelFactory(backend);\r\n\t\twindow.module = modelRef;\r\n\t\tthis.model = modelRef.classes;\r\n\r\n\t\tthis.rs = this.model.Resource.p('all').subscribe(\r\n\t\t\t(data) => {\r\n\t\t\t\tthis.items = data;\r\n\t\t\t\tif (this.items.length > 0){\r\n\t\t\t\t\tthis.selectedItem = this.items[0];\r\n\t\t\t\t}\r\n\t\t\t});\r\n\t\t//model.Resource.getAll(); //Fails!\r\n\t\t// this.model.Lyph.new({id: 1, name: \"Kidney\"});\r\n\t\t// this.model.Lyph.new({id: 2, name: \"Heart\"});\r\n\t\t// this.model.Lyph.new({id: 3, name: \"Head\"});\r\n\r\n\t\tloadData(this.model);\r\n\r\n\t}\r\n\r\n\tngOnDestroy() { this.rs.unsubscribe(); }\r\n\r\n\tonItemSelected(item) {\r\n\t\tsetTimeout(() => { this.selectedItem = null; }, 0);\r\n\t\tsetTimeout(() => { this.selectedItem = item; }, 0);\r\n\t}\r\n\r\n}\r\n\r\n/**\r\n * The TestAppModule test module, which supplies the _excellent_ TestApp test application!\r\n */\r\n@NgModule({\r\n\timports: [\r\n\t\tBrowserModule,\r\n\t\tNestedResourceWidgetModule,\r\n\t\tPipeTransformModule\r\n\t],\r\n\tdeclarations: [\r\n\t\tTestApp\r\n\t],\r\n\tbootstrap: [TestApp],\r\n})\r\nexport class TestAppModule {}\r\n",
+    "content": "import {NgModule, Component} from '@angular/core';\r\nimport {BrowserModule} from '@angular/platform-browser';\r\n\r\nimport '../libs/rxjs';\r\nimport $ from '../libs/jquery';\r\nimport modelFactory, {ajaxBackend} from 'open-physiology-model';\r\n\r\nimport {PipeTransformModule} from '../common/PipeTransformModule.js';\r\nimport {Subscription}   from 'rxjs/Subscription';\r\nimport {NestedResourceWidgetModule} from '../index.js';\r\n\r\n@Component({\r\n\tselector: 'test-app',\r\n\ttemplate: `\r\n        <nested-resource-widget id=\"repo\"\r\n\t\t  caption=\"Resources\" \r\n\t\t  [model]=\"model\"\r\n\t\t  [items]=\"items | setToArray\" \r\n\t\t  (selectedItemChange)=\"onItemSelected($event)\">\r\n\t\t</nested-resource-widget>\r\n\t`\r\n})\r\n/**\r\n * The TestComponent component, showing off the nested resource editor!\r\n */\r\nexport class TestApp {\r\n\tmodel;\r\n\titems;\r\n\tselectedItem;\r\n\r\n\trs: Subscription;\r\n\tconstructor() {\r\n\t\tlet {backend} = ajaxBackend({\r\n\t\t\tbaseURL:     'http://open-physiology.org:8880',\r\n\t\t\tajax:        $.ajax\r\n\t\t});\r\n\t\tlet modelRef = modelFactory(backend);\r\n\t\twindow.module = modelRef;\r\n\t\tthis.model = modelRef.classes;\r\n\r\n\t\tthis.rs = this.model.Resource.p('all').subscribe(\r\n\t\t\t(data) => {\r\n\t\t\t\tthis.items = data;\r\n\t\t\t\tif (this.items.length > 0){\r\n\t\t\t\t\tthis.selectedItem = this.items[0];\r\n\t\t\t\t}\r\n\t\t\t});\r\n\t\t//model.Resource.getAll(); //Fails!\r\n\t\tthis.model.Lyph.new({name: \"Kidney\"}, {createAxis: true});\r\n\t\tthis.model.Lyph.new({name: \"Heart\"});\r\n\t\tthis.model.Lyph.new({name: \"Head\"});\r\n\t}\r\n\r\n\tngOnDestroy() { this.rs.unsubscribe(); }\r\n\r\n\tonItemSelected(item) {\r\n\t\tsetTimeout(() => { this.selectedItem = null; }, 0);\r\n\t\tsetTimeout(() => { this.selectedItem = item; }, 0);\r\n\t}\r\n}\r\n\r\n/**\r\n * The TestAppModule test module, which supplies the _excellent_ TestApp test application!\r\n */\r\n@NgModule({\r\n\timports: [\r\n\t\tBrowserModule,\r\n\t\tNestedResourceWidgetModule,\r\n\t\tPipeTransformModule\r\n\t],\r\n\tdeclarations: [\r\n\t\tTestApp\r\n\t],\r\n\tbootstrap: [TestApp],\r\n})\r\nexport class TestAppModule {}\r\n",
     "static": true,
     "longname": "src/test-app/app.js",
     "access": null,
@@ -4191,7 +4148,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 177,
+    "__docId__": 176,
     "kind": "class",
     "name": "TestApp",
     "memberof": "src/test-app/app.js",
@@ -4202,11 +4159,11 @@
     "importPath": "nested-resource-editor/src/test-app/app.js",
     "importStyle": "{TestApp}",
     "description": "The TestComponent component, showing off the nested resource editor!",
-    "lineNumber": 16,
+    "lineNumber": 15,
     "interface": false
   },
   {
-    "__docId__": 178,
+    "__docId__": 177,
     "kind": "constructor",
     "name": "constructor",
     "memberof": "src/test-app/app.js~TestApp",
@@ -4216,7 +4173,7 @@
     "longname": "src/test-app/app.js~TestApp#constructor",
     "access": null,
     "description": null,
-    "lineNumber": 17,
+    "lineNumber": 16,
     "undocument": true,
     "unknown": [
       {
@@ -4227,7 +4184,7 @@
     "params": []
   },
   {
-    "__docId__": 179,
+    "__docId__": 178,
     "kind": "member",
     "name": "model",
     "memberof": "src/test-app/app.js~TestApp",
@@ -4235,7 +4192,30 @@
     "longname": "src/test-app/app.js~TestApp#model",
     "access": null,
     "description": null,
-    "lineNumber": 24,
+    "lineNumber": 23,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 179,
+    "kind": "member",
+    "name": "rs",
+    "memberof": "src/test-app/app.js~TestApp",
+    "static": false,
+    "longname": "src/test-app/app.js~TestApp#rs",
+    "access": null,
+    "description": null,
+    "lineNumber": 25,
     "undocument": true,
     "unknown": [
       {
@@ -4252,10 +4232,10 @@
   {
     "__docId__": 180,
     "kind": "member",
-    "name": "rs",
+    "name": "items",
     "memberof": "src/test-app/app.js~TestApp",
     "static": false,
-    "longname": "src/test-app/app.js~TestApp#rs",
+    "longname": "src/test-app/app.js~TestApp#items",
     "access": null,
     "description": null,
     "lineNumber": 26,
@@ -4275,13 +4255,13 @@
   {
     "__docId__": 181,
     "kind": "member",
-    "name": "items",
+    "name": "selectedItem",
     "memberof": "src/test-app/app.js~TestApp",
     "static": false,
-    "longname": "src/test-app/app.js~TestApp#items",
+    "longname": "src/test-app/app.js~TestApp#selectedItem",
     "access": null,
     "description": null,
-    "lineNumber": 27,
+    "lineNumber": 28,
     "undocument": true,
     "unknown": [
       {
@@ -4297,29 +4277,6 @@
   },
   {
     "__docId__": 182,
-    "kind": "member",
-    "name": "selectedItem",
-    "memberof": "src/test-app/app.js~TestApp",
-    "static": false,
-    "longname": "src/test-app/app.js~TestApp#selectedItem",
-    "access": null,
-    "description": null,
-    "lineNumber": 29,
-    "undocument": true,
-    "unknown": [
-      {
-        "tagName": "@_undocument",
-        "tagValue": ""
-      }
-    ],
-    "type": {
-      "types": [
-        "*"
-      ]
-    }
-  },
-  {
-    "__docId__": 183,
     "kind": "method",
     "name": "ngOnDestroy",
     "memberof": "src/test-app/app.js~TestApp",
@@ -4329,7 +4286,7 @@
     "longname": "src/test-app/app.js~TestApp#ngOnDestroy",
     "access": null,
     "description": null,
-    "lineNumber": 40,
+    "lineNumber": 37,
     "undocument": true,
     "unknown": [
       {
@@ -4340,7 +4297,7 @@
     "params": []
   },
   {
-    "__docId__": 184,
+    "__docId__": 183,
     "kind": "method",
     "name": "onItemSelected",
     "memberof": "src/test-app/app.js~TestApp",
@@ -4350,7 +4307,7 @@
     "longname": "src/test-app/app.js~TestApp#onItemSelected",
     "access": null,
     "description": null,
-    "lineNumber": 44,
+    "lineNumber": 41,
     "undocument": true,
     "unknown": [
       {
@@ -4366,6 +4323,29 @@
         ]
       }
     ]
+  },
+  {
+    "__docId__": 184,
+    "kind": "member",
+    "name": "selectedItem",
+    "memberof": "src/test-app/app.js~TestApp",
+    "static": false,
+    "longname": "src/test-app/app.js~TestApp#selectedItem",
+    "access": null,
+    "description": null,
+    "lineNumber": 43,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
   },
   {
     "__docId__": 185,
@@ -4392,29 +4372,6 @@
   },
   {
     "__docId__": 186,
-    "kind": "member",
-    "name": "selectedItem",
-    "memberof": "src/test-app/app.js~TestApp",
-    "static": false,
-    "longname": "src/test-app/app.js~TestApp#selectedItem",
-    "access": null,
-    "description": null,
-    "lineNumber": 49,
-    "undocument": true,
-    "unknown": [
-      {
-        "tagName": "@_undocument",
-        "tagValue": ""
-      }
-    ],
-    "type": {
-      "types": [
-        "*"
-      ]
-    }
-  },
-  {
-    "__docId__": 187,
     "kind": "class",
     "name": "TestAppModule",
     "memberof": "src/test-app/app.js",
@@ -4425,11 +4382,11 @@
     "importPath": "nested-resource-editor/src/test-app/app.js",
     "importStyle": "{TestAppModule}",
     "description": "The TestAppModule test module, which supplies the _excellent_ TestApp test application!",
-    "lineNumber": 59,
+    "lineNumber": 55,
     "interface": false
   },
   {
-    "__docId__": 188,
+    "__docId__": 187,
     "kind": "file",
     "name": "src/test-app/index.js",
     "content": "import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';\r\n\r\nimport { TestAppModule } from './app';\r\n\r\nplatformBrowserDynamic().bootstrapModule(TestAppModule);\r\n",
@@ -4440,46 +4397,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 189,
-    "kind": "file",
-    "name": "src/test-app/loadData.js",
-    "content": "import {lyphs, relations, edges, trees} from './apinatomyData.json';\r\nimport fmaData from './fmaNames.txt';\r\nimport isArray from 'lodash-bound/isArray';\r\n\r\n/**\r\n * Create ApiNatomy data\r\n * @param model - the open physiology model\r\n */\r\nexport function loadData(model){\r\n    let fmaNames = {};\r\n    fmaData.split('\\n').map(line => {\r\n        let endOfURI = line.indexOf(\" \");\r\n        let uri  = line.substring(0, endOfURI).trim();\r\n        let name = line.substring(endOfURI + 1).trim();\r\n        fmaNames[uri] = name;\r\n    });\r\n\r\n    /*Create lyphs*/\r\n    let lyphMap = {};\r\n    /*Create external resources*/\r\n    let fmaMap  = {};\r\n\r\n    //We exclude lyphs with 'tree' in the name as they are CanonicalTrees\r\n    for (let lyph of lyphs.filter(lyph  => !lyph.name.endsWith(\"tree\"))){\r\n        //name => name\r\n        let jsonDef = {name: lyph.name};\r\n        let options = {};\r\n        let cls = model.Lyph;\r\n\r\n        //type => borders or class\r\n        switch (lyph.type){\r\n            case \"BAG\"      : jsonDef.radialBorders = [\r\n                model.Border.new({nature: [\"closed\"]}),\r\n                model.Border.new({nature: [\"closed\"]}),\r\n            ] ; break;\r\n            case \"CYST\"     : jsonDef.radialBorders = [\r\n                model.Border.new({nature: [\"open\"]}),\r\n                model.Border.new({nature: [\"closed\"]}),\r\n            ] ; break;\r\n            case \"TUBE\"     : jsonDef.radialBorders = [\r\n                model.Border.new({nature: [\"open\"]}),\r\n                model.Border.new({nature: [\"open\"]}),\r\n            ] ; break;\r\n            //Geometric -> with axis\r\n            case \"GEOMETRIC\": options.createAxis = true; break;\r\n            //Create material instead of lyph ?\r\n            case \"MATERIAL\" : cls = model.Material; break;\r\n            case \"COALESCENCE GROUP\": break; //skip\r\n        }\r\n\r\n        //thickness => thickness\r\n        if (lyph.thickness.length > 0){\r\n            let thickness = [...lyph.thickness.match( /\\d+/g )].map(x => 10 ** (-x));\r\n            jsonDef.thickness = {min: thickness[1], max: thickness[0]};\r\n        }\r\n\r\n        //lgth => length\r\n        if (lyph.lgth.length > 0) {\r\n            let length = [...lyph.lgth.match(/\\d+/g)].map(x => 10 ** (-x));\r\n            jsonDef.length = {min: length[1], max: length[0]};\r\n        }\r\n\r\n        //ontoref => external resources\r\n        if (lyph.ontoref) {\r\n            jsonDef.externals = [];\r\n            let refs = lyph.ontoref::isArray()? lyph.ontoref: [lyph.ontoref];\r\n            for (let ref of refs.filter(x => x.length > 0)){\r\n                if (!fmaMap[ref]) {\r\n                    let fmaID = `http://purl.obolibrary.org/obo/${ref.replace(/\\s/g, '').replace(':', '_')}`;\r\n                    fmaMap[ref] = model.ExternalResource.new({\r\n                        name: fmaNames[fmaID]? fmaNames[fmaID]: \"\",\r\n                        type: \"fma\",\r\n                        uri: fmaID\r\n                    });\r\n                }\r\n                jsonDef.externals.push(fmaMap[ref]);\r\n            }\r\n        }\r\n\r\n        //Create resources:\r\n        lyphMap[lyph.ID] = cls.new(jsonDef);\r\n\r\n    }\r\n    /*Create relations*/\r\n    for (let rel of relations){\r\n        let jsonDef = {};\r\n        switch (rel.relation){\r\n        \tcase \"is_layer_of_in_position\":\r\n        \t\tjsonDef = {class: model.HasLayer.name, relativePosition: rel.extra}; break;\r\n        \tcase \"is_housed_in\":\r\n        \t\tjsonDef = {class: model.HasPart.name}; break;\r\n        \tcase \"has_material_type\": break; //skip\r\n        \t\tjsonDef = {class: model.ContainsMaterial.name}; break;\r\n            case \"sub_type_of\": break; //skip\r\n            default: console.log(\"Unexpected relationship class\", rel.relation);\r\n        }\r\n\r\n        //publicationIDs - not used\r\n\r\n        if (!lyphMap[rel.subject] || !lyphMap[rel.object]){\r\n            console.log(\"Error: relationship ends not found!\");\r\n        } else {\r\n            if (jsonDef.class){\r\n                //current model library\r\n                jsonDef[1] = lyphMap[rel.subject];\r\n                jsonDef[2] = lyphMap[rel.object];\r\n                console.log(jsonDef.class);\r\n                model[jsonDef.class].new(jsonDef);\r\n                //future model library\r\n                //if (!lyphMap[rel.subject][`-->${jsonDef.class}`]){\r\n                //lyphMap[rel.subject][`-->${jsonDef.class}`] = [];\r\n                //}\r\n                //lyphMap[rel.subject][`-->${jsonDef.class}`].push(lyphMap[rel.object]);\r\n            }\r\n        }\r\n    }\r\n\r\n    /*Create canonical trees*/\r\n    let treeMap = {};\r\n    for (let tree of lyphs.filter(lyph => lyph.name.endsWith(\"tree\"))){\r\n\r\n    }\r\n\r\n    for (let branch of trees){\r\n        if (!treeMap[branch.in_lyph]){ treeMap[branch.in_lyph] = []; }\r\n        treeMap[branch.in_lyph].push(branch);\r\n    }\r\n\r\n    for (let [in_lyph, branches] of Object.entries(treeMap)){\r\n        branches.sort((a, b) => a.level < b.level);\r\n        console.log(\"Canonical tree\", in_lyph, branches);\r\n\r\n    }\r\n\r\n}",
-    "static": true,
-    "longname": "src/test-app/loadData.js",
-    "access": null,
-    "description": null,
-    "lineNumber": 1
-  },
-  {
-    "__docId__": 190,
-    "kind": "function",
-    "name": "loadData",
-    "memberof": "src/test-app/loadData.js",
-    "generator": false,
-    "async": false,
-    "static": true,
-    "longname": "src/test-app/loadData.js~loadData",
-    "access": null,
-    "export": true,
-    "importPath": "nested-resource-editor/src/test-app/loadData.js",
-    "importStyle": "{loadData}",
-    "description": "Create ApiNatomy data",
-    "lineNumber": 9,
-    "params": [
-      {
-        "nullable": null,
-        "types": [
-          "*"
-        ],
-        "spread": false,
-        "optional": false,
-        "name": "model",
-        "description": "the open physiology model"
-      }
-    ]
-  },
-  {
-    "__docId__": 191,
+    "__docId__": 188,
     "kind": "file",
     "name": "src/toolbars/ToolbarAddModule.js",
     "content": "import {NgModule, Component, Input, Output, EventEmitter} from '@angular/core';\r\nimport {CommonModule} from '@angular/common';\r\nimport {DropdownModule} from 'ngx-dropdown';\r\n\r\n@Component({\r\n    selector: 'toolbar-add',\r\n    template: `\r\n      <div *ngIf=\"options?.length > 1\" class=\"btn-group\" dropdown>\r\n        <button type=\"button\" class=\"btn btn-default btn-icon\" aria-label=\"Add\" dropdown-open>\r\n          <span class=\"glyphicon glyphicon-plus\"></span>\r\n        </button>\r\n        <ul class=\"dropdown-menu\" role=\"menu\" aria-labelledby=\"Add\">\r\n          <li *ngFor=\"let option of options; let i = index\" role=\"menuitem\" (click)=\"added.emit(option)\">\r\n            <a class=\"dropdown-item\" href=\"#\">{{transform? transform(option): option}}</a>\r\n          </li>\r\n        </ul>\r\n      </div>\r\n      <button *ngIf=\"options?.length === 1\" \r\n        type=\"button\" class=\"btn btn-default btn-icon\" (click)=\"added.emit(options[0])\">\r\n        <span class=\"glyphicon glyphicon-plus\"></span>\r\n      </button>\r\n    `\r\n})\r\n/**\r\n * The ToolbarAdd component, offers a button to create a new resource from dropdown menu.\r\n *\r\n * @param {Array<string>} options - the list of item types (resource classes) to choose from\r\n * @param {string => string} transform - an optional function that can be used to transform option appearance\r\n *\r\n * @emits added  - an item added\r\n */\r\nexport class ToolbarAdd {\r\n    @Input() options: Array<string> = [];\r\n    @Input() transform: (x: string) => string;\r\n    @Output() added = new EventEmitter();\r\n}\r\n\r\n/**\r\n * The ToolbarAddModule module, offers the ToolbarAdd component.\r\n */\r\n@NgModule({\r\n    imports: [ CommonModule, DropdownModule ],\r\n    declarations: [ ToolbarAdd ],\r\n    exports: [ ToolbarAdd ]\r\n})\r\nexport class ToolbarAddModule {}\r\n\r\n\r\n\r\n\r\n",
@@ -4490,7 +4408,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 192,
+    "__docId__": 189,
     "kind": "class",
     "name": "ToolbarAdd",
     "memberof": "src/toolbars/ToolbarAddModule.js",
@@ -4535,7 +4453,7 @@
     "interface": false
   },
   {
-    "__docId__": 193,
+    "__docId__": 190,
     "kind": "class",
     "name": "ToolbarAddModule",
     "memberof": "src/toolbars/ToolbarAddModule.js",
@@ -4550,7 +4468,7 @@
     "interface": false
   },
   {
-    "__docId__": 194,
+    "__docId__": 191,
     "kind": "file",
     "name": "src/toolbars/ToolbarCommandsModule.js",
     "content": "import {NgModule, Component, Input, Output, EventEmitter} from '@angular/core';\r\nimport {CommonModule} from '@angular/common';\r\n\r\n@Component({\r\n    selector: 'toolbar-commands',\r\n    template: `\r\n       <button *ngIf=\"!options?.hideRemove\"\r\n      type=\"button\" class=\"btn btn-default btn-icon\" aria-label=\"Remove\" (click)=\"removed.emit()\">\r\n      <span class=\"glyphicon glyphicon-remove\"></span>\r\n    </button>\r\n    <div class=\"btn-group\">\r\n      <button *ngIf=\"!options?.hideSave\" \r\n        type=\"button\" class=\"btn btn-default btn-icon\" aria-label=\"Save\" (click)=\"saved.emit()\">\r\n        <span class=\"glyphicon glyphicon-check\"></span>\r\n      </button>\r\n      <button \r\n        *ngIf=\"!options?.hideRestore\" \r\n        type=\"button\" class=\"btn btn-default btn-icon\" aria-label=\"Restore\" (click)=\"canceled.emit()\">\r\n        <span class=\"glyphicon glyphicon-refresh\"></span>\r\n      </button>    \r\n    </div>\r\n    `\r\n})\r\n/**\r\n * The ToolbarCommands component, offers buttons to delete a resource, commit or rollback changes.\r\n *\r\n * @param {Object} options - a set of boolean options that indicate which buttons to show.\r\n * By default all three buttons are shown: {hideRemove: false, hideSave: false, hideRestore: false}\r\n * @param {string => string} transform - an optional function that can be used to transform option appearance\r\n\r\n * @emits removed   - a user pressed the button to delete the item\r\n * @emits canceled  - a user pressed the button to cancel changes (rollback)\r\n * @emits saved     - a user pressed the button to save changes (commit)\r\n */\r\nexport class ToolbarCommands {\r\n    @Input()  options  = {};\r\n    @Output() removed  = new EventEmitter();\r\n    @Output() canceled = new EventEmitter();\r\n    @Output() saved    = new EventEmitter();\r\n}\r\n\r\n@NgModule({\r\n    imports: [ CommonModule ],\r\n    declarations: [ ToolbarCommands ],\r\n    exports: [ ToolbarCommands ]\r\n})\r\nexport class ToolbarCommandsModule {}\r\n\r\n\r\n\r\n\r\n",
@@ -4561,7 +4479,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 195,
+    "__docId__": 192,
     "kind": "class",
     "name": "ToolbarCommands",
     "memberof": "src/toolbars/ToolbarCommandsModule.js",
@@ -4618,7 +4536,7 @@
     "interface": false
   },
   {
-    "__docId__": 196,
+    "__docId__": 193,
     "kind": "class",
     "name": "ToolbarCommandsModule",
     "memberof": "src/toolbars/ToolbarCommandsModule.js",
@@ -4640,7 +4558,7 @@
     "interface": false
   },
   {
-    "__docId__": 197,
+    "__docId__": 194,
     "kind": "file",
     "name": "src/toolbars/ToolbarFilterModule.js",
     "content": "import {NgModule, Component, Input, Output, EventEmitter} from '@angular/core';\r\nimport {CommonModule} from '@angular/common';\r\nimport {DropdownModule} from 'ngx-dropdown';\r\n\r\n@Component({\r\n    selector: 'toolbar-filter',\r\n    template: `\r\n     <div class=\"input-group input-group-sm\" style=\"width: 220px;\">\r\n        <input type=\"text\" class=\"form-control\" \r\n        [value]=\"filter\" (input)=\"updateValue($event)\" (keyup.enter)=\"applied.emit({filter: filter, mode: mode});\"/>\r\n        <div class=\"input-group-btn\" dropdown>\r\n          <button type=\"button\" class=\"btn btn-secondary dropdown-toggle\" aria-label=\"Filter\" dropdown-open\r\n            aria-haspopup=\"true\" aria-expanded=\"false\">\r\n             <span class=\"glyphicon glyphicon-filter\" aria-hidden=\"true\"></span>\r\n          </button>\r\n          <ul class=\"dropdown-menu dropdown-menu-right\" role=\"menu\" aria-labelledby=\"Filter\">\r\n            <li *ngFor=\"let option of options; let i = index\" (click)=\"updateMode(option)\">\r\n              <a class=\"dropdown-item\" href=\"#\"> <span *ngIf=\"mode === option\">&#10004;</span>{{option}}</a>\r\n            </li>            \r\n          </ul>\r\n        </div>\r\n      </div>\r\n    `,\r\n    styles: [`\r\n        :host {float: right;}\r\n        .form-control {\r\n          height: 30px;\r\n          box-shadow: none!important;\r\n        }\r\n        .form-control:focus  {\r\n          border: 2px solid #ccc;\r\n          box-shadow: none!important;\r\n        }\r\n    `]\r\n})\r\n/**\r\n * The ToolbarFilter component, offers an input field to specify search string and a dropdown menu to choose properties to which the filter is applied.\r\n *\r\n * @param {string} filter         - initial search string\r\n * @param {Array<string>} options - item properties to filter\r\n * @emits applied                 - a user pressed the button to filter the list of resources\r\n */\r\nexport class ToolbarFilter {\r\n    @Input() options: Array<string> = [];\r\n    @Input() filter: string = \"\";\r\n    @Output() applied = new EventEmitter();\r\n\r\n    mode: string;\r\n\r\n    ngOnInit(){\r\n        if (this.options && (this.options.length > 0)) {\r\n            this.mode = this.options[0];\r\n        }\r\n    }\r\n\r\n    updateMode(option: string){\r\n        this.mode = option;\r\n        this.applied.emit({filter: this.filter, mode: this.mode});\r\n    }\r\n\r\n    updateValue(event){\r\n        this.filter = event.target.value;\r\n        this.applied.emit({filter: this.filter, mode: this.mode});\r\n    }\r\n}\r\n/**\r\n * The ToolbarFilterModule module, offers the ToolbarFilter component.\r\n */\r\n@NgModule({\r\n    imports: [ CommonModule, DropdownModule ],\r\n    declarations: [ ToolbarFilter ],\r\n    exports: [ ToolbarFilter ]\r\n})\r\nexport class ToolbarFilterModule {}\r\n\r\n\r\n\r\n\r\n",
@@ -4651,7 +4569,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 198,
+    "__docId__": 195,
     "kind": "class",
     "name": "ToolbarFilter",
     "memberof": "src/toolbars/ToolbarFilterModule.js",
@@ -4696,7 +4614,7 @@
     "interface": false
   },
   {
-    "__docId__": 199,
+    "__docId__": 196,
     "kind": "method",
     "name": "ngOnInit",
     "memberof": "src/toolbars/ToolbarFilterModule.js~ToolbarFilter",
@@ -4717,7 +4635,7 @@
     "params": []
   },
   {
-    "__docId__": 200,
+    "__docId__": 197,
     "kind": "member",
     "name": "mode",
     "memberof": "src/toolbars/ToolbarFilterModule.js~ToolbarFilter",
@@ -4740,7 +4658,7 @@
     }
   },
   {
-    "__docId__": 201,
+    "__docId__": 198,
     "kind": "method",
     "name": "updateMode",
     "memberof": "src/toolbars/ToolbarFilterModule.js~ToolbarFilter",
@@ -4768,7 +4686,7 @@
     ]
   },
   {
-    "__docId__": 202,
+    "__docId__": 199,
     "kind": "member",
     "name": "mode",
     "memberof": "src/toolbars/ToolbarFilterModule.js~ToolbarFilter",
@@ -4791,7 +4709,7 @@
     }
   },
   {
-    "__docId__": 203,
+    "__docId__": 200,
     "kind": "method",
     "name": "updateValue",
     "memberof": "src/toolbars/ToolbarFilterModule.js~ToolbarFilter",
@@ -4819,7 +4737,7 @@
     ]
   },
   {
-    "__docId__": 204,
+    "__docId__": 201,
     "kind": "member",
     "name": "filter",
     "memberof": "src/toolbars/ToolbarFilterModule.js~ToolbarFilter",
@@ -4842,7 +4760,7 @@
     }
   },
   {
-    "__docId__": 205,
+    "__docId__": 202,
     "kind": "class",
     "name": "ToolbarFilterModule",
     "memberof": "src/toolbars/ToolbarFilterModule.js",
@@ -4857,7 +4775,7 @@
     "interface": false
   },
   {
-    "__docId__": 206,
+    "__docId__": 203,
     "kind": "file",
     "name": "src/toolbars/ToolbarSortModule.js",
     "content": "import {NgModule, Component, Input, Output, EventEmitter} from '@angular/core';\r\nimport {CommonModule} from '@angular/common';\r\nimport {DropdownModule} from 'ngx-dropdown';\r\n\r\n@Component({\r\n    selector: 'toolbar-sort',\r\n    template: `\r\n    <div class=\"btn-group\">\r\n      <div class=\"btn-group\" dropdown>\r\n        <button type=\"button\" class=\"btn btn-default btn-icon dropdown-toggle\" aria-label=\"SortAsc\" dropdown-open>\r\n          <span class=\"glyphicon glyphicon-sort-by-attributes\" aria-hidden=\"true\"></span>\r\n        </button>\r\n        <ul class=\"dropdown-menu\" role=\"menu\" aria-labelledby=\"SortAsc\">\r\n          <li role=\"menuitem\" (click)=\"onClick('unsorted')\">\r\n            <a class=\"dropdown-item\" href=\"#\">\r\n            <span *ngIf=\"sortByMode === 'unsorted'\">&#10004;</span>\r\n            (unsorted)</a>\r\n          </li>\r\n          <li class=\"divider\"></li>\r\n          <li *ngFor=\"let option of options; let i = index\" role=\"menuitem\" (click)=\"onClick(option)\">\r\n            <a class=\"dropdown-item\" href=\"#\">\r\n              <span *ngIf=\"sortByMode === option\">&#10004;</span>\r\n              {{option}}\r\n            </a>\r\n          </li>\r\n        </ul>\r\n      </div>\r\n      <div class=\"btn-group\" dropdown>\r\n        <button type=\"button\" class=\"btn btn-default btn-icon dropdown-toggle\" aria-label=\"SortDesc\" dropdown-open>\r\n          <span class=\"glyphicon glyphicon-sort-by-attributes-alt\" aria-hidden=\"true\"></span>\r\n        </button>\r\n        <ul class=\"dropdown-menu\" role=\"menu\" aria-labelledby=\"SortDesc\">\r\n          <li *ngFor=\"let option of options; let i = index\" role=\"menuitem\" (click)=\"onClick('-'+option)\">\r\n            <a class=\"dropdown-item\" href=\"#\">\r\n             <span *ngIf=\"sortByMode === '-'+option\">&#10004;</span>\r\n             {{option}}\r\n            </a>\r\n          </li>\r\n        </ul>\r\n      </div>\r\n    </div>\r\n    `\r\n})\r\n/**\r\n * The ToolbarSort component, offers buttons to trigger sorting in ascending and descending order\r\n * @param {Array<string>} options - item properties that define a sorting sort, e.g., [\"Id\", \"Name\", \"Class\"]\r\n * @emits sorted                  - a user pressed the button to filter the list of resources\r\n */\r\nexport class ToolbarSort {\r\n    @Input() options: Array<string> = [];\r\n    @Output() sorted = new EventEmitter();\r\n\r\n    sortByMode = \"unsorted\";\r\n\r\n    onClick(item){\r\n        this.sortByMode = item;\r\n        this.sorted.emit(item);\r\n    }\r\n}\r\n\r\n/**\r\n * The ToolbarSortModule module, offers the ToolbarSort component.\r\n */\r\n@NgModule({\r\n    imports: [ CommonModule, DropdownModule ],\r\n    declarations: [ ToolbarSort ],\r\n    exports: [ ToolbarSort ]\r\n})\r\nexport class ToolbarSortModule {}\r\n\r\n\r\n\r\n\r\n",
@@ -4868,7 +4786,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 207,
+    "__docId__": 204,
     "kind": "class",
     "name": "ToolbarSort",
     "memberof": "src/toolbars/ToolbarSortModule.js",
@@ -4903,7 +4821,7 @@
     "interface": false
   },
   {
-    "__docId__": 208,
+    "__docId__": 205,
     "kind": "constructor",
     "name": "constructor",
     "memberof": "src/toolbars/ToolbarSortModule.js~ToolbarSort",
@@ -4924,7 +4842,7 @@
     "params": []
   },
   {
-    "__docId__": 209,
+    "__docId__": 206,
     "kind": "member",
     "name": "sortByMode",
     "memberof": "src/toolbars/ToolbarSortModule.js~ToolbarSort",
@@ -4947,7 +4865,7 @@
     }
   },
   {
-    "__docId__": 210,
+    "__docId__": 207,
     "kind": "method",
     "name": "onClick",
     "memberof": "src/toolbars/ToolbarSortModule.js~ToolbarSort",
@@ -4975,7 +4893,7 @@
     ]
   },
   {
-    "__docId__": 211,
+    "__docId__": 208,
     "kind": "member",
     "name": "sortByMode",
     "memberof": "src/toolbars/ToolbarSortModule.js~ToolbarSort",
@@ -4998,7 +4916,7 @@
     }
   },
   {
-    "__docId__": 212,
+    "__docId__": 209,
     "kind": "class",
     "name": "ToolbarSortModule",
     "memberof": "src/toolbars/ToolbarSortModule.js",
@@ -5013,7 +4931,7 @@
     "interface": false
   },
   {
-    "__docId__": 214,
+    "__docId__": 211,
     "kind": "external",
     "name": "Infinity",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Infinity",
@@ -5025,7 +4943,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 215,
+    "__docId__": 212,
     "kind": "external",
     "name": "NaN",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NaN",
@@ -5037,7 +4955,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 216,
+    "__docId__": 213,
     "kind": "external",
     "name": "undefined",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined",
@@ -5049,7 +4967,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 217,
+    "__docId__": 214,
     "kind": "external",
     "name": "null",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/null",
@@ -5061,7 +4979,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 218,
+    "__docId__": 215,
     "kind": "external",
     "name": "Object",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object",
@@ -5073,7 +4991,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 219,
+    "__docId__": 216,
     "kind": "external",
     "name": "object",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object",
@@ -5085,7 +5003,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 220,
+    "__docId__": 217,
     "kind": "external",
     "name": "Function",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function",
@@ -5097,7 +5015,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 221,
+    "__docId__": 218,
     "kind": "external",
     "name": "function",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function",
@@ -5109,7 +5027,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 222,
+    "__docId__": 219,
     "kind": "external",
     "name": "Boolean",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean",
@@ -5121,7 +5039,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 223,
+    "__docId__": 220,
     "kind": "external",
     "name": "boolean",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean",
@@ -5133,7 +5051,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 224,
+    "__docId__": 221,
     "kind": "external",
     "name": "Symbol",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol",
@@ -5145,7 +5063,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 225,
+    "__docId__": 222,
     "kind": "external",
     "name": "Error",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error",
@@ -5157,7 +5075,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 226,
+    "__docId__": 223,
     "kind": "external",
     "name": "EvalError",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/EvalError",
@@ -5169,7 +5087,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 227,
+    "__docId__": 224,
     "kind": "external",
     "name": "InternalError",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/InternalError",
@@ -5181,7 +5099,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 228,
+    "__docId__": 225,
     "kind": "external",
     "name": "RangeError",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RangeError",
@@ -5193,7 +5111,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 229,
+    "__docId__": 226,
     "kind": "external",
     "name": "ReferenceError",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ReferenceError",
@@ -5205,7 +5123,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 230,
+    "__docId__": 227,
     "kind": "external",
     "name": "SyntaxError",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SyntaxError",
@@ -5217,7 +5135,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 231,
+    "__docId__": 228,
     "kind": "external",
     "name": "TypeError",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypeError",
@@ -5229,7 +5147,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 232,
+    "__docId__": 229,
     "kind": "external",
     "name": "URIError",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/URIError",
@@ -5241,7 +5159,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 233,
+    "__docId__": 230,
     "kind": "external",
     "name": "Number",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number",
@@ -5253,7 +5171,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 234,
+    "__docId__": 231,
     "kind": "external",
     "name": "number",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number",
@@ -5265,7 +5183,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 235,
+    "__docId__": 232,
     "kind": "external",
     "name": "Date",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date",
@@ -5277,7 +5195,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 236,
+    "__docId__": 233,
     "kind": "external",
     "name": "String",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String",
@@ -5289,7 +5207,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 237,
+    "__docId__": 234,
     "kind": "external",
     "name": "string",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String",
@@ -5301,7 +5219,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 238,
+    "__docId__": 235,
     "kind": "external",
     "name": "RegExp",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp",
@@ -5313,7 +5231,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 239,
+    "__docId__": 236,
     "kind": "external",
     "name": "Array",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array",
@@ -5325,7 +5243,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 240,
+    "__docId__": 237,
     "kind": "external",
     "name": "Int8Array",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Int8Array",
@@ -5337,7 +5255,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 241,
+    "__docId__": 238,
     "kind": "external",
     "name": "Uint8Array",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array",
@@ -5349,7 +5267,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 242,
+    "__docId__": 239,
     "kind": "external",
     "name": "Uint8ClampedArray",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8ClampedArray",
@@ -5361,7 +5279,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 243,
+    "__docId__": 240,
     "kind": "external",
     "name": "Int16Array",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Int16Array",
@@ -5373,7 +5291,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 244,
+    "__docId__": 241,
     "kind": "external",
     "name": "Uint16Array",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint16Array",
@@ -5385,7 +5303,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 245,
+    "__docId__": 242,
     "kind": "external",
     "name": "Int32Array",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Int32Array",
@@ -5397,7 +5315,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 246,
+    "__docId__": 243,
     "kind": "external",
     "name": "Uint32Array",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint32Array",
@@ -5409,7 +5327,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 247,
+    "__docId__": 244,
     "kind": "external",
     "name": "Float32Array",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Float32Array",
@@ -5421,7 +5339,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 248,
+    "__docId__": 245,
     "kind": "external",
     "name": "Float64Array",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Float64Array",
@@ -5433,7 +5351,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 249,
+    "__docId__": 246,
     "kind": "external",
     "name": "Map",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map",
@@ -5445,7 +5363,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 250,
+    "__docId__": 247,
     "kind": "external",
     "name": "Set",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set",
@@ -5457,7 +5375,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 251,
+    "__docId__": 248,
     "kind": "external",
     "name": "WeakMap",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap",
@@ -5469,7 +5387,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 252,
+    "__docId__": 249,
     "kind": "external",
     "name": "WeakSet",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakSet",
@@ -5481,7 +5399,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 253,
+    "__docId__": 250,
     "kind": "external",
     "name": "ArrayBuffer",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer",
@@ -5493,7 +5411,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 254,
+    "__docId__": 251,
     "kind": "external",
     "name": "DataView",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView",
@@ -5505,7 +5423,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 255,
+    "__docId__": 252,
     "kind": "external",
     "name": "JSON",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON",
@@ -5517,7 +5435,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 256,
+    "__docId__": 253,
     "kind": "external",
     "name": "Promise",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise",
@@ -5529,7 +5447,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 257,
+    "__docId__": 254,
     "kind": "external",
     "name": "Generator",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Generator",
@@ -5541,7 +5459,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 258,
+    "__docId__": 255,
     "kind": "external",
     "name": "GeneratorFunction",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/GeneratorFunction",
@@ -5553,7 +5471,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 259,
+    "__docId__": 256,
     "kind": "external",
     "name": "Reflect",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Reflect",
@@ -5565,7 +5483,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 260,
+    "__docId__": 257,
     "kind": "external",
     "name": "Proxy",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy",
@@ -5578,7 +5496,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 262,
+    "__docId__": 259,
     "kind": "external",
     "name": "CanvasRenderingContext2D",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D",
@@ -5590,7 +5508,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 263,
+    "__docId__": 260,
     "kind": "external",
     "name": "DocumentFragment",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/DocumentFragment",
@@ -5602,7 +5520,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 264,
+    "__docId__": 261,
     "kind": "external",
     "name": "Element",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/Element",
@@ -5614,7 +5532,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 265,
+    "__docId__": 262,
     "kind": "external",
     "name": "Event",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/Event",
@@ -5626,7 +5544,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 266,
+    "__docId__": 263,
     "kind": "external",
     "name": "Node",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/Node",
@@ -5638,7 +5556,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 267,
+    "__docId__": 264,
     "kind": "external",
     "name": "NodeList",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/NodeList",
@@ -5650,7 +5568,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 268,
+    "__docId__": 265,
     "kind": "external",
     "name": "XMLHttpRequest",
     "externalLink": "https://developer.mozilla.org/en/docs/Web/API/XMLHttpRequest",
@@ -5662,7 +5580,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 269,
+    "__docId__": 266,
     "kind": "external",
     "name": "AudioContext",
     "externalLink": "https://developer.mozilla.org/en/docs/Web/API/AudioContext",
@@ -5675,7 +5593,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 270,
+    "__docId__": 267,
     "kind": "testFile",
     "name": "test/index.spec.js",
     "content": "import {\r\n\tchai,\r\n\tsinon,\r\n\tdescribe,\r\n\tit,\r\n\tbeforeEach,\r\n\tafterEach,\r\n\texpect,\r\n} from './test.helper';\r\n\r\n\r\n// /** @test */\r\n// describe(\"the nested-resource-editor\", () => {\r\n//\r\n// \tbeforeEach(() => {\r\n// \t\t// setup\r\n// \t});\r\n//\r\n// \t/** @test {name} */\r\n// \tit(\"\", () => {\r\n//\r\n// \t});\r\n//\r\n// \tafterEach(() => {\r\n// \t\t// teardown\r\n// \t});\r\n//\r\n// });\r\n",

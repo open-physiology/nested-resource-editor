@@ -180,12 +180,6 @@ window.esdocSearchIndex = [
     "class"
   ],
   [
-    "nested-resource-editor/src/test-app/loaddata.js~loaddata",
-    "function/index.html#static-function-loadData",
-    "<span>loadData</span> <span class=\"search-result-import-path\">nested-resource-editor/src/test-app/loadData.js</span>",
-    "function"
-  ],
-  [
     "builtinexternal/ecmascriptexternal.js~array",
     "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array",
     "BuiltinExternal/ECMAScriptExternal.js~Array",
@@ -715,13 +709,13 @@ window.esdocSearchIndex = [
   ],
   [
     "src/panels/abstractresourcelist.js~abstractresourcelist#highlighteditem",
-    "class/src/panels/AbstractResourceList.js~AbstractResourceList.html#instance-get-highlightedItem",
+    "class/src/panels/AbstractResourceList.js~AbstractResourceList.html#instance-set-highlightedItem",
     "src/panels/AbstractResourceList.js~AbstractResourceList#highlightedItem",
     "member"
   ],
   [
     "src/panels/abstractresourcelist.js~abstractresourcelist#highlighteditem",
-    "class/src/panels/AbstractResourceList.js~AbstractResourceList.html#instance-set-highlightedItem",
+    "class/src/panels/AbstractResourceList.js~AbstractResourceList.html#instance-get-highlightedItem",
     "src/panels/AbstractResourceList.js~AbstractResourceList#highlightedItem",
     "member"
   ],
@@ -775,20 +769,14 @@ window.esdocSearchIndex = [
   ],
   [
     "src/panels/abstractresourcelist.js~abstractresourcelist#openitem",
-    "class/src/panels/AbstractResourceList.js~AbstractResourceList.html#instance-set-openItem",
-    "src/panels/AbstractResourceList.js~AbstractResourceList#openItem",
-    "member"
-  ],
-  [
-    "src/panels/abstractresourcelist.js~abstractresourcelist#openitem",
     "class/src/panels/AbstractResourceList.js~AbstractResourceList.html#instance-get-openItem",
     "src/panels/AbstractResourceList.js~AbstractResourceList#openItem",
     "member"
   ],
   [
-    "src/panels/abstractresourcelist.js~abstractresourcelist#selecteditem",
-    "class/src/panels/AbstractResourceList.js~AbstractResourceList.html#instance-get-selectedItem",
-    "src/panels/AbstractResourceList.js~AbstractResourceList#selectedItem",
+    "src/panels/abstractresourcelist.js~abstractresourcelist#openitem",
+    "class/src/panels/AbstractResourceList.js~AbstractResourceList.html#instance-set-openItem",
+    "src/panels/AbstractResourceList.js~AbstractResourceList#openItem",
     "member"
   ],
   [
@@ -798,10 +786,10 @@ window.esdocSearchIndex = [
     "member"
   ],
   [
-    "src/panels/abstractresourcelist.js~abstractresourcelist#unhighlight",
-    "class/src/panels/AbstractResourceList.js~AbstractResourceList.html#instance-method-unhighlight",
-    "src/panels/AbstractResourceList.js~AbstractResourceList#unhighlight",
-    "method"
+    "src/panels/abstractresourcelist.js~abstractresourcelist#selecteditem",
+    "class/src/panels/AbstractResourceList.js~AbstractResourceList.html#instance-get-selectedItem",
+    "src/panels/AbstractResourceList.js~AbstractResourceList#selectedItem",
+    "member"
   ],
   [
     "src/panels/highlightservice.js",
@@ -840,12 +828,6 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
-    "src/panels/itemheader.js~itemheader#el",
-    "class/src/panels/ItemHeader.js~ItemHeader.html#instance-member-el",
-    "src/panels/ItemHeader.js~ItemHeader#el",
-    "member"
-  ],
-  [
     "src/panels/itemheader.js~itemheader#getresourceicon",
     "class/src/panels/ItemHeader.js~ItemHeader.html#instance-method-getResourceIcon",
     "src/panels/ItemHeader.js~ItemHeader#getResourceIcon",
@@ -867,6 +849,12 @@ window.esdocSearchIndex = [
     "src/panels/nestedresourcelist.js~nestedresourcelist#constructor",
     "class/src/panels/NestedResourceList.js~NestedResourceList.html#instance-constructor-constructor",
     "src/panels/NestedResourceList.js~NestedResourceList#constructor",
+    "method"
+  ],
+  [
+    "src/panels/nestedresourcelist.js~nestedresourcelist#ngonchanges",
+    "class/src/panels/NestedResourceList.js~NestedResourceList.html#instance-method-ngOnChanges",
+    "src/panels/NestedResourceList.js~NestedResourceList#ngOnChanges",
     "method"
   ],
   [
@@ -1149,12 +1137,6 @@ window.esdocSearchIndex = [
     "src/test-app/index.js",
     "file/src/test-app/index.js.html",
     "src/test-app/index.js",
-    "file"
-  ],
-  [
-    "src/test-app/loaddata.js",
-    "file/src/test-app/loadData.js.html",
-    "src/test-app/loadData.js",
     "file"
   ],
   [

@@ -6,22 +6,26 @@ import {HighlightService} from './HighlightService.js';
  */
 export class AbstractResourceList {
     /**
-     * @property {string} caption           - the header of the list
+     * @type {string} caption           - the header of the list
      */
     @Input() caption = "Resources";
     /**
-     * @property {Object} model  - the open-physiology model
+     * @type {Object} model  - the open-physiology model
      */
     @Input() model;
     /**
-     * @property {Array<Resource>} items    - the list of displayed resources
+     * @type {Array<Resource>} items    - the list of displayed resources
      */
     @Input() items = [];
     /**
-     * @property {Array<string>} types      - the list of displayed item types (resource classes)
+     * @type {Array<string>} types      - the list of displayed item types (resource classes)
      */
     @Input() types = [];
 
+    /**
+     * @type {Object} - visualization options
+     * @property {boolean} options.ordered -
+     */
     @Input() options = {};
 
     @Input('selectedItem') set selectedItem(item) {

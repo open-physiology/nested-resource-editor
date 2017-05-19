@@ -1,5 +1,4 @@
 import {Component, Input, Output, EventEmitter, ElementRef} from '@angular/core';
-import $ from '../libs/jquery';
 
 @Component({
     selector: 'item-header',
@@ -85,17 +84,8 @@ export class ItemHeader {
         return this.item.constructor.icon;
     }
 
-    /**
-     *
-     * @param {ElementRef} el - the components's underlying native element
-     */
-    constructor(el: ElementRef) {
-        this.el = $(el.nativeElement);
-    }
-
     ngOnInit() {
         this._isType = this.item && (this.item.class === "Type");
-        this.el.parent().parent().parent().css("padding", 0);
     }
 }
 

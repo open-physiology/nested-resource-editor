@@ -54,7 +54,6 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/panels/ResourcePanelModule.js~ResourcePanelModule.html">ResourcePanelModule</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">test-app</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/test-app/app.js~TestApp.html">TestApp</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/test-app/app.js~TestAppModule.html">TestAppModule</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-loadData">loadData</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">toolbars</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/toolbars/ToolbarAddModule.js~ToolbarAdd.html">ToolbarAdd</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/toolbars/ToolbarAddModule.js~ToolbarAddModule.html">ToolbarAddModule</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/toolbars/ToolbarCommandsModule.js~ToolbarCommands.html">ToolbarCommands</a></span></span></li>
@@ -79,7 +78,7 @@ import {HighlightService} from &apos;./HighlightService.js&apos;;
 @Component({
     selector: &apos;nested-resource-widget&apos;,
     template:`
-     &lt;div class=&quot;panel panel-info repo&quot;&gt;
+        &lt;div class=&quot;panel panel-info repo&quot;&gt;
         &lt;div class=&quot;panel-heading&quot;&gt;{{caption}}
           &lt;span class=&quot;pull-right&quot; *ngIf=&quot;options?.showActive&quot;&gt;
             &lt;button type=&quot;button&quot; class=&quot;btn btn-default btn-header&quot; 
@@ -96,38 +95,37 @@ import {HighlightService} from &apos;./HighlightService.js&apos;;
           &lt;/toolbar-propertySettings&gt;
 
           &lt;toolbar-filter [filter]=&quot;_searchString&quot; [options]=&quot;[&apos;Name&apos;, &apos;ID&apos;, &apos;Class&apos;]&quot; (applied)=&quot;onFiltered($event)&quot;&gt;&lt;/toolbar-filter&gt;
-                   
+            
           &lt;accordion [closeOthers]=&quot;true&quot; 
-            dnd-sortable-container [dropZones]=&quot;_zones&quot; [sortableData]=&quot;items&quot;&gt;
-
+                     dnd-sortable-container [dropZones]=&quot;_zones&quot; [sortableData]=&quot;items&quot;&gt;
               &lt;accordion-group *ngFor=&quot;let item of items 
-                | hideClass : hiddenTypes
-                | orderBy : _sortByMode
-                | filterBy: [_searchString, _filterByMode]; let i = index&quot; dnd-sortable [sortableIndex]=&quot;i&quot;
-                (onOpen) =&quot;openItem = item&quot;
-                (onClose)=&quot;openItem = null&quot;&gt;
-    
-                &lt;accordion-heading (click)  =&quot;selectedItem = item&quot;&gt;                  
+              | hideClass : hiddenTypes
+              | orderBy : _sortByMode
+              | filterBy: [_searchString, _filterByMode]
+              ; let i = index&quot; class=&quot;list-group-item&quot;
+                dnd-sortable [sortableIndex]=&quot;i&quot;
+               (onOpen) =&quot;openItem = item&quot;
+               (onClose)=&quot;openItem = null&quot;
+              &gt;
+                  &lt;accordion-heading (click)  =&quot;selectedItem = item&quot;&gt;                  
                   &lt;item-header [item]= &quot;item&quot; 
                     [options]      = &quot;options&quot;
                     [isActive]     = &quot;item === activeItem&quot;
                     [isOpen]       = &quot;item === openItem&quot; 
                     (mouseover)    = &quot;highlightedItem = item&quot; 
-                    (mouseout)     = &quot;unhighlight(item)&quot;
+                    (mouseout)     = &quot;_unhighlight(item)&quot;
                     (activeItemChanged) = &quot;activeItem = item&quot;
                     [ngClass] =&quot;{highlighted: item === highlightedItem, active: item === selectedItem}&quot;&gt;   
                   &lt;/item-header&gt;
                 &lt;/accordion-heading&gt;
-    
                 &lt;div *ngIf=&quot;!options?.headersOnly&quot;&gt;
                   &lt;resource-panel *ngIf=&quot;item === openItem&quot; 
                     [item]=&quot;item&quot;
                     [model]=&quot;model&quot;
-                    (saved)   =&quot;onSaved(item, $event)&quot; 
+                    (saved)   =&quot;onSaved(item)&quot; 
                     (removed) =&quot;onRemoved(item)&quot;&gt;
                    &lt;/resource-panel&gt;   
                 &lt;/div&gt;
-                    
               &lt;/accordion-group&gt;        
           &lt;/accordion&gt;       
         &lt;/div&gt;
@@ -179,6 +177,10 @@ import {HighlightService} from &apos;./HighlightService.js&apos;;
           outline: none;
           text-decoration: none;
         }
+        :host &gt;&gt;&gt; .list-group-item {
+            padding: 0;
+        }
+
     `]
 })
 /**
@@ -186,7 +188,6 @@ import {HighlightService} from &apos;./HighlightService.js&apos;;
  * @extends {AbstractResourceList}
  */
 export class NestedResourceWidget extends AbstractResourceList{
-
     /**
      * @param {Resource} item - the active item
      */
@@ -223,6 +224,9 @@ export class NestedResourceWidget extends AbstractResourceList{
         super(highlightService);
     }
 
+    /**
+     * Initialize the nested resource list component: set invisible by default classes
+     */
     ngOnInit(){
         super.ngOnInit();
         this._ignoreTypes.add(this.model.Border.name).add(this.model.Node.name);

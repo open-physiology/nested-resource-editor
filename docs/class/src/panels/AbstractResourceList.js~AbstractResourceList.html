@@ -54,7 +54,6 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/panels/ResourcePanelModule.js~ResourcePanelModule.html">ResourcePanelModule</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">test-app</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/test-app/app.js~TestApp.html">TestApp</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/test-app/app.js~TestAppModule.html">TestAppModule</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-loadData">loadData</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">toolbars</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/toolbars/ToolbarAddModule.js~ToolbarAdd.html">ToolbarAdd</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/toolbars/ToolbarAddModule.js~ToolbarAddModule.html">ToolbarAddModule</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/toolbars/ToolbarCommandsModule.js~ToolbarCommands.html">ToolbarCommands</a></span></span></li>
@@ -241,13 +240,14 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/panels/AbstractResourceList.js~AbstractResourceList.html#instance-set-openItem">openItem</a></span></span><span data-ice="signature">: <span>*</span></span>
+          <span data-ice="name"><span><a href="class/src/panels/AbstractResourceList.js~AbstractResourceList.html#instance-set-openItem">openItem</a></span></span><span data-ice="signature">(item: <span>Resource</span>): <span>*</span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Set resource with the open editor</p>
+</div>
       </div>
     </td>
     <td>
@@ -268,7 +268,7 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/panels/AbstractResourceList.js~AbstractResourceList.html#instance-get-openItem">openItem</a></span></span><span data-ice="signature">: <span>*</span></span>
+          <span data-ice="name"><span><a href="class/src/panels/AbstractResourceList.js~AbstractResourceList.html#instance-get-openItem">openItem</a></span></span><span data-ice="signature">: <span>Resource</span>: <span>*</span></span>
         </p>
       </div>
       <div>
@@ -295,7 +295,7 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/panels/AbstractResourceList.js~AbstractResourceList.html#instance-set-selectedItem">selectedItem</a></span></span><span data-ice="signature">: <span>*</span></span>
+          <span data-ice="name"><span><a href="class/src/panels/AbstractResourceList.js~AbstractResourceList.html#instance-set-selectedItem">selectedItem</a></span></span><span data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></span>&lt;<span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>&gt;</span>
         </p>
       </div>
       <div>
@@ -322,7 +322,7 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/panels/AbstractResourceList.js~AbstractResourceList.html#instance-get-selectedItem">selectedItem</a></span></span><span data-ice="signature">: <span>*</span></span>
+          <span data-ice="name"><span><a href="class/src/panels/AbstractResourceList.js~AbstractResourceList.html#instance-get-selectedItem">selectedItem</a></span></span><span data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></span>
         </p>
       </div>
       <div>
@@ -390,7 +390,8 @@
       <div>
         
         
-        
+        <div data-ice="description"><p>On component destroy, unsubscribe from model library data handling events</p>
+</div>
       </div>
     </td>
     <td>
@@ -417,7 +418,8 @@
       <div>
         
         
-        
+        <div data-ice="description"><p>Initialize the nested resource list: choose selected item and default parameters (e.g., visible classes)</p>
+</div>
       </div>
     </td>
     <td>
@@ -438,13 +440,14 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/panels/AbstractResourceList.js~AbstractResourceList.html#instance-method-onAdded">onAdded</a></span></span><span data-ice="signature">(clsName: <span>*</span>)</span>
+          <span data-ice="name"><span><a href="class/src/panels/AbstractResourceList.js~AbstractResourceList.html#instance-method-onAdded">onAdded</a></span></span><span data-ice="signature">(clsName: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>)</span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Create new resource</p>
+</div>
       </div>
     </td>
     <td>
@@ -465,13 +468,14 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/panels/AbstractResourceList.js~AbstractResourceList.html#instance-method-onFiltered">onFiltered</a></span></span><span data-ice="signature">(config: <span>*</span>)</span>
+          <span data-ice="name"><span><a href="class/src/panels/AbstractResourceList.js~AbstractResourceList.html#instance-method-onFiltered">onFiltered</a></span></span><span data-ice="signature">(config: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>)</span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Change filter settings</p>
+</div>
       </div>
     </td>
     <td>
@@ -492,13 +496,14 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/panels/AbstractResourceList.js~AbstractResourceList.html#instance-method-onRemoved">onRemoved</a></span></span><span data-ice="signature">(item: <span>*</span>)</span>
+          <span data-ice="name"><span><a href="class/src/panels/AbstractResourceList.js~AbstractResourceList.html#instance-method-onRemoved">onRemoved</a></span></span><span data-ice="signature">(item: <span>Resource</span>)</span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Delete a given resource</p>
+</div>
       </div>
     </td>
     <td>
@@ -519,13 +524,14 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/panels/AbstractResourceList.js~AbstractResourceList.html#instance-method-onSaved">onSaved</a></span></span><span data-ice="signature">(item: <span>*</span>, updatedItem: <span>*</span>)</span>
+          <span data-ice="name"><span><a href="class/src/panels/AbstractResourceList.js~AbstractResourceList.html#instance-method-onSaved">onSaved</a></span></span><span data-ice="signature">(item: <span>Resource</span>)</span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Save (commit) a given resource</p>
+</div>
       </div>
     </td>
     <td>
@@ -546,40 +552,14 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="class/src/panels/AbstractResourceList.js~AbstractResourceList.html#instance-method-onSorted">onSorted</a></span></span><span data-ice="signature">(prop: <span>*</span>)</span>
+          <span data-ice="name"><span><a href="class/src/panels/AbstractResourceList.js~AbstractResourceList.html#instance-method-onSorted">onSorted</a></span></span><span data-ice="signature">(prop: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>)</span>
         </p>
       </div>
       <div>
         
         
-        
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-<tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">public</span>
-      
-      
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-          
-          
-          <span data-ice="name"><span><a href="class/src/panels/AbstractResourceList.js~AbstractResourceList.html#instance-method-unhighlight">unhighlight</a></span></span><span data-ice="signature">(item: <span>*</span>)</span>
-        </p>
-      </div>
-      <div>
-        
-        
-        
+        <div data-ice="description"><p>Change sorting mode</p>
+</div>
       </div>
     </td>
     <td>
@@ -609,7 +589,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/panels/AbstractResourceList.js.html#lineNumber63">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/panels/AbstractResourceList.js.html#lineNumber69">source</a></span></span>
     </span>
   </h3>
 
@@ -672,7 +652,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/panels/AbstractResourceList.js.html#lineNumber28">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/panels/AbstractResourceList.js.html#lineNumber34">source</a></span></span>
     </span>
   </h3>
 
@@ -715,7 +695,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/panels/AbstractResourceList.js.html#lineNumber35">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/panels/AbstractResourceList.js.html#lineNumber41">source</a></span></span>
     </span>
   </h3>
 
@@ -758,7 +738,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/panels/AbstractResourceList.js.html#lineNumber82">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/panels/AbstractResourceList.js.html#lineNumber91">source</a></span></span>
     </span>
   </h3>
 
@@ -797,18 +777,19 @@
     
     
     
-    <span data-ice="name">openItem</span><span data-ice="signature">: <span>*</span></span>
+    <span data-ice="name">openItem</span><span data-ice="signature">(item: <span>Resource</span>): <span>*</span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/panels/AbstractResourceList.js.html#lineNumber117">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/panels/AbstractResourceList.js.html#lineNumber132">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Set resource with the open editor</p>
+</div>
 
   
 
@@ -840,11 +821,67 @@
     
     
     
-    <span data-ice="name">openItem</span><span data-ice="signature">: <span>*</span></span>
+    <span data-ice="name">openItem</span><span data-ice="signature">: <span>Resource</span>: <span>*</span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/panels/AbstractResourceList.js.html#lineNumber123">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/panels/AbstractResourceList.js.html#lineNumber141">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  
+
+  
+
+  <div data-ice="properties">
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tbody>
+        <tr>
+          <td class="return-type" data-ice="returnType"><span>Resource</span></td>
+          <td class="return-desc" data-ice="returnDescription"><p>the resource with the open editor</p>
+</td>
+        </tr>
+      </tbody>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-set-selectedItem">
+    <span class="access" data-ice="access">public</span>
+    
+    <span class="kind" data-ice="kind">set</span>
+    
+    
+    
+    <span data-ice="name">selectedItem</span><span data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></span>&lt;<span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>&gt;</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/panels/AbstractResourceList.js.html#lineNumber11">source</a></span></span>
     </span>
   </h3>
 
@@ -876,66 +913,6 @@
   
 </div>
 <div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-set-selectedItem">
-    <span class="access" data-ice="access">public</span>
-    
-    <span class="kind" data-ice="kind">set</span>
-    
-    
-    
-    <span data-ice="name">selectedItem</span><span data-ice="signature">: <span>*</span></span>
-    <span class="right-info">
-      
-      
-      <span data-ice="source"><span><a href="file/src/panels/AbstractResourceList.js.html#lineNumber11">source</a></span></span>
-    </span>
-  </h3>
-
-  
-  
-  
-  
-
-  
-
-  <div data-ice="properties"><div data-ice="properties">
-  <h4 data-ice="title">Properties:</h4>
-  <table class="params">
-    <thead>
-    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
-    </thead>
-    <tbody>
-    
-    <tr data-ice="property" data-depth="0">
-      <td data-ice="name" data-depth="0">types</td>
-      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></span>&lt;<span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>&gt;</td>
-      <td data-ice="appendix"></td>
-      <td data-ice="description"><p>the list of displayed item types (resource classes)</p>
-</td>
-    </tr>
-</tbody>
-  </table>
-</div>
-</div>
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-  
-</div>
-<div class="detail" data-ice="detail">
   <h3 data-ice="anchor" id="instance-get-selectedItem">
     <span class="access" data-ice="access">public</span>
     
@@ -943,11 +920,11 @@
     
     
     
-    <span data-ice="name">selectedItem</span><span data-ice="signature">: <span>*</span></span>
+    <span data-ice="name">selectedItem</span><span data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/panels/AbstractResourceList.js.html#lineNumber25">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/panels/AbstractResourceList.js.html#lineNumber31">source</a></span></span>
     </span>
   </h3>
 
@@ -958,24 +935,7 @@
 
   
 
-  <div data-ice="properties"><div data-ice="properties">
-  <h4 data-ice="title">Properties:</h4>
-  <table class="params">
-    <thead>
-    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
-    </thead>
-    <tbody>
-    
-    <tr data-ice="property" data-depth="0">
-      <td data-ice="name" data-depth="0">model</td>
-      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></td>
-      <td data-ice="appendix"></td>
-      <td data-ice="description"><p>the open-physiology model</p>
-</td>
-    </tr>
-</tbody>
-  </table>
-</div>
+  <div data-ice="properties">
 </div>
 
   
@@ -1010,7 +970,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/panels/AbstractResourceList.js.html#lineNumber189">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/panels/AbstractResourceList.js.html#lineNumber227">source</a></span></span>
     </span>
   </h3>
 
@@ -1084,14 +1044,15 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/panels/AbstractResourceList.js.html#lineNumber104">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/panels/AbstractResourceList.js.html#lineNumber116">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>On component destroy, unsubscribe from model library data handling events</p>
+</div>
 
   
 
@@ -1127,14 +1088,15 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/panels/AbstractResourceList.js.html#lineNumber80">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/panels/AbstractResourceList.js.html#lineNumber89">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Initialize the nested resource list: choose selected item and default parameters (e.g., visible classes)</p>
+</div>
 
   
 
@@ -1166,18 +1128,19 @@
     
     
     
-    <span data-ice="name">onAdded</span><span data-ice="signature">(clsName: <span>*</span>)</span>
+    <span data-ice="name">onAdded</span><span data-ice="signature">(clsName: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>)</span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/panels/AbstractResourceList.js.html#lineNumber161">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/panels/AbstractResourceList.js.html#lineNumber199">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Create new resource</p>
+</div>
 
   
 
@@ -1191,9 +1154,10 @@
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" data-depth="0">clsName</td>
-      <td data-ice="type"><span>*</span></td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>the type of the resource to create</p>
+</td>
     </tr>
 </tbody>
   </table>
@@ -1225,18 +1189,19 @@
     
     
     
-    <span data-ice="name">onFiltered</span><span data-ice="signature">(config: <span>*</span>)</span>
+    <span data-ice="name">onFiltered</span><span data-ice="signature">(config: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>)</span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/panels/AbstractResourceList.js.html#lineNumber133">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/panels/AbstractResourceList.js.html#lineNumber159">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Change filter settings</p>
+</div>
 
   
 
@@ -1250,9 +1215,10 @@
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" data-depth="0">config</td>
-      <td data-ice="type"><span>*</span></td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>the parameters for filtering, mode and search string.</p>
+</td>
     </tr>
 </tbody>
   </table>
@@ -1284,18 +1250,19 @@
     
     
     
-    <span data-ice="name">onRemoved</span><span data-ice="signature">(item: <span>*</span>)</span>
+    <span data-ice="name">onRemoved</span><span data-ice="signature">(item: <span>Resource</span>)</span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/panels/AbstractResourceList.js.html#lineNumber145">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/panels/AbstractResourceList.js.html#lineNumber179">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Delete a given resource</p>
+</div>
 
   
 
@@ -1309,9 +1276,10 @@
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" data-depth="0">item</td>
-      <td data-ice="type"><span>*</span></td>
+      <td data-ice="type"><span>Resource</span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>he resource to delete</p>
+</td>
     </tr>
 </tbody>
   </table>
@@ -1343,18 +1311,19 @@
     
     
     
-    <span data-ice="name">onSaved</span><span data-ice="signature">(item: <span>*</span>, updatedItem: <span>*</span>)</span>
+    <span data-ice="name">onSaved</span><span data-ice="signature">(item: <span>Resource</span>)</span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/panels/AbstractResourceList.js.html#lineNumber138">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/panels/AbstractResourceList.js.html#lineNumber168">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Save (commit) a given resource</p>
+</div>
 
   
 
@@ -1368,15 +1337,10 @@
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" data-depth="0">item</td>
-      <td data-ice="type"><span>*</span></td>
+      <td data-ice="type"><span>Resource</span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
-    </tr>
-<tr data-ice="property" data-depth="0">
-      <td data-ice="name" data-depth="0">updatedItem</td>
-      <td data-ice="type"><span>*</span></td>
-      <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>the resource to save (commit)</p>
+</td>
     </tr>
 </tbody>
   </table>
@@ -1408,18 +1372,19 @@
     
     
     
-    <span data-ice="name">onSorted</span><span data-ice="signature">(prop: <span>*</span>)</span>
+    <span data-ice="name">onSorted</span><span data-ice="signature">(prop: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>)</span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/panels/AbstractResourceList.js.html#lineNumber129">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/panels/AbstractResourceList.js.html#lineNumber151">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Change sorting mode</p>
+</div>
 
   
 
@@ -1433,68 +1398,10 @@
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" data-depth="0">prop</td>
-      <td data-ice="type"><span>*</span></td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
-    </tr>
-</tbody>
-  </table>
-</div>
-</div>
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-  
-</div>
-<div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-method-unhighlight">
-    <span class="access" data-ice="access">public</span>
-    
-    
-    
-    
-    
-    <span data-ice="name">unhighlight</span><span data-ice="signature">(item: <span>*</span>)</span>
-    <span class="right-info">
-      
-      
-      <span data-ice="source"><span><a href="file/src/panels/AbstractResourceList.js.html#lineNumber110">source</a></span></span>
-    </span>
-  </h3>
-
-  
-  
-  
-  
-
-  
-
-  <div data-ice="properties"><div data-ice="properties">
-  <h4 data-ice="title">Params:</h4>
-  <table class="params">
-    <thead>
-    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
-    </thead>
-    <tbody>
-    
-    <tr data-ice="property" data-depth="0">
-      <td data-ice="name" data-depth="0">item</td>
-      <td data-ice="type"><span>*</span></td>
-      <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>the sorting mode</p>
+</td>
     </tr>
 </tbody>
   </table>

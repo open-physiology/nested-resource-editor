@@ -54,7 +54,6 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/panels/ResourcePanelModule.js~ResourcePanelModule.html">ResourcePanelModule</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">test-app</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/test-app/app.js~TestApp.html">TestApp</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/test-app/app.js~TestAppModule.html">TestAppModule</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-loadData">loadData</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">toolbars</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/toolbars/ToolbarAddModule.js~ToolbarAdd.html">ToolbarAdd</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/toolbars/ToolbarAddModule.js~ToolbarAddModule.html">ToolbarAddModule</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/toolbars/ToolbarCommandsModule.js~ToolbarCommands.html">ToolbarCommands</a></span></span></li>
@@ -76,22 +75,26 @@ import {HighlightService} from &apos;./HighlightService.js&apos;;
  */
 export class AbstractResourceList {
     /**
-     * @property {string} caption           - the header of the list
+     * @type {string} caption           - the header of the list
      */
     @Input() caption = &quot;Resources&quot;;
     /**
-     * @property {Object} model  - the open-physiology model
+     * @type {Object} model  - the open-physiology model
      */
     @Input() model;
     /**
-     * @property {Array&lt;Resource&gt;} items    - the list of displayed resources
+     * @type {Array&lt;Resource&gt;} items    - the list of displayed resources
      */
     @Input() items = [];
     /**
-     * @property {Array&lt;string&gt;} types      - the list of displayed item types (resource classes)
+     * @type {Array&lt;string&gt;} types      - the list of displayed item types (resource classes)
      */
     @Input() types = [];
 
+    /**
+     * @type {Object} - visualization options
+     * @property {boolean} options.ordered -
+     */
     @Input() options = {};
 
     @Input(&apos;selectedItem&apos;) set selectedItem(item) {
@@ -153,6 +156,9 @@ export class AbstractResourceList {
         })
     }
 
+    /**
+     * Initialize the nested resource list: choose selected item and default parameters (e.g., visible classes)
+     */
     ngOnInit() {
         if (!this.items) { this.items = []; }
 
@@ -173,47 +179,72 @@ export class AbstractResourceList {
         this._zones = this.types.map(x =&gt; x + &quot;_zone&quot;);
     }
 
+    /**
+     * On component destroy, unsubscribe from model library data handling events
+     */
     ngOnDestroy() {
         if (this._hs) {
             this._hs.unsubscribe();
         }
     }
 
-    unhighlight(item) {
+    _unhighlight(item) {
         if (this.highlightedItem === item) {
             this.highlightedItem = null;
         }
     }
 
-    //Open item
+    /**
+     * Set resource with the open editor
+     * @param {Resource} item - the resource with the open editor
+     */
     set openItem(item){
         if (this._openItem !== item) {
             this._openItem = item;
         }
     }
 
+    /**
+     * @returns {Resource} - the resource with the open editor
+     */
     get openItem(){
         return this._openItem;
     }
 
-    /* Events */
+    /* Event processing */
 
-    onSorted(prop: string) {
+    /**
+     * Change sorting mode
+     * @param {string} prop - the sorting mode
+     */
+    onSorted(prop) {
         this._sortByMode = prop.toLowerCase();
     }
 
+    /**
+     * Change filter settings
+     * @param {Object} config - the parameters for filtering, mode and search string.
+     */
     onFiltered(config) {
         this._filterByMode = config.mode.toLowerCase();
         this._searchString = config.filter;
     }
 
-    onSaved(item, updatedItem) {
+    /**
+     * Save (commit) a given resource
+     * @param {Resource} item - the resource to save (commit)
+     */
+    onSaved(item) {
         this.updated.emit(this.items);
         if (item === this.selectedItem) {
             this.selectedItemChange.emit(this.selectedItem);
         }
     }
 
+    /**
+     * Delete a given resource
+     * @param {Resource} item - he resource to delete
+     */
     onRemoved(item) {
         if (!this.items) return;
         let index = this.items.indexOf(item);
@@ -231,6 +262,10 @@ export class AbstractResourceList {
         this.updated.emit(this.items);
     }
 
+    /**
+     * Create new resource
+     * @param {string} clsName - the type of the resource to create
+     */
     onAdded(clsName) {
         let options = {};
         if (clsName === &quot;LyphWithAxis&quot;) {

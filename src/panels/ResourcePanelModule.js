@@ -1,4 +1,4 @@
-import {NgModule, Component, ViewChild, EventEmitter, Input, Output, forwardRef} from '@angular/core';
+import {NgModule, Component, ViewChild, EventEmitter, Input, Output} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
 import {AccordionModule} from "ngx-accordion";
@@ -26,7 +26,7 @@ import {MeasurableGeneratorModule, MeasurableGenerator} from "../components/Meas
 @Component({
     selector: 'resource-panel',
     template:`
-    <div class="panel">
+      <div class="panel">
         <div class="panel-body">
           <toolbar-commands  
             [options]  = "options"
@@ -81,6 +81,7 @@ import {MeasurableGeneratorModule, MeasurableGenerator} from "../components/Meas
                   [caption]="getPropertyLabel(property)" 
                   [model]  ="model"
                   [items]  ="item.p(property) | async | setToArray" 
+                  [options]="{ordered: ['layers', 'segments'].includes(property)}"
                   [types]  ="[item.constructor.relationshipShortcuts[property].codomain.resourceClass.name]"
                   (updated)="updateProperty(property, $event)"> 
                 </nested-resource-list>

@@ -54,7 +54,6 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/panels/ResourcePanelModule.js~ResourcePanelModule.html">ResourcePanelModule</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">test-app</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/test-app/app.js~TestApp.html">TestApp</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/test-app/app.js~TestAppModule.html">TestAppModule</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-loadData">loadData</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">toolbars</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/toolbars/ToolbarAddModule.js~ToolbarAdd.html">ToolbarAdd</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/toolbars/ToolbarAddModule.js~ToolbarAddModule.html">ToolbarAddModule</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/toolbars/ToolbarCommandsModule.js~ToolbarCommands.html">ToolbarCommands</a></span></span></li>
@@ -76,7 +75,7 @@ import {SetToArray, FilterBy} from &quot;../common/PipeTransformModule&quot;;
 
 @Component({
     selector: &apos;nested-resource-list&apos;,
-    template:`
+    template:`       
     &lt;div class=&quot;panel repo-nested&quot;&gt;
       &lt;div class=&quot;panel-heading&quot;&gt; &lt;label&gt;{{caption}}: &lt;/label&gt;&lt;/div&gt;
       &lt;div class=&quot;panel-body&quot; &gt;
@@ -94,21 +93,25 @@ import {SetToArray, FilterBy} from &quot;../common/PipeTransformModule&quot;;
         &lt;toolbar-sort   *ngIf =  &quot;options?.sortToolbar&quot;  [options]=&quot;[&apos;Name&apos;, &apos;ID&apos;, &apos;Class&apos;]&quot; (sorted)=&quot;onSorted($event)&quot;&gt;&lt;/toolbar-sort&gt;
         &lt;toolbar-add    *ngIf = &quot;!(options?.readOnly || options?.headersOnly)&quot;  [options]=&quot;types&quot; [transform]=&quot;getClassLabel&quot; (added)=&quot;onAdded($event)&quot;&gt;&lt;/toolbar-add&gt;
         &lt;toolbar-filter *ngIf =  &quot;options?.filterToolbar&quot; [options]=&quot;[&apos;Name&apos;, &apos;ID&apos;, &apos;Class&apos;]&quot; [filter]=&quot;_searchString&quot; (applied)=&quot;onFiltered($event)&quot;&gt;&lt;/toolbar-filter&gt;
-          
-        &lt;accordion [closeOthers]=&quot;true&quot;
+
+          &lt;!--| orderBy : _sortByMode--&gt;
+
+          &lt;accordion [closeOthers]=&quot;true&quot;
           dnd-sortable-container [dropZones]=&quot;_zones&quot; [sortableData]=&quot;items&quot;&gt;
           &lt;accordion-group *ngFor=&quot;let item of items 
-            | orderBy : _sortByMode
-            | filterBy: [_searchString, _filterByMode]; let i = index&quot; 
-                dnd-sortable (onDragStart)=&quot;_onDragStart()&quot; (onDragEnd)=&quot;_onDragEnd()&quot; [sortableIndex]=&quot;i&quot;
-                (onOpen) =&quot;openItem = item&quot;
-                (onClose)=&quot;openItem = null&quot;&gt;
+            | filterBy: [_searchString, _filterByMode]; let i = index&quot; class=&quot;list-group-item&quot;
+               dnd-sortable [dragEnabled] = true
+               [sortableIndex]=&quot;i&quot;
+               (onDragEnd)=&quot;_onDragEnd(i)&quot;
+
+               (onOpen) =&quot;openItem = item&quot; 
+               (onClose)=&quot;openItem = null&quot;&gt;
  
             &lt;accordion-heading (click)  =&quot;selectedItem = item&quot;&gt;
               &lt;item-header [item]=&quot;item&quot; 
                 [isOpen]       = &quot;item === openItem&quot; 
                 (mouseover)    = &quot;highlightedItem = item&quot; 
-                (mouseout)     = &quot;unhighlight(item)&quot;
+                (mouseout)     = &quot;_unhighlight(item)&quot;
                 [ngClass] =&quot;{highlighted: item === highlightedItem, active: item === selectedItem}&quot;&gt;
               &lt;/item-header&gt;
             &lt;/accordion-heading&gt;
@@ -118,7 +121,7 @@ import {SetToArray, FilterBy} from &quot;../common/PipeTransformModule&quot;;
                 [item]    =&quot;item&quot; 
                 [model]=&quot;model&quot;
                 [options] =&quot;options&quot;
-                (saved)   =&quot;onSaved(item, $event)&quot; 
+                (saved)   =&quot;onSaved(item)&quot; 
                 (removed) =&quot;onRemoved(item)&quot;
                 (highlightedItemChange)=&quot;highlightedItemChange.emit($event)&quot;
                 &gt;&lt;/resource-panel&gt;            
@@ -146,11 +149,10 @@ import {SetToArray, FilterBy} from &quot;../common/PipeTransformModule&quot;;
  * @extends {AbstractResourceList}
  */
 export class NestedResourceList extends AbstractResourceList{
-    @Input()
     /**
      *  the list of resources that can be added to the current list
      */
-    possibleValues;
+    @Input() possibleValues;
 
     _itemToInclude = null;
 
@@ -188,30 +190,40 @@ export class NestedResourceList extends AbstractResourceList{
         if (this._ts) { this._ts.unsubscribe(); }
     }
 
-    // ngOnChanges(changes) {
-    //     if (this.items) {
-    //         if (this.options.ordered) {
-    //             this.items.sort((a, b) =&gt; {
-    //                 return (a[&apos;--&gt;HasLayer&apos;].relativePosition - b[&apos;--&gt;HasLayer&apos;].relativePosition)
-    //             });
-    //         }
-    //     }
-    // }
-
-    _onDragStart(index: number){ }
+    ngOnChanges(changes) {
+        if (this.items &amp;&amp; this.options.ordered) {
+            this.items.sort((a, b) =&gt; {
+                return (a[&apos;--&gt;IsRadiallyAdjacent&apos;] &amp;&amp; (a[&apos;--&gt;IsRadiallyAdjacent&apos;][2] === b))
+            });
+        }
+    }
 
     //TODO: update new &quot;Follows&quot; relationship
-    _onDragEnd(index: number){
-        // if (this.options.ordered){
-        //     for (let i = 0; i &lt; this.items.length; i++){
-        //         this.items[i][&apos;--&gt;HasLayer&apos;].relativePosition = i;
-        //     }
-        //     this.updated.emit(this.items);
-        // }
+    _onDragEnd(index){
+        if (!this.options.ordered) { return; }
+
+        for (let i = 1; i &lt; this.items.length; i++){
+            if (this.items[i][&apos;--&gt;IsRadiallyAdjacent&apos;]){
+                if (this.items[i][&apos;--&gt;IsRadiallyAdjacent&apos;][2] !== this.items[i - 1]){
+                    this.items[i][&apos;--&gt;IsRadiallyAdjacent&apos;][2] = this.items[i - 1];
+                }
+            } else {
+                model.isRadiallyAdjacent.new({1: this.items[i - 1], 2: this.items[i]});
+            }
+        }
+        if (this.items.length &gt; 1) {
+            if (this.items[this.items.length - 1][&apos;--&gt;IsRadiallyAdjacent&apos;] !== null){
+                //TODO uncomment when model library implements delete operation
+                //this.items[i][&apos;--&gt;IsRadiallyAdjacent&apos;].delete();
+                this.items[this.items.length - 1][&apos;--&gt;IsRadiallyAdjacent&apos;] = null;
+            }
+        }
+        this.updated.emit(this.items);
     }
 
     /**
-     * @param {Resource} newItem - an existing resource included to the current list
+     * Include a selected resource to the current list
+     * @param {Resource} newItem - the selected resource to include to the current list
      */
     onIncluded(newItem){
         if (newItem){

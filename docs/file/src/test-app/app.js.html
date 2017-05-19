@@ -54,7 +54,6 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/panels/ResourcePanelModule.js~ResourcePanelModule.html">ResourcePanelModule</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">test-app</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/test-app/app.js~TestApp.html">TestApp</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/test-app/app.js~TestAppModule.html">TestAppModule</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-loadData">loadData</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">toolbars</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/toolbars/ToolbarAddModule.js~ToolbarAdd.html">ToolbarAdd</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/toolbars/ToolbarAddModule.js~ToolbarAddModule.html">ToolbarAddModule</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/toolbars/ToolbarCommandsModule.js~ToolbarCommands.html">ToolbarCommands</a></span></span></li>
@@ -78,16 +77,14 @@ import modelFactory, {ajaxBackend} from &apos;open-physiology-model&apos;;
 import {PipeTransformModule} from &apos;../common/PipeTransformModule.js&apos;;
 import {Subscription}   from &apos;rxjs/Subscription&apos;;
 import {NestedResourceWidgetModule} from &apos;../index.js&apos;;
-import {loadData} from &apos;./loadData&apos;;
 
 @Component({
 	selector: &apos;test-app&apos;,
 	template: `
         &lt;nested-resource-widget id=&quot;repo&quot;
+		  caption=&quot;Resources&quot; 
 		  [model]=&quot;model&quot;
 		  [items]=&quot;items | setToArray&quot; 
-		  caption=&quot;Resources&quot; 
-		  [options]=&quot;{showActive: true}&quot;
 		  (selectedItemChange)=&quot;onItemSelected($event)&quot;&gt;
 		&lt;/nested-resource-widget&gt;
 	`
@@ -118,12 +115,9 @@ export class TestApp {
 				}
 			});
 		//model.Resource.getAll(); //Fails!
-		// this.model.Lyph.new({id: 1, name: &quot;Kidney&quot;});
-		// this.model.Lyph.new({id: 2, name: &quot;Heart&quot;});
-		// this.model.Lyph.new({id: 3, name: &quot;Head&quot;});
-
-		loadData(this.model);
-
+		this.model.Lyph.new({name: &quot;Kidney&quot;}, {createAxis: true});
+		this.model.Lyph.new({name: &quot;Heart&quot;});
+		this.model.Lyph.new({name: &quot;Head&quot;});
 	}
 
 	ngOnDestroy() { this.rs.unsubscribe(); }
@@ -132,7 +126,6 @@ export class TestApp {
 		setTimeout(() =&gt; { this.selectedItem = null; }, 0);
 		setTimeout(() =&gt; { this.selectedItem = item; }, 0);
 	}
-
 }
 
 /**

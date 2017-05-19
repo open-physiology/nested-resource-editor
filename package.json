@@ -92,7 +92,6 @@
     "ngx-dnd": "^1.0.3",
     "ngx-dropdown": "0.0.22",
     "open-physiology-model": "github:open-physiology/open-physiology-model",
-    "raw-loader": "^0.5.1",
     "rxjs": "5",
     "utilities": "open-physiology/utilities",
     "zone.js": "0.7"

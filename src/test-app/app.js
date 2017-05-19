@@ -8,7 +8,6 @@ import modelFactory, {ajaxBackend} from 'open-physiology-model';
 import {PipeTransformModule} from '../common/PipeTransformModule.js';
 import {Subscription}   from 'rxjs/Subscription';
 import {NestedResourceWidgetModule} from '../index.js';
-import {loadData} from './loadData';
 
 @Component({
 	selector: 'test-app',
@@ -47,12 +46,9 @@ export class TestApp {
 				}
 			});
 		//model.Resource.getAll(); //Fails!
-		// this.model.Lyph.new({id: 1, name: "Kidney"});
-		// this.model.Lyph.new({id: 2, name: "Heart"});
-		// this.model.Lyph.new({id: 3, name: "Head"});
-
-		loadData(this.model);
-
+		this.model.Lyph.new({name: "Kidney"}, {createAxis: true});
+		this.model.Lyph.new({name: "Heart"});
+		this.model.Lyph.new({name: "Head"});
 	}
 
 	ngOnDestroy() { this.rs.unsubscribe(); }
@@ -61,7 +57,6 @@ export class TestApp {
 		setTimeout(() => { this.selectedItem = null; }, 0);
 		setTimeout(() => { this.selectedItem = item; }, 0);
 	}
-
 }
 
 /**

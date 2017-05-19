@@ -9,7 +9,7 @@ import {HighlightService} from './HighlightService.js';
 @Component({
     selector: 'nested-resource-widget',
     template:`
-     <div class="panel panel-info repo">
+        <div class="panel panel-info repo">
         <div class="panel-heading">{{caption}}
           <span class="pull-right" *ngIf="options?.showActive">
             <button type="button" class="btn btn-default btn-header" 
@@ -26,18 +26,19 @@ import {HighlightService} from './HighlightService.js';
           </toolbar-propertySettings>
 
           <toolbar-filter [filter]="_searchString" [options]="['Name', 'ID', 'Class']" (applied)="onFiltered($event)"></toolbar-filter>
-                   
+            
           <accordion [closeOthers]="true" 
-            dnd-sortable-container [dropZones]="_zones" [sortableData]="items">
-
+                     dnd-sortable-container [dropZones]="_zones" [sortableData]="items">
               <accordion-group *ngFor="let item of items 
-                | hideClass : hiddenTypes
-                | orderBy : _sortByMode
-                | filterBy: [_searchString, _filterByMode]; let i = index" dnd-sortable [sortableIndex]="i"
-                (onOpen) ="openItem = item"
-                (onClose)="openItem = null">
-    
-                <accordion-heading (click)  ="selectedItem = item">                  
+              | hideClass : hiddenTypes
+              | orderBy : _sortByMode
+              | filterBy: [_searchString, _filterByMode]
+              ; let i = index" class="list-group-item"
+                dnd-sortable [sortableIndex]="i"
+               (onOpen) ="openItem = item"
+               (onClose)="openItem = null"
+              >
+                  <accordion-heading (click)  ="selectedItem = item">                  
                   <item-header [item]= "item" 
                     [options]      = "options"
                     [isActive]     = "item === activeItem"
@@ -48,7 +49,6 @@ import {HighlightService} from './HighlightService.js';
                     [ngClass] ="{highlighted: item === highlightedItem, active: item === selectedItem}">   
                   </item-header>
                 </accordion-heading>
-    
                 <div *ngIf="!options?.headersOnly">
                   <resource-panel *ngIf="item === openItem" 
                     [item]="item"
@@ -57,7 +57,6 @@ import {HighlightService} from './HighlightService.js';
                     (removed) ="onRemoved(item)">
                    </resource-panel>   
                 </div>
-                    
               </accordion-group>        
           </accordion>       
         </div>
@@ -109,6 +108,10 @@ import {HighlightService} from './HighlightService.js';
           outline: none;
           text-decoration: none;
         }
+        :host >>> .list-group-item {
+            padding: 0;
+        }
+
     `]
 })
 /**
@@ -116,7 +119,6 @@ import {HighlightService} from './HighlightService.js';
  * @extends {AbstractResourceList}
  */
 export class NestedResourceWidget extends AbstractResourceList{
-
     /**
      * @param {Resource} item - the active item
      */

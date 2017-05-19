@@ -6,7 +6,7 @@ import {SetToArray, FilterBy} from "../common/PipeTransformModule";
 
 @Component({
     selector: 'nested-resource-list',
-    template:`
+    template:`       
     <div class="panel repo-nested">
       <div class="panel-heading"> <label>{{caption}}: </label></div>
       <div class="panel-body" >
@@ -24,15 +24,19 @@ import {SetToArray, FilterBy} from "../common/PipeTransformModule";
         <toolbar-sort   *ngIf =  "options?.sortToolbar"  [options]="['Name', 'ID', 'Class']" (sorted)="onSorted($event)"></toolbar-sort>
         <toolbar-add    *ngIf = "!(options?.readOnly || options?.headersOnly)"  [options]="types" [transform]="getClassLabel" (added)="onAdded($event)"></toolbar-add>
         <toolbar-filter *ngIf =  "options?.filterToolbar" [options]="['Name', 'ID', 'Class']" [filter]="_searchString" (applied)="onFiltered($event)"></toolbar-filter>
-          
-        <accordion [closeOthers]="true"
+
+          <!--| orderBy : _sortByMode-->
+
+          <accordion [closeOthers]="true"
           dnd-sortable-container [dropZones]="_zones" [sortableData]="items">
           <accordion-group *ngFor="let item of items 
-            | orderBy : _sortByMode
-            | filterBy: [_searchString, _filterByMode]; let i = index" 
-                dnd-sortable (onDragStart)="_onDragStart()" (onDragEnd)="_onDragEnd()" [sortableIndex]="i"
-                (onOpen) ="openItem = item"
-                (onClose)="openItem = null">
+            | filterBy: [_searchString, _filterByMode]; let i = index" class="list-group-item"
+               dnd-sortable [dragEnabled] = true
+               [sortableIndex]="i"
+               (onDragEnd)="_onDragEnd(i)"
+
+               (onOpen) ="openItem = item" 
+               (onClose)="openItem = null">
  
             <accordion-heading (click)  ="selectedItem = item">
               <item-header [item]="item" 
@@ -117,26 +121,36 @@ export class NestedResourceList extends AbstractResourceList{
         if (this._ts) { this._ts.unsubscribe(); }
     }
 
-    // ngOnChanges(changes) {
-    //     if (this.items) {
-    //         if (this.options.ordered) {
-    //             this.items.sort((a, b) => {
-    //                 return (a['-->HasLayer'].relativePosition - b['-->HasLayer'].relativePosition)
-    //             });
-    //         }
-    //     }
-    // }
-
-    _onDragStart(index: number){ }
+    ngOnChanges(changes) {
+        if (this.items && this.options.ordered) {
+            this.items.sort((a, b) => {
+                return (a['-->IsRadiallyAdjacent']
+                    && a['-->IsRadiallyAdjacent'][2]
+                    && a['-->IsRadiallyAdjacent'][2].includes(b))
+            });
+        }
+    }
 
     //TODO: update new "Follows" relationship
-    _onDragEnd(index: number){
-        // if (this.options.ordered){
-        //     for (let i = 0; i < this.items.length; i++){
-        //         this.items[i]['-->HasLayer'].relativePosition = i;
+    _onDragEnd(index){
+        if (!this.options.ordered) { return; }
+        //TODO: un-comment when the model libarry supports operations with this relationship (or other way to order)
+        //IsRadiallyAdjacent relation has cardinality [0..*]
+        // for (let i = 1; i < this.items.length; i++){
+        //     if (this.items[i]['-->IsRadiallyAdjacent'] && this.items[i]['-->IsRadiallyAdjacent'][2]){
+        //         if (!this.items[i]['-->IsRadiallyAdjacent'][2].includes(this.items[i - 1])){
+        //             this.items[i]['-->IsRadiallyAdjacent'][2] = [this.items[i - 1]];
+        //         }
+        //     } else {
+        //         this.model.isRadiallyAdjacent.new({1: this.items[i - 1], 2: this.items[i]});
         //     }
-        //     this.updated.emit(this.items);
         // }
+        // if (this.items.length > 1) {
+        //     if (this.items[this.items.length - 1]['-->IsRadiallyAdjacent'] !== null){
+        //         this.items[i]['-->IsRadiallyAdjacent'].delete();
+        //     }
+        // }
+        // this.updated.emit(this.items);
     }
 
     /**
