@@ -10,7 +10,7 @@ import {DropdownModule} from 'ngx-dropdown';
         <button type="button" class="btn btn-default btn-icon dropdown-toggle" aria-label="SortAsc" dropdown-open>
           <span class="glyphicon glyphicon-sort-by-attributes" aria-hidden="true"></span>
         </button>
-        <ul class="dropdown-menu" role="menu" aria-labelledby="SortAsc">
+        <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="SortAsc">
           <li role="menuitem" (click)="onClick('unsorted')">
             <a class="dropdown-item" href="#">
             <span *ngIf="sortByMode === 'unsorted'">&#10004;</span>
@@ -29,7 +29,7 @@ import {DropdownModule} from 'ngx-dropdown';
         <button type="button" class="btn btn-default btn-icon dropdown-toggle" aria-label="SortDesc" dropdown-open>
           <span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span>
         </button>
-        <ul class="dropdown-menu" role="menu" aria-labelledby="SortDesc">
+        <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="SortDesc">
           <li *ngFor="let option of options; let i = index" role="menuitem" (click)="onClick('-'+option)">
             <a class="dropdown-item" href="#">
              <span *ngIf="sortByMode === '-'+option">&#10004;</span>
@@ -39,7 +39,10 @@ import {DropdownModule} from 'ngx-dropdown';
         </ul>
       </div>
     </div>
-    `
+    `,
+    styles: [`
+        :host {float: right;}
+    `]
 })
 /**
  * The ToolbarSort component, offers buttons to trigger sorting in ascending and descending order

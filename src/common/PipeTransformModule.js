@@ -1,4 +1,5 @@
 import {NgModule, Pipe, PipeTransform} from '@angular/core';
+import isString from 'lodash-bound/isString';
 
 @Pipe({name: 'hideClass'})
 /**
@@ -59,24 +60,29 @@ export class OrderBy implements PipeTransform {
      *  with optional "-" prefix to sort in the descending order.
      * @returns {Array} - the sorted array. If sortedMode equals "unsorted", the function returns the input array without changes.
      */
-    transform(items, sortMode: string) {
+    transform(items, sortMode) {
         let propName = (sortMode[0] === '-')? sortMode.substring(1): sortMode;
         if (propName === "unsorted") {
             return items;
         } else {
+            if (!items || (items.length === 0)) {return items;}
+            if (items[0]::isString()){
+                return items.sort((a, b) => {
+                    if ((sortMode[0] === '-')) {//desc
+                        return (a > b) ? -1 : ((a < b) ? 1 : 0);
+                    } else {//asc
+                        return (a > b) ? 1 : ((a < b) ? -1 : 0);
+                    }
+                });
+            }
             return items.sort((a, b) => {
                 if ((sortMode[0] === '-')) {//desc
-                    if (a[propName] > b[propName]) return -1;
-                    if (a[propName] < b[propName]) return 1;
-                    return 0;
+                    return (a[propName] > b[propName])? -1: ((a[propName] < b[propName])? 1: 0);
                 } else {//asc
-                    if (a[propName] > b[propName]) return 1;
-                    if (a[propName] < b[propName]) return -1;
-                    return 0;
+                    return (a[propName] > b[propName])? 1: ((a[propName] < b[propName])? -1: 0);
                 }
             });
         }
-
     }
 }
 

@@ -26,93 +26,97 @@ import {MeasurableGeneratorModule, MeasurableGenerator} from "../components/Meas
 @Component({
     selector: 'resource-panel',
     template:`
-      <div class="panel">
-        <div class="panel-body">
-          <toolbar-commands  
-            [options]  = "options"
-            (saved)    = "onSaved($event)"
-            (canceled) = "onCanceled($event)"
-            (removed)  = "removed.emit($event)">            
-          </toolbar-commands>
-          <toolbar-propertySettings  
-            [options] = "fieldOptions"
-            [transform] = "getPropertyLabel"
-            (selectionChanged) = "visibleFieldsChanged($event)">
-          </toolbar-propertySettings>
-          <div class="input-control" *ngIf="item.class === model.Lyph.name">
-            <button type="button" class="btn btn-default btn-icon" 
-              (click)="generateMeasurables()">
-              <span class="glyphicon glyphicon-cog"></span>
-            </button>
-          </div>
-          <div class="input-control" *ngIf="!options?.hideCreateType && isTyped()" >
-            <input type="checkbox" [disabled]="typeCreated" [(ngModel)]="createType">Create type
-          </div>
-                    
-          <div class="panel-content"> 
-            <div class="input-control" *ngFor="let property of fieldNames">
-              <div *ngIf="!ignore.has(property)">
+        <div class="panel">
+            <div class="panel-body">
+                <toolbar-commands
+                        [options]="options"
+                        (saved)="onSaved($event)"
+                        (canceled)="onCanceled($event)"
+                        (removed)="removed.emit($event)">
+                </toolbar-commands>
+                <toolbar-propertySettings
+                        [options]="fields"
+                        [transform]="getPropertyLabel"
+                        (selectionChanged)="visibleFieldsChanged($event)">
+                </toolbar-propertySettings>
+                <toolbar-sort [options]="['Name']" (sorted)="onSorted($event)">
+                </toolbar-sort>
 
-                <div class="input-control-lg" *ngIf="inputGroup.includes(property)">
-                  <label for="comment">{{getPropertyLabel(property)}}: </label>
-                  <input class="form-control" 
-                    [type]="getDefaultValue(property, 'type')" 
-                    [disabled]="item.constructor.properties[property].readOnly"
-                    [(ngModel)]="item[property]">
+                <div class="input-control" *ngIf="item.class === model.Lyph.name">
+                    <button type="button" class="btn btn-default btn-icon" (click)="generateMeasurables()">
+                        <span class="glyphicon glyphicon-cog"></span>
+                    </button>
                 </div>
-              
-                <div *ngIf="selectGroup.includes(property)">      
-                  <label>{{getPropertyLabel(property)}}: </label>
-                  <select-input-1 [item] = "item.p(property) | async" 
-                    (updated) = "updateProperty(property, $event)"  
-                    [options] = "possibleValues[property]">
-                  </select-input-1>
+                <div class="input-control" *ngIf="!options?.hideCreateType && isTyped()">
+                    <input type="checkbox" [disabled]="typeCreated" [(ngModel)]="createType">Create type
                 </div>
-                
-                <div *ngIf="multiSelectGroup.includes(property)">
-                    <label>{{getPropertyLabel(property)}}: </label>
-                    <select-input [items] = "item.p(property) | async"
-                     (updated) = "updateProperty(property, $event)"    
-                     [options] = "possibleValues[property]">
-                    </select-input>
+
+                <div class="panel-content">
+                    <div class="input-control"
+                         *ngFor="let field of fields | orderBy : _sortByMode">
+                        <div *ngIf="!ignore.has(field.value)">
+
+                            <div class="input-control-lg" *ngIf="field.type === 'input'">
+                                <label for="comment">{{getPropertyLabel(field.value)}}: </label>
+                                <input class="form-control"
+                                       [type]="getDefaultValue(field.value, 'type')"
+                                       [disabled]="item.constructor.properties[field.value].readOnly"
+                                       [(ngModel)]="item[field.value]">
+                            </div>
+
+                            <div *ngIf="field.type === 'select'">
+                                <label>{{getPropertyLabel(field.value)}}: </label>
+                                <select-input-1 [item]="item.p(field.value) | async"
+                                                (updated)="updateProperty(field.value, $event)"
+                                                [options]="possibleValues[field.value]">
+                                </select-input-1>
+                            </div>
+
+                            <div *ngIf="field.type === 'multiSelect'">
+                                <label>{{getPropertyLabel(field.value)}}: </label>
+                                <select-input [items]="item.p(field.value) | async"
+                                              (updated)="updateProperty(field.value, $event)"
+                                              [options]="possibleValues[field.value]">
+                                </select-input>
+                            </div>
+
+                            <nested-resource-list *ngIf="field.type === 'relation'"
+                                                  [caption]="getPropertyLabel(field.value)"
+                                                  [model]="model"
+                                                  [items]="item.p(field.value) | async | setToArray"
+                                                  [options]="{ordered: ['layers', 'segments'].includes(field.value)}"
+                                                  [types]="[item.constructor.relationshipShortcuts[field.value].codomain.resourceClass.name]"
+                                                  (updated)="updateProperty(field.value, $event)">
+                            </nested-resource-list>
+
+                            <template-value *ngIf="field.type === 'template'"
+                                            [caption]="getPropertyLabel(field.value)"
+                                            [item]="item.p(field.value) | async"
+                                            [step]="getDefaultValue(field.value, 'step')"
+                                            (updated)="updateProperty(field.value, $event)">
+                            </template-value>
+
+                            <fieldset *ngIf="field.type === 'checkbox'">
+                                <legend>{{getPropertyLabel(field.value)}}:</legend>
+                                <p *ngFor="let option of possibleValues[field.value]; let i = index">
+                                    <input type="checkbox" [value]="option"
+                                           [checked]="item[field.value].includes(option)"
+                                           (change)="updateArray(field.value, option, $event)"
+                                    >{{option}}&nbsp;
+                                </p>
+                            </fieldset>
+                        </div>
+                    </div>
+
+                    <modal-window *ngIf="item.class === model.Lyph.name" [item]="item"
+                                  [clsMeasurable]="model.Measurable">
+                    </modal-window>
+
                 </div>
-                
-                <nested-resource-list *ngIf="relationGroup.includes(property)"
-                  [caption]="getPropertyLabel(property)" 
-                  [model]  ="model"
-                  [items]  ="item.p(property) | async | setToArray" 
-                  [options]="{ordered: ['layers', 'segments'].includes(property)}"
-                  [types]  ="[item.constructor.relationshipShortcuts[property].codomain.resourceClass.name]"
-                  (updated)="updateProperty(property, $event)"> 
-                </nested-resource-list>
-              
-                <template-value *ngIf="templateGroup.includes(property)" 
-                  [caption]="getPropertyLabel(property)" 
-                  [item]   ="item.p(property) | async"
-                  [step]   ="getDefaultValue(property, 'step')"
-                  (updated)="updateProperty(property, $event)">
-                </template-value>
-                
-                <fieldset *ngIf="checkboxGroup.includes(property)">
-                  <legend>{{getPropertyLabel(property)}}:</legend>
-                  <p *ngFor = "let option of possibleValues[property]; let i = index">
-                     <input type="checkbox" [value]="option" 
-                        [checked]="item[property].includes(option)" 
-                        (change)="updateArray(property, option, $event)"
-                     >{{option}}&nbsp;
-                  </p>
-                </fieldset>
-              </div>
             </div>
-            
-            <modal-window *ngIf = "item.class === model.Lyph.name" [item] = "item" [clsMeasurable] = "model.Measurable">
-            </modal-window>
-            
-          </div>
         </div>
-    </div>
-    <ng2-toasty></ng2-toasty>
-  `,
+        <ng2-toasty></ng2-toasty>
+    `,
     styles: [
         `
         input[type=number] {
@@ -197,19 +201,12 @@ export class ResourcePanel {
     @Output() propertyUpdated = new EventEmitter();
 
     @ViewChild(MeasurableGenerator) _mGen;
+    _sortByMode   = "unsorted";
 
-    ignore           = new Set();
+    ignore = new Set();
 
-    fieldNames       = [];  //All fields
-    fieldOptions     = [];  //Field visibility configurations
-
-    checkboxGroup    = [];  //Properties in check-boxes
-    templateGroup    = [];  //Properties in value-range-distribution component
-    inputGroup       = [];  //Properties in input fields
-
-    selectGroup      = [];  //Relationships with max cardinality-1 in combo list
-    multiSelectGroup = [];  //Relationships in multi-combo lists
-    relationGroup    = [];  //Relationships in nested resource lists
+    /*Field type and visibility configurations*/
+    fields = [];
 
     /*Typed resources*/
     createType = false;
@@ -232,65 +229,48 @@ export class ResourcePanel {
 
         /*Auto-generated visual groups*/
         let privateProperties = new Set(["class", "themes", "parents", "children"]);
+        let multiSelectProperties = [
+            'externals', 'subtypes', 'supertypes', 'clinicalIndices', 'correlations',
+            'cardinalityMultipliers', 'types', 'materials', 'locations', 'causes', 'effects'];
+        let templateGroup = ['thickness', 'length', 'cardinalityBase']; //TODO: override to use schema
+        /*Description of visible fields*/
 
-        let fields = Object.assign({}, this.item.constructor.properties, this.item.constructor.relationshipShortcuts);
-        this.fieldNames = Object.keys(fields).filter(p => !privateProperties.has(p));
-        this.fieldOptions = this.fieldNames.map(field => ({value: field, selected: !this.ignore.has(field)}));
-
-        /*Properties in check-boxes*/
-        this.checkboxGroup = ['transportPhenomenon', 'nature'].filter(key => this.item.constructor.properties[key]);
-
-        /*Properties in value-range-distribution forms */
-        this.templateGroup = ['cardinalityBase', 'thickness', 'length'].filter(key => this.item.constructor.properties[key]);
-
-        /*Properties in input fields*/
-        this.inputGroup = Object.keys(this.item.constructor.properties)
-            .filter(key => !privateProperties.has(key)
-            && !this.checkboxGroup.includes(key)
-            && !this.templateGroup.includes(key));
-
+        /*Properties*/
+        for (let [key, value] of Object.entries(this.item.constructor.properties)
+                .filter(([key, value]) => !privateProperties.has(key))){
+            this.fields.push({
+                value: key,
+                selected: !this.ignore.has(key),
+                type: (value.items && value.items.enum)? 'checkbox'
+                    : (templateGroup.includes(key))? 'template': 'input'
+            });
+            if (value.items && value.items.enum){
+                this.possibleValues[key] = Object.values(value.items.enum);
+            }
+        }
         /*Relationships*/
-        let relationships = Object.entries(this.item.constructor.relationshipShortcuts)
-            .filter(([key, value]) => !value.abstract && !privateProperties.has(key));
+        for (let [key, value] of Object.entries(this.item.constructor.relationshipShortcuts)
+                .filter(([key, value]) => !privateProperties.has(key) && !value.abstract)){
+            this.fields.push({
+                value: key,
+                selected: !this.ignore.has(key),
+                type: (value.cardinality.max === 1)
+                    ? 'select'
+                    : multiSelectProperties.includes[key]? 'multiSelect' : 'relation'
+                });
 
-        //Filtered possible values for relationships
-        for (let [key, value] of relationships){
-            this.item.fields[key].p('possibleValues') .subscribe(
+            this.item.fields[key].p('possibleValues').subscribe(
                 (data) => {
                     this.possibleValues[key] = (key === "cardinalityMultipliers")?
                         new Set(new HideClass().transform( new SetToArray().transform(data),
                             [this.model.Border.name, this.model.Node.name]))
                         : data;
                 });
-        }
+      }
 
-        //Possible values for enumerations
-        for (let [key, propertySpec] of Object.entries(this.item.constructor.properties)){
-            if (propertySpec.items && propertySpec.items.enum){
-                this.checkboxGroup.push(key);
-                this.possibleValues[key] = Object.values(propertySpec.items.enum);
-            } else {
-                this.possibleValues[key] = [];
-            }
-        }
+      /*"create type" check box enabled if type has not been defined */
+      if (this.isTyped()){ this.typeCreated = !!this.item['-->DefinesType']; }
 
-        let multiSelectProperties = new Set([
-            'externals', 'subtypes', 'supertypes', 'clinicalIndices', 'correlations',
-            'cardinalityMultipliers', 'types', 'materials', 'locations', 'causes','effects']);
-
-        /*Relationships in nested lists*/
-        this.relationGroup = relationships.filter(x =>
-            ((x[1].cardinality.max !== 1) && !multiSelectProperties.has(x[0]))).map(x => x[0]);
-
-        /*Relationships in multi-select combo lists*/
-        this.multiSelectGroup = relationships.filter(x =>
-            ((x[1].cardinality.max !== 1) && multiSelectProperties.has(x[0]))).map(x => x[0]);
-
-        //Relationships in single-select combo lists*/
-        this.selectGroup = relationships.filter(x => (x[1].cardinality.max === 1)).map(x => x[0]);
-
-        /*"create type" check box enabled if type has not been defined */
-        if (this.isTyped()){ this.typeCreated = !!this.item['-->DefinesType']; }
     }
 
     /**
@@ -375,6 +355,14 @@ export class ResourcePanel {
 
     generateMeasurables(){
         this._mGen.generateMeasurables();
+    }
+
+    onSorted(prop) {
+        if (prop === "Name"){
+            this._sortByMode = "value";
+        } else {
+            this._sortByMode = prop.toLowerCase();
+        }
     }
 
     onSaved(event){
