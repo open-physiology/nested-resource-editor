@@ -9,14 +9,17 @@ export class AbstractResourceList {
      * @type {string} caption           - the header of the list
      */
     @Input() caption = "Resources";
+
     /**
      * @type {Object} model  - the open-physiology model
      */
     @Input() model;
+
     /**
      * @type {Array<Resource>} items    - the list of displayed resources
      */
     @Input() items = [];
+
     /**
      * @type {Array<string>} types      - the list of displayed item types (resource classes)
      */

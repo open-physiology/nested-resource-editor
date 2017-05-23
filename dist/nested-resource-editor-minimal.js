@@ -36492,6 +36492,8 @@ var ResourcePanel = exports.ResourcePanel = (_dec = (0, _core.Component)({
         this.createType = false;
         this.typeCreated = false;
         this.possibleValues = {};
+
+        this._toastyService = toastyService;
     }
 
     /*Selection options*/
@@ -36551,8 +36553,6 @@ var ResourcePanel = exports.ResourcePanel = (_dec = (0, _core.Component)({
                     this.fields.push({
                         value: key,
                         selected: !this.ignore.has(key),
-                        property: true,
-                        relation: false,
                         type: value.items && value.items.enum ? 'checkbox' : templateGroup.includes(key) ? 'template' : 'input'
                     });
                     if (value.items && value.items.enum) {
@@ -36588,8 +36588,6 @@ var ResourcePanel = exports.ResourcePanel = (_dec = (0, _core.Component)({
                     _this.fields.push({
                         value: key,
                         selected: !_this.ignore.has(key),
-                        property: false,
-                        relation: true,
                         type: value.cardinality.max === 1 ? 'select' : multiSelectProperties.includes[key] ? 'multiSelect' : 'relation'
                     });
 
@@ -36748,13 +36746,13 @@ var ResourcePanel = exports.ResourcePanel = (_dec = (0, _core.Component)({
 
             if (this.item.class === this.model.CoalescenceScenario.name) {
                 if (this.item.lyphs && this.item.lyphs.size !== 2) {
-                    this.toastyService.error("Wrong number of lyphs", this.item.lyphs.size);
+                    this._toastyService.error("Wrong number of lyphs", this.item.lyphs.size);
                 }
             }
 
             this.item.commit().catch(function (reason) {
                 var errorMsg = "Failed to commit resource: Relationship constraints violated! \n" + reason;
-                _this2.toastyService.error(errorMsg);
+                _this2._toastyService.error(errorMsg);
             });
 
             if (event && event.createType) {

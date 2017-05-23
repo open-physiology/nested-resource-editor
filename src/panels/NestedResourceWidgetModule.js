@@ -51,8 +51,8 @@ import {HighlightService} from './HighlightService.js';
                 </accordion-heading>
                 <div *ngIf="!options?.headersOnly">
                   <resource-panel *ngIf="item === openItem" 
-                    [item]="item"
-                    [model]="model"
+                    [item]    ="item"
+                    [model]   ="model"
                     (saved)   ="onSaved(item)" 
                     (removed) ="onRemoved(item)">
                    </resource-panel>   

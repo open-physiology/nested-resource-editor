@@ -50,7 +50,7 @@ import {SetToArray, FilterBy} from "../common/PipeTransformModule";
             <div *ngIf="!options?.headersOnly">
               <resource-panel *ngIf="item === openItem" 
                 [item]    ="item" 
-                [model]="model"
+                [model]   ="model"
                 [options] ="options"
                 (saved)   ="onSaved(item)" 
                 (removed) ="onRemoved(item)"

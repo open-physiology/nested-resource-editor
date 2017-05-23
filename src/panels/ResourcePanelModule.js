@@ -218,7 +218,9 @@ export class ResourcePanel {
     /**
      * @param {ToastyService} toastyService - the service for showing notifications and error messages
      */
-    constructor(toastyService:ToastyService){}
+    constructor(toastyService:ToastyService){
+        this._toastyService = toastyService;
+    }
 
     ngOnInit(){
         this.ignore = new Set(["id", "cardinalityBase", "cardinalityMultipliers", "definedType"]);
@@ -368,14 +370,14 @@ export class ResourcePanel {
     onSaved(event){
         if (this.item.class === this.model.CoalescenceScenario.name){
             if (this.item.lyphs && (this.item.lyphs.size !== 2)){
-                this.toastyService.error("Wrong number of lyphs", this.item.lyphs.size);
+                this._toastyService.error("Wrong number of lyphs", this.item.lyphs.size);
             }
         }
 
         this.item.commit()
             .catch(reason => {
                 let errorMsg = "Failed to commit resource: Relationship constraints violated! \n" + reason;
-                this.toastyService.error(errorMsg);
+                this._toastyService.error(errorMsg);
             });
 
         if (event && event.createType){
