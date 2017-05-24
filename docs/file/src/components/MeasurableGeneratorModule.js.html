@@ -32,12 +32,7 @@
 <nav class="navigation" data-ice="nav"><div>
   <ul>
     
-  <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">common</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/PipeTransformModule.js~FilterBy.html">FilterBy</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/PipeTransformModule.js~HideClass.html">HideClass</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/PipeTransformModule.js~OrderBy.html">OrderBy</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/PipeTransformModule.js~PipeTransformModule.html">PipeTransformModule</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/PipeTransformModule.js~SetToArray.html">SetToArray</a></span></span></li>
-<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">common/components</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/components/CustomSelectModule.js~CustomSelectModule.html">CustomSelectModule</a></span></span></li>
+  <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">common/components</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/components/CustomSelectModule.js~CustomSelectModule.html">CustomSelectModule</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/components/CustomSelectModule.js~MultiSelectInput.html">MultiSelectInput</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/components/CustomSelectModule.js~SingleSelectInput.html">SingleSelectInput</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">common/toolbars</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/toolbars/ToolbarSettingsModule.js~ToolbarPropertySettings.html">ToolbarPropertySettings</a></span></span></li>
@@ -77,25 +72,25 @@ import {Ng2Bs3ModalModule, ModalComponent} from &apos;../libs/ng2-bs3-modal&apos
 @Component({
     selector: &apos;modal-window&apos;,
     template:`
-      &lt;modal #myModal&gt;
-        &lt;modal-header [show-close]=&quot;true&quot;&gt;
-            &lt;h4 class=&quot;modal-title&quot;&gt;Select supertype measurables to replicate&lt;/h4&gt;
-        &lt;/modal-header&gt;
-        &lt;modal-body&gt;
-            &lt;li *ngFor=&quot;let option of supertypeMeasurables; let i = index&quot;&gt;
-              &lt;a class=&quot;small&quot; href=&quot;#&quot;&gt;
-              &lt;input type=&quot;checkbox&quot; 
-                [(ngModel)]=&quot;option.selected&quot; 
-                (ngModelChange)=&quot;updateValue(option)&quot;/&gt;&amp;nbsp;
-              {{option.value.name}}&lt;/a&gt;
-            &lt;/li&gt;
-        &lt;/modal-body&gt;
-        &lt;modal-footer&gt;
-          &lt;button type=&quot;button&quot; class=&quot;btn btn-default&quot; data-dismiss=&quot;modal&quot;&gt;Cancel&lt;/button&gt;
-          &lt;button type=&quot;button&quot; class=&quot;btn btn-primary&quot; (click)=&quot;close($event)&quot;&gt;Ok&lt;/button&gt;
-        &lt;/modal-footer&gt;
-      &lt;/modal&gt;
-  `
+        &lt;modal #myModal&gt;
+            &lt;modal-header [show-close]=&quot;true&quot;&gt;
+                &lt;h4 class=&quot;modal-title&quot;&gt;Select supertype measurables to replicate&lt;/h4&gt;
+            &lt;/modal-header&gt;
+            &lt;modal-body&gt;
+                &lt;li *ngFor=&quot;let option of _supertypeMeasurables; let i = index&quot;&gt;
+                    &lt;a class=&quot;small&quot; href=&quot;#&quot;&gt;
+                        &lt;input type=&quot;checkbox&quot;
+                               [(ngModel)]=&quot;option.selected&quot;
+                               (ngModelChange)=&quot;_updateValue(option)&quot;/&gt;&amp;nbsp;
+                        {{option.value.name}}&lt;/a&gt;
+                &lt;/li&gt;
+            &lt;/modal-body&gt;
+            &lt;modal-footer&gt;
+                &lt;button type=&quot;button&quot; class=&quot;btn btn-default&quot; data-dismiss=&quot;modal&quot;&gt;Cancel&lt;/button&gt;
+                &lt;button type=&quot;button&quot; class=&quot;btn btn-primary&quot; (click)=&quot;close($event)&quot;&gt;Ok&lt;/button&gt;
+            &lt;/modal-footer&gt;
+        &lt;/modal&gt;
+    `
 })
 /**
  * MeasurableGenerator component, provides generation of measurables in a pop-up window.
@@ -111,13 +106,16 @@ export class MeasurableGenerator{
     @Output() closed = new EventEmitter();
 
     //Measurable replication
-    supertypeMeasurables : Array &lt;any&gt; = [];
-    measurablesToReplicate: Set&lt;any&gt; = new Set();
+    _supertypeMeasurables   = [];
+    _measurablesToReplicate = new Set();
 
     @ViewChild(&apos;myModal&apos;)
     modal: ModalComponent;
 
-    generateMeasurables() {
+    /**
+     * Open the modal window with pre-filled measurables of lyph supertypes
+     */
+    open() {
         let allSupertypeMeasurables = [];
         for (let type of this.item.types) {
             for (let supertype of type.supertypes) {
@@ -130,15 +128,19 @@ export class MeasurableGenerator{
                 }
             }
         }
-        this.supertypeMeasurables = allSupertypeMeasurables.map(x =&gt; {
-            return {value: x, selected: this.measurablesToReplicate.has(x)}
+        this._supertypeMeasurables = allSupertypeMeasurables.map(x =&gt; {
+            return {value: x, selected: this._measurablesToReplicate.has(x)}
         });
         this.modal.open();
     }
 
+    /**
+     * Close the modal window
+     * @param event - the event object
+     */
     close(event) {
-        if (this.measurablesToReplicate.size &gt; 0){
-            let protoMeasurables = Array.from(this.measurablesToReplicate);
+        if (this._measurablesToReplicate.size &gt; 0){
+            let protoMeasurables = Array.from(this._measurablesToReplicate);
             for (let protoMeasurable of protoMeasurables){
                 let newMeasurable = this.clsMeasurable.new(protoMeasurable);
                 newMeasurable.location = this.item;
@@ -148,11 +150,11 @@ export class MeasurableGenerator{
         this.closed.emit(event);
     }
 
-    updateValue(option){
-        if ( this.measurablesToReplicate.has(option.value) &amp;&amp; !option.selected)
-            this.measurablesToReplicate.delete(option.value);
-        if (!this.measurablesToReplicate.has(option.value) &amp;&amp; option.selected)
-            this.measurablesToReplicate.add(option.value);
+    _updateValue(option){
+        if ( this._measurablesToReplicate.has(option.value) &amp;&amp; !option.selected)
+            this._measurablesToReplicate.delete(option.value);
+        if (!this._measurablesToReplicate.has(option.value) &amp;&amp; option.selected)
+            this._measurablesToReplicate.add(option.value);
     }
 }
 

@@ -12,14 +12,18 @@ export class HighlightService {
      */
     highlightedItemChanged$: EventEmitter;
 
+    /**
+     * The constructor of the component
+     */
     constructor() {
         this.highlightedItemChanged$ = new EventEmitter();
     }
 
     /**
-     * @param {Resource} item - the highlighted item
+     * Notify components that the highlighted item changed
+     * @param {Resource} item - the new highlighted item
      */
-    highlight(item): void {
+    highlight(item) {
         this.highlightedItemChanged$.emit(item);
     }
     

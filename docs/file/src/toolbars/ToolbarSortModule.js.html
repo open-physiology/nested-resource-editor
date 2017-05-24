@@ -32,12 +32,7 @@
 <nav class="navigation" data-ice="nav"><div>
   <ul>
     
-  <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">common</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/PipeTransformModule.js~FilterBy.html">FilterBy</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/PipeTransformModule.js~HideClass.html">HideClass</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/PipeTransformModule.js~OrderBy.html">OrderBy</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/PipeTransformModule.js~PipeTransformModule.html">PipeTransformModule</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/PipeTransformModule.js~SetToArray.html">SetToArray</a></span></span></li>
-<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">common/components</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/components/CustomSelectModule.js~CustomSelectModule.html">CustomSelectModule</a></span></span></li>
+  <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">common/components</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/components/CustomSelectModule.js~CustomSelectModule.html">CustomSelectModule</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/components/CustomSelectModule.js~MultiSelectInput.html">MultiSelectInput</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/components/CustomSelectModule.js~SingleSelectInput.html">SingleSelectInput</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">common/toolbars</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/toolbars/ToolbarSettingsModule.js~ToolbarPropertySettings.html">ToolbarPropertySettings</a></span></span></li>
@@ -74,41 +69,46 @@ import {DropdownModule} from &apos;ngx-dropdown&apos;;
 @Component({
     selector: &apos;toolbar-sort&apos;,
     template: `
-    &lt;div class=&quot;btn-group&quot;&gt;
-      &lt;div class=&quot;btn-group&quot; dropdown&gt;
-        &lt;button type=&quot;button&quot; class=&quot;btn btn-default btn-icon dropdown-toggle&quot; aria-label=&quot;SortAsc&quot; dropdown-open&gt;
-          &lt;span class=&quot;glyphicon glyphicon-sort-by-attributes&quot; aria-hidden=&quot;true&quot;&gt;&lt;/span&gt;
-        &lt;/button&gt;
-        &lt;ul class=&quot;dropdown-menu&quot; role=&quot;menu&quot; aria-labelledby=&quot;SortAsc&quot;&gt;
-          &lt;li role=&quot;menuitem&quot; (click)=&quot;onClick(&apos;unsorted&apos;)&quot;&gt;
-            &lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;
-            &lt;span *ngIf=&quot;sortByMode === &apos;unsorted&apos;&quot;&gt;&amp;#10004;&lt;/span&gt;
-            (unsorted)&lt;/a&gt;
-          &lt;/li&gt;
-          &lt;li class=&quot;divider&quot;&gt;&lt;/li&gt;
-          &lt;li *ngFor=&quot;let option of options; let i = index&quot; role=&quot;menuitem&quot; (click)=&quot;onClick(option)&quot;&gt;
-            &lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;
-              &lt;span *ngIf=&quot;sortByMode === option&quot;&gt;&amp;#10004;&lt;/span&gt;
-              {{option}}
-            &lt;/a&gt;
-          &lt;/li&gt;
-        &lt;/ul&gt;
-      &lt;/div&gt;
-      &lt;div class=&quot;btn-group&quot; dropdown&gt;
-        &lt;button type=&quot;button&quot; class=&quot;btn btn-default btn-icon dropdown-toggle&quot; aria-label=&quot;SortDesc&quot; dropdown-open&gt;
-          &lt;span class=&quot;glyphicon glyphicon-sort-by-attributes-alt&quot; aria-hidden=&quot;true&quot;&gt;&lt;/span&gt;
-        &lt;/button&gt;
-        &lt;ul class=&quot;dropdown-menu&quot; role=&quot;menu&quot; aria-labelledby=&quot;SortDesc&quot;&gt;
-          &lt;li *ngFor=&quot;let option of options; let i = index&quot; role=&quot;menuitem&quot; (click)=&quot;onClick(&apos;-&apos;+option)&quot;&gt;
-            &lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;
-             &lt;span *ngIf=&quot;sortByMode === &apos;-&apos;+option&quot;&gt;&amp;#10004;&lt;/span&gt;
-             {{option}}
-            &lt;/a&gt;
-          &lt;/li&gt;
-        &lt;/ul&gt;
-      &lt;/div&gt;
-    &lt;/div&gt;
-    `
+        &lt;div class=&quot;btn-group&quot;&gt;
+            &lt;div class=&quot;btn-group&quot; dropdown&gt;
+                &lt;button type=&quot;button&quot; class=&quot;btn btn-default btn-icon dropdown-toggle&quot; aria-label=&quot;SortAsc&quot;
+                        dropdown-open&gt;
+                    &lt;span class=&quot;glyphicon glyphicon-sort-by-attributes&quot; aria-hidden=&quot;true&quot;&gt;&lt;/span&gt;
+                &lt;/button&gt;
+                &lt;ul class=&quot;dropdown-menu dropdown-menu-right&quot; role=&quot;menu&quot; aria-labelledby=&quot;SortAsc&quot;&gt;
+                    &lt;li role=&quot;menuitem&quot; (click)=&quot;_onClick(&apos;unsorted&apos;)&quot;&gt;
+                        &lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;
+                            &lt;span *ngIf=&quot;_sortByMode === &apos;unsorted&apos;&quot;&gt;&amp;#10004;&lt;/span&gt;
+                            (unsorted)&lt;/a&gt;
+                    &lt;/li&gt;
+                    &lt;li class=&quot;divider&quot;&gt;&lt;/li&gt;
+                    &lt;li *ngFor=&quot;let option of options; let i = index&quot; role=&quot;menuitem&quot; (click)=&quot;_onClick(option)&quot;&gt;
+                        &lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;
+                            &lt;span *ngIf=&quot;_sortByMode === option&quot;&gt;&amp;#10004;&lt;/span&gt;
+                            {{option}}
+                        &lt;/a&gt;
+                    &lt;/li&gt;
+                &lt;/ul&gt;
+            &lt;/div&gt;
+            &lt;div class=&quot;btn-group&quot; dropdown&gt;
+                &lt;button type=&quot;button&quot; class=&quot;btn btn-default btn-icon dropdown-toggle&quot; aria-label=&quot;SortDesc&quot;
+                        dropdown-open&gt;
+                    &lt;span class=&quot;glyphicon glyphicon-sort-by-attributes-alt&quot; aria-hidden=&quot;true&quot;&gt;&lt;/span&gt;
+                &lt;/button&gt;
+                &lt;ul class=&quot;dropdown-menu dropdown-menu-right&quot; role=&quot;menu&quot; aria-labelledby=&quot;SortDesc&quot;&gt;
+                    &lt;li *ngFor=&quot;let option of options; let i = index&quot; role=&quot;menuitem&quot; (click)=&quot;_onClick(&apos;-&apos;+option)&quot;&gt;
+                        &lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;
+                            &lt;span *ngIf=&quot;_sortByMode === &apos;-&apos;+option&quot;&gt;&amp;#10004;&lt;/span&gt;
+                            {{option}}
+                        &lt;/a&gt;
+                    &lt;/li&gt;
+                &lt;/ul&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    `,
+    styles: [`
+        :host {float: right;}
+    `]
 })
 /**
  * The ToolbarSort component, offers buttons to trigger sorting in ascending and descending order
@@ -119,10 +119,10 @@ export class ToolbarSort {
     @Input() options: Array&lt;string&gt; = [];
     @Output() sorted = new EventEmitter();
 
-    sortByMode = &quot;unsorted&quot;;
+    _sortByMode = &quot;unsorted&quot;;
 
-    onClick(item){
-        this.sortByMode = item;
+    _onClick(item){
+        this._sortByMode = item;
         this.sorted.emit(item);
     }
 }

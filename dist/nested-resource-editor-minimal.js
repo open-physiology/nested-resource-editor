@@ -12318,6 +12318,10 @@ function _classCallCheck(instance, Constructor) { if (!_instanceof(instance, Con
  * The HighlightService service notifies nested components about currently highlighted item
  */
 var HighlightService = exports.HighlightService = (_dec = (0, _core.Injectable)(), _dec(_class = function () {
+
+    /**
+     * The constructor of the component
+     */
     function HighlightService() {
         _classCallCheck(this, HighlightService);
 
@@ -12327,7 +12331,8 @@ var HighlightService = exports.HighlightService = (_dec = (0, _core.Injectable)(
     }
 
     /**
-     * @param {Resource} item - the highlighted item
+     * Notify components that the highlighted item changed
+     * @param {Resource} item - the new highlighted item
      */
 
 
@@ -22825,9 +22830,11 @@ var AbstractResourceList = exports.AbstractResourceList = (_dec = (0, _core.Inpu
     _createClass(AbstractResourceList, [{
         key: 'selectedItem',
 
+
         /**
          * @type {Array<string>} types      - the list of displayed item types (resource classes)
          */
+
 
         /**
          * @type {Object} model  - the open-physiology model
@@ -22843,6 +22850,7 @@ var AbstractResourceList = exports.AbstractResourceList = (_dec = (0, _core.Inpu
          * @type {Object} - visualization options
          * @property {boolean} options.ordered -
          */
+
 
         /**
          * @type {Array<Resource>} items    - the list of displayed resources
@@ -22887,6 +22895,7 @@ var AbstractResourceList = exports.AbstractResourceList = (_dec = (0, _core.Inpu
     }]);
 
     /**
+     * The constructor of the component
      * @param {HighlightService} highlightService - the service that notifies nested components about currently highlighted item
      */
     function AbstractResourceList(highlightService) {
@@ -23006,44 +23015,44 @@ var AbstractResourceList = exports.AbstractResourceList = (_dec = (0, _core.Inpu
         }
 
         /**
-         * Set resource with the open editor
+         * Choose a resource to show in the open editor
          * @param {Resource} item - the resource with the open editor
          */
 
     }, {
-        key: 'onSorted',
+        key: '_onSorted',
 
 
         /* Event processing */
 
         /**
-         * Change sorting mode
+         * Event handler for the sorting mode change event
          * @param {string} prop - the sorting mode
          */
-        value: function onSorted(prop) {
+        value: function _onSorted(prop) {
             this._sortByMode = prop.toLowerCase();
         }
 
         /**
-         * Change filter settings
+         * Event handler for the filter change event
          * @param {Object} config - the parameters for filtering, mode and search string.
          */
 
     }, {
-        key: 'onFiltered',
-        value: function onFiltered(config) {
+        key: '_onFiltered',
+        value: function _onFiltered(config) {
             this._filterByMode = config.mode.toLowerCase();
             this._searchString = config.filter;
         }
 
         /**
-         * Save (commit) a given resource
+         * Event handler for the 'save' ('commit') event
          * @param {Resource} item - the resource to save (commit)
          */
 
     }, {
-        key: 'onSaved',
-        value: function onSaved(item) {
+        key: '_onSaved',
+        value: function _onSaved(item) {
             this.updated.emit(this.items);
             if (item === this.selectedItem) {
                 this.selectedItemChange.emit(this.selectedItem);
@@ -23051,13 +23060,13 @@ var AbstractResourceList = exports.AbstractResourceList = (_dec = (0, _core.Inpu
         }
 
         /**
-         * Delete a given resource
+         * Event handler for the 'delete' event
          * @param {Resource} item - he resource to delete
          */
 
     }, {
-        key: 'onRemoved',
-        value: function onRemoved(item) {
+        key: '_onRemoved',
+        value: function _onRemoved(item) {
             if (!this.items) return;
             var index = this.items.indexOf(item);
             if (index > -1) this.items.splice(index, 1);
@@ -23074,13 +23083,13 @@ var AbstractResourceList = exports.AbstractResourceList = (_dec = (0, _core.Inpu
         }
 
         /**
-         * Create new resource
+         * Event handler for the 'create new resource' event
          * @param {string} clsName - the type of the resource to create
          */
 
     }, {
-        key: 'onAdded',
-        value: function onAdded(clsName) {
+        key: '_onAdded',
+        value: function _onAdded(clsName) {
             var options = {};
             if (clsName === "LyphWithAxis") {
                 clsName = this.model.Lyph.name;
@@ -23110,8 +23119,8 @@ var AbstractResourceList = exports.AbstractResourceList = (_dec = (0, _core.Inpu
          */
 
     }, {
-        key: 'getClassLabel',
-        value: function getClassLabel(clsName) {
+        key: '_getClassLabel',
+        value: function _getClassLabel(clsName) {
             if (!clsName) {
                 return "";
             }
@@ -34987,7 +34996,7 @@ function _initializerWarningHelper(descriptor, context) {
  */
 var MultiSelectInput = exports.MultiSelectInput = (_dec = (0, _core.Component)({
     selector: 'select-input',
-    template: '\n      <div *ngIf="active">\n          <ng-select\n            [items]       = "options | setToArray | mapToOptions"\n            [active]      = "items   | setToArray | mapToOptions"\n            [disabled]    = "disabled"\n            [multiple]    = "true"\n            [allowClear]  = "true"\n            (data)        = "refreshValue($event)"\n          ></ng-select>\n      </div>\n    ',
+    template: '\n        <div *ngIf="_active">\n            <ng-select\n                    [items]="options | setToArray | mapToOptions"\n                    [active]="items   | setToArray | mapToOptions"\n                    [disabled]="disabled"\n                    [multiple]="true"\n                    [allowClear]="true"\n                    (data)="_refreshValue($event)"\n            ></ng-select>\n        </div>\n    ',
     styles: ['\n        :host >>> .ui-select-container{\n            height: 30px;\n        }\n        ']
 }), _dec2 = (0, _core.Input)(), _dec3 = (0, _core.Input)(), _dec4 = (0, _core.Input)(), _dec5 = (0, _core.Output)(), _dec(_class = (_class2 = function () {
     function MultiSelectInput() {
@@ -35001,29 +35010,35 @@ var MultiSelectInput = exports.MultiSelectInput = (_dec = (0, _core.Component)({
 
         _initDefineProp(this, 'updated', _descriptor4, this);
 
-        this.active = true;
-        this.externalChange = false;
+        this._active = true;
+        this._externalChange = false;
     }
 
     _createClass(MultiSelectInput, [{
         key: 'ngOnChanges',
+
+
+        /**
+         * Update component parameters in response to external data change
+         * @param changes - the object defining input data changes
+         */
         value: function ngOnChanges(changes) {
             var _this = this;
 
-            if (this.externalChange) {
+            if (this._externalChange) {
                 setTimeout(function () {
-                    _this.active = false;
+                    _this._active = false;
                 }, 0);
                 setTimeout(function () {
-                    _this.active = true;
+                    _this._active = true;
                 }, 0);
             }
-            this.externalChange = true;
+            this._externalChange = true;
         }
     }, {
-        key: 'refreshValue',
-        value: function refreshValue(value) {
-            this.externalChange = false;
+        key: '_refreshValue',
+        value: function _refreshValue(value) {
+            this._externalChange = false;
             var newItems = value.map(function (x) {
                 return x.id;
             });
@@ -35059,7 +35074,7 @@ var MultiSelectInput = exports.MultiSelectInput = (_dec = (0, _core.Component)({
  */
 var SingleSelectInput = exports.SingleSelectInput = (_dec6 = (0, _core.Component)({
     selector: 'select-input-1',
-    template: '\n    <div *ngIf="active">\n      <ng-select\n        [items]       = "options | setToArray | mapToOptions"\n        [active]      = "[item || {}] | mapToOptions"\n        [multiple]    = false\n        [allowClear]  = true\n        [disabled]    = "disabled"\n        (data)        = "refreshValue($event)"\n      ></ng-select>\n    </div>\n  ',
+    template: '\n        <div *ngIf="_active">\n            <ng-select\n                    [items]="options | setToArray | mapToOptions"\n                    [active]="[item || {}] | mapToOptions"\n                    [disabled]="disabled"\n                    [multiple]=false\n                    [allowClear]=true\n                    (data)="_refreshValue($event)"\n            ></ng-select>\n        </div>\n    ',
     styles: ['\n        :host >>> .ui-select-container{\n            height: 30px;\n        }\n        ']
 }), _dec7 = (0, _core.Input)(), _dec8 = (0, _core.Input)(), _dec9 = (0, _core.Input)(), _dec10 = (0, _core.Output)(), _dec6(_class4 = (_class5 = function () {
     function SingleSelectInput() {
@@ -35073,31 +35088,37 @@ var SingleSelectInput = exports.SingleSelectInput = (_dec6 = (0, _core.Component
 
         _initDefineProp(this, 'updated', _descriptor8, this);
 
-        this.active = true;
-        this.externalChange = false;
+        this._active = true;
+        this._externalChange = false;
     }
 
     _createClass(SingleSelectInput, [{
         key: 'ngOnChanges',
+
+
+        /**
+         * Update component parameters in response to external data change
+         * @param {Object} changes - the object defining input data changes
+         */
         value: function ngOnChanges(changes) {
             var _this2 = this;
 
-            if (this.externalChange) {
+            if (this._externalChange) {
                 setTimeout(function () {
-                    _this2.active = false;
+                    _this2._active = false;
                 }, 0);
                 setTimeout(function () {
-                    _this2.active = true;
+                    _this2._active = true;
                 }, 0);
             }
-            this.externalChange = true;
+            this._externalChange = true;
         }
     }, {
-        key: 'refreshValue',
-        value: function refreshValue() {
+        key: '_refreshValue',
+        value: function _refreshValue() {
             var value = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 
-            this.externalChange = false;
+            this._externalChange = false;
             this.item = value.id;
             this.updated.emit(this.item);
         }
@@ -35222,7 +35243,7 @@ function _initializerWarningHelper(descriptor, context) {
 
 var ToolbarPropertySettings = exports.ToolbarPropertySettings = (_dec = (0, _core.Component)({
     selector: 'toolbar-propertySettings',
-    template: '\n      <div class="dropdown pull-right" dropdown [dropdownToggle]="false">\n          <button type="button" class="btn btn-default btn-icon" aria-label="Settings" dropdown-open>\n            <span class="glyphicon glyphicon-list"></span>\n          </button>\n          <!--<div draggable="true">-->\n              <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="Settings" \n              dropdown-not-closable-zone>\n                <li *ngFor="let option of options">\n                  <a class="small" href="#">\n                      <input type="checkbox"\n                      [checked]="option.selected" (change)="updateValue(option, $event)"/>&nbsp;\n                      <span [style.color]="option.color">{{transform? transform(option.value): option.value}}</span>\n                  </a>\n                </li>\n              </ul>\n          <!--</div>-->\n      </div>\n    '
+    template: '\n        <div class="dropdown pull-right" dropdown [dropdownToggle]="false">\n            <button type="button" class="btn btn-default btn-icon" aria-label="Settings" dropdown-open>\n                <span class="glyphicon glyphicon-list"></span>\n            </button>\n            <!--<div draggable="true">-->\n            <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="Settings"\n                dropdown-not-closable-zone>\n                <li *ngFor="let option of options">\n                    <a class="small" href="#">\n                        <input type="checkbox"\n                               [checked]="option.selected" (change)="_updateValue(option, $event)"/>&nbsp;\n                        <span [style.color]="option.color">{{transform ? transform(option.value) : option.value}}</span>\n                    </a>\n                </li>\n            </ul>\n            <!--</div>-->\n        </div>\n    '
 }), _dec2 = (0, _core.Input)(), _dec3 = (0, _core.Input)(), _dec4 = (0, _core.Output)(), _dec(_class = (_class2 = function () {
     function ToolbarPropertySettings() {
         _classCallCheck(this, ToolbarPropertySettings);
@@ -35235,8 +35256,8 @@ var ToolbarPropertySettings = exports.ToolbarPropertySettings = (_dec = (0, _cor
     }
 
     _createClass(ToolbarPropertySettings, [{
-        key: 'updateValue',
-        value: function updateValue(option, event) {
+        key: '_updateValue',
+        value: function _updateValue(option, event) {
             option.selected = event.target.checked;
             this.selectionChanged.emit(option);
         }
@@ -35356,7 +35377,7 @@ function _initializerWarningHelper(descriptor, context) {
  */
 var MeasurableGenerator = exports.MeasurableGenerator = (_dec = (0, _core.Component)({
     selector: 'modal-window',
-    template: '\n      <modal #myModal>\n        <modal-header [show-close]="true">\n            <h4 class="modal-title">Select supertype measurables to replicate</h4>\n        </modal-header>\n        <modal-body>\n            <li *ngFor="let option of supertypeMeasurables; let i = index">\n              <a class="small" href="#">\n              <input type="checkbox" \n                [(ngModel)]="option.selected" \n                (ngModelChange)="updateValue(option)"/>&nbsp;\n              {{option.value.name}}</a>\n            </li>\n        </modal-body>\n        <modal-footer>\n          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>\n          <button type="button" class="btn btn-primary" (click)="close($event)">Ok</button>\n        </modal-footer>\n      </modal>\n  '
+    template: '\n        <modal #myModal>\n            <modal-header [show-close]="true">\n                <h4 class="modal-title">Select supertype measurables to replicate</h4>\n            </modal-header>\n            <modal-body>\n                <li *ngFor="let option of _supertypeMeasurables; let i = index">\n                    <a class="small" href="#">\n                        <input type="checkbox"\n                               [(ngModel)]="option.selected"\n                               (ngModelChange)="_updateValue(option)"/>&nbsp;\n                        {{option.value.name}}</a>\n                </li>\n            </modal-body>\n            <modal-footer>\n                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>\n                <button type="button" class="btn btn-primary" (click)="close($event)">Ok</button>\n            </modal-footer>\n        </modal>\n    '
 }), _dec2 = (0, _core.Input)(), _dec3 = (0, _core.Input)(), _dec4 = (0, _core.Output)(), _dec5 = (0, _core.ViewChild)('myModal'), _dec(_class = (_class2 = function () {
     function MeasurableGenerator() {
         _classCallCheck(this, MeasurableGenerator);
@@ -35367,8 +35388,8 @@ var MeasurableGenerator = exports.MeasurableGenerator = (_dec = (0, _core.Compon
 
         _initDefineProp(this, 'closed', _descriptor3, this);
 
-        this.supertypeMeasurables = [];
-        this.measurablesToReplicate = new Set();
+        this._supertypeMeasurables = [];
+        this._measurablesToReplicate = new Set();
 
         _initDefineProp(this, 'modal', _descriptor4, this);
     }
@@ -35377,8 +35398,13 @@ var MeasurableGenerator = exports.MeasurableGenerator = (_dec = (0, _core.Compon
 
 
     _createClass(MeasurableGenerator, [{
-        key: 'generateMeasurables',
-        value: function generateMeasurables() {
+        key: 'open',
+
+
+        /**
+         * Open the modal window with pre-filled measurables of lyph supertypes
+         */
+        value: function open() {
             var _this = this;
 
             var allSupertypeMeasurables = [];
@@ -35457,16 +35483,22 @@ var MeasurableGenerator = exports.MeasurableGenerator = (_dec = (0, _core.Compon
                 }
             }
 
-            this.supertypeMeasurables = allSupertypeMeasurables.map(function (x) {
-                return { value: x, selected: _this.measurablesToReplicate.has(x) };
+            this._supertypeMeasurables = allSupertypeMeasurables.map(function (x) {
+                return { value: x, selected: _this._measurablesToReplicate.has(x) };
             });
             this.modal.open();
         }
+
+        /**
+         * Close the modal window
+         * @param event - the event object
+         */
+
     }, {
         key: 'close',
         value: function close(event) {
-            if (this.measurablesToReplicate.size > 0) {
-                var protoMeasurables = Array.from(this.measurablesToReplicate);
+            if (this._measurablesToReplicate.size > 0) {
+                var protoMeasurables = Array.from(this._measurablesToReplicate);
                 var _iteratorNormalCompletion4 = true;
                 var _didIteratorError4 = false;
                 var _iteratorError4 = undefined;
@@ -35497,10 +35529,10 @@ var MeasurableGenerator = exports.MeasurableGenerator = (_dec = (0, _core.Compon
             this.closed.emit(event);
         }
     }, {
-        key: 'updateValue',
-        value: function updateValue(option) {
-            if (this.measurablesToReplicate.has(option.value) && !option.selected) this.measurablesToReplicate.delete(option.value);
-            if (!this.measurablesToReplicate.has(option.value) && option.selected) this.measurablesToReplicate.add(option.value);
+        key: '_updateValue',
+        value: function _updateValue(option) {
+            if (this._measurablesToReplicate.has(option.value) && !option.selected) this._measurablesToReplicate.delete(option.value);
+            if (!this._measurablesToReplicate.has(option.value) && option.selected) this._measurablesToReplicate.add(option.value);
         }
     }]);
 
@@ -35548,7 +35580,7 @@ var MeasurableGeneratorModule = exports.MeasurableGeneratorModule = (_dec6 = (0,
 
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
 exports.TemplateValueModule = exports.TemplateValueComponent = undefined;
 
@@ -35571,142 +35603,142 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function _instanceof(left, right) { if (right != null && typeof Symbol !== "undefined" && right[Symbol.hasInstance]) { return right[Symbol.hasInstance](left); } else { return _instanceof(left, right); } }
 
 function _initDefineProp(target, property, descriptor, context) {
-  if (!descriptor) return;
-  Object.defineProperty(target, property, {
-    enumerable: descriptor.enumerable,
-    configurable: descriptor.configurable,
-    writable: descriptor.writable,
-    value: descriptor.initializer ? descriptor.initializer.call(context) : void 0
-  });
+    if (!descriptor) return;
+    Object.defineProperty(target, property, {
+        enumerable: descriptor.enumerable,
+        configurable: descriptor.configurable,
+        writable: descriptor.writable,
+        value: descriptor.initializer ? descriptor.initializer.call(context) : void 0
+    });
 }
 
 function _classCallCheck(instance, Constructor) { if (!_instanceof(instance, Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _applyDecoratedDescriptor(target, property, decorators, descriptor, context) {
-  var desc = {};
-  Object['ke' + 'ys'](descriptor).forEach(function (key) {
-    desc[key] = descriptor[key];
-  });
-  desc.enumerable = !!desc.enumerable;
-  desc.configurable = !!desc.configurable;
+    var desc = {};
+    Object['ke' + 'ys'](descriptor).forEach(function (key) {
+        desc[key] = descriptor[key];
+    });
+    desc.enumerable = !!desc.enumerable;
+    desc.configurable = !!desc.configurable;
 
-  if ('value' in desc || desc.initializer) {
-    desc.writable = true;
-  }
+    if ('value' in desc || desc.initializer) {
+        desc.writable = true;
+    }
 
-  desc = decorators.slice().reverse().reduce(function (desc, decorator) {
-    return decorator(target, property, desc) || desc;
-  }, desc);
+    desc = decorators.slice().reverse().reduce(function (desc, decorator) {
+        return decorator(target, property, desc) || desc;
+    }, desc);
 
-  if (context && desc.initializer !== void 0) {
-    desc.value = desc.initializer ? desc.initializer.call(context) : void 0;
-    desc.initializer = undefined;
-  }
+    if (context && desc.initializer !== void 0) {
+        desc.value = desc.initializer ? desc.initializer.call(context) : void 0;
+        desc.initializer = undefined;
+    }
 
-  if (desc.initializer === void 0) {
-    Object['define' + 'Property'](target, property, desc);
-    desc = null;
-  }
+    if (desc.initializer === void 0) {
+        Object['define' + 'Property'](target, property, desc);
+        desc = null;
+    }
 
-  return desc;
+    return desc;
 }
 
 function _initializerWarningHelper(descriptor, context) {
-  throw new Error('Decorating class property failed. Please ensure that transform-class-properties is enabled.');
+    throw new Error('Decorating class property failed. Please ensure that transform-class-properties is enabled.');
 }
 
 /**
  * The TemplateValueComponent, provides fields for editing typedDistribution schema
  */
 var TemplateValueComponent = exports.TemplateValueComponent = (_dec = (0, _core.Component)({
-  "inputs": ["caption", "item", "min", "max", "step"],
-  "selector": "template-value",
-  "template": '\n      <div class="input-control input-control-lg">\n        <label for="caption">{{caption}}:</label>\n        \n        <div class="btn-group" style="float: left;">\n          <button type="button" class="btn btn-default btn-icon" \n            [ngClass]="{\'active\': item.class === \'Number\'}" (click)="updateValue(\'Number\')">\n            <span class="glyphicon glyphicon-th"></span>\n          </button>\n          <button type="button" class="btn btn-default btn-icon" \n            [ngClass]="{\'active\': item.class === \'NumberRange\'}" (click)="updateValue(\'NumberRange\')">\n            <span class="glyphicon glyphicon-transfer"></span>\n          </button>\n          <button type="button" class="btn btn-default btn-icon" \n            [ngClass]="{\'active\': item.class === \'BoundedNormalDistribution\'}" (click)="updateValue(\'BoundedNormalDistribution\')">\n            <span class="glyphicon glyphicon-stats"></span>\n          </button>\n          <button type="button" class="btn btn-default btn-icon" \n            [ngClass]="{\'active\': item.class === \'UniformDistribution\'}" (click)="updateValue(\'UniformDistribution\')">\n            <span class="glyphicon glyphicon-align-center"></span>\n          </button>\n        </div>\n      </div>\n      \n      <div class="input-control input-control-md" *ngIf="item.class === \'Number\'">\n        <label>Value:</label>\n        <input type="number" class="form-control" \n           [min] ="min" \n           [max] ="max" \n           [step]="step" \n           [(ngModel)]="item.value" \n           (ngModelChange)="updated.emit(item)"/>\n      </div>\n\n      <div class="input-control" *ngIf="(item.class === \'NumberRange\') || (item.class.endsWith(\'Distribution\'))">\n        <label>{{getLabel()}}:</label>\n        <fieldset >\n          <div class="input-control input-control-sm">\n            <label for="min">Min: </label>\n            <input type="number" class="form-control" \n              [min] ="min" \n              [max] ="max" \n              [step]="step" \n              [(ngModel)]="item.min"\n              (ngModelChange)="updated.emit(item)">\n          </div>\n          <!--Max-->\n          <div class="input-control input-control-sm">\n            <label for="max">Max: </label>\n            <input type="number" class="form-control" \n              [min] ="min" \n              [max] ="max" \n              [step]="step" \n              [(ngModel)]="item.max"\n              (ngModelChange)="updated.emit(item)">\n          </div>\n          <div *ngIf="item.class === \'BoundedNormalDistribution\'" style="display: inline-block">\n            <!--Mean-->\n            <div class="input-control input-control-sm">\n              <label for="mean">Mean: </label>\n              <input type="number" class="form-control" \n              [min] ="min" \n              [max] ="max" \n              [step]="step" \n              [(ngModel)]="item.mean"\n              (ngModelChange)="updated.emit(item)">\n            </div>\n            <!--Std-->\n            <div class="input-control input-control-sm">\n              <label for="std">Std: </label>\n              <input type="number" class="form-control" \n              [min] ="min" \n              [max] ="max" \n              [step]="step" \n              [(ngModel)]="item.std"\n              (ngModelChange)="updated.emit(item)">\n            </div>\n          </div>\n        </fieldset>\n      </div>\n   ',
-  "styles": ['\n        input {width: 60px;}\n        .form-control {\n          height: 30px;\n          box-shadow: none!important;\n        }\n        .form-control:focus  {\n          border: 2px solid #ccc;\n          box-shadow: none!important;\n        }\n\n    ']
+    "inputs": ["caption", "item", "min", "max", "step"],
+    "selector": "template-value",
+    "template": '\n        <div class="input-control input-control-lg">\n            <label for="caption">{{caption}}:</label>\n\n            <div class="btn-group" style="float: left;">\n                <button type="button" class="btn btn-default btn-icon"\n                        [ngClass]="{\'active\': item.class === \'Number\'}" (click)="_updateValue(\'Number\')">\n                    <span class="glyphicon glyphicon-th"></span>\n                </button>\n                <button type="button" class="btn btn-default btn-icon"\n                        [ngClass]="{\'active\': item.class === \'NumberRange\'}" (click)="_updateValue(\'NumberRange\')">\n                    <span class="glyphicon glyphicon-transfer"></span>\n                </button>\n                <button type="button" class="btn btn-default btn-icon"\n                        [ngClass]="{\'active\': item.class === \'BoundedNormalDistribution\'}"\n                        (click)="_updateValue(\'BoundedNormalDistribution\')">\n                    <span class="glyphicon glyphicon-stats"></span>\n                </button>\n                <button type="button" class="btn btn-default btn-icon"\n                        [ngClass]="{\'active\': item.class === \'UniformDistribution\'}"\n                        (click)="_updateValue(\'UniformDistribution\')">\n                    <span class="glyphicon glyphicon-align-center"></span>\n                </button>\n            </div>\n        </div>\n\n        <div class="input-control input-control-md" *ngIf="item.class === \'Number\'">\n            <label>Value:</label>\n            <input type="number" class="form-control"\n                   [min]="min"\n                   [max]="max"\n                   [step]="step"\n                   [(ngModel)]="item.value"\n                   (ngModelChange)="updated.emit(item)"/>\n        </div>\n\n        <div class="input-control" *ngIf="(item.class === \'NumberRange\') || (item.class.endsWith(\'Distribution\'))">\n            <label>{{_getLabel()}}:</label>\n            <fieldset>\n                <div class="input-control input-control-sm">\n                    <label for="min">Min: </label>\n                    <input type="number" class="form-control"\n                           [min]="min"\n                           [max]="max"\n                           [step]="step"\n                           [(ngModel)]="item.min"\n                           (ngModelChange)="updated.emit(item)">\n                </div>\n                <!--Max-->\n                <div class="input-control input-control-sm">\n                    <label for="max">Max: </label>\n                    <input type="number" class="form-control"\n                           [min]="min"\n                           [max]="max"\n                           [step]="step"\n                           [(ngModel)]="item.max"\n                           (ngModelChange)="updated.emit(item)">\n                </div>\n                <div *ngIf="item.class === \'BoundedNormalDistribution\'" style="display: inline-block">\n                    <!--Mean-->\n                    <div class="input-control input-control-sm">\n                        <label for="mean">Mean: </label>\n                        <input type="number" class="form-control"\n                               [min]="min"\n                               [max]="max"\n                               [step]="step"\n                               [(ngModel)]="item.mean"\n                               (ngModelChange)="updated.emit(item)">\n                    </div>\n                    <!--Std-->\n                    <div class="input-control input-control-sm">\n                        <label for="std">Std: </label>\n                        <input type="number" class="form-control"\n                               [min]="min"\n                               [max]="max"\n                               [step]="step"\n                               [(ngModel)]="item.std"\n                               (ngModelChange)="updated.emit(item)">\n                    </div>\n                </div>\n            </fieldset>\n        </div>\n    ',
+    "styles": ['\n        input {width: 60px;}\n        .form-control {\n          height: 30px;\n          box-shadow: none!important;\n        }\n        .form-control:focus  {\n          border: 2px solid #ccc;\n          box-shadow: none!important;\n        }\n\n    ']
 }), _dec2 = (0, _core.Input)(), _dec3 = (0, _core.Input)(), _dec4 = (0, _core.Input)(), _dec5 = (0, _core.Input)(), _dec6 = (0, _core.Output)(), _dec(_class = (_class2 = function () {
-  function TemplateValueComponent() {
-    _classCallCheck(this, TemplateValueComponent);
+    function TemplateValueComponent() {
+        _classCallCheck(this, TemplateValueComponent);
 
-    _initDefineProp(this, 'item', _descriptor, this);
+        _initDefineProp(this, 'item', _descriptor, this);
 
-    _initDefineProp(this, 'min', _descriptor2, this);
+        _initDefineProp(this, 'min', _descriptor2, this);
 
-    _initDefineProp(this, 'max', _descriptor3, this);
+        _initDefineProp(this, 'max', _descriptor3, this);
 
-    _initDefineProp(this, 'step', _descriptor4, this);
+        _initDefineProp(this, 'step', _descriptor4, this);
 
-    _initDefineProp(this, 'updated', _descriptor5, this);
-  }
-  /**
-   * @property {number} min - the default value of the field "min"
-   */
-
-  /**
-   * @property {number} max - the default value of the field "max"
-   */
-
-  /**
-   * @property {number} step - the default value of the field "step"
-   */
-
-
-  _createClass(TemplateValueComponent, [{
-    key: 'ngOnInit',
-    value: function ngOnInit() {
-      var _context;
-
-      if ((_context = this.item, _isUndefined2.default).call(_context)) {
-        this.item = { value: 0, class: 'Number' };
-      }
-      if ((_context = this.item.class, _isUndefined2.default).call(_context)) {
-        this.item.class = 'Number';
-      }
+        _initDefineProp(this, 'updated', _descriptor5, this);
     }
+    /**
+     * @property {number} min - the default value of the field "min"
+     */
 
-    //TODO: add radio button to choose distribution type
+    /**
+     * @property {number} max - the default value of the field "max"
+     */
 
-  }, {
-    key: 'updateValue',
-    value: function updateValue(type) {
-      // if (type === "Distribution"){
-      //     this.item.class = "BoundedNormalDistribution";
-      // }
-      this.item.class = type;
-      this.updated.emit(this.item);
-    }
-  }, {
-    key: 'getLabel',
-    value: function getLabel() {
-      return this.item.class === 'NumberRange' ? 'Range' : this.item.class === 'BoundedNormalDistribution' ? 'Bounded normal distribution' : 'Uniform distribution';
-    }
-  }]);
+    /**
+     * @property {number} step - the default value of the field "step"
+     */
 
-  return TemplateValueComponent;
+
+    _createClass(TemplateValueComponent, [{
+        key: 'ngOnInit',
+
+
+        /**
+         * Initialize the component
+         */
+        value: function ngOnInit() {
+            var _context;
+
+            if ((_context = this.item, _isUndefined2.default).call(_context)) {
+                this.item = { value: 0, class: 'Number' };
+            }
+            if ((_context = this.item.class, _isUndefined2.default).call(_context)) {
+                this.item.class = 'Number';
+            }
+        }
+    }, {
+        key: '_updateValue',
+        value: function _updateValue(type) {
+            this.item.class = type;
+            this.updated.emit(this.item);
+        }
+    }, {
+        key: '_getLabel',
+        value: function _getLabel() {
+            return;
+            this.item.class === 'NumberRange' ? 'Range' : this.item.class === 'BoundedNormalDistribution' ? 'Bounded normal distribution' : 'Uniform distribution';
+        }
+    }]);
+
+    return TemplateValueComponent;
 }(), (_descriptor = _applyDecoratedDescriptor(_class2.prototype, 'item', [_dec2], {
-  enumerable: true,
-  initializer: function initializer() {
-    return { value: 0, class: 'Number' };
-  }
+    enumerable: true,
+    initializer: function initializer() {
+        return { value: 0, class: 'Number' };
+    }
 }), _descriptor2 = _applyDecoratedDescriptor(_class2.prototype, 'min', [_dec3], {
-  enumerable: true,
-  initializer: function initializer() {
-    return 0;
-  }
+    enumerable: true,
+    initializer: function initializer() {
+        return 0;
+    }
 }), _descriptor3 = _applyDecoratedDescriptor(_class2.prototype, 'max', [_dec4], {
-  enumerable: true,
-  initializer: function initializer() {
-    return 10;
-  }
+    enumerable: true,
+    initializer: function initializer() {
+        return 10;
+    }
 }), _descriptor4 = _applyDecoratedDescriptor(_class2.prototype, 'step', [_dec5], {
-  enumerable: true,
-  initializer: function initializer() {
-    return 1;
-  }
+    enumerable: true,
+    initializer: function initializer() {
+        return 1;
+    }
 }), _descriptor5 = _applyDecoratedDescriptor(_class2.prototype, 'updated', [_dec6], {
-  enumerable: true,
-  initializer: function initializer() {
-    return new _core.EventEmitter();
-  }
+    enumerable: true,
+    initializer: function initializer() {
+        return new _core.EventEmitter();
+    }
 })), _class2)) || _class);
 
 /**
@@ -35714,11 +35746,11 @@ var TemplateValueComponent = exports.TemplateValueComponent = (_dec = (0, _core.
  */
 
 var TemplateValueModule = exports.TemplateValueModule = (_dec7 = (0, _core.NgModule)({
-  imports: [_common.CommonModule, _forms.FormsModule],
-  declarations: [TemplateValueComponent],
-  exports: [TemplateValueComponent]
+    imports: [_common.CommonModule, _forms.FormsModule],
+    declarations: [TemplateValueComponent],
+    exports: [TemplateValueComponent]
 }), _dec7(_class4 = function TemplateValueModule() {
-  _classCallCheck(this, TemplateValueModule);
+    _classCallCheck(this, TemplateValueModule);
 }) || _class4);
 
 /***/ }),
@@ -35833,7 +35865,7 @@ function _initializerWarningHelper(descriptor, context) {
  */
 var ItemHeader = exports.ItemHeader = (_dec = (0, _core.Component)({
     selector: 'item-header',
-    template: '\n        <span class="pull-left glyphicon"\n            [ngClass]="{\n              \'glyphicon-chevron-down\':  isOpen, \n              \'glyphicon-chevron-right\': !isOpen}">\n        </span>\n        {{(item.id)? item.id: "?"}}: {{item.name}}\n        <span class="pull-right">\n          <img *ngIf="_isType" class="imtip" src="../images/type.png"/>\n          <img class="icon" [src]="getResourceIcon()"/>\n          <button type="button" *ngIf="options?.showActive" class="btn btn-default btn-header" \n            [ngClass]="{\'active\': isActive}" (click)="activeItemChanged.emit(item)">\n            <span class = "glyphicon" [ngClass]="{\'glyphicon-pencil\': isActive}"></span>\n          </button>\n        </span>\n  ',
+    template: '\n        <span class="pull-left glyphicon"\n              [ngClass]="{\n              \'glyphicon-chevron-down\':  isOpen, \n              \'glyphicon-chevron-right\': !isOpen}">\n        </span>\n        {{(item.id) ? item.id : "?"}}: {{item.name}}\n        <span class="pull-right">\n          <img *ngIf="_isType" class="imtip" src="../images/type.png"/>\n          <img class="icon" [src]="_getResourceIcon()"/>\n          <button type="button" *ngIf="options?.showActive" class="btn btn-default btn-header"\n                  [ngClass]="{\'active\': isActive}" (click)="activeItemChanged.emit(item)">\n            <span class="glyphicon" [ngClass]="{\'glyphicon-pencil\': isActive}"></span>\n          </button>\n        </span>\n    ',
     styles: ['\n        .icon {\n          height: 16px;\n          width: 16px;\n          padding: 0;\n        }\n        .imtip {\n          position: relative;\n          bottom: 2px;\n          left: 4px;\n          width: 24px;\n          height: 12px;\n        } \n        :host{\n            display: block;\n            padding: 4px;\n        }\n    ']
 }), _dec2 = (0, _core.Input)(), _dec3 = (0, _core.Input)(), _dec4 = (0, _core.Input)(), _dec5 = (0, _core.Input)(), _dec6 = (0, _core.Output)(), _dec(_class = (_class2 = function () {
     function ItemHeader() {
@@ -35870,7 +35902,7 @@ var ItemHeader = exports.ItemHeader = (_dec = (0, _core.Component)({
 
 
     _createClass(ItemHeader, [{
-        key: 'getResourceIcon',
+        key: '_getResourceIcon',
 
 
         /**
@@ -35878,7 +35910,7 @@ var ItemHeader = exports.ItemHeader = (_dec = (0, _core.Component)({
          * @param {Resource} item - the resource
          * @returns {DataURI} - the icon for the resource class
          */
-        value: function getResourceIcon() {
+        value: function _getResourceIcon() {
             if (this.item.class === "Lyph" && this.item.axis) {
                 return "../images/lyphWithAxis.png";
             }
@@ -35887,9 +35919,15 @@ var ItemHeader = exports.ItemHeader = (_dec = (0, _core.Component)({
             }
             return this.item.constructor.icon;
         }
+
+        /**
+         * Initialize the component
+         */
+
     }, {
         key: 'ngOnInit',
         value: function ngOnInit() {
+            //define if the resource is typed
             this._isType = this.item && this.item.class === "Type";
         }
     }]);
@@ -36008,12 +36046,13 @@ function _initializerWarningHelper(descriptor, context) {
  */
 var NestedResourceList = exports.NestedResourceList = (_dec = (0, _core.Component)({
     selector: 'nested-resource-list',
-    template: '       \n    <div class="panel repo-nested">\n      <div class="panel-heading"> <label>{{caption}}: </label></div>\n      <div class="panel-body" >\n        <span  *ngIf = "!(options?.readOnly || options?.headersOnly)">\n          <select-input-1 class="pull-left input-select" \n            [item] = "_itemToInclude"\n            (updated) = "_itemToInclude = $event"    \n            [options] = "possibleValues">\n          </select-input-1>\n          <button type="button" class="btn btn-default btn-icon" (click)="onIncluded(_itemToInclude)">\n            <span class="glyphicon glyphicon-save"></span>\n          </button>\n        </span>\n        \n        <toolbar-sort   *ngIf =  "options?.sortToolbar"  [options]="[\'Name\', \'ID\', \'Class\']" (sorted)="onSorted($event)"></toolbar-sort>\n        <toolbar-add    *ngIf = "!(options?.readOnly || options?.headersOnly)"  [options]="types" [transform]="getClassLabel" (added)="onAdded($event)"></toolbar-add>\n        <toolbar-filter *ngIf =  "options?.filterToolbar" [options]="[\'Name\', \'ID\', \'Class\']" [filter]="_searchString" (applied)="onFiltered($event)"></toolbar-filter>\n\n          <!--| orderBy : _sortByMode-->\n\n          <accordion [closeOthers]="true"\n          dnd-sortable-container [dropZones]="_zones" [sortableData]="items">\n          <accordion-group *ngFor="let item of items \n            | filterBy: [_searchString, _filterByMode]; let i = index" class="list-group-item"\n               dnd-sortable [dragEnabled] = true\n               [sortableIndex]="i"\n               (onDragEnd)="_onDragEnd(i)"\n\n               (onOpen) ="openItem = item" \n               (onClose)="openItem = null">\n \n            <accordion-heading (click)  ="selectedItem = item">\n              <item-header [item]="item" \n                [isOpen]       = "item === openItem" \n                (mouseover)    = "highlightedItem = item" \n                (mouseout)     = "_unhighlight(item)"\n                [ngClass] ="{highlighted: item === highlightedItem, active: item === selectedItem}">\n              </item-header>\n            </accordion-heading>\n\n            <div *ngIf="!options?.headersOnly">\n              <resource-panel *ngIf="item === openItem" \n                [item]    ="item" \n                [model]="model"\n                [options] ="options"\n                (saved)   ="onSaved(item)" \n                (removed) ="onRemoved(item)"\n                (highlightedItemChange)="highlightedItemChange.emit($event)"\n                ></resource-panel>            \n            </div>\n          </accordion-group>        \n        </accordion>       \n      </div>\n    </div>\n  ',
+    template: '\n        <div class="panel repo-nested">\n            <div class="panel-heading"><label>{{caption}}: </label></div>\n            <div class="panel-body">\n        <span *ngIf="!(options?.readOnly || options?.headersOnly)">\n          <select-input-1 class="pull-left input-select"\n                          [item]="_itemToInclude"\n                          (updated)="_itemToInclude = $event"\n                          [options]="possibleValues">\n          </select-input-1>\n          <button type="button" class="btn btn-default btn-icon" (click)="_onIncluded(_itemToInclude)">\n            <span class="glyphicon glyphicon-save"></span>\n          </button>\n        </span>\n\n                <toolbar-sort *ngIf="options?.sortToolbar" [options]="[\'Name\', \'ID\', \'Class\']"\n                              (sorted)="_onSorted($event)"></toolbar-sort>\n                <toolbar-add *ngIf="!(options?.readOnly || options?.headersOnly)" [options]="types"\n                             [transform]="_getClassLabel" (added)="_onAdded($event)"></toolbar-add>\n                <toolbar-filter *ngIf="options?.filterToolbar" [options]="[\'Name\', \'ID\', \'Class\']"\n                                [filter]="_searchString" (applied)="_onFiltered($event)"></toolbar-filter>\n\n                <!--| orderBy : _sortByMode-->\n\n                <accordion [closeOthers]="true"\n                           dnd-sortable-container [dropZones]="_zones" [sortableData]="items">\n                    <accordion-group *ngFor="let item of items \n            | filterBy: [_searchString, _filterByMode]; let i = index" class="list-group-item"\n                                     dnd-sortable [dragEnabled]=true\n                                     [sortableIndex]="i"\n                                     (onDragEnd)="_onDragEnd(i)"\n\n                                     (onOpen)="openItem = item"\n                                     (onClose)="openItem = null">\n\n                        <accordion-heading (click)="selectedItem = item">\n                            <item-header [item]="item"\n                                         [isOpen]="item === openItem"\n                                         (mouseover)="highlightedItem = item"\n                                         (mouseout)="_unhighlight(item)"\n                                         [ngClass]="{highlighted: item === highlightedItem, active: item === selectedItem}">\n                            </item-header>\n                        </accordion-heading>\n\n                        <div *ngIf="!options?.headersOnly">\n                            <resource-panel *ngIf="item === openItem"\n                                            [item]="item"\n                                            [model]="model"\n                                            [options]="options"\n                                            (saved)="_onSaved(item)"\n                                            (removed)="_onRemoved(item)"\n                                            (highlightedItemChange)="highlightedItemChange.emit($event)"\n                            ></resource-panel>\n                        </div>\n                    </accordion-group>\n                </accordion>\n            </div>\n        </div>\n    ',
     styles: ['\n        .input-select{\n          min-width: 100px;\n        }\n        .highlighted {\n          background-color: #e3d2d2;\n        }\n        .active {\n          border: 2px solid #ff9999;\n          padding: 2px;\n        }\n    ']
 }), _dec2 = (0, _core.Input)(), _dec(_class = (_class2 = function (_AbstractResourceList) {
     _inherits(NestedResourceList, _AbstractResourceList);
 
     /**
+     * The constructor of the component
      * @param {ToastyService} toastyService - the service for showing notifications and error messages
      * @param {HighlightService} highlightService - the service that notifies nested components about currently highlighted item
      */
@@ -36029,6 +36068,11 @@ var NestedResourceList = exports.NestedResourceList = (_dec = (0, _core.Componen
         _this._toastyService = toastyService;
         return _this;
     }
+
+    /**
+     * Initialize the component
+     */
+
 
     _createClass(NestedResourceList, [{
         key: 'ngOnInit',
@@ -36055,6 +36099,11 @@ var NestedResourceList = exports.NestedResourceList = (_dec = (0, _core.Componen
                 }
             }
         }
+
+        /**
+         * Unsubscribe from subscriptions
+         */
+
     }, {
         key: 'ngOnDestroy',
         value: function ngOnDestroy() {
@@ -36062,6 +36111,12 @@ var NestedResourceList = exports.NestedResourceList = (_dec = (0, _core.Componen
                 this._ts.unsubscribe();
             }
         }
+
+        /**
+         * Update the view in response to external data change (e.g., sort layers)
+         * @param {Object} changes - the object defining input data changes
+         */
+
     }, {
         key: 'ngOnChanges',
         value: function ngOnChanges(changes) {
@@ -36105,8 +36160,8 @@ var NestedResourceList = exports.NestedResourceList = (_dec = (0, _core.Componen
          */
 
     }, {
-        key: 'onIncluded',
-        value: function onIncluded(newItem) {
+        key: '_onIncluded',
+        value: function _onIncluded(newItem) {
             if (newItem) {
                 if (this.items.indexOf(newItem) < 0) {
                     this.items.push(newItem);
@@ -36218,7 +36273,7 @@ function _applyDecoratedDescriptor(target, property, decorators, descriptor, con
  */
 var NestedResourceWidget = exports.NestedResourceWidget = (_dec = (0, _core.Component)({
     selector: 'nested-resource-widget',
-    template: '\n        <div class="panel panel-info repo">\n        <div class="panel-heading">{{caption}}\n          <span class="pull-right" *ngIf="options?.showActive">\n            <button type="button" class="btn btn-default btn-header" \n              [ngClass]="{\'active\': activeItem === null}" (click)="activeItem = null">\n              <span class = "glyphicon" [ngClass]="{\'glyphicon-pencil\': activeItem === null}"></span>\n            </button>\n          </span>\n        </div>\n        <div class="panel-body">\n          <toolbar-sort  [options]="[\'Name\', \'ID\', \'Class\']" (sorted)="onSorted($event)"></toolbar-sort>\n          <toolbar-add   [options]="types" [transform]="getClassLabel" (added)="onAdded($event)"></toolbar-add>\n          <toolbar-propertySettings  [options] = "_typeOptions" [transform] = "getClassLabel" \n            (selectionChanged) = "hiddenTypesChanged($event)">\n          </toolbar-propertySettings>\n\n          <toolbar-filter [filter]="_searchString" [options]="[\'Name\', \'ID\', \'Class\']" (applied)="onFiltered($event)"></toolbar-filter>\n            \n          <accordion [closeOthers]="true" \n                     dnd-sortable-container [dropZones]="_zones" [sortableData]="items">\n              <accordion-group *ngFor="let item of items \n              | hideClass : hiddenTypes\n              | orderBy : _sortByMode\n              | filterBy: [_searchString, _filterByMode]\n              ; let i = index" class="list-group-item"\n                dnd-sortable [sortableIndex]="i"\n               (onOpen) ="openItem = item"\n               (onClose)="openItem = null"\n              >\n                  <accordion-heading (click)  ="selectedItem = item">                  \n                  <item-header [item]= "item" \n                    [options]      = "options"\n                    [isActive]     = "item === activeItem"\n                    [isOpen]       = "item === openItem" \n                    (mouseover)    = "highlightedItem = item" \n                    (mouseout)     = "_unhighlight(item)"\n                    (activeItemChanged) = "activeItem = item"\n                    [ngClass] ="{highlighted: item === highlightedItem, active: item === selectedItem}">   \n                  </item-header>\n                </accordion-heading>\n                <div *ngIf="!options?.headersOnly">\n                  <resource-panel *ngIf="item === openItem" \n                    [item]="item"\n                    [model]="model"\n                    (saved)   ="onSaved(item)" \n                    (removed) ="onRemoved(item)">\n                   </resource-panel>   \n                </div>\n              </accordion-group>        \n          </accordion>       \n        </div>\n      </div>\n  ',
+    template: '\n        <div class="panel panel-info repo">\n            <div class="panel-heading">{{caption}}\n                <span class="pull-right" *ngIf="options?.showActive">\n            <button type="button" class="btn btn-default btn-header"\n                    [ngClass]="{\'active\': activeItem === null}" (click)="activeItem = null">\n              <span class="glyphicon" [ngClass]="{\'glyphicon-pencil\': activeItem === null}"></span>\n            </button>\n          </span>\n            </div>\n            <div class="panel-body">\n                <toolbar-sort [options]="[\'Name\', \'ID\', \'Class\']" (sorted)="_onSorted($event)"></toolbar-sort>\n                <toolbar-add [options]="types" [transform]="_getClassLabel" (added)="_onAdded($event)"></toolbar-add>\n                <toolbar-propertySettings [options]="_typeOptions" [transform]="_getClassLabel"\n                                          (selectionChanged)="_hiddenTypesChanged($event)">\n                </toolbar-propertySettings>\n\n                <toolbar-filter [filter]="_searchString" [options]="[\'Name\', \'ID\', \'Class\']"\n                                (applied)="_onFiltered($event)"></toolbar-filter>\n\n                <accordion [closeOthers]="true"\n                           dnd-sortable-container [dropZones]="_zones" [sortableData]="items">\n                    <accordion-group *ngFor="let item of items \n              | hideClass : hiddenTypes\n              | orderBy : _sortByMode\n              | filterBy: [_searchString, _filterByMode]\n              ; let i = index" class="list-group-item"\n                                     dnd-sortable [sortableIndex]="i"\n                                     (onOpen)="openItem = item"\n                                     (onClose)="openItem = null"\n                    >\n                        <accordion-heading (click)="selectedItem = item">\n                            <item-header [item]="item"\n                                         [options]="options"\n                                         [isActive]="item === activeItem"\n                                         [isOpen]="item === openItem"\n                                         (mouseover)="highlightedItem = item"\n                                         (mouseout)="_unhighlight(item)"\n                                         (activeItemChanged)="activeItem = item"\n                                         [ngClass]="{highlighted: item === highlightedItem, active: item === selectedItem}">\n                            </item-header>\n                        </accordion-heading>\n                        <div *ngIf="!options?.headersOnly">\n                            <resource-panel *ngIf="item === openItem"\n                                            [item]="item"\n                                            [model]="model"\n                                            (saved)="_onSaved(item)"\n                                            (removed)="_onRemoved(item)">\n                            </resource-panel>\n                        </div>\n                    </accordion-group>\n                </accordion>\n            </div>\n        </div>\n    ',
     styles: [' \n        .repo{ \n            width: 100%;\n            border: 0;\n            border-right:3px #eee solid;\n            min-width: 380px;\n            min-height: 300px;\n        }\n        .panel-heading{\n          padding: 2px;\n        }\n        .highlighted {\n          background-color: #e3d2d2;\n        }\n        .active {\n          border: 2px solid #ff9999;\n          padding: 2px;\n        }\n        :host >>> .btn-header{\n          width: 16px;\n          height: 16px;\n          padding: 0;\n        }\n        :host >>> .btn-icon {\n            height: 30px;\n        }\n        :host >>> .panel-body {\n          padding: 0;\n        }\n        :host >>> .btn:focus ,.btn:active {\n          outline: none !important;\n        }    \n        :host >>> .dropdown-toggle {\n          padding: 6px;\n        }\n        :host >>> .panel-heading{\n            padding: 0\n        }\n        :host >>> .accordion-toggle:hover {\n          outline: none;\n          text-decoration: none;\n        }\n        :host >>> .accordion-toggle:focus {\n          outline: none;\n          text-decoration: none;\n        }\n        :host >>> .list-group-item {\n            padding: 0;\n        }\n\n    ']
 }), _dec2 = (0, _core.Input)('activeItem'), _dec3 = (0, _core.Output)(), _dec(_class = (_class2 = function (_AbstractResourceList) {
     _inherits(NestedResourceWidget, _AbstractResourceList);
@@ -36271,7 +36326,7 @@ var NestedResourceWidget = exports.NestedResourceWidget = (_dec = (0, _core.Comp
     }
 
     /**
-     * Initialize the nested resource list component: set invisible by default classes
+     * Initialize the nested resource widget component: set invisible by default classes
      */
 
 
@@ -36295,8 +36350,8 @@ var NestedResourceWidget = exports.NestedResourceWidget = (_dec = (0, _core.Comp
          */
 
     }, {
-        key: 'hiddenTypesChanged',
-        value: function hiddenTypesChanged(option) {
+        key: '_hiddenTypesChanged',
+        value: function _hiddenTypesChanged(option) {
             if (this._ignoreTypes.has(option.value) && option.selected) {
                 this._ignoreTypes.delete(option.value);
             }
@@ -36445,16 +36500,17 @@ function _initializerWarningHelper(descriptor, context) {
  */
 var ResourcePanel = exports.ResourcePanel = (_dec = (0, _core.Component)({
     selector: 'resource-panel',
-    template: '\n        <div class="panel">\n            <div class="panel-body">\n                <toolbar-commands\n                        [options]="options"\n                        (saved)="onSaved($event)"\n                        (canceled)="onCanceled($event)"\n                        (removed)="removed.emit($event)">\n                </toolbar-commands>\n                <toolbar-propertySettings\n                        [options]="fields"\n                        [transform]="getPropertyLabel"\n                        (selectionChanged)="visibleFieldsChanged($event)">\n                </toolbar-propertySettings>\n                <toolbar-sort [options]="[\'Name\']" (sorted)="onSorted($event)">\n                </toolbar-sort>\n\n                <div class="input-control" *ngIf="item.class === model.Lyph.name">\n                    <button type="button" class="btn btn-default btn-icon" (click)="generateMeasurables()">\n                        <span class="glyphicon glyphicon-cog"></span>\n                    </button>\n                </div>\n                <div class="input-control" *ngIf="!options?.hideCreateType && isTyped()">\n                    <input type="checkbox" [disabled]="typeCreated" [(ngModel)]="createType">Create type\n                </div>\n\n                <div class="panel-content">\n                    <div class="input-control"\n                         *ngFor="let field of fields | orderBy : _sortByMode">\n                        <div *ngIf="!ignore.has(field.value)">\n\n                            <div class="input-control-lg" *ngIf="field.type === \'input\'">\n                                <label for="comment">{{getPropertyLabel(field.value)}}: </label>\n                                <input class="form-control"\n                                       [type]="getDefaultValue(field.value, \'type\')"\n                                       [disabled]="item.constructor.properties[field.value].readOnly"\n                                       [(ngModel)]="item[field.value]">\n                            </div>\n\n                            <div *ngIf="field.type === \'select\'">\n                                <label>{{getPropertyLabel(field.value)}}: </label>\n                                <select-input-1 [item]="item.p(field.value) | async"\n                                                (updated)="updateProperty(field.value, $event)"\n                                                [options]="possibleValues[field.value]">\n                                </select-input-1>\n                            </div>\n\n                            <div *ngIf="field.type === \'multiSelect\'">\n                                <label>{{getPropertyLabel(field.value)}}: </label>\n                                <select-input [items]="item.p(field.value) | async"\n                                              (updated)="updateProperty(field.value, $event)"\n                                              [options]="possibleValues[field.value]">\n                                </select-input>\n                            </div>\n\n                            <nested-resource-list *ngIf="field.type === \'relation\'"\n                                                  [caption]="getPropertyLabel(field.value)"\n                                                  [model]="model"\n                                                  [items]="item.p(field.value) | async | setToArray"\n                                                  [options]="{ordered: [\'layers\', \'segments\'].includes(field.value)}"\n                                                  [types]="[item.constructor.relationshipShortcuts[field.value].codomain.resourceClass.name]"\n                                                  (updated)="updateProperty(field.value, $event)">\n                            </nested-resource-list>\n\n                            <template-value *ngIf="field.type === \'template\'"\n                                            [caption]="getPropertyLabel(field.value)"\n                                            [item]="item.p(field.value) | async"\n                                            [step]="getDefaultValue(field.value, \'step\')"\n                                            (updated)="updateProperty(field.value, $event)">\n                            </template-value>\n\n                            <fieldset *ngIf="field.type === \'checkbox\'">\n                                <legend>{{getPropertyLabel(field.value)}}:</legend>\n                                <p *ngFor="let option of possibleValues[field.value]; let i = index">\n                                    <input type="checkbox" [value]="option"\n                                           [checked]="item[field.value].includes(option)"\n                                           (change)="updateArray(field.value, option, $event)"\n                                    >{{option}}&nbsp;\n                                </p>\n                            </fieldset>\n                        </div>\n                    </div>\n\n                    <modal-window *ngIf="item.class === model.Lyph.name" [item]="item"\n                                  [clsMeasurable]="model.Measurable">\n                    </modal-window>\n\n                </div>\n            </div>\n        </div>\n        <ng2-toasty></ng2-toasty>\n    ',
+    template: '\n        <div class="panel">\n            <div class="panel-body">\n                <toolbar-commands\n                        [options]="options"\n                        (saved)="_onSaved($event)"\n                        (canceled)="_onCanceled($event)"\n                        (removed)="removed.emit($event)">\n                </toolbar-commands>\n                <toolbar-propertySettings\n                        [options]="_fields"\n                        [transform]="_getPropertyLabel"\n                        (selectionChanged)="_visibleFieldsChanged($event)">\n                </toolbar-propertySettings>\n                <toolbar-sort [options]="[\'Name\']" (sorted)="_onSorted($event)">\n                </toolbar-sort>\n\n                <div class="input-control" *ngIf="item.class === model.Lyph.name">\n                    <button type="button" class="btn btn-default btn-icon" (click)="_mGen.open()">\n                        <span class="glyphicon glyphicon-cog"></span>\n                    </button>\n                </div>\n                <div class="input-control" *ngIf="!options?.hideCreateType && _isTyped()">\n                    <input type="checkbox" [disabled]="_typeCreated" [(ngModel)]="_createType">Create type\n                </div>\n\n                <div class="panel-content">\n                    <div class="input-control"\n                         *ngFor="let field of _fields | orderBy : _sortByMode">\n                        <div *ngIf="!_ignore.has(field.value)">\n\n                            <div class="input-control-lg" *ngIf="field.type === \'input\'">\n                                <label for="comment">{{_getPropertyLabel(field.value)}}: </label>\n                                <input class="form-control"\n                                       [type]="_getDefaultValue(field.value, \'type\')"\n                                       [disabled]="item.constructor.properties[field.value].readOnly"\n                                       [(ngModel)]="item[field.value]">\n                            </div>\n\n                            <div *ngIf="field.type === \'select\'">\n                                <label>{{_getPropertyLabel(field.value)}}: </label>\n                                <select-input-1 [item]="item.p(field.value) | async"\n                                                (updated)="_updateProperty(field.value, $event)"\n                                                [options]="_possibleValues[field.value]">\n                                </select-input-1>\n                            </div>\n\n                            <div *ngIf="field.type === \'multiSelect\'">\n                                <label>{{_getPropertyLabel(field.value)}}: </label>\n                                <select-input [items]="item.p(field.value) | async"\n                                              (updated)="_updateProperty(field.value, $event)"\n                                              [options]="_possibleValues[field.value]">\n                                </select-input>\n                            </div>\n\n                            <nested-resource-list *ngIf="field.type === \'relation\'"\n                                                  [caption]="_getPropertyLabel(field.value)"\n                                                  [model]="model"\n                                                  [items]="item.p(field.value) | async | setToArray"\n                                                  [options]="{ordered: [\'layers\', \'segments\'].includes(field.value)}"\n                                                  [types]="[item.constructor.relationshipShortcuts[field.value].codomain.resourceClass.name]"\n                                                  (updated)="_updateProperty(field.value, $event)">\n                            </nested-resource-list>\n\n                            <template-value *ngIf="field.type === \'template\'"\n                                            [caption]="_getPropertyLabel(field.value)"\n                                            [item]="item.p(field.value) | async"\n                                            [step]="_getDefaultValue(field.value, \'step\')"\n                                            (updated)="_updateProperty(field.value, $event)">\n                            </template-value>\n\n                            <fieldset *ngIf="field.type === \'checkbox\'">\n                                <legend>{{_getPropertyLabel(field.value)}}:</legend>\n                                <p *ngFor="let option of _possibleValues[field.value]; let i = index">\n                                    <input type="checkbox" [value]="option"\n                                           [checked]="item[field.value].includes(option)"\n                                           (change)="_updateArray(field.value, option, $event)"\n                                    >{{option}}&nbsp;\n                                </p>\n                            </fieldset>\n                        </div>\n                    </div>\n\n                    <modal-window *ngIf="item.class === model.Lyph.name" [item]="item"\n                                  [clsMeasurable]="model.Measurable">\n                    </modal-window>\n\n                </div>\n            </div>\n        </div>\n        <ng2-toasty></ng2-toasty>\n    ',
     styles: ['\n        input[type=number] {\n          text-align:right;\n        }\n        .panel-content{\n          border: 1px solid #ccc;\n        }\n        :host >>> .input-control {\n          margin-left: 4px;\n          padding: 2px;\n          display: inline-block;\n          vertical-align:top;\n        }\n        :host >>> .input-control >>> label {\n          display: block;\n        }\n        :host >>> .input-control-sm {\n          width: 68px;\n        }\n        :host >>> .input-control-md {\n          width: 124px;\n        }\n        :host >>> .input-control-lg {\n          width: 178px;\n        }\n        :host >>> fieldset {\n          border: 1px ridge #e3e3e3;\n          padding: 4px;\n          margin: 4px;\n        }\n        legend{\n          font: inherit;\n          font-weight: bold;\n          padding: 4px;\n          margin-bottom: 0;\n          border: 0;\n          width: auto;\n        }\n        :host >>> .form-control {\n          height: 30px;\n          box-shadow: none!important;\n        }\n        :host >>> .form-control:focus {\n          border: 2px solid #ccc;\n          box-shadow: none!important;\n        }\n    ']
 }), _dec2 = (0, _core.Input)(), _dec3 = (0, _core.Input)(), _dec4 = (0, _core.Input)(), _dec5 = (0, _core.Output)(), _dec6 = (0, _core.Output)(), _dec7 = (0, _core.Output)(), _dec8 = (0, _core.Output)(), _dec9 = (0, _core.ViewChild)(_MeasurableGeneratorModule.MeasurableGenerator), _dec(_class = (_class2 = function () {
 
     /**
+     * The constructor of the component
      * @param {ToastyService} toastyService - the service for showing notifications and error messages
      */
 
 
-    /*Field type and visibility configurations*/
+    //Field type and visibility configurations
 
     /**
      * @emits propertyUpdated - the item property changed
@@ -36487,19 +36543,22 @@ var ResourcePanel = exports.ResourcePanel = (_dec = (0, _core.Component)({
         _initDefineProp(this, '_mGen', _descriptor8, this);
 
         this._sortByMode = "unsorted";
-        this.ignore = new Set();
-        this.fields = [];
-        this.createType = false;
-        this.typeCreated = false;
-        this.possibleValues = {};
+        this._ignore = new Set();
+        this._fields = [];
+        this._createType = false;
+        this._typeCreated = false;
+        this._possibleValues = {};
 
         this._toastyService = toastyService;
     }
 
-    /*Selection options*/
+    /**
+     * Initialize the component: define visual element type for each property field
+     */
 
+    //Selection options
 
-    /*Typed resources*/
+    //Typed resources
 
     /**
      * @emits removed         - the item deleted
@@ -36520,10 +36579,10 @@ var ResourcePanel = exports.ResourcePanel = (_dec = (0, _core.Component)({
         value: function ngOnInit() {
             var _this = this;
 
-            this.ignore = new Set(["id", "cardinalityBase", "cardinalityMultipliers", "definedType"]);
+            this._ignore = new Set(["id", "cardinalityBase", "cardinalityMultipliers", "definedType"]);
             if (_instanceof(this.item, this.model.Border)) {
                 ['externals', 'species', 'measurables', 'name', 'types', 'nodes'].map(function (propName) {
-                    return _this.ignore.add(propName);
+                    return _this._ignore.add(propName);
                 });
             }
 
@@ -36550,13 +36609,13 @@ var ResourcePanel = exports.ResourcePanel = (_dec = (0, _core.Component)({
                         key = _step$value[0],
                         value = _step$value[1];
 
-                    this.fields.push({
+                    this._fields.push({
                         value: key,
-                        selected: !this.ignore.has(key),
+                        selected: !this._ignore.has(key),
                         type: value.items && value.items.enum ? 'checkbox' : templateGroup.includes(key) ? 'template' : 'input'
                     });
                     if (value.items && value.items.enum) {
-                        this.possibleValues[key] = Object.values(value.items.enum);
+                        this._possibleValues[key] = Object.values(value.items.enum);
                     }
                 }
                 /*Relationships*/
@@ -36585,14 +36644,14 @@ var ResourcePanel = exports.ResourcePanel = (_dec = (0, _core.Component)({
                         key = _step2$value[0],
                         value = _step2$value[1];
 
-                    _this.fields.push({
+                    _this._fields.push({
                         value: key,
-                        selected: !_this.ignore.has(key),
+                        selected: !_this._ignore.has(key),
                         type: value.cardinality.max === 1 ? 'select' : multiSelectProperties.includes[key] ? 'multiSelect' : 'relation'
                     });
 
                     _this.item.fields[key].p('possibleValues').subscribe(function (data) {
-                        _this.possibleValues[key] = key === "cardinalityMultipliers" ? new Set(new _PipeTransformModule.HideClass().transform(new _PipeTransformModule.SetToArray().transform(data), [_this.model.Border.name, _this.model.Node.name])) : data;
+                        _this._possibleValues[key] = key === "cardinalityMultipliers" ? new Set(new _PipeTransformModule.HideClass().transform(new _PipeTransformModule.SetToArray().transform(data), [_this.model.Border.name, _this.model.Node.name])) : data;
                     });
                 };
 
@@ -36622,8 +36681,8 @@ var ResourcePanel = exports.ResourcePanel = (_dec = (0, _core.Component)({
                 }
             }
 
-            if (this.isTyped()) {
-                this.typeCreated = !!this.item['-->DefinesType'];
+            if (this._isTyped()) {
+                this._typeCreated = !!this.item['-->DefinesType'];
             }
         }
 
@@ -36634,8 +36693,8 @@ var ResourcePanel = exports.ResourcePanel = (_dec = (0, _core.Component)({
          */
 
     }, {
-        key: 'getPropertyLabel',
-        value: function getPropertyLabel(option) {
+        key: '_getPropertyLabel',
+        value: function _getPropertyLabel(option) {
             var custom = { "externals": "Annotations",
                 "locals": "Local resources" };
             if (custom[option]) {
@@ -36660,8 +36719,8 @@ var ResourcePanel = exports.ResourcePanel = (_dec = (0, _core.Component)({
          */
 
     }, {
-        key: 'getDefaultValue',
-        value: function getDefaultValue(property, attribute) {
+        key: '_getDefaultValue',
+        value: function _getDefaultValue(property, attribute) {
             var propertySpec = this.item.constructor.properties[property];
             switch (attribute) {
                 case "type":
@@ -36672,18 +36731,18 @@ var ResourcePanel = exports.ResourcePanel = (_dec = (0, _core.Component)({
             return "";
         }
     }, {
-        key: 'visibleFieldsChanged',
-        value: function visibleFieldsChanged(option) {
-            if (this.ignore.has(option.value) && option.selected) {
-                this.ignore.delete(option.value);
+        key: '_visibleFieldsChanged',
+        value: function _visibleFieldsChanged(option) {
+            if (this._ignore.has(option.value) && option.selected) {
+                this._ignore.delete(option.value);
             }
-            if (!this.ignore.has(option.value) && !option.selected) {
-                this.ignore.add(option.value);
+            if (!this._ignore.has(option.value) && !option.selected) {
+                this._ignore.add(option.value);
             }
         }
     }, {
-        key: 'updateProperty',
-        value: function updateProperty(property, item) {
+        key: '_updateProperty',
+        value: function _updateProperty(property, item) {
             if (this.item.fields[property] && this.item.fields[property].readonly) {
                 return;
             }
@@ -36691,8 +36750,8 @@ var ResourcePanel = exports.ResourcePanel = (_dec = (0, _core.Component)({
             this.propertyUpdated.emit({ property: property, values: item });
         }
     }, {
-        key: 'updateArray',
-        value: function updateArray(property, option, event) {
+        key: '_updateArray',
+        value: function _updateArray(property, option, event) {
             var newArray = [];
             if (!event.target.checked) {
                 newArray = this.item[property].filter(function (x) {
@@ -36704,35 +36763,30 @@ var ResourcePanel = exports.ResourcePanel = (_dec = (0, _core.Component)({
                     newArray.push(option);
                 }
             }
-            this.updateProperty(property, newArray);
+            this._updateProperty(property, newArray);
         }
     }, {
-        key: 'addItem',
-        value: function addItem(parent, property, item) {
+        key: '_addItem',
+        value: function _addItem(parent, property, item) {
             if (parent && parent[property]) {
                 parent[property].add(item);
                 this.propertyUpdated.emit({ property: property, values: parent[property] });
             }
         }
     }, {
-        key: 'removeItem',
-        value: function removeItem(parent, property, item) {
+        key: '_removeItem',
+        value: function _removeItem(parent, property, item) {
             item.delete();
-            this.updateProperty(property, parent[property]);
+            this._updateProperty(property, parent[property]);
         }
     }, {
-        key: 'isTyped',
-        value: function isTyped() {
+        key: '_isTyped',
+        value: function _isTyped() {
             return _instanceof(this.item, this.model.Template);
         }
     }, {
-        key: 'generateMeasurables',
-        value: function generateMeasurables() {
-            this._mGen.generateMeasurables();
-        }
-    }, {
-        key: 'onSorted',
-        value: function onSorted(prop) {
+        key: '_onSorted',
+        value: function _onSorted(prop) {
             if (prop === "Name") {
                 this._sortByMode = "value";
             } else {
@@ -36740,8 +36794,8 @@ var ResourcePanel = exports.ResourcePanel = (_dec = (0, _core.Component)({
             }
         }
     }, {
-        key: 'onSaved',
-        value: function onSaved(event) {
+        key: '_onSaved',
+        value: function _onSaved(event) {
             var _this2 = this;
 
             if (this.item.class === this.model.CoalescenceScenario.name) {
@@ -36755,7 +36809,7 @@ var ResourcePanel = exports.ResourcePanel = (_dec = (0, _core.Component)({
                 _this2._toastyService.error(errorMsg);
             });
 
-            if (event && event.createType) {
+            if (event && event._createType) {
                 var template = this.item;
                 if (!template['-->DefinesType']) {
                     _asyncToGenerator(regeneratorRuntime.mark(function _callee() {
@@ -36784,8 +36838,8 @@ var ResourcePanel = exports.ResourcePanel = (_dec = (0, _core.Component)({
             this.saved.emit(this.item);
         }
     }, {
-        key: 'onCanceled',
-        value: function onCanceled(event) {
+        key: '_onCanceled',
+        value: function _onCanceled(event) {
             this.item.rollback();
             this.canceled.emit(event);
         }
@@ -36840,14 +36894,10 @@ var ResourcePanel = exports.ResourcePanel = (_dec = (0, _core.Component)({
 
 Reflect.defineMetadata('design:paramtypes', [_ng2Toasty.ToastyService], ResourcePanel);
 var ResourcePanelModule = exports.ResourcePanelModule = (_dec10 = (0, _core.NgModule)({
-    imports: [_common.CommonModule, _forms.FormsModule, _ngxDnd.DndModule.forRoot(),
-    //Existing
-    _ngxAccordion.AccordionModule, _ToolbarSettingsModule.ToolbarSettingsModule, _ToolbarCommandsModule.ToolbarCommandsModule, _ToolbarAddModule.ToolbarAddModule, _ToolbarFilterModule.ToolbarFilterModule, _ToolbarSortModule.ToolbarSortModule, _TemplateValueModule.TemplateValueModule, _PipeTransformModule.PipeTransformModule, _CustomSelectModule.CustomSelectModule, _ng2Toasty.ToastyModule.forRoot(), _MeasurableGeneratorModule.MeasurableGeneratorModule],
+    imports: [_common.CommonModule, _forms.FormsModule, _ngxDnd.DndModule.forRoot(), _ngxAccordion.AccordionModule, _ToolbarSettingsModule.ToolbarSettingsModule, _ToolbarCommandsModule.ToolbarCommandsModule, _ToolbarAddModule.ToolbarAddModule, _ToolbarFilterModule.ToolbarFilterModule, _ToolbarSortModule.ToolbarSortModule, _TemplateValueModule.TemplateValueModule, _PipeTransformModule.PipeTransformModule, _CustomSelectModule.CustomSelectModule, _ng2Toasty.ToastyModule.forRoot(), _MeasurableGeneratorModule.MeasurableGeneratorModule],
     declarations: [ResourcePanel, _NestedResourceList.NestedResourceList, _ItemHeader.ItemHeader],
     providers: [_ng2Toasty.ToastyService],
-    exports: [_ngxAccordion.AccordionModule, _ngxDnd.DndModule, _PipeTransformModule.PipeTransformModule, _ToolbarSettingsModule.ToolbarSettingsModule, _ToolbarAddModule.ToolbarAddModule, _ToolbarFilterModule.ToolbarFilterModule, _ToolbarSortModule.ToolbarSortModule,
-    //New
-    ResourcePanel, _ItemHeader.ItemHeader]
+    exports: [_ngxAccordion.AccordionModule, _ngxDnd.DndModule, _PipeTransformModule.PipeTransformModule, _ToolbarSettingsModule.ToolbarSettingsModule, _ToolbarAddModule.ToolbarAddModule, _ToolbarFilterModule.ToolbarFilterModule, _ToolbarSortModule.ToolbarSortModule, ResourcePanel, _ItemHeader.ItemHeader]
 }), _dec10(_class4 = function ResourcePanelModule() {
     _classCallCheck(this, ResourcePanelModule);
 }) || _class4);
@@ -37166,7 +37216,7 @@ function _initializerWarningHelper(descriptor, context) {
  */
 var ToolbarFilter = exports.ToolbarFilter = (_dec = (0, _core.Component)({
     selector: 'toolbar-filter',
-    template: '\n     <div class="input-group input-group-sm" style="width: 220px;">\n        <input type="text" class="form-control" \n        [value]="filter" (input)="updateValue($event)" (keyup.enter)="applied.emit({filter: filter, mode: mode});"/>\n        <div class="input-group-btn" dropdown>\n          <button type="button" class="btn btn-secondary dropdown-toggle" aria-label="Filter" dropdown-open\n            aria-haspopup="true" aria-expanded="false">\n             <span class="glyphicon glyphicon-filter" aria-hidden="true"></span>\n          </button>\n          <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="Filter">\n            <li *ngFor="let option of options; let i = index" (click)="updateMode(option)">\n              <a class="dropdown-item" href="#"> <span *ngIf="mode === option">&#10004;</span>{{option}}</a>\n            </li>            \n          </ul>\n        </div>\n      </div>\n    ',
+    template: '\n        <div class="input-group input-group-sm" style="width: 220px;">\n            <input type="text" class="form-control"\n                   [value]="filter" (input)="_updateValue($event)"\n                   (keyup.enter)="applied.emit({filter: filter, mode: mode});"/>\n            <div class="input-group-btn" dropdown>\n                <button type="button" class="btn btn-secondary dropdown-toggle" aria-label="Filter" dropdown-open\n                        aria-haspopup="true" aria-expanded="false">\n                    <span class="glyphicon glyphicon-filter" aria-hidden="true"></span>\n                </button>\n                <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="Filter">\n                    <li *ngFor="let option of options; let i = index" (click)="_updateMode(option)">\n                        <a class="dropdown-item" href="#"> <span *ngIf="mode === option">&#10004;</span>{{option}}</a>\n                    </li>\n                </ul>\n            </div>\n        </div>\n    ',
     styles: ['\n        :host {float: right;}\n        .form-control {\n          height: 30px;\n          box-shadow: none!important;\n        }\n        .form-control:focus  {\n          border: 2px solid #ccc;\n          box-shadow: none!important;\n        }\n    ']
 }), _dec2 = (0, _core.Input)(), _dec3 = (0, _core.Input)(), _dec4 = (0, _core.Output)(), _dec(_class = (_class2 = function () {
     function ToolbarFilter() {
@@ -37183,20 +37233,25 @@ var ToolbarFilter = exports.ToolbarFilter = (_dec = (0, _core.Component)({
 
     _createClass(ToolbarFilter, [{
         key: 'ngOnInit',
+
+
+        /**
+         * Initialize the component
+         */
         value: function ngOnInit() {
             if (this.options && this.options.length > 0) {
                 this.mode = this.options[0];
             }
         }
     }, {
-        key: 'updateMode',
-        value: function updateMode(option) {
+        key: '_updateMode',
+        value: function _updateMode(option) {
             this.mode = option;
             this.applied.emit({ filter: this.filter, mode: this.mode });
         }
     }, {
-        key: 'updateValue',
-        value: function updateValue(event) {
+        key: '_updateValue',
+        value: function _updateValue(event) {
             this.filter = event.target.value;
             this.applied.emit({ filter: this.filter, mode: this.mode });
         }
@@ -37240,7 +37295,7 @@ var ToolbarFilterModule = exports.ToolbarFilterModule = (_dec5 = (0, _core.NgMod
 
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
 exports.ToolbarSortModule = exports.ToolbarSort = undefined;
 
@@ -37257,48 +37312,48 @@ var _ngxDropdown = __webpack_require__(87);
 function _instanceof(left, right) { if (right != null && typeof Symbol !== "undefined" && right[Symbol.hasInstance]) { return right[Symbol.hasInstance](left); } else { return _instanceof(left, right); } }
 
 function _initDefineProp(target, property, descriptor, context) {
-  if (!descriptor) return;
-  Object.defineProperty(target, property, {
-    enumerable: descriptor.enumerable,
-    configurable: descriptor.configurable,
-    writable: descriptor.writable,
-    value: descriptor.initializer ? descriptor.initializer.call(context) : void 0
-  });
+    if (!descriptor) return;
+    Object.defineProperty(target, property, {
+        enumerable: descriptor.enumerable,
+        configurable: descriptor.configurable,
+        writable: descriptor.writable,
+        value: descriptor.initializer ? descriptor.initializer.call(context) : void 0
+    });
 }
 
 function _classCallCheck(instance, Constructor) { if (!_instanceof(instance, Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _applyDecoratedDescriptor(target, property, decorators, descriptor, context) {
-  var desc = {};
-  Object['ke' + 'ys'](descriptor).forEach(function (key) {
-    desc[key] = descriptor[key];
-  });
-  desc.enumerable = !!desc.enumerable;
-  desc.configurable = !!desc.configurable;
+    var desc = {};
+    Object['ke' + 'ys'](descriptor).forEach(function (key) {
+        desc[key] = descriptor[key];
+    });
+    desc.enumerable = !!desc.enumerable;
+    desc.configurable = !!desc.configurable;
 
-  if ('value' in desc || desc.initializer) {
-    desc.writable = true;
-  }
+    if ('value' in desc || desc.initializer) {
+        desc.writable = true;
+    }
 
-  desc = decorators.slice().reverse().reduce(function (desc, decorator) {
-    return decorator(target, property, desc) || desc;
-  }, desc);
+    desc = decorators.slice().reverse().reduce(function (desc, decorator) {
+        return decorator(target, property, desc) || desc;
+    }, desc);
 
-  if (context && desc.initializer !== void 0) {
-    desc.value = desc.initializer ? desc.initializer.call(context) : void 0;
-    desc.initializer = undefined;
-  }
+    if (context && desc.initializer !== void 0) {
+        desc.value = desc.initializer ? desc.initializer.call(context) : void 0;
+        desc.initializer = undefined;
+    }
 
-  if (desc.initializer === void 0) {
-    Object['define' + 'Property'](target, property, desc);
-    desc = null;
-  }
+    if (desc.initializer === void 0) {
+        Object['define' + 'Property'](target, property, desc);
+        desc = null;
+    }
 
-  return desc;
+    return desc;
 }
 
 function _initializerWarningHelper(descriptor, context) {
-  throw new Error('Decorating class property failed. Please ensure that transform-class-properties is enabled.');
+    throw new Error('Decorating class property failed. Please ensure that transform-class-properties is enabled.');
 }
 
 /**
@@ -37307,39 +37362,39 @@ function _initializerWarningHelper(descriptor, context) {
  * @emits sorted                  - a user pressed the button to filter the list of resources
  */
 var ToolbarSort = exports.ToolbarSort = (_dec = (0, _core.Component)({
-  selector: 'toolbar-sort',
-  template: '\n    <div class="btn-group">\n      <div class="btn-group" dropdown>\n        <button type="button" class="btn btn-default btn-icon dropdown-toggle" aria-label="SortAsc" dropdown-open>\n          <span class="glyphicon glyphicon-sort-by-attributes" aria-hidden="true"></span>\n        </button>\n        <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="SortAsc">\n          <li role="menuitem" (click)="onClick(\'unsorted\')">\n            <a class="dropdown-item" href="#">\n            <span *ngIf="sortByMode === \'unsorted\'">&#10004;</span>\n            (unsorted)</a>\n          </li>\n          <li class="divider"></li>\n          <li *ngFor="let option of options; let i = index" role="menuitem" (click)="onClick(option)">\n            <a class="dropdown-item" href="#">\n              <span *ngIf="sortByMode === option">&#10004;</span>\n              {{option}}\n            </a>\n          </li>\n        </ul>\n      </div>\n      <div class="btn-group" dropdown>\n        <button type="button" class="btn btn-default btn-icon dropdown-toggle" aria-label="SortDesc" dropdown-open>\n          <span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span>\n        </button>\n        <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="SortDesc">\n          <li *ngFor="let option of options; let i = index" role="menuitem" (click)="onClick(\'-\'+option)">\n            <a class="dropdown-item" href="#">\n             <span *ngIf="sortByMode === \'-\'+option">&#10004;</span>\n             {{option}}\n            </a>\n          </li>\n        </ul>\n      </div>\n    </div>\n    ',
-  styles: ['\n        :host {float: right;}\n    ']
+    selector: 'toolbar-sort',
+    template: '\n        <div class="btn-group">\n            <div class="btn-group" dropdown>\n                <button type="button" class="btn btn-default btn-icon dropdown-toggle" aria-label="SortAsc"\n                        dropdown-open>\n                    <span class="glyphicon glyphicon-sort-by-attributes" aria-hidden="true"></span>\n                </button>\n                <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="SortAsc">\n                    <li role="menuitem" (click)="_onClick(\'unsorted\')">\n                        <a class="dropdown-item" href="#">\n                            <span *ngIf="_sortByMode === \'unsorted\'">&#10004;</span>\n                            (unsorted)</a>\n                    </li>\n                    <li class="divider"></li>\n                    <li *ngFor="let option of options; let i = index" role="menuitem" (click)="_onClick(option)">\n                        <a class="dropdown-item" href="#">\n                            <span *ngIf="_sortByMode === option">&#10004;</span>\n                            {{option}}\n                        </a>\n                    </li>\n                </ul>\n            </div>\n            <div class="btn-group" dropdown>\n                <button type="button" class="btn btn-default btn-icon dropdown-toggle" aria-label="SortDesc"\n                        dropdown-open>\n                    <span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span>\n                </button>\n                <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="SortDesc">\n                    <li *ngFor="let option of options; let i = index" role="menuitem" (click)="_onClick(\'-\'+option)">\n                        <a class="dropdown-item" href="#">\n                            <span *ngIf="_sortByMode === \'-\'+option">&#10004;</span>\n                            {{option}}\n                        </a>\n                    </li>\n                </ul>\n            </div>\n        </div>\n    ',
+    styles: ['\n        :host {float: right;}\n    ']
 }), _dec2 = (0, _core.Input)(), _dec3 = (0, _core.Output)(), _dec(_class = (_class2 = function () {
-  function ToolbarSort() {
-    _classCallCheck(this, ToolbarSort);
+    function ToolbarSort() {
+        _classCallCheck(this, ToolbarSort);
 
-    _initDefineProp(this, 'options', _descriptor, this);
+        _initDefineProp(this, 'options', _descriptor, this);
 
-    _initDefineProp(this, 'sorted', _descriptor2, this);
+        _initDefineProp(this, 'sorted', _descriptor2, this);
 
-    this.sortByMode = "unsorted";
-  }
-
-  _createClass(ToolbarSort, [{
-    key: 'onClick',
-    value: function onClick(item) {
-      this.sortByMode = item;
-      this.sorted.emit(item);
+        this._sortByMode = "unsorted";
     }
-  }]);
 
-  return ToolbarSort;
+    _createClass(ToolbarSort, [{
+        key: '_onClick',
+        value: function _onClick(item) {
+            this._sortByMode = item;
+            this.sorted.emit(item);
+        }
+    }]);
+
+    return ToolbarSort;
 }(), (_descriptor = _applyDecoratedDescriptor(_class2.prototype, 'options', [_dec2], {
-  enumerable: true,
-  initializer: function initializer() {
-    return [];
-  }
+    enumerable: true,
+    initializer: function initializer() {
+        return [];
+    }
 }), _descriptor2 = _applyDecoratedDescriptor(_class2.prototype, 'sorted', [_dec3], {
-  enumerable: true,
-  initializer: function initializer() {
-    return new _core.EventEmitter();
-  }
+    enumerable: true,
+    initializer: function initializer() {
+        return new _core.EventEmitter();
+    }
 })), _class2)) || _class);
 
 /**
@@ -37347,11 +37402,11 @@ var ToolbarSort = exports.ToolbarSort = (_dec = (0, _core.Component)({
  */
 
 var ToolbarSortModule = exports.ToolbarSortModule = (_dec4 = (0, _core.NgModule)({
-  imports: [_common.CommonModule, _ngxDropdown.DropdownModule],
-  declarations: [ToolbarSort],
-  exports: [ToolbarSort]
+    imports: [_common.CommonModule, _ngxDropdown.DropdownModule],
+    declarations: [ToolbarSort],
+    exports: [ToolbarSort]
 }), _dec4(_class4 = function ToolbarSortModule() {
-  _classCallCheck(this, ToolbarSortModule);
+    _classCallCheck(this, ToolbarSortModule);
 }) || _class4);
 
 /***/ }),

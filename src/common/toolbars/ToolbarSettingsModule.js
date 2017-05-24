@@ -6,23 +6,23 @@ import {DropdownModule} from 'ngx-dropdown';
 @Component({
     selector: 'toolbar-propertySettings',
     template: `
-      <div class="dropdown pull-right" dropdown [dropdownToggle]="false">
-          <button type="button" class="btn btn-default btn-icon" aria-label="Settings" dropdown-open>
-            <span class="glyphicon glyphicon-list"></span>
-          </button>
-          <!--<div draggable="true">-->
-              <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="Settings" 
-              dropdown-not-closable-zone>
+        <div class="dropdown pull-right" dropdown [dropdownToggle]="false">
+            <button type="button" class="btn btn-default btn-icon" aria-label="Settings" dropdown-open>
+                <span class="glyphicon glyphicon-list"></span>
+            </button>
+            <!--<div draggable="true">-->
+            <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="Settings"
+                dropdown-not-closable-zone>
                 <li *ngFor="let option of options">
-                  <a class="small" href="#">
-                      <input type="checkbox"
-                      [checked]="option.selected" (change)="updateValue(option, $event)"/>&nbsp;
-                      <span [style.color]="option.color">{{transform? transform(option.value): option.value}}</span>
-                  </a>
+                    <a class="small" href="#">
+                        <input type="checkbox"
+                               [checked]="option.selected" (change)="_updateValue(option, $event)"/>&nbsp;
+                        <span [style.color]="option.color">{{transform ? transform(option.value) : option.value}}</span>
+                    </a>
                 </li>
-              </ul>
-          <!--</div>-->
-      </div>
+            </ul>
+            <!--</div>-->
+        </div>
     `
 })
 /**
@@ -40,7 +40,7 @@ export class ToolbarPropertySettings {
     @Input()  transform: (x: string) => string;
     @Output() selectionChanged = new EventEmitter();
 
-    updateValue(option, event) {
+    _updateValue(option, event) {
         option.selected = event.target.checked;
         this.selectionChanged.emit(option);
     }

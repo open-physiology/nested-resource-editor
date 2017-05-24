@@ -7,86 +7,88 @@ import isUndefined from 'lodash-bound/isUndefined';
     "inputs": ["caption", "item", "min", "max", "step"],
     "selector": "template-value",
     "template": `
-      <div class="input-control input-control-lg">
-        <label for="caption">{{caption}}:</label>
-        
-        <div class="btn-group" style="float: left;">
-          <button type="button" class="btn btn-default btn-icon" 
-            [ngClass]="{'active': item.class === 'Number'}" (click)="updateValue('Number')">
-            <span class="glyphicon glyphicon-th"></span>
-          </button>
-          <button type="button" class="btn btn-default btn-icon" 
-            [ngClass]="{'active': item.class === 'NumberRange'}" (click)="updateValue('NumberRange')">
-            <span class="glyphicon glyphicon-transfer"></span>
-          </button>
-          <button type="button" class="btn btn-default btn-icon" 
-            [ngClass]="{'active': item.class === 'BoundedNormalDistribution'}" (click)="updateValue('BoundedNormalDistribution')">
-            <span class="glyphicon glyphicon-stats"></span>
-          </button>
-          <button type="button" class="btn btn-default btn-icon" 
-            [ngClass]="{'active': item.class === 'UniformDistribution'}" (click)="updateValue('UniformDistribution')">
-            <span class="glyphicon glyphicon-align-center"></span>
-          </button>
-        </div>
-      </div>
-      
-      <div class="input-control input-control-md" *ngIf="item.class === 'Number'">
-        <label>Value:</label>
-        <input type="number" class="form-control" 
-           [min] ="min" 
-           [max] ="max" 
-           [step]="step" 
-           [(ngModel)]="item.value" 
-           (ngModelChange)="updated.emit(item)"/>
-      </div>
+        <div class="input-control input-control-lg">
+            <label for="caption">{{caption}}:</label>
 
-      <div class="input-control" *ngIf="(item.class === 'NumberRange') || (item.class.endsWith('Distribution'))">
-        <label>{{getLabel()}}:</label>
-        <fieldset >
-          <div class="input-control input-control-sm">
-            <label for="min">Min: </label>
-            <input type="number" class="form-control" 
-              [min] ="min" 
-              [max] ="max" 
-              [step]="step" 
-              [(ngModel)]="item.min"
-              (ngModelChange)="updated.emit(item)">
-          </div>
-          <!--Max-->
-          <div class="input-control input-control-sm">
-            <label for="max">Max: </label>
-            <input type="number" class="form-control" 
-              [min] ="min" 
-              [max] ="max" 
-              [step]="step" 
-              [(ngModel)]="item.max"
-              (ngModelChange)="updated.emit(item)">
-          </div>
-          <div *ngIf="item.class === 'BoundedNormalDistribution'" style="display: inline-block">
-            <!--Mean-->
-            <div class="input-control input-control-sm">
-              <label for="mean">Mean: </label>
-              <input type="number" class="form-control" 
-              [min] ="min" 
-              [max] ="max" 
-              [step]="step" 
-              [(ngModel)]="item.mean"
-              (ngModelChange)="updated.emit(item)">
+            <div class="btn-group" style="float: left;">
+                <button type="button" class="btn btn-default btn-icon"
+                        [ngClass]="{'active': item.class === 'Number'}" (click)="_updateValue('Number')">
+                    <span class="glyphicon glyphicon-th"></span>
+                </button>
+                <button type="button" class="btn btn-default btn-icon"
+                        [ngClass]="{'active': item.class === 'NumberRange'}" (click)="_updateValue('NumberRange')">
+                    <span class="glyphicon glyphicon-transfer"></span>
+                </button>
+                <button type="button" class="btn btn-default btn-icon"
+                        [ngClass]="{'active': item.class === 'BoundedNormalDistribution'}"
+                        (click)="_updateValue('BoundedNormalDistribution')">
+                    <span class="glyphicon glyphicon-stats"></span>
+                </button>
+                <button type="button" class="btn btn-default btn-icon"
+                        [ngClass]="{'active': item.class === 'UniformDistribution'}"
+                        (click)="_updateValue('UniformDistribution')">
+                    <span class="glyphicon glyphicon-align-center"></span>
+                </button>
             </div>
-            <!--Std-->
-            <div class="input-control input-control-sm">
-              <label for="std">Std: </label>
-              <input type="number" class="form-control" 
-              [min] ="min" 
-              [max] ="max" 
-              [step]="step" 
-              [(ngModel)]="item.std"
-              (ngModelChange)="updated.emit(item)">
-            </div>
-          </div>
-        </fieldset>
-      </div>
-   `,
+        </div>
+
+        <div class="input-control input-control-md" *ngIf="item.class === 'Number'">
+            <label>Value:</label>
+            <input type="number" class="form-control"
+                   [min]="min"
+                   [max]="max"
+                   [step]="step"
+                   [(ngModel)]="item.value"
+                   (ngModelChange)="updated.emit(item)"/>
+        </div>
+
+        <div class="input-control" *ngIf="(item.class === 'NumberRange') || (item.class.endsWith('Distribution'))">
+            <label>{{_getLabel()}}:</label>
+            <fieldset>
+                <div class="input-control input-control-sm">
+                    <label for="min">Min: </label>
+                    <input type="number" class="form-control"
+                           [min]="min"
+                           [max]="max"
+                           [step]="step"
+                           [(ngModel)]="item.min"
+                           (ngModelChange)="updated.emit(item)">
+                </div>
+                <!--Max-->
+                <div class="input-control input-control-sm">
+                    <label for="max">Max: </label>
+                    <input type="number" class="form-control"
+                           [min]="min"
+                           [max]="max"
+                           [step]="step"
+                           [(ngModel)]="item.max"
+                           (ngModelChange)="updated.emit(item)">
+                </div>
+                <div *ngIf="item.class === 'BoundedNormalDistribution'" style="display: inline-block">
+                    <!--Mean-->
+                    <div class="input-control input-control-sm">
+                        <label for="mean">Mean: </label>
+                        <input type="number" class="form-control"
+                               [min]="min"
+                               [max]="max"
+                               [step]="step"
+                               [(ngModel)]="item.mean"
+                               (ngModelChange)="updated.emit(item)">
+                    </div>
+                    <!--Std-->
+                    <div class="input-control input-control-sm">
+                        <label for="std">Std: </label>
+                        <input type="number" class="form-control"
+                               [min]="min"
+                               [max]="max"
+                               [step]="step"
+                               [(ngModel)]="item.std"
+                               (ngModelChange)="updated.emit(item)">
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+    `,
     "styles": [`
         input {width: 60px;}
         .form-control {
@@ -128,8 +130,15 @@ export class TemplateValueComponent{
      */
     @Input() step: number = 1;
 
+    /**
+     * The event signalling that the object has been changed
+     * @type {EventEmitter}
+     */
     @Output() updated = new EventEmitter();
 
+    /**
+     * Initialize the component
+     */
     ngOnInit(){
         if (this.item::isUndefined()){
             this.item = {value: 0, class: 'Number'};
@@ -139,17 +148,14 @@ export class TemplateValueComponent{
         }
     }
 
-    //TODO: add radio button to choose distribution type
-    updateValue(type){
-        // if (type === "Distribution"){
-        //     this.item.class = "BoundedNormalDistribution";
-        // }
+    _updateValue(type){
         this.item.class = type;
         this.updated.emit(this.item);
     }
 
-    getLabel(){
-        return (this.item.class === 'NumberRange')? 'Range':
+    _getLabel(){
+        return
+            (this.item.class === 'NumberRange')? 'Range':
             (this.item.class === 'BoundedNormalDistribution')
                 ? 'Bounded normal distribution'
                 : 'Uniform distribution';

@@ -13,22 +13,26 @@ import {NestedResourceWidgetModule} from '../index.js';
 	selector: 'test-app',
 	template: `
         <nested-resource-widget id="repo"
-		  caption="Resources" 
-		  [model]="model"
-		  [items]="items | setToArray" 
-		  (selectedItemChange)="onItemSelected($event)">
-		</nested-resource-widget>
+                                caption="Resources"
+                                [model]="_model"
+                                [items]="_items | setToArray"
+                                (selectedItemChange)="_onItemSelected($event)">
+        </nested-resource-widget>
 	`
 })
 /**
  * The TestComponent component, showing off the nested resource editor!
  */
 export class TestApp {
-	model;
-	items;
-	selectedItem;
+	_model;
+	_items;
+	_selectedItem;
 
-	rs: Subscription;
+	_rs: Subscription;
+
+    /**
+	 * The constructor of the component
+     */
 	constructor() {
 		let {backend} = ajaxBackend({
 			baseURL:     'http://open-physiology.org:8880',
@@ -36,26 +40,31 @@ export class TestApp {
 		});
 		let modelRef = modelFactory(backend);
 		window.module = modelRef;
-		this.model = modelRef.classes;
+		this._model = modelRef.classes;
 
-		this.rs = this.model.Resource.p('all').subscribe(
+		console.log("Model", this._model);
+
+		this._rs = this._model.Resource.p('all').subscribe(
 			(data) => {
-				this.items = data;
-				if (this.items.length > 0){
-					this.selectedItem = this.items[0];
+				this._items = data;
+				if (this._items.length > 0){
+					this._selectedItem = this._items[0];
 				}
 			});
 		//model.Resource.getAll(); //Fails!
-		this.model.Lyph.new({name: "Kidney"}, {createAxis: true});
-		this.model.Lyph.new({name: "Heart"});
-		this.model.Lyph.new({name: "Head"});
+		this._model.Lyph.new({name: "Kidney"}, {createAxis: true});
+		this._model.Lyph.new({name: "Heart"});
+		this._model.Lyph.new({name: "Head"});
 	}
 
-	ngOnDestroy() { this.rs.unsubscribe(); }
+    /**
+	 * Unsubscribe from subscriptions
+     */
+	ngOnDestroy() { this._rs.unsubscribe(); }
 
-	onItemSelected(item) {
-		setTimeout(() => { this.selectedItem = null; }, 0);
-		setTimeout(() => { this.selectedItem = item; }, 0);
+	_onItemSelected(item) {
+		setTimeout(() => { this._selectedItem = null; }, 0);
+		setTimeout(() => { this._selectedItem = item; }, 0);
 	}
 }
 

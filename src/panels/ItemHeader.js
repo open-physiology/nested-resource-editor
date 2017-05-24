@@ -4,20 +4,20 @@ import {Component, Input, Output, EventEmitter, ElementRef} from '@angular/core'
     selector: 'item-header',
     template: `
         <span class="pull-left glyphicon"
-            [ngClass]="{
+              [ngClass]="{
               'glyphicon-chevron-down':  isOpen, 
               'glyphicon-chevron-right': !isOpen}">
         </span>
-        {{(item.id)? item.id: "?"}}: {{item.name}}
+        {{(item.id) ? item.id : "?"}}: {{item.name}}
         <span class="pull-right">
           <img *ngIf="_isType" class="imtip" src="../images/type.png"/>
-          <img class="icon" [src]="getResourceIcon()"/>
-          <button type="button" *ngIf="options?.showActive" class="btn btn-default btn-header" 
-            [ngClass]="{'active': isActive}" (click)="activeItemChanged.emit(item)">
-            <span class = "glyphicon" [ngClass]="{'glyphicon-pencil': isActive}"></span>
+          <img class="icon" [src]="_getResourceIcon()"/>
+          <button type="button" *ngIf="options?.showActive" class="btn btn-default btn-header"
+                  [ngClass]="{'active': isActive}" (click)="activeItemChanged.emit(item)">
+            <span class="glyphicon" [ngClass]="{'glyphicon-pencil': isActive}"></span>
           </button>
         </span>
-  `,
+    `,
     styles: [`
         .icon {
           height: 16px;
@@ -72,7 +72,7 @@ export class ItemHeader {
      * @param {Resource} item - the resource
      * @returns {DataURI} - the icon for the resource class
      */
-    getResourceIcon(): string{
+    _getResourceIcon(){
         if (this.item.class === "Lyph" && this.item.axis) {
             return "../images/lyphWithAxis.png";
         }
@@ -84,7 +84,11 @@ export class ItemHeader {
         return this.item.constructor.icon;
     }
 
+    /**
+     * Initialize the component
+     */
     ngOnInit() {
+        //define if the resource is typed
         this._isType = this.item && (this.item.class === "Type");
     }
 }

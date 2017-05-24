@@ -6,62 +6,65 @@ import {SetToArray, FilterBy} from "../common/PipeTransformModule";
 
 @Component({
     selector: 'nested-resource-list',
-    template:`       
-    <div class="panel repo-nested">
-      <div class="panel-heading"> <label>{{caption}}: </label></div>
-      <div class="panel-body" >
-        <span  *ngIf = "!(options?.readOnly || options?.headersOnly)">
-          <select-input-1 class="pull-left input-select" 
-            [item] = "_itemToInclude"
-            (updated) = "_itemToInclude = $event"    
-            [options] = "possibleValues">
+    template:`
+        <div class="panel repo-nested">
+            <div class="panel-heading"><label>{{caption}}: </label></div>
+            <div class="panel-body">
+        <span *ngIf="!(options?.readOnly || options?.headersOnly)">
+          <select-input-1 class="pull-left input-select"
+                          [item]="_itemToInclude"
+                          (updated)="_itemToInclude = $event"
+                          [options]="possibleValues">
           </select-input-1>
-          <button type="button" class="btn btn-default btn-icon" (click)="onIncluded(_itemToInclude)">
+          <button type="button" class="btn btn-default btn-icon" (click)="_onIncluded(_itemToInclude)">
             <span class="glyphicon glyphicon-save"></span>
           </button>
         </span>
-        
-        <toolbar-sort   *ngIf =  "options?.sortToolbar"  [options]="['Name', 'ID', 'Class']" (sorted)="onSorted($event)"></toolbar-sort>
-        <toolbar-add    *ngIf = "!(options?.readOnly || options?.headersOnly)"  [options]="types" [transform]="getClassLabel" (added)="onAdded($event)"></toolbar-add>
-        <toolbar-filter *ngIf =  "options?.filterToolbar" [options]="['Name', 'ID', 'Class']" [filter]="_searchString" (applied)="onFiltered($event)"></toolbar-filter>
 
-          <!--| orderBy : _sortByMode-->
+                <toolbar-sort *ngIf="options?.sortToolbar" [options]="['Name', 'ID', 'Class']"
+                              (sorted)="_onSorted($event)"></toolbar-sort>
+                <toolbar-add *ngIf="!(options?.readOnly || options?.headersOnly)" [options]="types"
+                             [transform]="_getClassLabel" (added)="_onAdded($event)"></toolbar-add>
+                <toolbar-filter *ngIf="options?.filterToolbar" [options]="['Name', 'ID', 'Class']"
+                                [filter]="_searchString" (applied)="_onFiltered($event)"></toolbar-filter>
 
-          <accordion [closeOthers]="true"
-          dnd-sortable-container [dropZones]="_zones" [sortableData]="items">
-          <accordion-group *ngFor="let item of items 
+                <!--| orderBy : _sortByMode-->
+
+                <accordion [closeOthers]="true"
+                           dnd-sortable-container [dropZones]="_zones" [sortableData]="items">
+                    <accordion-group *ngFor="let item of items 
             | filterBy: [_searchString, _filterByMode]; let i = index" class="list-group-item"
-               dnd-sortable [dragEnabled] = true
-               [sortableIndex]="i"
-               (onDragEnd)="_onDragEnd(i)"
+                                     dnd-sortable [dragEnabled]=true
+                                     [sortableIndex]="i"
+                                     (onDragEnd)="_onDragEnd(i)"
 
-               (onOpen) ="openItem = item" 
-               (onClose)="openItem = null">
- 
-            <accordion-heading (click)  ="selectedItem = item">
-              <item-header [item]="item" 
-                [isOpen]       = "item === openItem" 
-                (mouseover)    = "highlightedItem = item" 
-                (mouseout)     = "_unhighlight(item)"
-                [ngClass] ="{highlighted: item === highlightedItem, active: item === selectedItem}">
-              </item-header>
-            </accordion-heading>
+                                     (onOpen)="openItem = item"
+                                     (onClose)="openItem = null">
 
-            <div *ngIf="!options?.headersOnly">
-              <resource-panel *ngIf="item === openItem" 
-                [item]    ="item" 
-                [model]   ="model"
-                [options] ="options"
-                (saved)   ="onSaved(item)" 
-                (removed) ="onRemoved(item)"
-                (highlightedItemChange)="highlightedItemChange.emit($event)"
-                ></resource-panel>            
+                        <accordion-heading (click)="selectedItem = item">
+                            <item-header [item]="item"
+                                         [isOpen]="item === openItem"
+                                         (mouseover)="highlightedItem = item"
+                                         (mouseout)="_unhighlight(item)"
+                                         [ngClass]="{highlighted: item === highlightedItem, active: item === selectedItem}">
+                            </item-header>
+                        </accordion-heading>
+
+                        <div *ngIf="!options?.headersOnly">
+                            <resource-panel *ngIf="item === openItem"
+                                            [item]="item"
+                                            [model]="model"
+                                            [options]="options"
+                                            (saved)="_onSaved(item)"
+                                            (removed)="_onRemoved(item)"
+                                            (highlightedItemChange)="highlightedItemChange.emit($event)"
+                            ></resource-panel>
+                        </div>
+                    </accordion-group>
+                </accordion>
             </div>
-          </accordion-group>        
-        </accordion>       
-      </div>
-    </div>
-  `,
+        </div>
+    `,
     styles: [`
         .input-select{
           min-width: 100px;
@@ -88,6 +91,7 @@ export class NestedResourceList extends AbstractResourceList{
     _itemToInclude = null;
 
     /**
+     * The constructor of the component
      * @param {ToastyService} toastyService - the service for showing notifications and error messages
      * @param {HighlightService} highlightService - the service that notifies nested components about currently highlighted item
      */
@@ -96,6 +100,9 @@ export class NestedResourceList extends AbstractResourceList{
         this._toastyService = toastyService;
     }
 
+    /**
+     * Initialize the component
+     */
     ngOnInit(){
         super.ngOnInit();
 
@@ -117,10 +124,17 @@ export class NestedResourceList extends AbstractResourceList{
         }
     }
 
+    /**
+     * Unsubscribe from subscriptions
+     */
     ngOnDestroy() {
         if (this._ts) { this._ts.unsubscribe(); }
     }
 
+    /**
+     * Update the view in response to external data change (e.g., sort layers)
+     * @param {Object} changes - the object defining input data changes
+     */
     ngOnChanges(changes) {
         if (this.items && this.options.ordered) {
             this.items.sort((a, b) => {
@@ -157,7 +171,7 @@ export class NestedResourceList extends AbstractResourceList{
      * Include a selected resource to the current list
      * @param {Resource} newItem - the selected resource to include to the current list
      */
-    onIncluded(newItem){
+    _onIncluded(newItem){
         if (newItem){
             if (this.items.indexOf(newItem) < 0){
                 this.items.push(newItem);

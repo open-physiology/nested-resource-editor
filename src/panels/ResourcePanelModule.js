@@ -30,78 +30,78 @@ import {MeasurableGeneratorModule, MeasurableGenerator} from "../components/Meas
             <div class="panel-body">
                 <toolbar-commands
                         [options]="options"
-                        (saved)="onSaved($event)"
-                        (canceled)="onCanceled($event)"
+                        (saved)="_onSaved($event)"
+                        (canceled)="_onCanceled($event)"
                         (removed)="removed.emit($event)">
                 </toolbar-commands>
                 <toolbar-propertySettings
-                        [options]="fields"
-                        [transform]="getPropertyLabel"
-                        (selectionChanged)="visibleFieldsChanged($event)">
+                        [options]="_fields"
+                        [transform]="_getPropertyLabel"
+                        (selectionChanged)="_visibleFieldsChanged($event)">
                 </toolbar-propertySettings>
-                <toolbar-sort [options]="['Name']" (sorted)="onSorted($event)">
+                <toolbar-sort [options]="['Name']" (sorted)="_onSorted($event)">
                 </toolbar-sort>
 
                 <div class="input-control" *ngIf="item.class === model.Lyph.name">
-                    <button type="button" class="btn btn-default btn-icon" (click)="generateMeasurables()">
+                    <button type="button" class="btn btn-default btn-icon" (click)="_mGen.open()">
                         <span class="glyphicon glyphicon-cog"></span>
                     </button>
                 </div>
-                <div class="input-control" *ngIf="!options?.hideCreateType && isTyped()">
-                    <input type="checkbox" [disabled]="typeCreated" [(ngModel)]="createType">Create type
+                <div class="input-control" *ngIf="!options?.hideCreateType && _isTyped()">
+                    <input type="checkbox" [disabled]="_typeCreated" [(ngModel)]="_createType">Create type
                 </div>
 
                 <div class="panel-content">
                     <div class="input-control"
-                         *ngFor="let field of fields | orderBy : _sortByMode">
-                        <div *ngIf="!ignore.has(field.value)">
+                         *ngFor="let field of _fields | orderBy : _sortByMode">
+                        <div *ngIf="!_ignore.has(field.value)">
 
                             <div class="input-control-lg" *ngIf="field.type === 'input'">
-                                <label for="comment">{{getPropertyLabel(field.value)}}: </label>
+                                <label for="comment">{{_getPropertyLabel(field.value)}}: </label>
                                 <input class="form-control"
-                                       [type]="getDefaultValue(field.value, 'type')"
+                                       [type]="_getDefaultValue(field.value, 'type')"
                                        [disabled]="item.constructor.properties[field.value].readOnly"
                                        [(ngModel)]="item[field.value]">
                             </div>
 
                             <div *ngIf="field.type === 'select'">
-                                <label>{{getPropertyLabel(field.value)}}: </label>
+                                <label>{{_getPropertyLabel(field.value)}}: </label>
                                 <select-input-1 [item]="item.p(field.value) | async"
-                                                (updated)="updateProperty(field.value, $event)"
-                                                [options]="possibleValues[field.value]">
+                                                (updated)="_updateProperty(field.value, $event)"
+                                                [options]="_possibleValues[field.value]">
                                 </select-input-1>
                             </div>
 
                             <div *ngIf="field.type === 'multiSelect'">
-                                <label>{{getPropertyLabel(field.value)}}: </label>
+                                <label>{{_getPropertyLabel(field.value)}}: </label>
                                 <select-input [items]="item.p(field.value) | async"
-                                              (updated)="updateProperty(field.value, $event)"
-                                              [options]="possibleValues[field.value]">
+                                              (updated)="_updateProperty(field.value, $event)"
+                                              [options]="_possibleValues[field.value]">
                                 </select-input>
                             </div>
 
                             <nested-resource-list *ngIf="field.type === 'relation'"
-                                                  [caption]="getPropertyLabel(field.value)"
+                                                  [caption]="_getPropertyLabel(field.value)"
                                                   [model]="model"
                                                   [items]="item.p(field.value) | async | setToArray"
                                                   [options]="{ordered: ['layers', 'segments'].includes(field.value)}"
                                                   [types]="[item.constructor.relationshipShortcuts[field.value].codomain.resourceClass.name]"
-                                                  (updated)="updateProperty(field.value, $event)">
+                                                  (updated)="_updateProperty(field.value, $event)">
                             </nested-resource-list>
 
                             <template-value *ngIf="field.type === 'template'"
-                                            [caption]="getPropertyLabel(field.value)"
+                                            [caption]="_getPropertyLabel(field.value)"
                                             [item]="item.p(field.value) | async"
-                                            [step]="getDefaultValue(field.value, 'step')"
-                                            (updated)="updateProperty(field.value, $event)">
+                                            [step]="_getDefaultValue(field.value, 'step')"
+                                            (updated)="_updateProperty(field.value, $event)">
                             </template-value>
 
                             <fieldset *ngIf="field.type === 'checkbox'">
-                                <legend>{{getPropertyLabel(field.value)}}:</legend>
-                                <p *ngFor="let option of possibleValues[field.value]; let i = index">
+                                <legend>{{_getPropertyLabel(field.value)}}:</legend>
+                                <p *ngFor="let option of _possibleValues[field.value]; let i = index">
                                     <input type="checkbox" [value]="option"
                                            [checked]="item[field.value].includes(option)"
-                                           (change)="updateArray(field.value, option, $event)"
+                                           (change)="_updateArray(field.value, option, $event)"
                                     >{{option}}&nbsp;
                                 </p>
                             </fieldset>
@@ -202,31 +202,32 @@ export class ResourcePanel {
 
     @ViewChild(MeasurableGenerator) _mGen;
     _sortByMode   = "unsorted";
+    _ignore = new Set();
 
-    ignore = new Set();
-
-    /*Field type and visibility configurations*/
-    fields = [];
-
-    /*Typed resources*/
-    createType = false;
-    typeCreated = false;
-
-    /*Selection options*/
-    possibleValues = {};
+    //Field type and visibility configurations
+    _fields = [];
+    //Typed resources
+    _createType = false;
+    _typeCreated = false;
+    //Selection options
+    _possibleValues = {};
 
     /**
+     * The constructor of the component
      * @param {ToastyService} toastyService - the service for showing notifications and error messages
      */
-    constructor(toastyService:ToastyService){
+    constructor(toastyService: ToastyService){
         this._toastyService = toastyService;
     }
 
+    /**
+     * Initialize the component: define visual element type for each property field
+     */
     ngOnInit(){
-        this.ignore = new Set(["id", "cardinalityBase", "cardinalityMultipliers", "definedType"]);
+        this._ignore = new Set(["id", "cardinalityBase", "cardinalityMultipliers", "definedType"]);
         if (this.item instanceof this.model.Border) {
             ['externals', 'species', 'measurables', 'name', 'types', 'nodes'].map(propName =>
-                this.ignore.add(propName));
+                this._ignore.add(propName));
         }
 
         /*Auto-generated visual groups*/
@@ -240,22 +241,22 @@ export class ResourcePanel {
         /*Properties*/
         for (let [key, value] of Object.entries(this.item.constructor.properties)
                 .filter(([key, value]) => !privateProperties.has(key))){
-            this.fields.push({
+            this._fields.push({
                 value: key,
-                selected: !this.ignore.has(key),
+                selected: !this._ignore.has(key),
                 type: (value.items && value.items.enum)? 'checkbox'
                     : (templateGroup.includes(key))? 'template': 'input'
             });
             if (value.items && value.items.enum){
-                this.possibleValues[key] = Object.values(value.items.enum);
+                this._possibleValues[key] = Object.values(value.items.enum);
             }
         }
         /*Relationships*/
         for (let [key, value] of Object.entries(this.item.constructor.relationshipShortcuts)
                 .filter(([key, value]) => !privateProperties.has(key) && !value.abstract)){
-            this.fields.push({
+            this._fields.push({
                 value: key,
-                selected: !this.ignore.has(key),
+                selected: !this._ignore.has(key),
                 type: (value.cardinality.max === 1)
                     ? 'select'
                     : multiSelectProperties.includes[key]? 'multiSelect' : 'relation'
@@ -263,7 +264,7 @@ export class ResourcePanel {
 
             this.item.fields[key].p('possibleValues').subscribe(
                 (data) => {
-                    this.possibleValues[key] = (key === "cardinalityMultipliers")?
+                    this._possibleValues[key] = (key === "cardinalityMultipliers")?
                         new Set(new HideClass().transform( new SetToArray().transform(data),
                             [this.model.Border.name, this.model.Node.name]))
                         : data;
@@ -271,7 +272,7 @@ export class ResourcePanel {
       }
 
       /*"create type" check box enabled if type has not been defined */
-      if (this.isTyped()){ this.typeCreated = !!this.item['-->DefinesType']; }
+      if (this._isTyped()){ this._typeCreated = !!this.item['-->DefinesType']; }
 
     }
 
@@ -280,7 +281,7 @@ export class ResourcePanel {
      * @param {string} option - the open-physiology resource field name
      * @returns {string} - the user readable label
      */
-    getPropertyLabel(option: string): string{
+    _getPropertyLabel(option: string): string{
         let custom = { "externals": "Annotations",
             "locals": "Local resources" };
         if (custom[option]) { return custom[option]; }
@@ -301,7 +302,7 @@ export class ResourcePanel {
      *
      * @example getDefaultValue("width", "step") = 1
      */
-    getDefaultValue(property, attribute){
+    _getDefaultValue(property, attribute){
         let propertySpec = this.item.constructor.properties[property];
         switch(attribute){
             case "type": return ((propertySpec.type === "integer")
@@ -311,22 +312,22 @@ export class ResourcePanel {
         return "";
     }
 
-    visibleFieldsChanged(option){
-        if ( this.ignore.has(option.value) &&  option.selected) {
-            this.ignore.delete(option.value);
+    _visibleFieldsChanged(option){
+        if ( this._ignore.has(option.value) &&  option.selected) {
+            this._ignore.delete(option.value);
         }
-        if (!this.ignore.has(option.value) && !option.selected) {
-            this.ignore.add(option.value);
+        if (!this._ignore.has(option.value) && !option.selected) {
+            this._ignore.add(option.value);
         }
     }
 
-    updateProperty(property, item){
+    _updateProperty(property, item){
         if (this.item.fields[property] && this.item.fields[property].readonly) { return; }
         this.item[property] = item;
         this.propertyUpdated.emit({property: property, values: item});
     }
 
-    updateArray(property, option, event){
+    _updateArray(property, option, event){
         let newArray = [];
         if (!event.target.checked){
             newArray = this.item[property].filter(x => x !== option);
@@ -336,30 +337,26 @@ export class ResourcePanel {
                 newArray.push(option);
             }
         }
-        this.updateProperty(property, newArray);
+        this._updateProperty(property, newArray);
     }
 
-    addItem(parent, property, item){
+    _addItem(parent, property, item){
         if (parent && (parent[property])){
             parent[property].add(item);
             this.propertyUpdated.emit({property: property, values: parent[property]});
         }
     }
 
-    removeItem(parent, property, item){
+    _removeItem(parent, property, item){
         item.delete();
-        this.updateProperty(property, parent[property]);
+        this._updateProperty(property, parent[property]);
     }
 
-    isTyped(){
+    _isTyped(){
         return this.item instanceof this.model.Template;
     }
 
-    generateMeasurables(){
-        this._mGen.generateMeasurables();
-    }
-
-    onSorted(prop) {
+    _onSorted(prop) {
         if (prop === "Name"){
             this._sortByMode = "value";
         } else {
@@ -367,7 +364,7 @@ export class ResourcePanel {
         }
     }
 
-    onSaved(event){
+    _onSaved(event){
         if (this.item.class === this.model.CoalescenceScenario.name){
             if (this.item.lyphs && (this.item.lyphs.size !== 2)){
                 this._toastyService.error("Wrong number of lyphs", this.item.lyphs.size);
@@ -380,7 +377,7 @@ export class ResourcePanel {
                 this._toastyService.error(errorMsg);
             });
 
-        if (event && event.createType){
+        if (event && event._createType){
             let template = this.item;
             if (!template['-->DefinesType']){
                 (async function() {
@@ -395,7 +392,7 @@ export class ResourcePanel {
         this.saved.emit(this.item);
     }
 
-    onCanceled(event) {
+    _onCanceled(event) {
         this.item.rollback();
         this.canceled.emit(event);
     }
@@ -423,7 +420,6 @@ export class ResourcePanel {
     declarations: [ ResourcePanel, NestedResourceList, ItemHeader ],
     providers: [ToastyService],
     exports: [
-        //Existing
         AccordionModule,
         DndModule,
         PipeTransformModule,
@@ -431,7 +427,6 @@ export class ResourcePanel {
         ToolbarAddModule,
         ToolbarFilterModule,
         ToolbarSortModule,
-        //New
         ResourcePanel,
         ItemHeader]
 })

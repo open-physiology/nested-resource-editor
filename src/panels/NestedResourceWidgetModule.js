@@ -10,58 +10,59 @@ import {HighlightService} from './HighlightService.js';
     selector: 'nested-resource-widget',
     template:`
         <div class="panel panel-info repo">
-        <div class="panel-heading">{{caption}}
-          <span class="pull-right" *ngIf="options?.showActive">
-            <button type="button" class="btn btn-default btn-header" 
-              [ngClass]="{'active': activeItem === null}" (click)="activeItem = null">
-              <span class = "glyphicon" [ngClass]="{'glyphicon-pencil': activeItem === null}"></span>
+            <div class="panel-heading">{{caption}}
+                <span class="pull-right" *ngIf="options?.showActive">
+            <button type="button" class="btn btn-default btn-header"
+                    [ngClass]="{'active': activeItem === null}" (click)="activeItem = null">
+              <span class="glyphicon" [ngClass]="{'glyphicon-pencil': activeItem === null}"></span>
             </button>
           </span>
-        </div>
-        <div class="panel-body">
-          <toolbar-sort  [options]="['Name', 'ID', 'Class']" (sorted)="onSorted($event)"></toolbar-sort>
-          <toolbar-add   [options]="types" [transform]="getClassLabel" (added)="onAdded($event)"></toolbar-add>
-          <toolbar-propertySettings  [options] = "_typeOptions" [transform] = "getClassLabel" 
-            (selectionChanged) = "hiddenTypesChanged($event)">
-          </toolbar-propertySettings>
+            </div>
+            <div class="panel-body">
+                <toolbar-sort [options]="['Name', 'ID', 'Class']" (sorted)="_onSorted($event)"></toolbar-sort>
+                <toolbar-add [options]="types" [transform]="_getClassLabel" (added)="_onAdded($event)"></toolbar-add>
+                <toolbar-propertySettings [options]="_typeOptions" [transform]="_getClassLabel"
+                                          (selectionChanged)="_hiddenTypesChanged($event)">
+                </toolbar-propertySettings>
 
-          <toolbar-filter [filter]="_searchString" [options]="['Name', 'ID', 'Class']" (applied)="onFiltered($event)"></toolbar-filter>
-            
-          <accordion [closeOthers]="true" 
-                     dnd-sortable-container [dropZones]="_zones" [sortableData]="items">
-              <accordion-group *ngFor="let item of items 
+                <toolbar-filter [filter]="_searchString" [options]="['Name', 'ID', 'Class']"
+                                (applied)="_onFiltered($event)"></toolbar-filter>
+
+                <accordion [closeOthers]="true"
+                           dnd-sortable-container [dropZones]="_zones" [sortableData]="items">
+                    <accordion-group *ngFor="let item of items 
               | hideClass : hiddenTypes
               | orderBy : _sortByMode
               | filterBy: [_searchString, _filterByMode]
               ; let i = index" class="list-group-item"
-                dnd-sortable [sortableIndex]="i"
-               (onOpen) ="openItem = item"
-               (onClose)="openItem = null"
-              >
-                  <accordion-heading (click)  ="selectedItem = item">                  
-                  <item-header [item]= "item" 
-                    [options]      = "options"
-                    [isActive]     = "item === activeItem"
-                    [isOpen]       = "item === openItem" 
-                    (mouseover)    = "highlightedItem = item" 
-                    (mouseout)     = "_unhighlight(item)"
-                    (activeItemChanged) = "activeItem = item"
-                    [ngClass] ="{highlighted: item === highlightedItem, active: item === selectedItem}">   
-                  </item-header>
-                </accordion-heading>
-                <div *ngIf="!options?.headersOnly">
-                  <resource-panel *ngIf="item === openItem" 
-                    [item]    ="item"
-                    [model]   ="model"
-                    (saved)   ="onSaved(item)" 
-                    (removed) ="onRemoved(item)">
-                   </resource-panel>   
-                </div>
-              </accordion-group>        
-          </accordion>       
+                                     dnd-sortable [sortableIndex]="i"
+                                     (onOpen)="openItem = item"
+                                     (onClose)="openItem = null"
+                    >
+                        <accordion-heading (click)="selectedItem = item">
+                            <item-header [item]="item"
+                                         [options]="options"
+                                         [isActive]="item === activeItem"
+                                         [isOpen]="item === openItem"
+                                         (mouseover)="highlightedItem = item"
+                                         (mouseout)="_unhighlight(item)"
+                                         (activeItemChanged)="activeItem = item"
+                                         [ngClass]="{highlighted: item === highlightedItem, active: item === selectedItem}">
+                            </item-header>
+                        </accordion-heading>
+                        <div *ngIf="!options?.headersOnly">
+                            <resource-panel *ngIf="item === openItem"
+                                            [item]="item"
+                                            [model]="model"
+                                            (saved)="_onSaved(item)"
+                                            (removed)="_onRemoved(item)">
+                            </resource-panel>
+                        </div>
+                    </accordion-group>
+                </accordion>
+            </div>
         </div>
-      </div>
-  `,
+    `,
     styles: [` 
         .repo{ 
             width: 100%;
@@ -149,6 +150,7 @@ export class NestedResourceWidget extends AbstractResourceList{
     _typeOptions = [];
 
     /**
+     * The constructor of the component
      * @param {HighlightService} highlightService - the service that notifies nested components about currently highlighted item
      */
     constructor(highlightService: HighlightService){
@@ -156,7 +158,7 @@ export class NestedResourceWidget extends AbstractResourceList{
     }
 
     /**
-     * Initialize the nested resource list component: set invisible by default classes
+     * Initialize the nested resource widget component: set invisible by default classes
      */
     ngOnInit(){
         super.ngOnInit();
@@ -169,7 +171,7 @@ export class NestedResourceWidget extends AbstractResourceList{
      * @param {Object} option - the object with the field "value" that defines the resource class and
      *  the boolean field "selected" that indicates whether the value is selected or not.
      */
-    hiddenTypesChanged(option){
+    _hiddenTypesChanged(option){
         if ( this._ignoreTypes.has(option.value) &&  option.selected) {
             this._ignoreTypes.delete(option.value);
         }

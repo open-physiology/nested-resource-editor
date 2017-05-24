@@ -79,6 +79,7 @@ export class AbstractResourceList {
     _searchString = "";
 
     /**
+     * The constructor of the component
      * @param {HighlightService} highlightService - the service that notifies nested components about currently highlighted item
      */
     constructor(highlightService: HighlightService) {
@@ -129,7 +130,7 @@ export class AbstractResourceList {
     }
 
     /**
-     * Set resource with the open editor
+     * Choose a resource to show in the open editor
      * @param {Resource} item - the resource with the open editor
      */
     set openItem(item){
@@ -148,27 +149,27 @@ export class AbstractResourceList {
     /* Event processing */
 
     /**
-     * Change sorting mode
+     * Event handler for the sorting mode change event
      * @param {string} prop - the sorting mode
      */
-    onSorted(prop) {
+    _onSorted(prop) {
         this._sortByMode = prop.toLowerCase();
     }
 
     /**
-     * Change filter settings
+     * Event handler for the filter change event
      * @param {Object} config - the parameters for filtering, mode and search string.
      */
-    onFiltered(config) {
+    _onFiltered(config) {
         this._filterByMode = config.mode.toLowerCase();
         this._searchString = config.filter;
     }
 
     /**
-     * Save (commit) a given resource
+     * Event handler for the 'save' ('commit') event
      * @param {Resource} item - the resource to save (commit)
      */
-    onSaved(item) {
+    _onSaved(item) {
         this.updated.emit(this.items);
         if (item === this.selectedItem) {
             this.selectedItemChange.emit(this.selectedItem);
@@ -176,10 +177,10 @@ export class AbstractResourceList {
     }
 
     /**
-     * Delete a given resource
+     * Event handler for the 'delete' event
      * @param {Resource} item - he resource to delete
      */
-    onRemoved(item) {
+    _onRemoved(item) {
         if (!this.items) return;
         let index = this.items.indexOf(item);
         if (index > -1) this.items.splice(index, 1);
@@ -197,10 +198,10 @@ export class AbstractResourceList {
     }
 
     /**
-     * Create new resource
+     * Event handler for the 'create new resource' event
      * @param {string} clsName - the type of the resource to create
      */
-    onAdded(clsName) {
+    _onAdded(clsName) {
         let options = {};
         if (clsName === "LyphWithAxis") {
             clsName = this.model.Lyph.name;
@@ -228,7 +229,7 @@ export class AbstractResourceList {
      * @param {Resource} clsName - the resource class name
      * @returns {string} - the human readable label
      */
-    getClassLabel(clsName: string): string{
+    _getClassLabel(clsName){
         if (!clsName) { return ""; }
         let label = clsName;
         label = label.replace(/([a-z])([A-Z])/g, '$1 $2');

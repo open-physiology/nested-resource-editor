@@ -32,12 +32,7 @@
 <nav class="navigation" data-ice="nav"><div>
   <ul>
     
-  <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">common</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/PipeTransformModule.js~FilterBy.html">FilterBy</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/PipeTransformModule.js~HideClass.html">HideClass</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/PipeTransformModule.js~OrderBy.html">OrderBy</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/PipeTransformModule.js~PipeTransformModule.html">PipeTransformModule</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/PipeTransformModule.js~SetToArray.html">SetToArray</a></span></span></li>
-<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">common/components</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/components/CustomSelectModule.js~CustomSelectModule.html">CustomSelectModule</a></span></span></li>
+  <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">common/components</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/components/CustomSelectModule.js~CustomSelectModule.html">CustomSelectModule</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/components/CustomSelectModule.js~MultiSelectInput.html">MultiSelectInput</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/components/CustomSelectModule.js~SingleSelectInput.html">SingleSelectInput</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">common/toolbars</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/toolbars/ToolbarSettingsModule.js~ToolbarPropertySettings.html">ToolbarPropertySettings</a></span></span></li>
@@ -74,21 +69,22 @@ import {DropdownModule} from &apos;ngx-dropdown&apos;;
 @Component({
     selector: &apos;toolbar-filter&apos;,
     template: `
-     &lt;div class=&quot;input-group input-group-sm&quot; style=&quot;width: 220px;&quot;&gt;
-        &lt;input type=&quot;text&quot; class=&quot;form-control&quot; 
-        [value]=&quot;filter&quot; (input)=&quot;updateValue($event)&quot; (keyup.enter)=&quot;applied.emit({filter: filter, mode: mode});&quot;/&gt;
-        &lt;div class=&quot;input-group-btn&quot; dropdown&gt;
-          &lt;button type=&quot;button&quot; class=&quot;btn btn-secondary dropdown-toggle&quot; aria-label=&quot;Filter&quot; dropdown-open
-            aria-haspopup=&quot;true&quot; aria-expanded=&quot;false&quot;&gt;
-             &lt;span class=&quot;glyphicon glyphicon-filter&quot; aria-hidden=&quot;true&quot;&gt;&lt;/span&gt;
-          &lt;/button&gt;
-          &lt;ul class=&quot;dropdown-menu dropdown-menu-right&quot; role=&quot;menu&quot; aria-labelledby=&quot;Filter&quot;&gt;
-            &lt;li *ngFor=&quot;let option of options; let i = index&quot; (click)=&quot;updateMode(option)&quot;&gt;
-              &lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt; &lt;span *ngIf=&quot;mode === option&quot;&gt;&amp;#10004;&lt;/span&gt;{{option}}&lt;/a&gt;
-            &lt;/li&gt;            
-          &lt;/ul&gt;
+        &lt;div class=&quot;input-group input-group-sm&quot; style=&quot;width: 220px;&quot;&gt;
+            &lt;input type=&quot;text&quot; class=&quot;form-control&quot;
+                   [value]=&quot;filter&quot; (input)=&quot;_updateValue($event)&quot;
+                   (keyup.enter)=&quot;applied.emit({filter: filter, mode: mode});&quot;/&gt;
+            &lt;div class=&quot;input-group-btn&quot; dropdown&gt;
+                &lt;button type=&quot;button&quot; class=&quot;btn btn-secondary dropdown-toggle&quot; aria-label=&quot;Filter&quot; dropdown-open
+                        aria-haspopup=&quot;true&quot; aria-expanded=&quot;false&quot;&gt;
+                    &lt;span class=&quot;glyphicon glyphicon-filter&quot; aria-hidden=&quot;true&quot;&gt;&lt;/span&gt;
+                &lt;/button&gt;
+                &lt;ul class=&quot;dropdown-menu dropdown-menu-right&quot; role=&quot;menu&quot; aria-labelledby=&quot;Filter&quot;&gt;
+                    &lt;li *ngFor=&quot;let option of options; let i = index&quot; (click)=&quot;_updateMode(option)&quot;&gt;
+                        &lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt; &lt;span *ngIf=&quot;mode === option&quot;&gt;&amp;#10004;&lt;/span&gt;{{option}}&lt;/a&gt;
+                    &lt;/li&gt;
+                &lt;/ul&gt;
+            &lt;/div&gt;
         &lt;/div&gt;
-      &lt;/div&gt;
     `,
     styles: [`
         :host {float: right;}
@@ -116,18 +112,21 @@ export class ToolbarFilter {
 
     mode: string;
 
+    /**
+     * Initialize the component
+     */
     ngOnInit(){
         if (this.options &amp;&amp; (this.options.length &gt; 0)) {
             this.mode = this.options[0];
         }
     }
 
-    updateMode(option: string){
+    _updateMode(option: string){
         this.mode = option;
         this.applied.emit({filter: this.filter, mode: this.mode});
     }
 
-    updateValue(event){
+    _updateValue(event){
         this.filter = event.target.value;
         this.applied.emit({filter: this.filter, mode: this.mode});
     }

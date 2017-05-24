@@ -32,12 +32,7 @@
 <nav class="navigation" data-ice="nav"><div>
   <ul>
     
-  <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">common</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/PipeTransformModule.js~FilterBy.html">FilterBy</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/PipeTransformModule.js~HideClass.html">HideClass</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/PipeTransformModule.js~OrderBy.html">OrderBy</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/PipeTransformModule.js~PipeTransformModule.html">PipeTransformModule</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/PipeTransformModule.js~SetToArray.html">SetToArray</a></span></span></li>
-<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">common/components</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/components/CustomSelectModule.js~CustomSelectModule.html">CustomSelectModule</a></span></span></li>
+  <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">common/components</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/components/CustomSelectModule.js~CustomSelectModule.html">CustomSelectModule</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/components/CustomSelectModule.js~MultiSelectInput.html">MultiSelectInput</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/components/CustomSelectModule.js~SingleSelectInput.html">SingleSelectInput</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">common/toolbars</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/toolbars/ToolbarSettingsModule.js~ToolbarPropertySettings.html">ToolbarPropertySettings</a></span></span></li>
@@ -76,16 +71,16 @@ import {SelectModule} from &apos;ng2-select&apos;;
 @Component({
     selector: &apos;select-input&apos;,
     template: `
-      &lt;div *ngIf=&quot;active&quot;&gt;
-          &lt;ng-select
-            [items]       = &quot;options | setToArray | mapToOptions&quot;
-            [active]      = &quot;items   | setToArray | mapToOptions&quot;
-            [disabled]    = &quot;disabled&quot;
-            [multiple]    = &quot;true&quot;
-            [allowClear]  = &quot;true&quot;
-            (data)        = &quot;refreshValue($event)&quot;
-          &gt;&lt;/ng-select&gt;
-      &lt;/div&gt;
+        &lt;div *ngIf=&quot;_active&quot;&gt;
+            &lt;ng-select
+                    [items]=&quot;options | setToArray | mapToOptions&quot;
+                    [active]=&quot;items   | setToArray | mapToOptions&quot;
+                    [disabled]=&quot;disabled&quot;
+                    [multiple]=&quot;true&quot;
+                    [allowClear]=&quot;true&quot;
+                    (data)=&quot;_refreshValue($event)&quot;
+            &gt;&lt;/ng-select&gt;
+        &lt;/div&gt;
     `,
     styles: [
         `
@@ -99,24 +94,44 @@ import {SelectModule} from &apos;ng2-select&apos;;
  * A component for multiple selection in drop-down list
  */
 export class MultiSelectInput {
+    /**
+     * The set of input items
+     * @type {Set&lt;T&gt;|Set}
+     */
     @Input()  items   = new Set();
+    /**
+     * The set of items for selection
+     * @type {Set&lt;T&gt;|Set}
+     */
     @Input()  options = new Set();
+    /**
+     * The boolean flag to disable the component
+     * @type {boolean}
+     */
     @Input()  disabled = false;
+    /**
+     * The event to signal that the selected item has been changed
+     * @type {EventEmitter}
+     */
     @Output() updated = new EventEmitter();
 
-    active = true;
+    _active = true;
+    _externalChange = false;
 
-    externalChange = false;
+    /**
+     * Update component parameters in response to external data change
+     * @param changes - the object defining input data changes
+     */
     ngOnChanges(changes) {
-        if (this.externalChange){
-            setTimeout(() =&gt; { this.active = false }, 0);
-            setTimeout(() =&gt; { this.active = true  }, 0);
+        if (this._externalChange){
+            setTimeout(() =&gt; { this._active = false }, 0);
+            setTimeout(() =&gt; { this._active = true  }, 0);
         }
-        this.externalChange = true;
+        this._externalChange = true;
     }
 
-    refreshValue(value):void {
-        this.externalChange = false;
+    _refreshValue(value):void {
+        this._externalChange = false;
         let newItems = value.map(x =&gt; x.id);
         this.updated.emit(new Set(newItems));
     }
@@ -125,17 +140,17 @@ export class MultiSelectInput {
 @Component({
     selector: &apos;select-input-1&apos;,
     template:`
-    &lt;div *ngIf=&quot;active&quot;&gt;
-      &lt;ng-select
-        [items]       = &quot;options | setToArray | mapToOptions&quot;
-        [active]      = &quot;[item || {}] | mapToOptions&quot;
-        [multiple]    = false
-        [allowClear]  = true
-        [disabled]    = &quot;disabled&quot;
-        (data)        = &quot;refreshValue($event)&quot;
-      &gt;&lt;/ng-select&gt;
-    &lt;/div&gt;
-  `,
+        &lt;div *ngIf=&quot;_active&quot;&gt;
+            &lt;ng-select
+                    [items]=&quot;options | setToArray | mapToOptions&quot;
+                    [active]=&quot;[item || {}] | mapToOptions&quot;
+                    [disabled]=&quot;disabled&quot;
+                    [multiple]=false
+                    [allowClear]=true
+                    (data)=&quot;_refreshValue($event)&quot;
+            &gt;&lt;/ng-select&gt;
+        &lt;/div&gt;
+    `,
     styles: [
         `
         :host &gt;&gt;&gt; .ui-select-container{
@@ -148,24 +163,44 @@ export class MultiSelectInput {
  * A component for a single item selection in drop-down list
  */
 export class SingleSelectInput {
+    /**
+     * The set of input items
+     * @type {Set&lt;T&gt;|Set}
+     */
     @Input()  item    = new Set();
+    /**
+     * The set of items for selection
+     * @type {Set&lt;T&gt;|Set}
+     */
     @Input()  options = new Set();
+    /**
+     * The boolean flag to disable the component
+     * @type {boolean}
+     */
     @Input()  disabled = false;
+    /**
+     * The event to signal that the selected item has been changed
+     * @type {EventEmitter}
+     */
     @Output() updated = new EventEmitter();
 
-    active = true;
-    externalChange = false;
+    _active = true;
+    _externalChange = false;
 
+    /**
+     * Update component parameters in response to external data change
+     * @param {Object} changes - the object defining input data changes
+     */
     ngOnChanges(changes) {
-        if (this.externalChange){
-            setTimeout(() =&gt; {this.active = false}, 0);
-            setTimeout(() =&gt; {this.active = true},  0);
+        if (this._externalChange){
+            setTimeout(() =&gt; {this._active = false}, 0);
+            setTimeout(() =&gt; {this._active = true},  0);
         }
-        this.externalChange = true;
+        this._externalChange = true;
     }
 
-    refreshValue(value = {}):void {
-        this.externalChange = false;
+    _refreshValue(value = {}):void {
+        this._externalChange = false;
         this.item = value.id;
         this.updated.emit(this.item);
     }

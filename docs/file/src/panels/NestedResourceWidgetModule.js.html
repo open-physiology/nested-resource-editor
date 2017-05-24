@@ -32,12 +32,7 @@
 <nav class="navigation" data-ice="nav"><div>
   <ul>
     
-  <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">common</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/PipeTransformModule.js~FilterBy.html">FilterBy</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/PipeTransformModule.js~HideClass.html">HideClass</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/PipeTransformModule.js~OrderBy.html">OrderBy</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/PipeTransformModule.js~PipeTransformModule.html">PipeTransformModule</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/PipeTransformModule.js~SetToArray.html">SetToArray</a></span></span></li>
-<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">common/components</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/components/CustomSelectModule.js~CustomSelectModule.html">CustomSelectModule</a></span></span></li>
+  <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">common/components</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/components/CustomSelectModule.js~CustomSelectModule.html">CustomSelectModule</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/components/CustomSelectModule.js~MultiSelectInput.html">MultiSelectInput</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/components/CustomSelectModule.js~SingleSelectInput.html">SingleSelectInput</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">common/toolbars</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/toolbars/ToolbarSettingsModule.js~ToolbarPropertySettings.html">ToolbarPropertySettings</a></span></span></li>
@@ -79,58 +74,59 @@ import {HighlightService} from &apos;./HighlightService.js&apos;;
     selector: &apos;nested-resource-widget&apos;,
     template:`
         &lt;div class=&quot;panel panel-info repo&quot;&gt;
-        &lt;div class=&quot;panel-heading&quot;&gt;{{caption}}
-          &lt;span class=&quot;pull-right&quot; *ngIf=&quot;options?.showActive&quot;&gt;
-            &lt;button type=&quot;button&quot; class=&quot;btn btn-default btn-header&quot; 
-              [ngClass]=&quot;{&apos;active&apos;: activeItem === null}&quot; (click)=&quot;activeItem = null&quot;&gt;
-              &lt;span class = &quot;glyphicon&quot; [ngClass]=&quot;{&apos;glyphicon-pencil&apos;: activeItem === null}&quot;&gt;&lt;/span&gt;
+            &lt;div class=&quot;panel-heading&quot;&gt;{{caption}}
+                &lt;span class=&quot;pull-right&quot; *ngIf=&quot;options?.showActive&quot;&gt;
+            &lt;button type=&quot;button&quot; class=&quot;btn btn-default btn-header&quot;
+                    [ngClass]=&quot;{&apos;active&apos;: activeItem === null}&quot; (click)=&quot;activeItem = null&quot;&gt;
+              &lt;span class=&quot;glyphicon&quot; [ngClass]=&quot;{&apos;glyphicon-pencil&apos;: activeItem === null}&quot;&gt;&lt;/span&gt;
             &lt;/button&gt;
           &lt;/span&gt;
-        &lt;/div&gt;
-        &lt;div class=&quot;panel-body&quot;&gt;
-          &lt;toolbar-sort  [options]=&quot;[&apos;Name&apos;, &apos;ID&apos;, &apos;Class&apos;]&quot; (sorted)=&quot;onSorted($event)&quot;&gt;&lt;/toolbar-sort&gt;
-          &lt;toolbar-add   [options]=&quot;types&quot; [transform]=&quot;getClassLabel&quot; (added)=&quot;onAdded($event)&quot;&gt;&lt;/toolbar-add&gt;
-          &lt;toolbar-propertySettings  [options] = &quot;_typeOptions&quot; [transform] = &quot;getClassLabel&quot; 
-            (selectionChanged) = &quot;hiddenTypesChanged($event)&quot;&gt;
-          &lt;/toolbar-propertySettings&gt;
+            &lt;/div&gt;
+            &lt;div class=&quot;panel-body&quot;&gt;
+                &lt;toolbar-sort [options]=&quot;[&apos;Name&apos;, &apos;ID&apos;, &apos;Class&apos;]&quot; (sorted)=&quot;_onSorted($event)&quot;&gt;&lt;/toolbar-sort&gt;
+                &lt;toolbar-add [options]=&quot;types&quot; [transform]=&quot;_getClassLabel&quot; (added)=&quot;_onAdded($event)&quot;&gt;&lt;/toolbar-add&gt;
+                &lt;toolbar-propertySettings [options]=&quot;_typeOptions&quot; [transform]=&quot;_getClassLabel&quot;
+                                          (selectionChanged)=&quot;_hiddenTypesChanged($event)&quot;&gt;
+                &lt;/toolbar-propertySettings&gt;
 
-          &lt;toolbar-filter [filter]=&quot;_searchString&quot; [options]=&quot;[&apos;Name&apos;, &apos;ID&apos;, &apos;Class&apos;]&quot; (applied)=&quot;onFiltered($event)&quot;&gt;&lt;/toolbar-filter&gt;
-            
-          &lt;accordion [closeOthers]=&quot;true&quot; 
-                     dnd-sortable-container [dropZones]=&quot;_zones&quot; [sortableData]=&quot;items&quot;&gt;
-              &lt;accordion-group *ngFor=&quot;let item of items 
+                &lt;toolbar-filter [filter]=&quot;_searchString&quot; [options]=&quot;[&apos;Name&apos;, &apos;ID&apos;, &apos;Class&apos;]&quot;
+                                (applied)=&quot;_onFiltered($event)&quot;&gt;&lt;/toolbar-filter&gt;
+
+                &lt;accordion [closeOthers]=&quot;true&quot;
+                           dnd-sortable-container [dropZones]=&quot;_zones&quot; [sortableData]=&quot;items&quot;&gt;
+                    &lt;accordion-group *ngFor=&quot;let item of items 
               | hideClass : hiddenTypes
               | orderBy : _sortByMode
               | filterBy: [_searchString, _filterByMode]
               ; let i = index&quot; class=&quot;list-group-item&quot;
-                dnd-sortable [sortableIndex]=&quot;i&quot;
-               (onOpen) =&quot;openItem = item&quot;
-               (onClose)=&quot;openItem = null&quot;
-              &gt;
-                  &lt;accordion-heading (click)  =&quot;selectedItem = item&quot;&gt;                  
-                  &lt;item-header [item]= &quot;item&quot; 
-                    [options]      = &quot;options&quot;
-                    [isActive]     = &quot;item === activeItem&quot;
-                    [isOpen]       = &quot;item === openItem&quot; 
-                    (mouseover)    = &quot;highlightedItem = item&quot; 
-                    (mouseout)     = &quot;_unhighlight(item)&quot;
-                    (activeItemChanged) = &quot;activeItem = item&quot;
-                    [ngClass] =&quot;{highlighted: item === highlightedItem, active: item === selectedItem}&quot;&gt;   
-                  &lt;/item-header&gt;
-                &lt;/accordion-heading&gt;
-                &lt;div *ngIf=&quot;!options?.headersOnly&quot;&gt;
-                  &lt;resource-panel *ngIf=&quot;item === openItem&quot; 
-                    [item]=&quot;item&quot;
-                    [model]=&quot;model&quot;
-                    (saved)   =&quot;onSaved(item)&quot; 
-                    (removed) =&quot;onRemoved(item)&quot;&gt;
-                   &lt;/resource-panel&gt;   
-                &lt;/div&gt;
-              &lt;/accordion-group&gt;        
-          &lt;/accordion&gt;       
+                                     dnd-sortable [sortableIndex]=&quot;i&quot;
+                                     (onOpen)=&quot;openItem = item&quot;
+                                     (onClose)=&quot;openItem = null&quot;
+                    &gt;
+                        &lt;accordion-heading (click)=&quot;selectedItem = item&quot;&gt;
+                            &lt;item-header [item]=&quot;item&quot;
+                                         [options]=&quot;options&quot;
+                                         [isActive]=&quot;item === activeItem&quot;
+                                         [isOpen]=&quot;item === openItem&quot;
+                                         (mouseover)=&quot;highlightedItem = item&quot;
+                                         (mouseout)=&quot;_unhighlight(item)&quot;
+                                         (activeItemChanged)=&quot;activeItem = item&quot;
+                                         [ngClass]=&quot;{highlighted: item === highlightedItem, active: item === selectedItem}&quot;&gt;
+                            &lt;/item-header&gt;
+                        &lt;/accordion-heading&gt;
+                        &lt;div *ngIf=&quot;!options?.headersOnly&quot;&gt;
+                            &lt;resource-panel *ngIf=&quot;item === openItem&quot;
+                                            [item]=&quot;item&quot;
+                                            [model]=&quot;model&quot;
+                                            (saved)=&quot;_onSaved(item)&quot;
+                                            (removed)=&quot;_onRemoved(item)&quot;&gt;
+                            &lt;/resource-panel&gt;
+                        &lt;/div&gt;
+                    &lt;/accordion-group&gt;
+                &lt;/accordion&gt;
+            &lt;/div&gt;
         &lt;/div&gt;
-      &lt;/div&gt;
-  `,
+    `,
     styles: [` 
         .repo{ 
             width: 100%;
@@ -218,6 +214,7 @@ export class NestedResourceWidget extends AbstractResourceList{
     _typeOptions = [];
 
     /**
+     * The constructor of the component
      * @param {HighlightService} highlightService - the service that notifies nested components about currently highlighted item
      */
     constructor(highlightService: HighlightService){
@@ -225,7 +222,7 @@ export class NestedResourceWidget extends AbstractResourceList{
     }
 
     /**
-     * Initialize the nested resource list component: set invisible by default classes
+     * Initialize the nested resource widget component: set invisible by default classes
      */
     ngOnInit(){
         super.ngOnInit();
@@ -238,7 +235,7 @@ export class NestedResourceWidget extends AbstractResourceList{
      * @param {Object} option - the object with the field &quot;value&quot; that defines the resource class and
      *  the boolean field &quot;selected&quot; that indicates whether the value is selected or not.
      */
-    hiddenTypesChanged(option){
+    _hiddenTypesChanged(option){
         if ( this._ignoreTypes.has(option.value) &amp;&amp;  option.selected) {
             this._ignoreTypes.delete(option.value);
         }

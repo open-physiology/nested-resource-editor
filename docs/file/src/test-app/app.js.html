@@ -32,12 +32,7 @@
 <nav class="navigation" data-ice="nav"><div>
   <ul>
     
-  <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">common</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/PipeTransformModule.js~FilterBy.html">FilterBy</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/PipeTransformModule.js~HideClass.html">HideClass</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/PipeTransformModule.js~OrderBy.html">OrderBy</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/PipeTransformModule.js~PipeTransformModule.html">PipeTransformModule</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/PipeTransformModule.js~SetToArray.html">SetToArray</a></span></span></li>
-<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">common/components</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/components/CustomSelectModule.js~CustomSelectModule.html">CustomSelectModule</a></span></span></li>
+  <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">common/components</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/components/CustomSelectModule.js~CustomSelectModule.html">CustomSelectModule</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/components/CustomSelectModule.js~MultiSelectInput.html">MultiSelectInput</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/components/CustomSelectModule.js~SingleSelectInput.html">SingleSelectInput</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">common/toolbars</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/toolbars/ToolbarSettingsModule.js~ToolbarPropertySettings.html">ToolbarPropertySettings</a></span></span></li>
@@ -82,22 +77,26 @@ import {NestedResourceWidgetModule} from &apos;../index.js&apos;;
 	selector: &apos;test-app&apos;,
 	template: `
         &lt;nested-resource-widget id=&quot;repo&quot;
-		  caption=&quot;Resources&quot; 
-		  [model]=&quot;model&quot;
-		  [items]=&quot;items | setToArray&quot; 
-		  (selectedItemChange)=&quot;onItemSelected($event)&quot;&gt;
-		&lt;/nested-resource-widget&gt;
+                                caption=&quot;Resources&quot;
+                                [model]=&quot;_model&quot;
+                                [items]=&quot;_items | setToArray&quot;
+                                (selectedItemChange)=&quot;_onItemSelected($event)&quot;&gt;
+        &lt;/nested-resource-widget&gt;
 	`
 })
 /**
  * The TestComponent component, showing off the nested resource editor!
  */
 export class TestApp {
-	model;
-	items;
-	selectedItem;
+	_model;
+	_items;
+	_selectedItem;
 
-	rs: Subscription;
+	_rs: Subscription;
+
+    /**
+	 * The constructor of the component
+     */
 	constructor() {
 		let {backend} = ajaxBackend({
 			baseURL:     &apos;http://open-physiology.org:8880&apos;,
@@ -105,26 +104,31 @@ export class TestApp {
 		});
 		let modelRef = modelFactory(backend);
 		window.module = modelRef;
-		this.model = modelRef.classes;
+		this._model = modelRef.classes;
 
-		this.rs = this.model.Resource.p(&apos;all&apos;).subscribe(
+		console.log(&quot;Model&quot;, this._model);
+
+		this._rs = this._model.Resource.p(&apos;all&apos;).subscribe(
 			(data) =&gt; {
-				this.items = data;
-				if (this.items.length &gt; 0){
-					this.selectedItem = this.items[0];
+				this._items = data;
+				if (this._items.length &gt; 0){
+					this._selectedItem = this._items[0];
 				}
 			});
 		//model.Resource.getAll(); //Fails!
-		this.model.Lyph.new({name: &quot;Kidney&quot;}, {createAxis: true});
-		this.model.Lyph.new({name: &quot;Heart&quot;});
-		this.model.Lyph.new({name: &quot;Head&quot;});
+		this._model.Lyph.new({name: &quot;Kidney&quot;}, {createAxis: true});
+		this._model.Lyph.new({name: &quot;Heart&quot;});
+		this._model.Lyph.new({name: &quot;Head&quot;});
 	}
 
-	ngOnDestroy() { this.rs.unsubscribe(); }
+    /**
+	 * Unsubscribe from subscriptions
+     */
+	ngOnDestroy() { this._rs.unsubscribe(); }
 
-	onItemSelected(item) {
-		setTimeout(() =&gt; { this.selectedItem = null; }, 0);
-		setTimeout(() =&gt; { this.selectedItem = item; }, 0);
+	_onItemSelected(item) {
+		setTimeout(() =&gt; { this._selectedItem = null; }, 0);
+		setTimeout(() =&gt; { this._selectedItem = item; }, 0);
 	}
 }
 

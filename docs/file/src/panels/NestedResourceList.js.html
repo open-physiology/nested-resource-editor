@@ -32,12 +32,7 @@
 <nav class="navigation" data-ice="nav"><div>
   <ul>
     
-  <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">common</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/PipeTransformModule.js~FilterBy.html">FilterBy</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/PipeTransformModule.js~HideClass.html">HideClass</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/PipeTransformModule.js~OrderBy.html">OrderBy</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/PipeTransformModule.js~PipeTransformModule.html">PipeTransformModule</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/PipeTransformModule.js~SetToArray.html">SetToArray</a></span></span></li>
-<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">common/components</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/components/CustomSelectModule.js~CustomSelectModule.html">CustomSelectModule</a></span></span></li>
+  <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">common/components</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/components/CustomSelectModule.js~CustomSelectModule.html">CustomSelectModule</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/components/CustomSelectModule.js~MultiSelectInput.html">MultiSelectInput</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/components/CustomSelectModule.js~SingleSelectInput.html">SingleSelectInput</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">common/toolbars</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/toolbars/ToolbarSettingsModule.js~ToolbarPropertySettings.html">ToolbarPropertySettings</a></span></span></li>
@@ -75,62 +70,65 @@ import {SetToArray, FilterBy} from &quot;../common/PipeTransformModule&quot;;
 
 @Component({
     selector: &apos;nested-resource-list&apos;,
-    template:`       
-    &lt;div class=&quot;panel repo-nested&quot;&gt;
-      &lt;div class=&quot;panel-heading&quot;&gt; &lt;label&gt;{{caption}}: &lt;/label&gt;&lt;/div&gt;
-      &lt;div class=&quot;panel-body&quot; &gt;
-        &lt;span  *ngIf = &quot;!(options?.readOnly || options?.headersOnly)&quot;&gt;
-          &lt;select-input-1 class=&quot;pull-left input-select&quot; 
-            [item] = &quot;_itemToInclude&quot;
-            (updated) = &quot;_itemToInclude = $event&quot;    
-            [options] = &quot;possibleValues&quot;&gt;
+    template:`
+        &lt;div class=&quot;panel repo-nested&quot;&gt;
+            &lt;div class=&quot;panel-heading&quot;&gt;&lt;label&gt;{{caption}}: &lt;/label&gt;&lt;/div&gt;
+            &lt;div class=&quot;panel-body&quot;&gt;
+        &lt;span *ngIf=&quot;!(options?.readOnly || options?.headersOnly)&quot;&gt;
+          &lt;select-input-1 class=&quot;pull-left input-select&quot;
+                          [item]=&quot;_itemToInclude&quot;
+                          (updated)=&quot;_itemToInclude = $event&quot;
+                          [options]=&quot;possibleValues&quot;&gt;
           &lt;/select-input-1&gt;
-          &lt;button type=&quot;button&quot; class=&quot;btn btn-default btn-icon&quot; (click)=&quot;onIncluded(_itemToInclude)&quot;&gt;
+          &lt;button type=&quot;button&quot; class=&quot;btn btn-default btn-icon&quot; (click)=&quot;_onIncluded(_itemToInclude)&quot;&gt;
             &lt;span class=&quot;glyphicon glyphicon-save&quot;&gt;&lt;/span&gt;
           &lt;/button&gt;
         &lt;/span&gt;
-        
-        &lt;toolbar-sort   *ngIf =  &quot;options?.sortToolbar&quot;  [options]=&quot;[&apos;Name&apos;, &apos;ID&apos;, &apos;Class&apos;]&quot; (sorted)=&quot;onSorted($event)&quot;&gt;&lt;/toolbar-sort&gt;
-        &lt;toolbar-add    *ngIf = &quot;!(options?.readOnly || options?.headersOnly)&quot;  [options]=&quot;types&quot; [transform]=&quot;getClassLabel&quot; (added)=&quot;onAdded($event)&quot;&gt;&lt;/toolbar-add&gt;
-        &lt;toolbar-filter *ngIf =  &quot;options?.filterToolbar&quot; [options]=&quot;[&apos;Name&apos;, &apos;ID&apos;, &apos;Class&apos;]&quot; [filter]=&quot;_searchString&quot; (applied)=&quot;onFiltered($event)&quot;&gt;&lt;/toolbar-filter&gt;
 
-          &lt;!--| orderBy : _sortByMode--&gt;
+                &lt;toolbar-sort *ngIf=&quot;options?.sortToolbar&quot; [options]=&quot;[&apos;Name&apos;, &apos;ID&apos;, &apos;Class&apos;]&quot;
+                              (sorted)=&quot;_onSorted($event)&quot;&gt;&lt;/toolbar-sort&gt;
+                &lt;toolbar-add *ngIf=&quot;!(options?.readOnly || options?.headersOnly)&quot; [options]=&quot;types&quot;
+                             [transform]=&quot;_getClassLabel&quot; (added)=&quot;_onAdded($event)&quot;&gt;&lt;/toolbar-add&gt;
+                &lt;toolbar-filter *ngIf=&quot;options?.filterToolbar&quot; [options]=&quot;[&apos;Name&apos;, &apos;ID&apos;, &apos;Class&apos;]&quot;
+                                [filter]=&quot;_searchString&quot; (applied)=&quot;_onFiltered($event)&quot;&gt;&lt;/toolbar-filter&gt;
 
-          &lt;accordion [closeOthers]=&quot;true&quot;
-          dnd-sortable-container [dropZones]=&quot;_zones&quot; [sortableData]=&quot;items&quot;&gt;
-          &lt;accordion-group *ngFor=&quot;let item of items 
+                &lt;!--| orderBy : _sortByMode--&gt;
+
+                &lt;accordion [closeOthers]=&quot;true&quot;
+                           dnd-sortable-container [dropZones]=&quot;_zones&quot; [sortableData]=&quot;items&quot;&gt;
+                    &lt;accordion-group *ngFor=&quot;let item of items 
             | filterBy: [_searchString, _filterByMode]; let i = index&quot; class=&quot;list-group-item&quot;
-               dnd-sortable [dragEnabled] = true
-               [sortableIndex]=&quot;i&quot;
-               (onDragEnd)=&quot;_onDragEnd(i)&quot;
+                                     dnd-sortable [dragEnabled]=true
+                                     [sortableIndex]=&quot;i&quot;
+                                     (onDragEnd)=&quot;_onDragEnd(i)&quot;
 
-               (onOpen) =&quot;openItem = item&quot; 
-               (onClose)=&quot;openItem = null&quot;&gt;
- 
-            &lt;accordion-heading (click)  =&quot;selectedItem = item&quot;&gt;
-              &lt;item-header [item]=&quot;item&quot; 
-                [isOpen]       = &quot;item === openItem&quot; 
-                (mouseover)    = &quot;highlightedItem = item&quot; 
-                (mouseout)     = &quot;_unhighlight(item)&quot;
-                [ngClass] =&quot;{highlighted: item === highlightedItem, active: item === selectedItem}&quot;&gt;
-              &lt;/item-header&gt;
-            &lt;/accordion-heading&gt;
+                                     (onOpen)=&quot;openItem = item&quot;
+                                     (onClose)=&quot;openItem = null&quot;&gt;
 
-            &lt;div *ngIf=&quot;!options?.headersOnly&quot;&gt;
-              &lt;resource-panel *ngIf=&quot;item === openItem&quot; 
-                [item]    =&quot;item&quot; 
-                [model]=&quot;model&quot;
-                [options] =&quot;options&quot;
-                (saved)   =&quot;onSaved(item)&quot; 
-                (removed) =&quot;onRemoved(item)&quot;
-                (highlightedItemChange)=&quot;highlightedItemChange.emit($event)&quot;
-                &gt;&lt;/resource-panel&gt;            
+                        &lt;accordion-heading (click)=&quot;selectedItem = item&quot;&gt;
+                            &lt;item-header [item]=&quot;item&quot;
+                                         [isOpen]=&quot;item === openItem&quot;
+                                         (mouseover)=&quot;highlightedItem = item&quot;
+                                         (mouseout)=&quot;_unhighlight(item)&quot;
+                                         [ngClass]=&quot;{highlighted: item === highlightedItem, active: item === selectedItem}&quot;&gt;
+                            &lt;/item-header&gt;
+                        &lt;/accordion-heading&gt;
+
+                        &lt;div *ngIf=&quot;!options?.headersOnly&quot;&gt;
+                            &lt;resource-panel *ngIf=&quot;item === openItem&quot;
+                                            [item]=&quot;item&quot;
+                                            [model]=&quot;model&quot;
+                                            [options]=&quot;options&quot;
+                                            (saved)=&quot;_onSaved(item)&quot;
+                                            (removed)=&quot;_onRemoved(item)&quot;
+                                            (highlightedItemChange)=&quot;highlightedItemChange.emit($event)&quot;
+                            &gt;&lt;/resource-panel&gt;
+                        &lt;/div&gt;
+                    &lt;/accordion-group&gt;
+                &lt;/accordion&gt;
             &lt;/div&gt;
-          &lt;/accordion-group&gt;        
-        &lt;/accordion&gt;       
-      &lt;/div&gt;
-    &lt;/div&gt;
-  `,
+        &lt;/div&gt;
+    `,
     styles: [`
         .input-select{
           min-width: 100px;
@@ -157,6 +155,7 @@ export class NestedResourceList extends AbstractResourceList{
     _itemToInclude = null;
 
     /**
+     * The constructor of the component
      * @param {ToastyService} toastyService - the service for showing notifications and error messages
      * @param {HighlightService} highlightService - the service that notifies nested components about currently highlighted item
      */
@@ -165,6 +164,9 @@ export class NestedResourceList extends AbstractResourceList{
         this._toastyService = toastyService;
     }
 
+    /**
+     * Initialize the component
+     */
     ngOnInit(){
         super.ngOnInit();
 
@@ -186,14 +188,23 @@ export class NestedResourceList extends AbstractResourceList{
         }
     }
 
+    /**
+     * Unsubscribe from subscriptions
+     */
     ngOnDestroy() {
         if (this._ts) { this._ts.unsubscribe(); }
     }
 
+    /**
+     * Update the view in response to external data change (e.g., sort layers)
+     * @param {Object} changes - the object defining input data changes
+     */
     ngOnChanges(changes) {
         if (this.items &amp;&amp; this.options.ordered) {
             this.items.sort((a, b) =&gt; {
-                return (a[&apos;--&gt;IsRadiallyAdjacent&apos;] &amp;&amp; (a[&apos;--&gt;IsRadiallyAdjacent&apos;][2] === b))
+                return (a[&apos;--&gt;IsRadiallyAdjacent&apos;]
+                    &amp;&amp; a[&apos;--&gt;IsRadiallyAdjacent&apos;][2]
+                    &amp;&amp; a[&apos;--&gt;IsRadiallyAdjacent&apos;][2].includes(b))
             });
         }
     }
@@ -201,31 +212,30 @@ export class NestedResourceList extends AbstractResourceList{
     //TODO: update new &quot;Follows&quot; relationship
     _onDragEnd(index){
         if (!this.options.ordered) { return; }
-
-        for (let i = 1; i &lt; this.items.length; i++){
-            if (this.items[i][&apos;--&gt;IsRadiallyAdjacent&apos;]){
-                if (this.items[i][&apos;--&gt;IsRadiallyAdjacent&apos;][2] !== this.items[i - 1]){
-                    this.items[i][&apos;--&gt;IsRadiallyAdjacent&apos;][2] = this.items[i - 1];
-                }
-            } else {
-                model.isRadiallyAdjacent.new({1: this.items[i - 1], 2: this.items[i]});
-            }
-        }
-        if (this.items.length &gt; 1) {
-            if (this.items[this.items.length - 1][&apos;--&gt;IsRadiallyAdjacent&apos;] !== null){
-                //TODO uncomment when model library implements delete operation
-                //this.items[i][&apos;--&gt;IsRadiallyAdjacent&apos;].delete();
-                this.items[this.items.length - 1][&apos;--&gt;IsRadiallyAdjacent&apos;] = null;
-            }
-        }
-        this.updated.emit(this.items);
+        //TODO: un-comment when the model libarry supports operations with this relationship (or other way to order)
+        //IsRadiallyAdjacent relation has cardinality [0..*]
+        // for (let i = 1; i &lt; this.items.length; i++){
+        //     if (this.items[i][&apos;--&gt;IsRadiallyAdjacent&apos;] &amp;&amp; this.items[i][&apos;--&gt;IsRadiallyAdjacent&apos;][2]){
+        //         if (!this.items[i][&apos;--&gt;IsRadiallyAdjacent&apos;][2].includes(this.items[i - 1])){
+        //             this.items[i][&apos;--&gt;IsRadiallyAdjacent&apos;][2] = [this.items[i - 1]];
+        //         }
+        //     } else {
+        //         this.model.isRadiallyAdjacent.new({1: this.items[i - 1], 2: this.items[i]});
+        //     }
+        // }
+        // if (this.items.length &gt; 1) {
+        //     if (this.items[this.items.length - 1][&apos;--&gt;IsRadiallyAdjacent&apos;] !== null){
+        //         this.items[i][&apos;--&gt;IsRadiallyAdjacent&apos;].delete();
+        //     }
+        // }
+        // this.updated.emit(this.items);
     }
 
     /**
      * Include a selected resource to the current list
      * @param {Resource} newItem - the selected resource to include to the current list
      */
-    onIncluded(newItem){
+    _onIncluded(newItem){
         if (newItem){
             if (this.items.indexOf(newItem) &lt; 0){
                 this.items.push(newItem);

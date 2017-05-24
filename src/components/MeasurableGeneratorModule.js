@@ -8,25 +8,25 @@ import {Ng2Bs3ModalModule, ModalComponent} from '../libs/ng2-bs3-modal';
 @Component({
     selector: 'modal-window',
     template:`
-      <modal #myModal>
-        <modal-header [show-close]="true">
-            <h4 class="modal-title">Select supertype measurables to replicate</h4>
-        </modal-header>
-        <modal-body>
-            <li *ngFor="let option of supertypeMeasurables; let i = index">
-              <a class="small" href="#">
-              <input type="checkbox" 
-                [(ngModel)]="option.selected" 
-                (ngModelChange)="updateValue(option)"/>&nbsp;
-              {{option.value.name}}</a>
-            </li>
-        </modal-body>
-        <modal-footer>
-          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-          <button type="button" class="btn btn-primary" (click)="close($event)">Ok</button>
-        </modal-footer>
-      </modal>
-  `
+        <modal #myModal>
+            <modal-header [show-close]="true">
+                <h4 class="modal-title">Select supertype measurables to replicate</h4>
+            </modal-header>
+            <modal-body>
+                <li *ngFor="let option of _supertypeMeasurables; let i = index">
+                    <a class="small" href="#">
+                        <input type="checkbox"
+                               [(ngModel)]="option.selected"
+                               (ngModelChange)="_updateValue(option)"/>&nbsp;
+                        {{option.value.name}}</a>
+                </li>
+            </modal-body>
+            <modal-footer>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" (click)="close($event)">Ok</button>
+            </modal-footer>
+        </modal>
+    `
 })
 /**
  * MeasurableGenerator component, provides generation of measurables in a pop-up window.
@@ -42,13 +42,16 @@ export class MeasurableGenerator{
     @Output() closed = new EventEmitter();
 
     //Measurable replication
-    supertypeMeasurables : Array <any> = [];
-    measurablesToReplicate: Set<any> = new Set();
+    _supertypeMeasurables   = [];
+    _measurablesToReplicate = new Set();
 
     @ViewChild('myModal')
     modal: ModalComponent;
 
-    generateMeasurables() {
+    /**
+     * Open the modal window with pre-filled measurables of lyph supertypes
+     */
+    open() {
         let allSupertypeMeasurables = [];
         for (let type of this.item.types) {
             for (let supertype of type.supertypes) {
@@ -61,15 +64,19 @@ export class MeasurableGenerator{
                 }
             }
         }
-        this.supertypeMeasurables = allSupertypeMeasurables.map(x => {
-            return {value: x, selected: this.measurablesToReplicate.has(x)}
+        this._supertypeMeasurables = allSupertypeMeasurables.map(x => {
+            return {value: x, selected: this._measurablesToReplicate.has(x)}
         });
         this.modal.open();
     }
 
+    /**
+     * Close the modal window
+     * @param event - the event object
+     */
     close(event) {
-        if (this.measurablesToReplicate.size > 0){
-            let protoMeasurables = Array.from(this.measurablesToReplicate);
+        if (this._measurablesToReplicate.size > 0){
+            let protoMeasurables = Array.from(this._measurablesToReplicate);
             for (let protoMeasurable of protoMeasurables){
                 let newMeasurable = this.clsMeasurable.new(protoMeasurable);
                 newMeasurable.location = this.item;
@@ -79,11 +86,11 @@ export class MeasurableGenerator{
         this.closed.emit(event);
     }
 
-    updateValue(option){
-        if ( this.measurablesToReplicate.has(option.value) && !option.selected)
-            this.measurablesToReplicate.delete(option.value);
-        if (!this.measurablesToReplicate.has(option.value) && option.selected)
-            this.measurablesToReplicate.add(option.value);
+    _updateValue(option){
+        if ( this._measurablesToReplicate.has(option.value) && !option.selected)
+            this._measurablesToReplicate.delete(option.value);
+        if (!this._measurablesToReplicate.has(option.value) && option.selected)
+            this._measurablesToReplicate.add(option.value);
     }
 }
 

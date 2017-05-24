@@ -75,7 +75,6 @@
     "@angular/platform-browser": "2",
     "@angular/platform-browser-dynamic": "2",
     "@angular/router": "3",
-    "angular2-select": "^1.0.0-beta.3",
     "babel-plugin-transform-builtin-extend": "^1.1.2",
     "babel-polyfill": "6",
     "bootstrap": "^3.3.7",
