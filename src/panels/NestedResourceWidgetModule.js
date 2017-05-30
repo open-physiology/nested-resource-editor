@@ -12,11 +12,11 @@ import {HighlightService} from './HighlightService.js';
         <div class="panel panel-info repo">
             <div class="panel-heading">{{caption}}
                 <span class="pull-right" *ngIf="options?.showActive">
-            <button type="button" class="btn btn-default btn-header"
-                    [ngClass]="{'active': activeItem === null}" (click)="activeItem = null">
-              <span class="glyphicon" [ngClass]="{'glyphicon-pencil': activeItem === null}"></span>
-            </button>
-          </span>
+                    <button type="button" class="btn btn-default btn-header"
+                        [ngClass]="{'active': activeItem === null}" (click)="activeItem = null">    
+                        <span class="glyphicon" [ngClass]="{'glyphicon-pencil': activeItem === null}"></span>
+                    </button>
+                </span>
             </div>
             <div class="panel-body">
                 <toolbar-sort [options]="['Name', 'ID', 'Class']" (sorted)="_onSorted($event)"></toolbar-sort>
@@ -28,13 +28,12 @@ import {HighlightService} from './HighlightService.js';
                 <toolbar-filter [filter]="_searchString" [options]="['Name', 'ID', 'Class']"
                                 (applied)="_onFiltered($event)"></toolbar-filter>
 
-                <accordion [closeOthers]="true"
-                           dnd-sortable-container [dropZones]="_zones" [sortableData]="items">
+                <accordion [closeOthers]="true" dnd-sortable-container [dropZones]="_zones" [sortableData]="items">
                     <accordion-group *ngFor="let item of items 
-              | hideClass : hiddenTypes
-              | orderBy : _sortByMode
-              | filterBy: [_searchString, _filterByMode]
-              ; let i = index" class="list-group-item"
+                          | hideClass : hiddenTypes
+                          | orderBy : _sortByMode
+                          | filterBy: [_searchString, _filterByMode]
+                          ; let i = index" class="list-group-item"
                                      dnd-sortable [sortableIndex]="i"
                                      (onOpen)="openItem = item"
                                      (onClose)="openItem = null"

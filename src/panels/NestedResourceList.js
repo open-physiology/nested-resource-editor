@@ -6,38 +6,35 @@ import {SetToArray, FilterBy} from "../common/PipeTransformModule";
 
 @Component({
     selector: 'nested-resource-list',
-    template:`
+    template: `
         <div class="panel repo-nested">
             <div class="panel-heading"><label>{{caption}}: </label></div>
             <div class="panel-body">
-        <span *ngIf="!(options?.readOnly || options?.headersOnly)">
-          <select-input-1 class="pull-left input-select"
-                          [item]="_itemToInclude"
-                          (updated)="_itemToInclude = $event"
-                          [options]="possibleValues">
-          </select-input-1>
-          <button type="button" class="btn btn-default btn-icon" (click)="_onIncluded(_itemToInclude)">
-            <span class="glyphicon glyphicon-save"></span>
-          </button>
-        </span>
+                <span *ngIf="!(options?.readOnly || options?.headersOnly)">
+                    <select-input-1 class = "pull-left input-select"
+                              [item]   = "_itemToInclude"
+                              (updated)= "_itemToInclude = $event"
+                              [options]= "possibleValues">
+                    </select-input-1>
+                    <button type="button" class="btn btn-default btn-icon" (click)="_onIncluded(_itemToInclude)">
+                        <span class="glyphicon glyphicon-save"></span>
+                    </button>
+                </span>
 
                 <toolbar-sort *ngIf="options?.sortToolbar" [options]="['Name', 'ID', 'Class']"
                               (sorted)="_onSorted($event)"></toolbar-sort>
                 <toolbar-add *ngIf="!(options?.readOnly || options?.headersOnly)" [options]="types"
-                             [transform]="_getClassLabel" (added)="_onAdded($event)"></toolbar-add>
+                              [transform]="_getClassLabel" (added)="_onAdded($event)"></toolbar-add>
                 <toolbar-filter *ngIf="options?.filterToolbar" [options]="['Name', 'ID', 'Class']"
-                                [filter]="_searchString" (applied)="_onFiltered($event)"></toolbar-filter>
-
-                <!--| orderBy : _sortByMode-->
+                              [filter]="_searchString" (applied)="_onFiltered($event)"></toolbar-filter>
 
                 <accordion [closeOthers]="true"
                            dnd-sortable-container [dropZones]="_zones" [sortableData]="items">
                     <accordion-group *ngFor="let item of items 
-            | filterBy: [_searchString, _filterByMode]; let i = index" class="list-group-item"
+                        | filterBy: [_searchString, _filterByMode]; let i = index" class="list-group-item"
                                      dnd-sortable [dragEnabled]=true
                                      [sortableIndex]="i"
                                      (onDragEnd)="_onDragEnd(i)"
-
                                      (onOpen)="openItem = item"
                                      (onClose)="openItem = null">
 
@@ -66,15 +63,15 @@ import {SetToArray, FilterBy} from "../common/PipeTransformModule";
         </div>
     `,
     styles: [`
-        .input-select{
-          min-width: 100px;
+        .input-select {
+            min-width: 100px;
         }
         .highlighted {
-          background-color: #e3d2d2;
+            background-color: #e3d2d2;
         }
         .active {
-          border: 2px solid #ff9999;
-          padding: 2px;
+            border: 2px solid #ff9999;
+            padding: 2px;
         }
     `]
 })
@@ -82,7 +79,7 @@ import {SetToArray, FilterBy} from "../common/PipeTransformModule";
  * The NestedResourceList component, provides functionality for editing lists of resources.
  * @extends {AbstractResourceList}
  */
-export class NestedResourceList extends AbstractResourceList{
+export class NestedResourceList extends AbstractResourceList {
     /**
      *  the list of resources that can be added to the current list
      */
@@ -95,7 +92,7 @@ export class NestedResourceList extends AbstractResourceList{
      * @param {ToastyService} toastyService - the service for showing notifications and error messages
      * @param {HighlightService} highlightService - the service that notifies nested components about currently highlighted item
      */
-    constructor(toastyService: ToastyService, highlightService: HighlightService){
+    constructor(toastyService: ToastyService, highlightService: HighlightService) {
         super(highlightService);
         this._toastyService = toastyService;
     }
@@ -103,22 +100,26 @@ export class NestedResourceList extends AbstractResourceList{
     /**
      * Initialize the component
      */
-    ngOnInit(){
+    ngOnInit() {
         super.ngOnInit();
 
         //If selectionOptions are not provided by parent, subscribe and get all for given types
         if (!this.possibleValues) {
-            if (this.types.length === 1){
+            if (this.types.length === 1) {
                 this._ts = this.model[this.types[0]].p('all').subscribe(
-                    (data) => { this.possibleValues = data; });
+                    (data) => {
+                        this.possibleValues = data;
+                    });
             } else {
-                if (this.types.length > 1){
+                if (this.types.length > 1) {
                     let setToArray = new SetToArray();
                     let filterByClass = new FilterBy();
 
                     this._ts = this.model.Template.p('all').subscribe(
-                        (data) => {this.possibleValues = new Set(
-                            filterByClass.transform( setToArray.transform(data), [this.types, 'class']))});
+                        (data) => {
+                            this.possibleValues = new Set(
+                                filterByClass.transform(setToArray.transform(data), [this.types, 'class']))
+                        });
                 }
             }
         }
@@ -128,7 +129,9 @@ export class NestedResourceList extends AbstractResourceList{
      * Unsubscribe from subscriptions
      */
     ngOnDestroy() {
-        if (this._ts) { this._ts.unsubscribe(); }
+        if (this._ts) {
+            this._ts.unsubscribe();
+        }
     }
 
     /**
@@ -139,15 +142,17 @@ export class NestedResourceList extends AbstractResourceList{
         if (this.items && this.options.ordered) {
             this.items.sort((a, b) => {
                 return (a['-->IsRadiallyAdjacent']
-                    && a['-->IsRadiallyAdjacent'][2]
-                    && a['-->IsRadiallyAdjacent'][2].includes(b))
+                && a['-->IsRadiallyAdjacent'][2]
+                && a['-->IsRadiallyAdjacent'][2].includes(b))
             });
         }
     }
 
     //TODO: update new "Follows" relationship
-    _onDragEnd(index){
-        if (!this.options.ordered) { return; }
+    _onDragEnd(index) {
+        if (!this.options.ordered) {
+            return;
+        }
         //TODO: un-comment when the model libarry supports operations with this relationship (or other way to order)
         //IsRadiallyAdjacent relation has cardinality [0..*]
         // for (let i = 1; i < this.items.length; i++){
@@ -171,9 +176,9 @@ export class NestedResourceList extends AbstractResourceList{
      * Include a selected resource to the current list
      * @param {Resource} newItem - the selected resource to include to the current list
      */
-    _onIncluded(newItem){
-        if (newItem){
-            if (this.items.indexOf(newItem) < 0){
+    _onIncluded(newItem) {
+        if (newItem) {
+            if (this.items.indexOf(newItem) < 0) {
                 this.items.push(newItem);
                 this.updated.emit(this.items);
                 this.added.emit(newItem);

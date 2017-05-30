@@ -34,13 +34,12 @@ import {MeasurableGeneratorModule, MeasurableGenerator} from "../components/Meas
                         (canceled)="_onCanceled($event)"
                         (removed)="removed.emit($event)">
                 </toolbar-commands>
+                <!--<toolbar-sort [options]="['Name']" (sorted)="_onSorted($event)"></toolbar-sort>-->
                 <toolbar-propertySettings
                         [options]="_fields"
                         [transform]="_getPropertyLabel"
                         (selectionChanged)="_visibleFieldsChanged($event)">
                 </toolbar-propertySettings>
-                <toolbar-sort [options]="['Name']" (sorted)="_onSorted($event)">
-                </toolbar-sort>
 
                 <div class="input-control" *ngIf="item.class === model.Lyph.name">
                     <button type="button" class="btn btn-default btn-icon" (click)="_mGen.open()">
@@ -52,8 +51,7 @@ import {MeasurableGeneratorModule, MeasurableGenerator} from "../components/Meas
                 </div>
 
                 <div class="panel-content">
-                    <div class="input-control"
-                         *ngFor="let field of _fields | orderBy : _sortByMode">
+                    <div class="input-control" *ngFor="let field of _fields | orderBy : _sortByMode">
                         <div *ngIf="!_ignore.has(field.value)">
 
                             <div class="input-control-lg" *ngIf="field.type === 'input'">
@@ -66,7 +64,7 @@ import {MeasurableGeneratorModule, MeasurableGenerator} from "../components/Meas
 
                             <div *ngIf="field.type === 'select'">
                                 <label>{{_getPropertyLabel(field.value)}}: </label>
-                                <select-input-1 [item]="item.p(field.value) | async"
+                                <select-input-1 [item]  ="item.p(field.value) | async"
                                                 (updated)="_updateProperty(field.value, $event)"
                                                 [options]="_possibleValues[field.value]">
                                 </select-input-1>
@@ -159,12 +157,17 @@ import {MeasurableGeneratorModule, MeasurableGenerator} from "../components/Meas
         :host >>> .form-control {
           height: 30px;
           box-shadow: none!important;
+            
         }
         :host >>> .form-control:focus {
           border: 2px solid #ccc;
           box-shadow: none!important;
         }
-    `]
+        :host >>> .dropdown-menu  {
+            position: relative !important;
+        }
+        `
+    ]
 })
 /**
  * The ResourcePanel component, generates fields for editting properties of a given resource.
@@ -201,7 +204,7 @@ export class ResourcePanel {
     @Output() propertyUpdated = new EventEmitter();
 
     @ViewChild(MeasurableGenerator) _mGen;
-    _sortByMode   = "unsorted";
+    _sortByMode = "unsorted";
     _ignore = new Set();
 
     //Field type and visibility configurations
@@ -259,7 +262,7 @@ export class ResourcePanel {
                 selected: !this._ignore.has(key),
                 type: (value.cardinality.max === 1)
                     ? 'select'
-                    : multiSelectProperties.includes[key]? 'multiSelect' : 'relation'
+                    : multiSelectProperties.includes(key)? 'multiSelect' : 'relation'
                 });
 
             this.item.fields[key].p('possibleValues').subscribe(

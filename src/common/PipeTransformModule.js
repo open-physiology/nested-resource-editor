@@ -1,5 +1,6 @@
 import {NgModule, Pipe, PipeTransform} from '@angular/core';
 import isString from 'lodash-bound/isString';
+import isUndefined from 'lodash-bound/isUndefined';
 
 @Pipe({name: 'hideClass'})
 /**
@@ -45,7 +46,7 @@ export class SetToArray implements PipeTransform {
      * @param {Set} items - the set of items
      * @returns {Array} - the array of items
      */
-    transform(items) { return Array.from(items || {}); }
+    transform(items) { return Array.from(items || {}).filter(x => !x::isUndefined()); }
 }
 
 /**
@@ -90,46 +91,24 @@ export class OrderBy implements PipeTransform {
  * The MapToOptions pipe, maps resources into objects for drop-down lists
  */
 @Pipe({name: 'mapToOptions'})
-class MapToOptions implements PipeTransform {
+export class MapToOptions implements PipeTransform {
     /**
      * @param {Array<Resource>} items -  the array of resources to convert to the array of selection options
      * which are objects with fields "id" and "text".
-     * @returns {Array<{id: string, text: string}>} - the array of drop-down list selection options
+     * @returns {Array<{value: string, label: string}>} - the array of drop-down list selection options
      */
     transform(items = []) {
-        return items.filter(x => (x.name && (x.name !== ""))).map((entry) => ({
-            id: entry, text: entry.name? entry.name: "(Unnamed) " + entry.class
-        }))
+        return items.map(x =>({value: x, label: x.name? x.name: "(Unnamed) " + x.class}))
     }
 }
 
-/**
- * The MapToCategories pipe, maps resources into categorized objects for drop-down lists
- */
-@Pipe({name: 'mapToCategories'})
-class MapToCategories implements PipeTransform {
-    /**
-     * @param {Array<Resource>} items - the array of resources to convert to an array of categorized selection options
-     * which are objects with fields "text" and "children".
-     * @returns {Array<{text: string, children: Array}>} - the array of categorized drop-down list selection options
-     */
-    transform(items = []) {
-        let types = Array.from(new Set(items.map(item => item.type)));
-        let typedItems = [];
-        for (let type of types){
-            let typed = items.filter(item => (item.type === type));
-            typedItems.push({text: type, children: typed});
-        }
-        return typedItems;
-    }
-}
 
 /**
  * The PipeTransformModule module, exports open-physiology helper pipes
  */
 @NgModule({
-    declarations: [ OrderBy, FilterBy, SetToArray, HideClass, MapToOptions, MapToCategories ],
-    exports: [ OrderBy, FilterBy, SetToArray, HideClass, MapToOptions, MapToCategories ]
+    declarations: [ OrderBy, FilterBy, SetToArray, HideClass, MapToOptions],
+    exports: [ OrderBy, FilterBy, SetToArray, HideClass, MapToOptions]
 })
 export class PipeTransformModule {}
 

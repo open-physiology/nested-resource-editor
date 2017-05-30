@@ -1,28 +1,32 @@
 import {NgModule, Component, Input, Output, EventEmitter} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {PipeTransformModule} from '../PipeTransformModule';
+import {PipeTransformModule, SetToArray, MapToOptions} from '../PipeTransformModule';
 import {DropdownModule} from 'ngx-dropdown';
-import {SelectModule} from 'ng2-select';
+import {FormsModule} from '@angular/forms';
+import {SelectModule} from 'angular2-select';
 
 @Component({
     selector: 'select-input',
     template: `
         <div *ngIf="_active">
-            <ng-select
-                    [items]="options | setToArray | mapToOptions"
-                    [active]="items   | setToArray | mapToOptions"
-                    [disabled]="disabled"
-                    [multiple]="true"
-                    [allowClear]="true"
-                    (data)="_refreshValue($event)"
+            <ng-select 
+                    [options]    = "options | setToArray | mapToOptions"
+                    [(ngModel)]  = "_items"
+                    placeholder  = "Select many"
+                    [disabled]   = "disabled"
+                    [multiple]   = "true"
+                    [allowClear] = "true"
+                    (selected)   = "_updateValue($event)"
+                    (deselected) = "_updateValue($event)">
             ></ng-select>
         </div>
     `,
     styles: [
         `
-        :host >>> .ui-select-container{
-            height: 30px;
-        }
+            :host > div >>> .below {
+                height: 30px;
+                border-radius: 4px;
+            }
         `
     ]
 })
@@ -53,6 +57,7 @@ export class MultiSelectInput {
 
     _active = true;
     _externalChange = false;
+    _items = [];
 
     /**
      * Update component parameters in response to external data change
@@ -62,14 +67,19 @@ export class MultiSelectInput {
         if (this._externalChange){
             setTimeout(() => { this._active = false }, 0);
             setTimeout(() => { this._active = true  }, 0);
+            this._items =  new MapToOptions().transform(new SetToArray().transform(this.items || {}));
         }
         this._externalChange = true;
     }
 
-    _refreshValue(value):void {
+    /**
+     * @param item - added or removed item
+     * @private
+     */
+    _updateValue(item){
         this._externalChange = false;
-        let newItems = value.map(x => x.id);
-        this.updated.emit(new Set(newItems));
+        this.items = this._items;
+        this.updated.emit(this.items);
     }
 }
 
@@ -78,19 +88,22 @@ export class MultiSelectInput {
     template:`
         <div *ngIf="_active">
             <ng-select
-                    [items]="options | setToArray | mapToOptions"
-                    [active]="[item || {}] | mapToOptions"
-                    [disabled]="disabled"
-                    [multiple]=false
-                    [allowClear]=true
-                    (data)="_refreshValue($event)"
+                    [options]    = "options | setToArray | mapToOptions"
+                    [(ngModel)]  = "_items"
+                    placeholder  = "Select one"
+                    [disabled]   = "disabled"
+                    [multiple]   = false
+                    [allowClear] = true
+                    (selected)   = "_updateValue($event)"
+                    (deselected) = "_updateValue($event)">
             ></ng-select>
         </div>
     `,
     styles: [
         `
-        :host >>> .ui-select-container{
+        :host > div >>> .below {  
             height: 30px;
+            border-radius: 4px;
         }
         `
     ]
@@ -103,7 +116,7 @@ export class SingleSelectInput {
      * The set of input items
      * @type {Set<T>|Set}
      */
-    @Input()  item    = new Set();
+    @Input()  item  = new Set();
     /**
      * The set of items for selection
      * @type {Set<T>|Set}
@@ -122,6 +135,7 @@ export class SingleSelectInput {
 
     _active = true;
     _externalChange = false;
+    _items = [];
 
     /**
      * Update component parameters in response to external data change
@@ -129,15 +143,20 @@ export class SingleSelectInput {
      */
     ngOnChanges(changes) {
         if (this._externalChange){
-            setTimeout(() => {this._active = false}, 0);
-            setTimeout(() => {this._active = true},  0);
+            setTimeout(() => { this._active = false }, 0);
+            setTimeout(() => { this._active = true  }, 0);
+            this._items =  new MapToOptions().transform(new SetToArray().transform(this.item));
         }
         this._externalChange = true;
     }
 
-    _refreshValue(value = {}):void {
+    /**
+     * @param item - added or removed item
+     * @private
+     */
+    _updateValue(item){
         this._externalChange = false;
-        this.item = value.id;
+        this.item = this._items;
         this.updated.emit(this.item);
     }
 }
@@ -145,7 +164,7 @@ export class SingleSelectInput {
  * The CustomSelectModule module, offers pre-configured multiple and single item selection components.
  */
 @NgModule({
-    imports: [ CommonModule, DropdownModule, PipeTransformModule, SelectModule ],
+    imports: [ CommonModule, FormsModule, DropdownModule, PipeTransformModule, SelectModule ],
     declarations: [ MultiSelectInput, SingleSelectInput ],
     exports: [ MultiSelectInput, SingleSelectInput ]
 })

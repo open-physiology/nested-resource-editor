@@ -42,8 +42,6 @@ export class TestApp {
 		window.module = modelRef;
 		this._model = modelRef.classes;
 
-		console.log("Model", this._model);
-
 		this._rs = this._model.Resource.p('all').subscribe(
 			(data) => {
 				this._items = data;
