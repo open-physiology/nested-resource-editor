@@ -1,6 +1,6 @@
 import {NgModule, Pipe, PipeTransform} from '@angular/core';
 import isString from 'lodash-bound/isString';
-import isUndefined from 'lodash-bound/isUndefined';
+import isUndefined from 'lodash-bound/isUndefined'
 
 @Pipe({name: 'hideClass'})
 /**

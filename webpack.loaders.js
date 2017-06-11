@@ -21,7 +21,7 @@ module.exports = [
 		loader: 'url-loader?limit=20000'
 	},
 	{
-		test: /node_modules[\/\\](utilities|open-physiology-model)[\/\\]src[\/\\].*\.js$/,
+		test: /node_modules[\/\\](utilities|open-physiology-model|open-physiology-manifest)[\/\\]src[\/\\].*\.js$/,
 		loader: 'babel-loader'
 	},
 	{

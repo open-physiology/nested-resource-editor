@@ -14,9 +14,11 @@ import {NestedResourceWidgetModule} from '../index.js';
 	template: `
         <nested-resource-widget id="repo"
                                 caption="Resources"
-                                [model]="_model"
                                 [items]="_items | setToArray"
-                                (selectedItemChange)="_onItemSelected($event)">
+								[resourceFactory]="resourceFactory"
+                                (selectedItemChange)="_onSelected($event)"
+								(updated)="_onUpdated($event)"
+								(removed)="_onRemoved($event)">
         </nested-resource-widget>
 	`
 })
@@ -56,14 +58,30 @@ export class TestApp {
 	}
 
     /**
+	 * Create a new resource
+     * @param clsName - resource class name
+     * @param def     - object with resource definition
+     * @param options - options
+     * @returns a newly created resource
+     */
+    resourceFactory = (clsName, def, options = {}) => {
+		return this._model[clsName].new(def, options);
+	};
+
+    /**
 	 * Unsubscribe from subscriptions
      */
 	ngOnDestroy() { this._rs.unsubscribe(); }
 
-	_onItemSelected(item) {
+	_onSelected(item) {
 		setTimeout(() => { this._selectedItem = null; }, 0);
 		setTimeout(() => { this._selectedItem = item; }, 0);
 	}
+
+
+	_onUpdated(item){}
+
+	_onRemoved(item){}
 }
 
 /**

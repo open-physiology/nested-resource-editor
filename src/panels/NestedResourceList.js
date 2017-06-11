@@ -2,7 +2,6 @@ import {Component, Input} from '@angular/core';
 import {AbstractResourceList} from "./AbstractResourceList";
 import {HighlightService} from './HighlightService.js';
 import {ToastyService} from 'ng2-toasty';
-import {SetToArray, FilterBy} from "../common/PipeTransformModule";
 
 @Component({
     selector: 'nested-resource-list',
@@ -11,10 +10,10 @@ import {SetToArray, FilterBy} from "../common/PipeTransformModule";
             <div class="panel-heading"><label>{{caption}}: </label></div>
             <div class="panel-body">
                 <span *ngIf="!(options?.readOnly || options?.headersOnly)">
-                    <select-input-1 class = "pull-left input-select"
-                              [item]   = "_itemToInclude"
-                              (updated)= "_itemToInclude = $event"
-                              [options]= "possibleValues">
+                    <select-input-1 class="pull-left input-select"
+                                    [item]="_itemToInclude"
+                                    (updated)="_itemToInclude = $event"
+                                    [options]="possibleValues">
                     </select-input-1>
                     <button type="button" class="btn btn-default btn-icon" (click)="_onIncluded(_itemToInclude)">
                         <span class="glyphicon glyphicon-save"></span>
@@ -23,13 +22,13 @@ import {SetToArray, FilterBy} from "../common/PipeTransformModule";
 
                 <toolbar-sort *ngIf="options?.sortToolbar" [options]="['Name', 'ID', 'Class']"
                               (sorted)="_onSorted($event)"></toolbar-sort>
-                <toolbar-add *ngIf="!(options?.readOnly || options?.headersOnly)" [options]="types"
-                              [transform]="_getClassLabel" (added)="_onAdded($event)"></toolbar-add>
+                <toolbar-add *ngIf="!(options?.readOnly || options?.headersOnly)" [options]="_typeNames"
+                             [transform]="_getClassLabel" (added)="_onAdded($event)"></toolbar-add>
                 <toolbar-filter *ngIf="options?.filterToolbar" [options]="['Name', 'ID', 'Class']"
-                              [filter]="_searchString" (applied)="_onFiltered($event)"></toolbar-filter>
+                                [filter]="_searchString" (applied)="_onFiltered($event)"></toolbar-filter>
 
                 <accordion [closeOthers]="true"
-                           dnd-sortable-container [dropZones]="_zones" [sortableData]="items">
+                           dnd-sortable-container [dropZones]="_typeNames" [sortableData]="items">
                     <accordion-group *ngFor="let item of items 
                         | filterBy: [_searchString, _filterByMode]; let i = index" class="list-group-item"
                                      dnd-sortable [dragEnabled]=true
@@ -50,7 +49,7 @@ import {SetToArray, FilterBy} from "../common/PipeTransformModule";
                         <div *ngIf="!options?.headersOnly">
                             <resource-panel *ngIf="item === openItem"
                                             [item]="item"
-                                            [model]="model"
+                                            [resourceClasses]="resourceClasses"
                                             [options]="options"
                                             (saved)="_onSaved(item)"
                                             (removed)="_onRemoved(item)"
@@ -84,43 +83,36 @@ export class NestedResourceList extends AbstractResourceList {
      *  the list of resources that can be added to the current list
      */
     @Input() possibleValues;
+    /**
+     * @type {Object} type      - the displayed item type (resource class)
+     */
+    @Input() type = [];
 
     _itemToInclude = null;
 
     /**
      * The constructor of the component
-     * @param {ToastyService} toastyService - the service for showing notifications and error messages
      * @param {HighlightService} highlightService - the service that notifies nested components about currently highlighted item
+     * @param {ToastyService} toastyService - the service for showing notifications and error messages
      */
-    constructor(toastyService: ToastyService, highlightService: HighlightService) {
-        super(highlightService);
-        this._toastyService = toastyService;
+    constructor(highlightService: HighlightService, toastyService: ToastyService) {
+        super(highlightService, toastyService);
     }
+
 
     /**
      * Initialize the component
      */
     ngOnInit() {
         super.ngOnInit();
+        if (this.type){
+            //Make a list of all subclasses to filter or choose which class to add ?
+            //this._typeNames = [...this.type.allSubclasses()].map(x => x.name);
+            this._typeNames = [this.type.name];
 
-        //If selectionOptions are not provided by parent, subscribe and get all for given types
-        if (!this.possibleValues) {
-            if (this.types.length === 1) {
-                this._ts = this.model[this.types[0]].p('all').subscribe(
-                    (data) => {
-                        this.possibleValues = data;
-                    });
-            } else {
-                if (this.types.length > 1) {
-                    let setToArray = new SetToArray();
-                    let filterByClass = new FilterBy();
-
-                    this._ts = this.model.Template.p('all').subscribe(
-                        (data) => {
-                            this.possibleValues = new Set(
-                                filterByClass.transform(setToArray.transform(data), [this.types, 'class']))
-                        });
-                }
+            //If selectionOptions are not provided by parent, subscribe and get all for given type
+            if (!this.possibleValues) {
+                this._ts = this.type.p('all').subscribe( (data) => { this.possibleValues = data; });
             }
         }
     }
@@ -150,8 +142,7 @@ export class NestedResourceList extends AbstractResourceList {
 
     //TODO: update new "Follows" relationship
     _onDragEnd(index) {
-        if (!this.options.ordered) {
-            return;
+        if (!this.options.ordered) { return;
         }
         //TODO: un-comment when the model libarry supports operations with this relationship (or other way to order)
         //IsRadiallyAdjacent relation has cardinality [0..*]

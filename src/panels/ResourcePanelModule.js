@@ -1,19 +1,14 @@
 import {NgModule, Component, ViewChild, EventEmitter, Input, Output} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {FormsModule} from '@angular/forms';
+import {CommonModule}    from '@angular/common';
+import {FormsModule}     from '@angular/forms';
 import {AccordionModule} from "ngx-accordion";
-import {DndModule} from 'ngx-dnd';
-
+import {DndModule}       from 'ngx-dnd';
 import {ToastyModule, ToastyService} from 'ng2-toasty';
-import '../../node_modules/ng2-toasty/style.css';
-import '../../node_modules/ng2-toasty/style-bootstrap.css';
 
-//Common
-import {PipeTransformModule, SetToArray, HideClass} from "../common/PipeTransformModule";
+import {PipeTransformModule, SetToArray, HideClass}     from "../common/PipeTransformModule";
+import {MeasurableGeneratorModule, MeasurableGenerator} from "../components/MeasurableGeneratorModule";
 import {ToolbarSettingsModule} from '../common/toolbars/ToolbarSettingsModule';
-import {CustomSelectModule} from '../common/components/CustomSelectModule';
-
-//Local
+import {CustomSelectModule}    from '../common/components/CustomSelectModule';
 import {ToolbarAddModule}      from '../toolbars/ToolbarAddModule';
 import {ToolbarFilterModule}   from '../toolbars/ToolbarFilterModule';
 import {ToolbarSortModule}     from '../toolbars/ToolbarSortModule';
@@ -21,7 +16,7 @@ import {ItemHeader}            from "./ItemHeader";
 import {NestedResourceList}    from './NestedResourceList';
 import {ToolbarCommandsModule} from '../toolbars/ToolbarCommandsModule';
 import {TemplateValueModule}   from '../components/TemplateValueModule';
-import {MeasurableGeneratorModule, MeasurableGenerator} from "../components/MeasurableGeneratorModule";
+import {HighlightService}      from './HighlightService.js';
 
 @Component({
     selector: 'resource-panel',
@@ -29,23 +24,22 @@ import {MeasurableGeneratorModule, MeasurableGenerator} from "../components/Meas
         <div class="panel">
             <div class="panel-body">
                 <toolbar-commands
-                        [options]="options"
-                        (saved)="_onSaved($event)"
-                        (canceled)="_onCanceled($event)"
-                        (removed)="removed.emit($event)">
+                        [options]  = "options"
+                        (saved)    = "_onSaved($event)"
+                        (canceled) = "_onCanceled($event)"
+                        (removed)  = "removed.emit($event)">
+                    <button *ngIf="item.class === resourceClasses.Lyph.name" 
+                            type="button" class="btn btn-default btn-icon" (click)="_mGen.open()">
+                        <span class="glyphicon glyphicon-cog"></span>
+                    </button>
                 </toolbar-commands>
                 <!--<toolbar-sort [options]="['Name']" (sorted)="_onSorted($event)"></toolbar-sort>-->
                 <toolbar-propertySettings
-                        [options]="_fields"
-                        [transform]="_getPropertyLabel"
-                        (selectionChanged)="_visibleFieldsChanged($event)">
+                        [options]          = "_fields"
+                        [transform]        = "_getPropertyLabel"
+                        (selectionChanged) = "_visibleFieldsChanged($event)">
                 </toolbar-propertySettings>
 
-                <div class="input-control" *ngIf="item.class === model.Lyph.name">
-                    <button type="button" class="btn btn-default btn-icon" (click)="_mGen.open()">
-                        <span class="glyphicon glyphicon-cog"></span>
-                    </button>
-                </div>
                 <div class="input-control" *ngIf="!options?.hideCreateType && _isTyped()">
                     <input type="checkbox" [disabled]="_typeCreated" [(ngModel)]="_createType">Create type
                 </div>
@@ -57,57 +51,61 @@ import {MeasurableGeneratorModule, MeasurableGenerator} from "../components/Meas
                             <div class="input-control-lg" *ngIf="field.type === 'input'">
                                 <label for="comment">{{_getPropertyLabel(field.value)}}: </label>
                                 <input class="form-control"
-                                       [type]="_getDefaultValue(field.value, 'type')"
-                                       [disabled]="item.constructor.properties[field.value].readOnly"
-                                       [(ngModel)]="item[field.value]">
+                                       [type]      = "_getDefaultValue(field.value, 'type')"
+                                       [disabled]  = "item.constructor.properties[field.value].readOnly"
+                                       [(ngModel)] = "item[field.value]">
                             </div>
 
                             <div *ngIf="field.type === 'select'">
                                 <label>{{_getPropertyLabel(field.value)}}: </label>
-                                <select-input-1 [item]  ="item.p(field.value) | async"
-                                                (updated)="_updateProperty(field.value, $event)"
-                                                [options]="_possibleValues[field.value]">
+                                <select-input-1 [item]    = "item.p(field.value) | async"
+                                                (updated) = "_updateProperty(field.value, $event)"
+                                                [options] = "_possibleValues[field.value]">
                                 </select-input-1>
                             </div>
 
                             <div *ngIf="field.type === 'multiSelect'">
                                 <label>{{_getPropertyLabel(field.value)}}: </label>
-                                <select-input [items]="item.p(field.value) | async"
-                                              (updated)="_updateProperty(field.value, $event)"
-                                              [options]="_possibleValues[field.value]">
+                                <select-input [items]   = "item.p(field.value) | async"
+                                              (updated) = "_updateProperty(field.value, $event)"
+                                              [options] = "_possibleValues[field.value]">
                                 </select-input>
                             </div>
 
                             <nested-resource-list *ngIf="field.type === 'relation'"
-                                                  [caption]="_getPropertyLabel(field.value)"
-                                                  [model]="model"
-                                                  [items]="item.p(field.value) | async | setToArray"
-                                                  [options]="{ordered: ['layers', 'segments'].includes(field.value)}"
-                                                  [types]="[item.constructor.relationshipShortcuts[field.value].codomain.resourceClass.name]"
-                                                  (updated)="_updateProperty(field.value, $event)">
+                                                  [caption]  = "_getPropertyLabel(field.value)"
+                                                  [items]    = "item.p(field.value) | async | setToArray"
+                                                  [resourceClasses] = "resourceClasses"   
+                                                  [resourceFactory] = "resourceFactory"
+                                                  [options]  = "{ordered: ['layers', 'segments'].includes(field.value)}"
+                                                  [type]     = "item.constructor.relationshipShortcuts[field.value].codomain.resourceClass"
+                                                  (updated)  = "_updateProperty(field.value, $event)">
                             </nested-resource-list>
 
                             <template-value *ngIf="field.type === 'template'"
-                                            [caption]="_getPropertyLabel(field.value)"
-                                            [item]="item.p(field.value) | async"
-                                            [step]="_getDefaultValue(field.value, 'step')"
-                                            (updated)="_updateProperty(field.value, $event)">
+                                            [caption] = "_getPropertyLabel(field.value)"
+                                            [item]    = "item.p(field.value) | async"
+                                            [step]    = "_getDefaultValue(field.value, 'step')"
+                                            (updated) = "_updateProperty(field.value, $event)">
                             </template-value>
 
                             <fieldset *ngIf="field.type === 'checkbox'">
                                 <legend>{{_getPropertyLabel(field.value)}}:</legend>
                                 <p *ngFor="let option of _possibleValues[field.value]; let i = index">
-                                    <input type="checkbox" [value]="option"
-                                           [checked]="item[field.value].includes(option)"
-                                           (change)="_updateArray(field.value, option, $event)"
+                                    <input type     = "checkbox" 
+                                           [value]  = "option"
+                                           [checked]= "item[field.value].includes(option)"
+                                           (change) = "_updateArray(field.value, option, $event)"
                                     >{{option}}&nbsp;
                                 </p>
                             </fieldset>
                         </div>
                     </div>
 
-                    <modal-window *ngIf="item.class === model.Lyph.name" [item]="item"
-                                  [clsMeasurable]="model.Measurable">
+                    <modal-window *ngIf="item.class === resourceClasses.Lyph.name" 
+                                  [item]            = "item"
+                                  [resourceClasses] = "resourceClasses"
+                                  [resourceFactory] = "resourceFactory">
                     </modal-window>
 
                 </div>
@@ -164,7 +162,7 @@ import {MeasurableGeneratorModule, MeasurableGenerator} from "../components/Meas
           box-shadow: none!important;
         }
         :host >>> .dropdown-menu  {
-            position: relative !important;
+          position: relative !important;
         }
         `
     ]
@@ -178,13 +176,18 @@ export class ResourcePanel {
      */
     @Input() item;
     /**
-     * @property {Object} model  - the open-physiology model
-     */
-    @Input() model;
-    /**
      * @property {Object} options - the visualization options for the panel's commands toolbar
      */
     @Input() options;
+
+    /**
+     * A function that creates resources that are handled by model library
+     */
+    @Input() resourceFactory;
+    /**
+     * Resource classes
+     */
+    @Input() resourceClasses;
 
     /**
      * @emits saved           - the changes saved
@@ -228,7 +231,7 @@ export class ResourcePanel {
      */
     ngOnInit(){
         this._ignore = new Set(["id", "cardinalityBase", "cardinalityMultipliers", "definedType"]);
-        if (this.item instanceof this.model.Border) {
+        if (this.item instanceof this.resourceClasses.Border) {
             ['externals', 'species', 'measurables', 'name', 'types', 'nodes'].map(propName =>
                 this._ignore.add(propName));
         }
@@ -269,7 +272,7 @@ export class ResourcePanel {
                 (data) => {
                     this._possibleValues[key] = (key === "cardinalityMultipliers")?
                         new Set(new HideClass().transform( new SetToArray().transform(data),
-                            [this.model.Border.name, this.model.Node.name]))
+                            [this.resourceClasses.Border.name, this.resourceClasses.Node.name]))
                         : data;
                 });
       }
@@ -343,20 +346,8 @@ export class ResourcePanel {
         this._updateProperty(property, newArray);
     }
 
-    _addItem(parent, property, item){
-        if (parent && (parent[property])){
-            parent[property].add(item);
-            this.propertyUpdated.emit({property: property, values: parent[property]});
-        }
-    }
-
-    _removeItem(parent, property, item){
-        item.delete();
-        this._updateProperty(property, parent[property]);
-    }
-
     _isTyped(){
-        return this.item instanceof this.model.Template;
+        return this.item instanceof this.resourceClasses.Template;
     }
 
     _onSorted(prop) {
@@ -368,7 +359,7 @@ export class ResourcePanel {
     }
 
     _onSaved(event){
-        if (this.item.class === this.model.CoalescenceScenario.name){
+        if (this.item.class === this.resourceClasses.CoalescenceScenario.name){
             if (this.item.lyphs && (this.item.lyphs.size !== 2)){
                 this._toastyService.error("Wrong number of lyphs", this.item.lyphs.size);
             }
@@ -384,7 +375,7 @@ export class ResourcePanel {
             let template = this.item;
             if (!template['-->DefinesType']){
                 (async function() {
-                    let newType = this.model.Type.new({definition: template});
+                    let newType = this.resourceClasses.Type.new({definition: template});
                     template.p('name').subscribe(newType.p('name'));
 
                     await newType.commit();
@@ -409,6 +400,7 @@ export class ResourcePanel {
         CommonModule,
         FormsModule,
         DndModule.forRoot(),
+        ToastyModule.forRoot(),
         AccordionModule,
         ToolbarSettingsModule,
         ToolbarCommandsModule,
@@ -418,10 +410,9 @@ export class ResourcePanel {
         TemplateValueModule,
         PipeTransformModule,
         CustomSelectModule,
-        ToastyModule.forRoot(),
         MeasurableGeneratorModule],
     declarations: [ ResourcePanel, NestedResourceList, ItemHeader ],
-    providers: [ToastyService],
+    providers:    [ HighlightService, ToastyService ],
     exports: [
         AccordionModule,
         DndModule,
@@ -431,6 +422,7 @@ export class ResourcePanel {
         ToolbarFilterModule,
         ToolbarSortModule,
         ResourcePanel,
-        ItemHeader]
+        ItemHeader
+    ]
 })
 export class ResourcePanelModule {}

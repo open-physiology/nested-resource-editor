@@ -32,13 +32,13 @@ import {Ng2Bs3ModalModule, ModalComponent} from '../libs/ng2-bs3-modal';
  * MeasurableGenerator component, provides generation of measurables in a pop-up window.
  *
  * @param {Resource} item - a resource, typically, lyph, which inherits measurables from its type
- * @param {Object} clsMeasurable - the Measurable resource class to create new measurables
  * @emits closed - a user closed the modal window
  *
  */
 export class MeasurableGenerator{
     @Input()  item;
-    @Input()  clsMeasurable;
+    @Input()  resourceClasses;
+    @Input()  resourceFactory;
     @Output() closed = new EventEmitter();
 
     //Measurable replication
@@ -78,7 +78,7 @@ export class MeasurableGenerator{
         if (this._measurablesToReplicate.size > 0){
             let protoMeasurables = Array.from(this._measurablesToReplicate);
             for (let protoMeasurable of protoMeasurables){
-                let newMeasurable = this.clsMeasurable.new(protoMeasurable);
+                let newMeasurable = this.resourceFactory(this.resourceClasses.Measuarable.name, protoMeasurable);
                 newMeasurable.location = this.item;
             }
         }

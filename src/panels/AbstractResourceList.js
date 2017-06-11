@@ -1,5 +1,6 @@
 import {Input, Output, EventEmitter} from '@angular/core';
 import {HighlightService} from './HighlightService.js';
+import {ToastyService} from 'ng2-toasty';
 
 /**
  * The AbstractResourceList class implements methods common for upper level and nested resource lists.
@@ -11,23 +12,22 @@ export class AbstractResourceList {
     @Input() caption = "Resources";
 
     /**
-     * @type {Object} model  - the open-physiology model
+     * A function that creates resources that are handled by model library
      */
-    @Input() model;
+    @Input() resourceFactory;
 
     /**
-     * @type {Array<Resource>} items    - the list of displayed resources
+     * @type {Object} resourceClasses          - the open-physiology model
+     */
+    @Input() resourceClasses;
+
+    /**
+     * @type {Array<Resource>} items     - the list of displayed resources
      */
     @Input() items = [];
 
     /**
-     * @type {Array<string>} types      - the list of displayed item types (resource classes)
-     */
-    @Input() types = [];
-
-    /**
      * @type {Object} - visualization options
-     * @property {boolean} options.ordered -
      */
     @Input() options = {};
 
@@ -71,19 +71,19 @@ export class AbstractResourceList {
     _selectedItem    = null;
     _highlightedItem = null;
     _openItem        = null;
-
-    _zones = [];
-
-    _sortByMode   = "unsorted";
-    _filterByMode = "Name";
-    _searchString = "";
+    _typeNames       = [];
+    _sortByMode      = "unsorted";
+    _filterByMode    = "Name";
+    _searchString    = "";
 
     /**
      * The constructor of the component
      * @param {HighlightService} highlightService - the service that notifies nested components about currently highlighted item
+     * @param {ToastyService} toastyService - the service for showing notifications and error messages
      */
-    constructor(highlightService: HighlightService) {
+    constructor(highlightService: HighlightService, toastyService: ToastyService) {
         this._highlightService = highlightService;
+        this._toastyService = toastyService;
         this._hs = this._highlightService.highlightedItemChanged$.subscribe(item => {
             if (this.items.includes(item) && this._highlightedItem !== item){
                 this._highlightedItem = item;
@@ -100,18 +100,6 @@ export class AbstractResourceList {
         if (this.items[0] || !this.selectedItem) {
             this.selectedItem = this.items[0];
         }
-
-        if (this.types.length === 0) {
-            //If no specific classes were specified, it works with any class
-            let visualClasses = [...this.model.Artefact.allSubclasses()].map(x => x.name);
-            for (let cls of Object.values(this.model)){
-                if (cls.isResource && !cls.abstract && !visualClasses.includes(cls.name)){
-                    this.types.push(cls.name);
-                    if (cls.name === this.model.Lyph.name){ this.types.push("LyphWithAxis"); }
-                }
-            }
-        }
-        this._zones = this.types.map(x => x + "_zone");
     }
 
     /**
@@ -204,18 +192,28 @@ export class AbstractResourceList {
     _onAdded(clsName) {
         let options = {};
         if (clsName === "LyphWithAxis") {
-            clsName = this.model.Lyph.name;
+            clsName = this.resourceClasses.Lyph.name;
             options.createAxis = true;
         }
-        if (clsName === this.model.Lyph.name) {
+        if (clsName === this.resourceClasses.Lyph.name) {
             options.createRadialBorders = true;
         }
 
-        let newItem = this.model[clsName].new({name: `New ${clsName}`}, options);
-
-        if (clsName === this.model.Material.name) {
-            let newType = this.model.Type.new({name: newItem.name, definition: newItem});
-            newItem.p('name').subscribe(newType.p('name'));
+        let newItem;
+        if (this.resourceFactory){
+            newItem = this.resourceFactory(clsName, {name: `New ${clsName}`}, options);
+            if (clsName === this.resourceClasses.Material.name) {
+                let newType = this.resourceFactory(this.resourceClasses.Type.name,
+                    {name: newItem.name, definition: newItem});
+                newItem.p('name').subscribe(newType.p('name'));
+            }
+        } else {
+            let cls = this.resourceClasses[clsName];
+            newItem = cls.new({name: `New ${clsName}`}, options);
+            if (clsName === this.resourceClasses.Material.name) {
+                this.resourceClasses.Type.new({name: newItem.name, definition: newItem});
+            }
+            this._toastyService.error("The resource factory is not provided! The created resource is a placeholder!");
         }
 
         this.items.push(newItem);
