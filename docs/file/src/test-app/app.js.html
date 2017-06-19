@@ -32,13 +32,21 @@
 <nav class="navigation" data-ice="nav"><div>
   <ul>
     
-  <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">common/components</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/components/CustomSelectModule.js~CustomSelectModule.html">CustomSelectModule</a></span></span></li>
+  <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">common</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/PipeTransformModule.js~FilterBy.html">FilterBy</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/PipeTransformModule.js~HideClass.html">HideClass</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/PipeTransformModule.js~MapToOptions.html">MapToOptions</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/PipeTransformModule.js~OrderBy.html">OrderBy</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/PipeTransformModule.js~PipeTransformModule.html">PipeTransformModule</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/PipeTransformModule.js~SetToArray.html">SetToArray</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">common/components</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/components/CustomSelectModule.js~CustomSelectModule.html">CustomSelectModule</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/components/CustomSelectModule.js~MultiSelectInput.html">MultiSelectInput</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/components/CustomSelectModule.js~SingleSelectInput.html">SingleSelectInput</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">common/toolbars</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/toolbars/ToolbarSettingsModule.js~ToolbarPropertySettings.html">ToolbarPropertySettings</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/toolbars/ToolbarSettingsModule.js~ToolbarSettingsModule.html">ToolbarSettingsModule</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">components</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/components/MeasurableGeneratorModule.js~MeasurableGenerator.html">MeasurableGenerator</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/components/MeasurableGeneratorModule.js~MeasurableGeneratorModule.html">MeasurableGeneratorModule</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/components/TemplateValueModule.js~TemplateValueComponent.html">TemplateValueComponent</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/components/TemplateValueModule.js~TemplateValueModule.html">TemplateValueModule</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">panels</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/panels/AbstractResourceList.js~AbstractResourceList.html">AbstractResourceList</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/panels/HighlightService.js~HighlightService.html">HighlightService</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/panels/ItemHeader.js~ItemHeader.html">ItemHeader</a></span></span></li>
@@ -70,7 +78,6 @@ import $ from &apos;../libs/jquery&apos;;
 import modelFactory, {ajaxBackend} from &apos;open-physiology-model&apos;;
 
 import {PipeTransformModule} from &apos;../common/PipeTransformModule.js&apos;;
-import {Subscription}   from &apos;rxjs/Subscription&apos;;
 import {NestedResourceWidgetModule} from &apos;../index.js&apos;;
 
 @Component({
@@ -78,9 +85,11 @@ import {NestedResourceWidgetModule} from &apos;../index.js&apos;;
 	template: `
         &lt;nested-resource-widget id=&quot;repo&quot;
                                 caption=&quot;Resources&quot;
-                                [model]=&quot;_model&quot;
                                 [items]=&quot;_items | setToArray&quot;
-                                (selectedItemChange)=&quot;_onItemSelected($event)&quot;&gt;
+								[resourceFactory]=&quot;resourceFactory&quot;
+                                (selectedItemChange)=&quot;_onSelected($event)&quot;
+								(updated)=&quot;_onUpdated($event)&quot;
+								(removed)=&quot;_onRemoved($event)&quot;&gt;
         &lt;/nested-resource-widget&gt;
 	`
 })
@@ -91,8 +100,7 @@ export class TestApp {
 	_model;
 	_items;
 	_selectedItem;
-
-	_rs: Subscription;
+	_rs;
 
     /**
 	 * The constructor of the component
@@ -103,12 +111,10 @@ export class TestApp {
 			ajax:        $.ajax
 		});
 		let modelRef = modelFactory(backend);
-		window.module = modelRef;
 		this._model = modelRef.classes;
+        window.model = this._model;
 
-		console.log(&quot;Model&quot;, this._model);
-
-		this._rs = this._model.Resource.p(&apos;all&apos;).subscribe(
+        this._rs = this._model.Resource.p(&apos;all&apos;).subscribe(
 			(data) =&gt; {
 				this._items = data;
 				if (this._items.length &gt; 0){
@@ -119,17 +125,40 @@ export class TestApp {
 		this._model.Lyph.new({name: &quot;Kidney&quot;}, {createAxis: true});
 		this._model.Lyph.new({name: &quot;Heart&quot;});
 		this._model.Lyph.new({name: &quot;Head&quot;});
+
+		this.resourceFactory = ::this.resourceFactory;
 	}
+
+    /**
+	 * Create a new resource
+     * @param clsName - resource class name
+     * @param def     - object with resource definition
+     * @param options - options
+     * @returns a newly created resource
+     */
+    // resourceFactory = (clsName, def, options = {}) =&gt; {
+	// 	return this._model[clsName].new(def, options);
+	// };
+    //
+
+    resourceFactory(clsName, def, options = {}) {
+        return this._model[clsName].new(def, options);
+    }
 
     /**
 	 * Unsubscribe from subscriptions
      */
 	ngOnDestroy() { this._rs.unsubscribe(); }
 
-	_onItemSelected(item) {
+	_onSelected(item) {
 		setTimeout(() =&gt; { this._selectedItem = null; }, 0);
 		setTimeout(() =&gt; { this._selectedItem = item; }, 0);
 	}
+
+
+	_onUpdated(item){}
+
+	_onRemoved(item){}
 }
 
 /**

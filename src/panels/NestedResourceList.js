@@ -10,12 +10,13 @@ import {ToastyService} from 'ng2-toasty';
             <div class="panel-heading"><label>{{caption}}: </label></div>
             <div class="panel-body">
                 <span *ngIf="!(options?.readOnly || options?.headersOnly)">
-                    <select-input-1 class="pull-left input-select"
-                                    [item]="_itemToInclude"
-                                    (updated)="_itemToInclude = $event"
-                                    [options]="possibleValues">
-                    </select-input-1>
-                    <button type="button" class="btn btn-default btn-icon" (click)="_onIncluded(_itemToInclude)">
+                    <select-input class="pull-left input-select"
+                                    [items]    = "_itemsToInclude"
+                                    [options]  = "possibleValues"
+                                    [multiple] = "false"
+                    >
+                    </select-input>
+                    <button type="button" class="btn btn-default btn-icon" (click)="_onIncluded()">
                         <span class="glyphicon glyphicon-save"></span>
                     </button>
                 </span>
@@ -31,8 +32,7 @@ import {ToastyService} from 'ng2-toasty';
                            dnd-sortable-container [dropZones]="_typeNames" [sortableData]="items">
                     <accordion-group *ngFor="let item of items 
                         | filterBy: [_searchString, _filterByMode]; let i = index" class="list-group-item"
-                                     dnd-sortable [dragEnabled]=true
-                                     [sortableIndex]="i"
+                                     dnd-sortable [sortableIndex]="i"
                                      (onDragEnd)="_onDragEnd(i)"
                                      (onOpen)="openItem = item"
                                      (onClose)="openItem = null">
@@ -86,9 +86,9 @@ export class NestedResourceList extends AbstractResourceList {
     /**
      * @type {Object} type      - the displayed item type (resource class)
      */
-    @Input() type = [];
+    @Input() type;
 
-    _itemToInclude = null;
+    _itemsToInclude = new Set();
 
     /**
      * The constructor of the component
@@ -133,47 +133,44 @@ export class NestedResourceList extends AbstractResourceList {
     ngOnChanges(changes) {
         if (this.items && this.options.ordered) {
             this.items.sort((a, b) => {
-                return (a['-->IsRadiallyAdjacent']
-                && a['-->IsRadiallyAdjacent'][2]
-                && a['-->IsRadiallyAdjacent'][2].includes(b))
+                let a1 = a;
+                let follow_a = [];
+                let b1 = [...a1['-->IsRadiallyAdjacent']];
+                while (b1.length > 0){
+                    follow_a.push(b1[0]);
+                    a1 = b1[0];
+                    b1 = [...a1['-->IsRadiallyAdjacent']];
+                }
+                return ( follow_a.includes(b) )
             });
         }
     }
 
-    //TODO: update new "Follows" relationship
     _onDragEnd(index) {
-        if (!this.options.ordered) { return;
+        if (this.items.length < 2 || !this.options.ordered) { return; }
+        for (let i = 1; i < this.items.length; i++){
+            this.resourceFactory(this.resourceClasses.IsRadiallyAdjacent.name,
+                {1: this.items[i-1], 2: this.items[i]});
         }
-        //TODO: un-comment when the model libarry supports operations with this relationship (or other way to order)
-        //IsRadiallyAdjacent relation has cardinality [0..*]
-        // for (let i = 1; i < this.items.length; i++){
-        //     if (this.items[i]['-->IsRadiallyAdjacent'] && this.items[i]['-->IsRadiallyAdjacent'][2]){
-        //         if (!this.items[i]['-->IsRadiallyAdjacent'][2].includes(this.items[i - 1])){
-        //             this.items[i]['-->IsRadiallyAdjacent'][2] = [this.items[i - 1]];
-        //         }
-        //     } else {
-        //         this.model.isRadiallyAdjacent.new({1: this.items[i - 1], 2: this.items[i]});
-        //     }
+        // for (let i = 1; i < this.items.length; i++) {
+        //     console.log(this.items[i].name, this.items[i]['-->IsRadiallyAdjacent']);
         // }
-        // if (this.items.length > 1) {
-        //     if (this.items[this.items.length - 1]['-->IsRadiallyAdjacent'] !== null){
-        //         this.items[i]['-->IsRadiallyAdjacent'].delete();
-        //     }
-        // }
-        // this.updated.emit(this.items);
+        this.updated.emit(this.items);
     }
 
     /**
      * Include a selected resource to the current list
      * @param {Resource} newItem - the selected resource to include to the current list
      */
-    _onIncluded(newItem) {
-        if (newItem) {
-            if (this.items.indexOf(newItem) < 0) {
+    _onIncluded() {
+        for (let newItem of Array.from(this._itemsToInclude)){
+            if (!newItem){ continue; }
+            if (!this.items.includes(newItem)) {
                 this.items.push(newItem);
                 this.updated.emit(this.items);
                 this.added.emit(newItem);
                 this.selectedItem = newItem;
+
             } else {
                 this._toastyService.error("Selected resource is already included to the set!");
             }

@@ -13,6 +13,6 @@ module.exports = {
 	},
 	target: 'node',
 	externals: [require('webpack-node-externals')({
-		whitelist: ['utilities', 'open-physiology-model']
+		whitelist: ['utilities', 'open-physiology-model', 'open-physiology-manifest']
 	})]
 };

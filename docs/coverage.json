@@ -1,7 +1,7 @@
 {
-  "coverage": "76.11%",
-  "expectCount": 67,
-  "actualCount": 51,
+  "coverage": "77.38%",
+  "expectCount": 84,
+  "actualCount": 65,
   "files": {
     "src/panels/AbstractResourceList.js": {
       "expectCount": 11,
@@ -9,17 +9,23 @@
       "undocumentLines": [
         44,
         37,
-        95
+        97
       ]
     },
     "src/common/components/CustomSelectModule.js": {
-      "expectCount": 8,
+      "expectCount": 9,
       "actualCount": 5,
       "undocumentLines": [
-        11,
-        58,
-        96
+        65,
+        12,
+        109,
+        56
       ]
+    },
+    "src/common/PipeTransformModule.js": {
+      "expectCount": 11,
+      "actualCount": 11,
+      "undocumentLines": []
     },
     "src/panels/HighlightService.js": {
       "expectCount": 4,
@@ -39,22 +45,23 @@
       "expectCount": 5,
       "actualCount": 4,
       "undocumentLines": [
-        17
+        16
       ]
     },
     "src/panels/NestedResourceList.js": {
       "expectCount": 7,
       "actualCount": 5,
       "undocumentLines": [
-        34,
-        104
+        39,
+        100
       ]
     },
     "src/panels/NestedResourceWidgetModule.js": {
       "expectCount": 7,
-      "actualCount": 6,
+      "actualCount": 5,
       "undocumentLines": [
-        14
+        17,
+        60
       ]
     },
     "src/panels/ResourcePanelModule.js": {
@@ -62,9 +69,16 @@
       "actualCount": 4,
       "undocumentLines": []
     },
-    "src/test-app/app.js": {
+    "src/components/TemplateValueModule.js": {
       "expectCount": 4,
-      "actualCount": 4,
+      "actualCount": 3,
+      "undocumentLines": [
+        26
+      ]
+    },
+    "src/test-app/app.js": {
+      "expectCount": 5,
+      "actualCount": 5,
       "undocumentLines": []
     },
     "src/toolbars/ToolbarAddModule.js": {

@@ -34,6 +34,7 @@
     
   <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">common</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/PipeTransformModule.js~FilterBy.html">FilterBy</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/PipeTransformModule.js~HideClass.html">HideClass</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/PipeTransformModule.js~MapToOptions.html">MapToOptions</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/PipeTransformModule.js~OrderBy.html">OrderBy</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/PipeTransformModule.js~PipeTransformModule.html">PipeTransformModule</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/PipeTransformModule.js~SetToArray.html">SetToArray</a></span></span></li>
@@ -44,6 +45,8 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/toolbars/ToolbarSettingsModule.js~ToolbarSettingsModule.html">ToolbarSettingsModule</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">components</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/components/MeasurableGeneratorModule.js~MeasurableGenerator.html">MeasurableGenerator</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/components/MeasurableGeneratorModule.js~MeasurableGeneratorModule.html">MeasurableGeneratorModule</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/components/TemplateValueModule.js~TemplateValueComponent.html">TemplateValueComponent</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/components/TemplateValueModule.js~TemplateValueModule.html">TemplateValueModule</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">panels</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/panels/AbstractResourceList.js~AbstractResourceList.html">AbstractResourceList</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/panels/HighlightService.js~HighlightService.html">HighlightService</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/panels/ItemHeader.js~ItemHeader.html">ItemHeader</a></span></span></li>
@@ -68,6 +71,8 @@
 
 <div class="content" data-ice="content"><h1 data-ice="title">src/common/PipeTransformModule.js</h1>
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import {NgModule, Pipe, PipeTransform} from &apos;@angular/core&apos;;
+import isString from &apos;lodash-bound/isString&apos;;
+import isUndefined from &apos;lodash-bound/isUndefined&apos;
 
 @Pipe({name: &apos;hideClass&apos;})
 /**
@@ -92,11 +97,12 @@ export class HideClass implements PipeTransform {
 export class FilterBy implements PipeTransform {
     /**
      * @param {Array&lt;Resource&gt;} items - the array of resources to filter
-     * @param {string} searchString - the string that the resource field must contain
-     * @param {string} propName - the resource field name
+     * @param {[string, string]} params - an array with two parameters:
+     * [0] - the string that the resource field must contain, [1] - the resource field name
      * @returns {Array&lt;Resource&gt;} - the array of filtered resources
      */
-    transform(items = [], [searchString, propName]) {
+    transform(items = [], params) {
+        let [searchString, propName] = params;
         if (searchString.length === 0) { return items; }
         return items.filter(item =&gt; (typeof(item[propName]) === &apos;string&apos;)
             ? item[propName].toLowerCase().indexOf(searchString.toLowerCase()) !== -1
@@ -113,7 +119,7 @@ export class SetToArray implements PipeTransform {
      * @param {Set} items - the set of items
      * @returns {Array} - the array of items
      */
-    transform(items) { return Array.from(items || {}); }
+    transform(items) { return Array.from(items || {}).filter(x =&gt; !x::isUndefined()); }
 }
 
 /**
@@ -128,24 +134,29 @@ export class OrderBy implements PipeTransform {
      *  with optional &quot;-&quot; prefix to sort in the descending order.
      * @returns {Array} - the sorted array. If sortedMode equals &quot;unsorted&quot;, the function returns the input array without changes.
      */
-    transform(items, sortMode: string) {
+    transform(items, sortMode) {
         let propName = (sortMode[0] === &apos;-&apos;)? sortMode.substring(1): sortMode;
         if (propName === &quot;unsorted&quot;) {
             return items;
         } else {
+            if (!items || (items.length === 0)) {return items;}
+            if (items[0]::isString()){
+                return items.sort((a, b) =&gt; {
+                    if ((sortMode[0] === &apos;-&apos;)) {//desc
+                        return (a &gt; b) ? -1 : ((a &lt; b) ? 1 : 0);
+                    } else {//asc
+                        return (a &gt; b) ? 1 : ((a &lt; b) ? -1 : 0);
+                    }
+                });
+            }
             return items.sort((a, b) =&gt; {
                 if ((sortMode[0] === &apos;-&apos;)) {//desc
-                    if (a[propName] &gt; b[propName]) return -1;
-                    if (a[propName] &lt; b[propName]) return 1;
-                    return 0;
+                    return (a[propName] &gt; b[propName])? -1: ((a[propName] &lt; b[propName])? 1: 0);
                 } else {//asc
-                    if (a[propName] &gt; b[propName]) return 1;
-                    if (a[propName] &lt; b[propName]) return -1;
-                    return 0;
+                    return (a[propName] &gt; b[propName])? 1: ((a[propName] &lt; b[propName])? -1: 0);
                 }
             });
         }
-
     }
 }
 
@@ -153,46 +164,24 @@ export class OrderBy implements PipeTransform {
  * The MapToOptions pipe, maps resources into objects for drop-down lists
  */
 @Pipe({name: &apos;mapToOptions&apos;})
-class MapToOptions implements PipeTransform {
+export class MapToOptions implements PipeTransform {
     /**
      * @param {Array&lt;Resource&gt;} items -  the array of resources to convert to the array of selection options
      * which are objects with fields &quot;id&quot; and &quot;text&quot;.
-     * @returns {Array&lt;{id: string, text: string}&gt;} - the array of drop-down list selection options
+     * @returns {Array&lt;{value: string, label: string}&gt;} - the array of drop-down list selection options
      */
     transform(items = []) {
-        return items.filter(x =&gt; (x.name &amp;&amp; (x.name !== &quot;&quot;))).map((entry) =&gt; ({
-            id: entry, text: entry.name? entry.name: &quot;(Unnamed) &quot; + entry.class
-        }))
+        return items.map(x =&gt;({value: x, label: x.name? x.name: &quot;(Unnamed) &quot; + x.class}))
     }
 }
 
-/**
- * The MapToCategories pipe, maps resources into categorized objects for drop-down lists
- */
-@Pipe({name: &apos;mapToCategories&apos;})
-class MapToCategories implements PipeTransform {
-    /**
-     * @param {Array&lt;Resource&gt;} items - the array of resources to convert to an array of categorized selection options
-     * which are objects with fields &quot;text&quot; and &quot;children&quot;.
-     * @returns {Array&lt;{text: string, children: Array}&gt;} - the array of categorized drop-down list selection options
-     */
-    transform(items = []) {
-        let types = Array.from(new Set(items.map(item =&gt; item.type)));
-        let typedItems = [];
-        for (let type of types){
-            let typed = items.filter(item =&gt; (item.type === type));
-            typedItems.push({text: type, children: typed});
-        }
-        return typedItems;
-    }
-}
 
 /**
  * The PipeTransformModule module, exports open-physiology helper pipes
  */
 @NgModule({
-    declarations: [ OrderBy, FilterBy, SetToArray, HideClass, MapToOptions, MapToCategories ],
-    exports: [ OrderBy, FilterBy, SetToArray, HideClass, MapToOptions, MapToCategories ]
+    declarations: [ OrderBy, FilterBy, SetToArray, HideClass, MapToOptions],
+    exports: [ OrderBy, FilterBy, SetToArray, HideClass, MapToOptions]
 })
 export class PipeTransformModule {}
 

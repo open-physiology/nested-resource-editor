@@ -6,7 +6,6 @@ import $ from '../libs/jquery';
 import modelFactory, {ajaxBackend} from 'open-physiology-model';
 
 import {PipeTransformModule} from '../common/PipeTransformModule.js';
-import {Subscription}   from 'rxjs/Subscription';
 import {NestedResourceWidgetModule} from '../index.js';
 
 @Component({
@@ -29,8 +28,7 @@ export class TestApp {
 	_model;
 	_items;
 	_selectedItem;
-
-	_rs: Subscription;
+	_rs;
 
     /**
 	 * The constructor of the component
@@ -41,10 +39,10 @@ export class TestApp {
 			ajax:        $.ajax
 		});
 		let modelRef = modelFactory(backend);
-		window.module = modelRef;
 		this._model = modelRef.classes;
+        window.model = this._model;
 
-		this._rs = this._model.Resource.p('all').subscribe(
+        this._rs = this._model.Resource.p('all').subscribe(
 			(data) => {
 				this._items = data;
 				if (this._items.length > 0){
@@ -52,21 +50,24 @@ export class TestApp {
 				}
 			});
 		//model.Resource.getAll(); //Fails!
-		this._model.Lyph.new({name: "Kidney"}, {createAxis: true});
+        let fma = this._model.ExternalResource.new({name: "FMA 13867"});
+        this._model.Lyph.new({name: "Kidney", externals: [fma]}, {createAxis: true});
 		this._model.Lyph.new({name: "Heart"});
 		this._model.Lyph.new({name: "Head"});
+
+
+		this.resourceFactory = ::this.resourceFactory;
 	}
 
     /**
 	 * Create a new resource
      * @param clsName - resource class name
      * @param def     - object with resource definition
-     * @param options - options
      * @returns a newly created resource
      */
-    resourceFactory = (clsName, def, options = {}) => {
-		return this._model[clsName].new(def, options);
-	};
+    resourceFactory(clsName, def) {
+        return this._model[clsName].new(def);
+    }
 
     /**
 	 * Unsubscribe from subscriptions

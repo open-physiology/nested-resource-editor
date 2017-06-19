@@ -201,7 +201,7 @@ export class AbstractResourceList {
 
         let newItem;
         if (this.resourceFactory){
-            newItem = this.resourceFactory(clsName, {name: `New ${clsName}`}, options);
+            newItem = this.resourceFactory(clsName, {name: `New ${clsName}`});
             if (clsName === this.resourceClasses.Material.name) {
                 let newType = this.resourceFactory(this.resourceClasses.Type.name,
                     {name: newItem.name, definition: newItem});
@@ -209,11 +209,21 @@ export class AbstractResourceList {
             }
         } else {
             let cls = this.resourceClasses[clsName];
-            newItem = cls.new({name: `New ${clsName}`}, options);
+            newItem = cls.new({name: `New ${clsName}`});
             if (clsName === this.resourceClasses.Material.name) {
                 this.resourceClasses.Type.new({name: newItem.name, definition: newItem});
             }
             this._toastyService.error("The resource factory is not provided! The created resource is a placeholder!");
+        }
+
+        if (options.createRadialBorders){
+            let border1 = this.resourceFactory(this.resourceClasses.Border.name, {});
+            let border2 = this.resourceFactory(this.resourceClasses.Border.name, {});
+            newItem.radialBorders = [border1, border2];
+        }
+
+        if (options.createAxis){
+            newItem.axis = this.resourceFactory(this.resourceClasses.Border.name, {});
         }
 
         this.items.push(newItem);

@@ -32,13 +32,21 @@
 <nav class="navigation" data-ice="nav"><div>
   <ul>
     
-  <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">common/components</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/components/CustomSelectModule.js~CustomSelectModule.html">CustomSelectModule</a></span></span></li>
+  <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">common</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/PipeTransformModule.js~FilterBy.html">FilterBy</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/PipeTransformModule.js~HideClass.html">HideClass</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/PipeTransformModule.js~MapToOptions.html">MapToOptions</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/PipeTransformModule.js~OrderBy.html">OrderBy</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/PipeTransformModule.js~PipeTransformModule.html">PipeTransformModule</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/PipeTransformModule.js~SetToArray.html">SetToArray</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">common/components</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/components/CustomSelectModule.js~CustomSelectModule.html">CustomSelectModule</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/components/CustomSelectModule.js~MultiSelectInput.html">MultiSelectInput</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/components/CustomSelectModule.js~SingleSelectInput.html">SingleSelectInput</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">common/toolbars</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/toolbars/ToolbarSettingsModule.js~ToolbarPropertySettings.html">ToolbarPropertySettings</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/toolbars/ToolbarSettingsModule.js~ToolbarSettingsModule.html">ToolbarSettingsModule</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">components</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/components/MeasurableGeneratorModule.js~MeasurableGenerator.html">MeasurableGenerator</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/components/MeasurableGeneratorModule.js~MeasurableGeneratorModule.html">MeasurableGeneratorModule</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/components/TemplateValueModule.js~TemplateValueComponent.html">TemplateValueComponent</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/components/TemplateValueModule.js~TemplateValueModule.html">TemplateValueModule</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">panels</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/panels/AbstractResourceList.js~AbstractResourceList.html">AbstractResourceList</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/panels/HighlightService.js~HighlightService.html">HighlightService</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/panels/ItemHeader.js~ItemHeader.html">ItemHeader</a></span></span></li>
@@ -64,29 +72,33 @@
 <div class="content" data-ice="content"><h1 data-ice="title">src/common/components/CustomSelectModule.js</h1>
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import {NgModule, Component, Input, Output, EventEmitter} from &apos;@angular/core&apos;;
 import {CommonModule} from &apos;@angular/common&apos;;
-import {PipeTransformModule} from &apos;../PipeTransformModule&apos;;
+import {PipeTransformModule, SetToArray, MapToOptions} from &apos;../PipeTransformModule&apos;;
 import {DropdownModule} from &apos;ngx-dropdown&apos;;
-import {SelectModule} from &apos;ng2-select&apos;;
+import {FormsModule} from &apos;@angular/forms&apos;;
+import {SelectModule} from &apos;angular2-select&apos;;
 
 @Component({
     selector: &apos;select-input&apos;,
     template: `
         &lt;div *ngIf=&quot;_active&quot;&gt;
-            &lt;ng-select
-                    [items]=&quot;options | setToArray | mapToOptions&quot;
-                    [active]=&quot;items   | setToArray | mapToOptions&quot;
-                    [disabled]=&quot;disabled&quot;
-                    [multiple]=&quot;true&quot;
-                    [allowClear]=&quot;true&quot;
-                    (data)=&quot;_refreshValue($event)&quot;
+            &lt;ng-select 
+                    [options]    = &quot;options | setToArray | mapToOptions&quot;
+                    [(ngModel)]  = &quot;_items&quot;
+                    placeholder  = &quot;Select many&quot;
+                    [disabled]   = &quot;disabled&quot;
+                    [multiple]   = &quot;true&quot;
+                    [allowClear] = &quot;true&quot;
+                    (selected)   = &quot;_updateValue($event)&quot;
+                    (deselected) = &quot;_updateValue($event)&quot;&gt;
             &gt;&lt;/ng-select&gt;
         &lt;/div&gt;
     `,
     styles: [
         `
-        :host &gt;&gt;&gt; .ui-select-container{
-            height: 30px;
-        }
+            :host &gt; div &gt;&gt;&gt; .below {
+                height: 30px;
+                border-radius: 4px;
+            }
         `
     ]
 })
@@ -117,6 +129,7 @@ export class MultiSelectInput {
 
     _active = true;
     _externalChange = false;
+    _items = [];
 
     /**
      * Update component parameters in response to external data change
@@ -126,14 +139,19 @@ export class MultiSelectInput {
         if (this._externalChange){
             setTimeout(() =&gt; { this._active = false }, 0);
             setTimeout(() =&gt; { this._active = true  }, 0);
+            this._items =  new MapToOptions().transform(new SetToArray().transform(this.items || {}));
         }
         this._externalChange = true;
     }
 
-    _refreshValue(value):void {
+    /**
+     * @param item - added or removed item
+     * @private
+     */
+    _updateValue(item){
         this._externalChange = false;
-        let newItems = value.map(x =&gt; x.id);
-        this.updated.emit(new Set(newItems));
+        this.items = this._items;
+        this.updated.emit(this.items);
     }
 }
 
@@ -142,19 +160,22 @@ export class MultiSelectInput {
     template:`
         &lt;div *ngIf=&quot;_active&quot;&gt;
             &lt;ng-select
-                    [items]=&quot;options | setToArray | mapToOptions&quot;
-                    [active]=&quot;[item || {}] | mapToOptions&quot;
-                    [disabled]=&quot;disabled&quot;
-                    [multiple]=false
-                    [allowClear]=true
-                    (data)=&quot;_refreshValue($event)&quot;
+                    [options]    = &quot;options | setToArray | mapToOptions&quot;
+                    [(ngModel)]  = &quot;_items&quot;
+                    placeholder  = &quot;Select one&quot;
+                    [disabled]   = &quot;disabled&quot;
+                    [multiple]   = false
+                    [allowClear] = true
+                    (selected)   = &quot;_updateValue($event)&quot;
+                    (deselected) = &quot;_updateValue($event)&quot;&gt;
             &gt;&lt;/ng-select&gt;
         &lt;/div&gt;
     `,
     styles: [
         `
-        :host &gt;&gt;&gt; .ui-select-container{
+        :host &gt; div &gt;&gt;&gt; .below {  
             height: 30px;
+            border-radius: 4px;
         }
         `
     ]
@@ -167,7 +188,7 @@ export class SingleSelectInput {
      * The set of input items
      * @type {Set&lt;T&gt;|Set}
      */
-    @Input()  item    = new Set();
+    @Input()  item  = new Set();
     /**
      * The set of items for selection
      * @type {Set&lt;T&gt;|Set}
@@ -186,6 +207,7 @@ export class SingleSelectInput {
 
     _active = true;
     _externalChange = false;
+    _items = [];
 
     /**
      * Update component parameters in response to external data change
@@ -193,15 +215,20 @@ export class SingleSelectInput {
      */
     ngOnChanges(changes) {
         if (this._externalChange){
-            setTimeout(() =&gt; {this._active = false}, 0);
-            setTimeout(() =&gt; {this._active = true},  0);
+            setTimeout(() =&gt; { this._active = false }, 0);
+            setTimeout(() =&gt; { this._active = true  }, 0);
+            this._items =  new MapToOptions().transform(new SetToArray().transform(this.item));
         }
         this._externalChange = true;
     }
 
-    _refreshValue(value = {}):void {
+    /**
+     * @param item - added or removed item
+     * @private
+     */
+    _updateValue(item){
         this._externalChange = false;
-        this.item = value.id;
+        this.item = this._items;
         this.updated.emit(this.item);
     }
 }
@@ -209,7 +236,7 @@ export class SingleSelectInput {
  * The CustomSelectModule module, offers pre-configured multiple and single item selection components.
  */
 @NgModule({
-    imports: [ CommonModule, DropdownModule, PipeTransformModule, SelectModule ],
+    imports: [ CommonModule, FormsModule, DropdownModule, PipeTransformModule, SelectModule ],
     declarations: [ MultiSelectInput, SingleSelectInput ],
     exports: [ MultiSelectInput, SingleSelectInput ]
 })

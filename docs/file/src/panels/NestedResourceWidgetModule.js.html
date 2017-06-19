@@ -32,13 +32,21 @@
 <nav class="navigation" data-ice="nav"><div>
   <ul>
     
-  <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">common/components</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/components/CustomSelectModule.js~CustomSelectModule.html">CustomSelectModule</a></span></span></li>
+  <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">common</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/PipeTransformModule.js~FilterBy.html">FilterBy</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/PipeTransformModule.js~HideClass.html">HideClass</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/PipeTransformModule.js~MapToOptions.html">MapToOptions</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/PipeTransformModule.js~OrderBy.html">OrderBy</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/PipeTransformModule.js~PipeTransformModule.html">PipeTransformModule</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/PipeTransformModule.js~SetToArray.html">SetToArray</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">common/components</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/components/CustomSelectModule.js~CustomSelectModule.html">CustomSelectModule</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/components/CustomSelectModule.js~MultiSelectInput.html">MultiSelectInput</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/components/CustomSelectModule.js~SingleSelectInput.html">SingleSelectInput</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">common/toolbars</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/toolbars/ToolbarSettingsModule.js~ToolbarPropertySettings.html">ToolbarPropertySettings</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/toolbars/ToolbarSettingsModule.js~ToolbarSettingsModule.html">ToolbarSettingsModule</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">components</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/components/MeasurableGeneratorModule.js~MeasurableGenerator.html">MeasurableGenerator</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/components/MeasurableGeneratorModule.js~MeasurableGeneratorModule.html">MeasurableGeneratorModule</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/components/TemplateValueModule.js~TemplateValueComponent.html">TemplateValueComponent</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/components/TemplateValueModule.js~TemplateValueModule.html">TemplateValueModule</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">panels</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/panels/AbstractResourceList.js~AbstractResourceList.html">AbstractResourceList</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/panels/HighlightService.js~HighlightService.html">HighlightService</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/panels/ItemHeader.js~ItemHeader.html">ItemHeader</a></span></span></li>
@@ -64,11 +72,14 @@
 <div class="content" data-ice="content"><h1 data-ice="title">src/panels/NestedResourceWidgetModule.js</h1>
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import {NgModule, Component, Input, Output, EventEmitter} from &apos;@angular/core&apos;;
 import {CommonModule} from &apos;@angular/common&apos;;
+import {ToastyService} from &apos;ng2-toasty&apos;;
 
 //internal
 import {ResourcePanelModule}  from &quot;./ResourcePanelModule.js&quot;;
 import {AbstractResourceList} from &quot;./AbstractResourceList.js&quot;;
 import {HighlightService} from &apos;./HighlightService.js&apos;;
+
+import moduleFactory from &apos;../../node_modules/open-physiology-manifest/src/index.js&apos;;
 
 @Component({
     selector: &apos;nested-resource-widget&apos;,
@@ -76,29 +87,29 @@ import {HighlightService} from &apos;./HighlightService.js&apos;;
         &lt;div class=&quot;panel panel-info repo&quot;&gt;
             &lt;div class=&quot;panel-heading&quot;&gt;{{caption}}
                 &lt;span class=&quot;pull-right&quot; *ngIf=&quot;options?.showActive&quot;&gt;
-            &lt;button type=&quot;button&quot; class=&quot;btn btn-default btn-header&quot;
-                    [ngClass]=&quot;{&apos;active&apos;: activeItem === null}&quot; (click)=&quot;activeItem = null&quot;&gt;
-              &lt;span class=&quot;glyphicon&quot; [ngClass]=&quot;{&apos;glyphicon-pencil&apos;: activeItem === null}&quot;&gt;&lt;/span&gt;
-            &lt;/button&gt;
-          &lt;/span&gt;
+                    &lt;button type=&quot;button&quot; class=&quot;btn btn-default btn-header&quot;
+                            [ngClass]=&quot;{&apos;active&apos;: activeItem === null}&quot; (click)=&quot;activeItem = null&quot;&gt;    
+                        &lt;span class=&quot;glyphicon&quot; [ngClass]=&quot;{&apos;glyphicon-pencil&apos;: activeItem === null}&quot;&gt;&lt;/span&gt;
+                    &lt;/button&gt;
+                &lt;/span&gt;
             &lt;/div&gt;
             &lt;div class=&quot;panel-body&quot;&gt;
                 &lt;toolbar-sort [options]=&quot;[&apos;Name&apos;, &apos;ID&apos;, &apos;Class&apos;]&quot; (sorted)=&quot;_onSorted($event)&quot;&gt;&lt;/toolbar-sort&gt;
-                &lt;toolbar-add [options]=&quot;types&quot; [transform]=&quot;_getClassLabel&quot; (added)=&quot;_onAdded($event)&quot;&gt;&lt;/toolbar-add&gt;
+                &lt;toolbar-add [options]=&quot;_typeNames&quot; [transform]=&quot;_getClassLabel&quot;
+                             (added)=&quot;_onAdded($event)&quot;&gt;&lt;/toolbar-add&gt;
                 &lt;toolbar-propertySettings [options]=&quot;_typeOptions&quot; [transform]=&quot;_getClassLabel&quot;
-                                          (selectionChanged)=&quot;_hiddenTypesChanged($event)&quot;&gt;
+                                          (selectionChanged)=&quot;_ignoreTypesChanged($event)&quot;&gt;
                 &lt;/toolbar-propertySettings&gt;
 
                 &lt;toolbar-filter [filter]=&quot;_searchString&quot; [options]=&quot;[&apos;Name&apos;, &apos;ID&apos;, &apos;Class&apos;]&quot;
                                 (applied)=&quot;_onFiltered($event)&quot;&gt;&lt;/toolbar-filter&gt;
 
-                &lt;accordion [closeOthers]=&quot;true&quot;
-                           dnd-sortable-container [dropZones]=&quot;_zones&quot; [sortableData]=&quot;items&quot;&gt;
+                &lt;accordion [closeOthers]=&quot;true&quot; dnd-sortable-container [dropZones]=&quot;_typeNames&quot; [sortableData]=&quot;items&quot;&gt;
                     &lt;accordion-group *ngFor=&quot;let item of items 
-              | hideClass : hiddenTypes
-              | orderBy : _sortByMode
-              | filterBy: [_searchString, _filterByMode]
-              ; let i = index&quot; class=&quot;list-group-item&quot;
+                          | hideClass : _hiddenTypes
+                          | orderBy : _sortByMode
+                          | filterBy: [_searchString, _filterByMode]
+                          ; let i = index&quot; class=&quot;list-group-item&quot;
                                      dnd-sortable [sortableIndex]=&quot;i&quot;
                                      (onOpen)=&quot;openItem = item&quot;
                                      (onClose)=&quot;openItem = null&quot;
@@ -117,9 +128,10 @@ import {HighlightService} from &apos;./HighlightService.js&apos;;
                         &lt;div *ngIf=&quot;!options?.headersOnly&quot;&gt;
                             &lt;resource-panel *ngIf=&quot;item === openItem&quot;
                                             [item]=&quot;item&quot;
-                                            [model]=&quot;model&quot;
-                                            (saved)=&quot;_onSaved(item)&quot;
-                                            (removed)=&quot;_onRemoved(item)&quot;&gt;
+                                            [resourceClasses]=&quot;resourceClasses&quot;
+                                            [resourceFactory]=&quot;resourceFactory&quot;
+                                            (saved)   =&quot;_onSaved(item)&quot;
+                                            (removed) =&quot;_onRemoved(item)&quot;&gt;
                             &lt;/resource-panel&gt;
                         &lt;/div&gt;
                     &lt;/accordion-group&gt;
@@ -203,22 +215,36 @@ export class NestedResourceWidget extends AbstractResourceList{
     @Output() activeItemChange = new EventEmitter();
 
     /**
-     * @returns {Array&lt;string&gt;} - the set of hidden resource classes
+     *
+     * @returns {Array} - hidden types
+     * @private
      */
-    get hiddenTypes () {
+    get _hiddenTypes(){
         return Array.from(this._ignoreTypes);
     }
 
-    _activeItem = null;
+    /**
+     * @type {Array&lt;Resource&gt;} types      - the list of displayed item types (resource classes)
+     */
+    @Input() types = [];
+
+    /**
+     * Objects that define classes of open-physiology resources
+     */
+    resourceClasses = moduleFactory().classes;
+
+    _activeItem  = null;
     _ignoreTypes = new Set();
+    _hiddenTyes  = [];
     _typeOptions = [];
 
     /**
      * The constructor of the component
      * @param {HighlightService} highlightService - the service that notifies nested components about currently highlighted item
+     * @param {ToastyService} toastyService - the service for showing notifications and error messages
      */
-    constructor(highlightService: HighlightService){
-        super(highlightService);
+    constructor(highlightService: HighlightService, toastyService: ToastyService) {
+        super(highlightService, toastyService);
     }
 
     /**
@@ -226,8 +252,21 @@ export class NestedResourceWidget extends AbstractResourceList{
      */
     ngOnInit(){
         super.ngOnInit();
-        this._ignoreTypes.add(this.model.Border.name).add(this.model.Node.name);
-        this._typeOptions = this.types.filter(x =&gt; this.model[x])
+
+        if (this.types.length === 0) {
+            //If no specific class was set, the widget works with any class
+            for (let cls of Object.values(this.resourceClasses)){
+                if (cls.isResource &amp;&amp; !cls.abstract){
+                    this.types.push(cls);
+                    if (cls.name === this.resourceClasses.Lyph.name){
+                        this._typeNames.push(&quot;LyphWithAxis&quot;);
+                    }
+                }
+            }
+        }
+        this._typeNames = this.types.map(x =&gt; x.name);
+        this._ignoreTypes = new Set([this.resourceClasses.Border.name,this.resourceClasses.Node.name]);
+        this._typeOptions = this._typeNames.filter(x =&gt; this.resourceClasses[x])
             .map(x =&gt; ({ selected: !this._ignoreTypes.has(x), value: x }));
     }
 
@@ -235,7 +274,7 @@ export class NestedResourceWidget extends AbstractResourceList{
      * @param {Object} option - the object with the field &quot;value&quot; that defines the resource class and
      *  the boolean field &quot;selected&quot; that indicates whether the value is selected or not.
      */
-    _hiddenTypesChanged(option){
+    _ignoreTypesChanged(option){
         if ( this._ignoreTypes.has(option.value) &amp;&amp;  option.selected) {
             this._ignoreTypes.delete(option.value);
         }
@@ -249,9 +288,11 @@ export class NestedResourceWidget extends AbstractResourceList{
  * The NestedResourceModule module, offers the NestedResourceWidget panel.
  */
 @NgModule({
-    imports:      [ CommonModule, ResourcePanelModule  ],
+    imports:      [
+        CommonModule,
+        ResourcePanelModule ],
     declarations: [ NestedResourceWidget ],
-    providers:    [ HighlightService ],
+    providers:    [ HighlightService, ToastyService ],
     exports:      [ NestedResourceWidget ]
 })
 export class NestedResourceWidgetModule {}

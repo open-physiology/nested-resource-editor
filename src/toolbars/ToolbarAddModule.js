@@ -5,7 +5,7 @@ import {DropdownModule} from 'ngx-dropdown';
 @Component({
     selector: 'toolbar-add',
     template: `
-      <div *ngIf="options?.length > 1" class="btn-group" dropdown>
+      <div *ngIf="options?.length > 1"  class="dropdown" dropdown>
         <button type="button" class="btn btn-default btn-icon" aria-label="Add" dropdown-open>
           <span class="glyphicon glyphicon-plus"></span>
         </button>
@@ -15,8 +15,7 @@ import {DropdownModule} from 'ngx-dropdown';
           </li>
         </ul>
       </div>
-      <button *ngIf="options?.length === 1" 
-        type="button" class="btn btn-default btn-icon" (click)="added.emit(options[0])">
+      <button *ngIf="options?.length === 1" type="button" class="btn btn-default btn-icon" (click)="added.emit(options[0])">
         <span class="glyphicon glyphicon-plus"></span>
       </button>
     `

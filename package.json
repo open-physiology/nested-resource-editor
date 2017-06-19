@@ -7,7 +7,8 @@
     "test": "mocha-webpack --opts mocha-webpack.opts",
     "build": "cross-env BABEL_ENV=production webpack",
     "docs": "esdoc",
-    "everything": "npm test && npm run build && npm run docs"
+    "everything": "npm test && npm run build && npm run docs",
+    "dev-server": "webpack-dev-server --open --hot --config webpack.config-dev.js"
   },
   "repository": {
     "type": "git",
@@ -65,6 +66,7 @@
     "style-loader": "^0.17.0",
     "url-loader": "0.5",
     "webpack": "2",
+    "webpack-dev-server": "^2.4.5",
     "webpack-node-externals": "1.5"
   },
   "dependencies": {
@@ -91,7 +93,7 @@
     "ngx-dnd": "^1.0.3",
     "ngx-dropdown": "0.0.22",
     "open-physiology-model": "github:open-physiology/open-physiology-model",
-    "open-physiology-manifest":"github:open-physiology/open-physiology-manifest",
+    "open-physiology-manifest": "github:open-physiology/open-physiology-manifest",
     "rxjs": "5",
     "utilities": "open-physiology/utilities",
     "zone.js": "0.7"

@@ -7,7 +7,10 @@ import {ResourcePanelModule}  from "./ResourcePanelModule.js";
 import {AbstractResourceList} from "./AbstractResourceList.js";
 import {HighlightService} from './HighlightService.js';
 
-import moduleFactory from '../../node_modules/open-physiology-manifest/src/index.js';
+import "../../node_modules/bootstrap/dist/css/bootstrap.min.css";
+
+//import moduleFactory from '../../node_modules/open-physiology-manifest/src/index.js';
+import moduleFactory from 'open-physiology-manifest';
 
 @Component({
     selector: 'nested-resource-widget',
@@ -22,15 +25,20 @@ import moduleFactory from '../../node_modules/open-physiology-manifest/src/index
                 </span>
             </div>
             <div class="panel-body">
-                <toolbar-sort [options]="['Name', 'ID', 'Class']" (sorted)="_onSorted($event)"></toolbar-sort>
-                <toolbar-add [options]="_typeNames" [transform]="_getClassLabel"
-                             (added)="_onAdded($event)"></toolbar-add>
-                <toolbar-propertySettings [options]="_typeOptions" [transform]="_getClassLabel"
-                                          (selectionChanged)="_ignoreTypesChanged($event)">
-                </toolbar-propertySettings>
 
-                <toolbar-filter [filter]="_searchString" [options]="['Name', 'ID', 'Class']"
-                                (applied)="_onFiltered($event)"></toolbar-filter>
+                <div class="btn-toolbar justify-content-between" 
+                     role="toolbar" aria-label="Toolbar with button groups" style="padding: 2px;">
+                    <toolbar-add [options]="_typeNames" [transform]="_getClassLabel"
+                        (added)="_onAdded($event)"></toolbar-add>
+                    <toolbar-sort [options]="['Name', 'ID', 'Class']" (sorted)="_onSorted($event)"></toolbar-sort>
+
+                    <toolbar-propertySettings [options]="_typeOptions" [transform]="_getClassLabel"
+                        (selectionChanged)="_ignoreTypesChanged($event)">
+                    </toolbar-propertySettings>
+
+                    <toolbar-filter [filter]="_searchString" [options]="['Name', 'ID', 'Class']"
+                                    (applied)="_onFiltered($event)"></toolbar-filter>
+                </div>
 
                 <accordion [closeOthers]="true" dnd-sortable-container [dropZones]="_typeNames" [sortableData]="items">
                     <accordion-group *ngFor="let item of items 
@@ -39,7 +47,7 @@ import moduleFactory from '../../node_modules/open-physiology-manifest/src/index
                           | filterBy: [_searchString, _filterByMode]
                           ; let i = index" class="list-group-item"
                                      dnd-sortable [sortableIndex]="i"
-                                     (onOpen)="openItem = item"
+                                     (onOpen) ="openItem = item"
                                      (onClose)="openItem = null"
                     >
                         <accordion-heading (click)="selectedItem = item">

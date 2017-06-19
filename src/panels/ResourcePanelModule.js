@@ -4,6 +4,9 @@ import {FormsModule}     from '@angular/forms';
 import {AccordionModule} from "ngx-accordion";
 import {DndModule}       from 'ngx-dnd';
 import {ToastyModule, ToastyService} from 'ng2-toasty';
+import '../../node_modules/ng2-toasty/style.css';
+import '../../node_modules/ng2-toasty/style-bootstrap.css';
+
 
 import {PipeTransformModule, SetToArray, HideClass}     from "../common/PipeTransformModule";
 import {MeasurableGeneratorModule, MeasurableGenerator} from "../components/MeasurableGeneratorModule";
@@ -24,20 +27,20 @@ import {HighlightService}      from './HighlightService.js';
         <div class="panel">
             <div class="panel-body">
                 <toolbar-commands
-                        [options]  = "options"
-                        (saved)    = "_onSaved($event)"
-                        (canceled) = "_onCanceled($event)"
-                        (removed)  = "removed.emit($event)">
-                    <button *ngIf="item.class === resourceClasses.Lyph.name" 
+                        [options]="options"
+                        (saved)="_onSaved($event)"
+                        (canceled)="_onCanceled($event)"
+                        (removed)="removed.emit($event)">
+                    <button *ngIf="item.class === resourceClasses.Lyph.name"
                             type="button" class="btn btn-default btn-icon" (click)="_mGen.open()">
                         <span class="glyphicon glyphicon-cog"></span>
                     </button>
                 </toolbar-commands>
                 <!--<toolbar-sort [options]="['Name']" (sorted)="_onSorted($event)"></toolbar-sort>-->
                 <toolbar-propertySettings
-                        [options]          = "_fields"
-                        [transform]        = "_getPropertyLabel"
-                        (selectionChanged) = "_visibleFieldsChanged($event)">
+                        [options]="_fields"
+                        [transform]="_getPropertyLabel"
+                        (selectionChanged)="_visibleFieldsChanged($event)">
                 </toolbar-propertySettings>
 
                 <div class="input-control" *ngIf="!options?.hideCreateType && _isTyped()">
@@ -51,61 +54,64 @@ import {HighlightService}      from './HighlightService.js';
                             <div class="input-control-lg" *ngIf="field.type === 'input'">
                                 <label for="comment">{{_getPropertyLabel(field.value)}}: </label>
                                 <input class="form-control"
-                                       [type]      = "_getDefaultValue(field.value, 'type')"
-                                       [disabled]  = "item.constructor.properties[field.value].readOnly"
-                                       [(ngModel)] = "item[field.value]">
+                                       [type]     ="_getDefaultValue(field.value, 'type')"
+                                       [disabled] ="item.constructor.properties[field.value].readOnly"
+                                       [(ngModel)]="item[field.value]">
                             </div>
 
                             <div *ngIf="field.type === 'select'">
                                 <label>{{_getPropertyLabel(field.value)}}: </label>
-                                <select-input-1 [item]    = "item.p(field.value) | async"
-                                                (updated) = "_updateProperty(field.value, $event)"
-                                                [options] = "_possibleValues[field.value]">
-                                </select-input-1>
+                                <select-input [items]   = "item.p(field.value) | async"
+                                              [options] = "_possibleValues[field.value]"
+                                              [placeholder] = "_getPlaceholder(field.value)"
+                                              (updated) = "_updateProperty(field.value, $event)"
+                                              [multiple]= "false"
+                                >
+                                </select-input>
                             </div>
 
                             <div *ngIf="field.type === 'multiSelect'">
                                 <label>{{_getPropertyLabel(field.value)}}: </label>
-                                <select-input [items]   = "item.p(field.value) | async"
-                                              (updated) = "_updateProperty(field.value, $event)"
-                                              [options] = "_possibleValues[field.value]">
+                                <select-input [items]="item.p(field.value) | async"
+                                              [placeholder] = "_getPlaceholder(field.value)"
+                                              [options]="_possibleValues[field.value]">
                                 </select-input>
                             </div>
 
                             <nested-resource-list *ngIf="field.type === 'relation'"
-                                                  [caption]  = "_getPropertyLabel(field.value)"
-                                                  [items]    = "item.p(field.value) | async | setToArray"
-                                                  [resourceClasses] = "resourceClasses"   
-                                                  [resourceFactory] = "resourceFactory"
-                                                  [options]  = "{ordered: ['layers', 'segments'].includes(field.value)}"
-                                                  [type]     = "item.constructor.relationshipShortcuts[field.value].codomain.resourceClass"
-                                                  (updated)  = "_updateProperty(field.value, $event)">
+                                                  [caption]="_getPropertyLabel(field.value)"
+                                                  [items]="item.p(field.value) | async | setToArray"
+                                                  [resourceClasses]="resourceClasses"
+                                                  [resourceFactory]="resourceFactory"
+                                                  [options]="{ordered: ['layers', 'segments'].includes(field.value)}"
+                                                  [type]="item.constructor.relationshipShortcuts[field.value].codomain.resourceClass"
+                                                  (updated)="_updateProperty(field.value, $event)">
                             </nested-resource-list>
 
                             <template-value *ngIf="field.type === 'template'"
-                                            [caption] = "_getPropertyLabel(field.value)"
-                                            [item]    = "item.p(field.value) | async"
-                                            [step]    = "_getDefaultValue(field.value, 'step')"
-                                            (updated) = "_updateProperty(field.value, $event)">
+                                            [caption]="_getPropertyLabel(field.value)"
+                                            [item]="item.p(field.value) | async"
+                                            [step]="_getDefaultValue(field.value, 'step')"
+                                            (updated)="_updateProperty(field.value, $event)">
                             </template-value>
 
                             <fieldset *ngIf="field.type === 'checkbox'">
                                 <legend>{{_getPropertyLabel(field.value)}}:</legend>
                                 <p *ngFor="let option of _possibleValues[field.value]; let i = index">
-                                    <input type     = "checkbox" 
-                                           [value]  = "option"
-                                           [checked]= "item[field.value].includes(option)"
-                                           (change) = "_updateArray(field.value, option, $event)"
+                                    <input type="checkbox"
+                                           [value]="option"
+                                           [checked]="item[field.value].includes(option)"
+                                           (change)="_updateArray(field.value, option, $event)"
                                     >{{option}}&nbsp;
                                 </p>
                             </fieldset>
                         </div>
                     </div>
 
-                    <modal-window *ngIf="item.class === resourceClasses.Lyph.name" 
-                                  [item]            = "item"
-                                  [resourceClasses] = "resourceClasses"
-                                  [resourceFactory] = "resourceFactory">
+                    <modal-window *ngIf="item.class === resourceClasses.Lyph.name"
+                                  [item]="item"
+                                  [resourceClasses]="resourceClasses"
+                                  [resourceFactory]="resourceFactory">
                     </modal-window>
 
                 </div>
@@ -201,10 +207,6 @@ export class ResourcePanel {
      * @emits removed         - the item deleted
      */
     @Output() removed = new EventEmitter();
-    /**
-     * @emits propertyUpdated - the item property changed
-     */
-    @Output() propertyUpdated = new EventEmitter();
 
     @ViewChild(MeasurableGenerator) _mGen;
     _sortByMode = "unsorted";
@@ -237,7 +239,7 @@ export class ResourcePanel {
         }
 
         /*Auto-generated visual groups*/
-        let privateProperties = new Set(["class", "themes", "parents", "children"]);
+        let privateProperties = new Set(["class", "themes", "parents", "children", "borders"]);
         let multiSelectProperties = [
             'externals', 'subtypes', 'supertypes', 'clinicalIndices', 'correlations',
             'cardinalityMultipliers', 'types', 'materials', 'locations', 'causes', 'effects'];
@@ -287,7 +289,7 @@ export class ResourcePanel {
      * @param {string} option - the open-physiology resource field name
      * @returns {string} - the user readable label
      */
-    _getPropertyLabel(option: string): string{
+    _getPropertyLabel(option, uppercase = true){
         let custom = { "externals": "Annotations",
             "locals": "Local resources" };
         if (custom[option]) { return custom[option]; }
@@ -297,8 +299,14 @@ export class ResourcePanel {
         }
 
         let label = option.replace(/([a-z])([A-Z])/g, '$1 $2');
-        label = label[0].toUpperCase() + label.substring(1).toLowerCase();
+        if (uppercase){
+            label = label[0].toUpperCase() + label.substring(1).toLowerCase();
+        }
         return label;
+    }
+
+    _getPlaceholder(option){
+        return "Select " + this._getPropertyLabel(option, false);
     }
 
     /**
@@ -328,9 +336,11 @@ export class ResourcePanel {
     }
 
     _updateProperty(property, item){
-        if (this.item.fields[property] && this.item.fields[property].readonly) { return; }
-        this.item[property] = item;
-        this.propertyUpdated.emit({property: property, values: item});
+        if (!(this.item.fields[property] && this.item.fields[property].readonly)) {
+            this.item[property] = item;
+        } else {
+            this._toastyService.error("Cannot update read only field!");
+        }
     }
 
     _updateArray(property, option, event){
@@ -358,29 +368,27 @@ export class ResourcePanel {
         }
     }
 
-    _onSaved(event){
+    async _onSaved(event){
         if (this.item.class === this.resourceClasses.CoalescenceScenario.name){
             if (this.item.lyphs && (this.item.lyphs.size !== 2)){
                 this._toastyService.error("Wrong number of lyphs", this.item.lyphs.size);
             }
         }
 
-        this.item.commit()
-            .catch(reason => {
-                let errorMsg = "Failed to commit resource: Relationship constraints violated! \n" + reason;
-                this._toastyService.error(errorMsg);
-            });
-
-        if (event && event._createType){
-            let template = this.item;
-            if (!template['-->DefinesType']){
-                (async function() {
+        try{
+            await this.item.commit();
+            if (event && event._createType){
+                let template = this.item;
+                if (!template['-->DefinesType']){
                     let newType = this.resourceClasses.Type.new({definition: template});
                     template.p('name').subscribe(newType.p('name'));
-
                     await newType.commit();
-                })();
+                }
             }
+        } catch (reason){
+            let errorMsg = "Failed to commit resource!\n" + reason;
+            this._toastyService.error(errorMsg);
+            console.error(reason);
         }
 
         this.saved.emit(this.item);

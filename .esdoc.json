@@ -9,6 +9,7 @@
     "name": "esdoc-babel-plugin",
     "option": {
       "plugins": [
+        "transform-function-bind",
         "syntax-decorators",
         "remove-decorator",
         "transform-flow-strip-types",

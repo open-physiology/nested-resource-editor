@@ -24,21 +24,24 @@ module.exports = [
 		test: /node_modules[\/\\](utilities|open-physiology-model|open-physiology-manifest)[\/\\]src[\/\\].*\.js$/,
 		loader: 'babel-loader'
 	},
-	{
+    {
+        test: /^open-physiology-manifest$/,
+        loader: 'babel-loader'
+    },
+    {
 		test: /\.(woff|woff2)(\?v=\d+\.\d+\.\d+)?$/,
-		loader: 'url?limit=10000&mimetype=application/font-woff'
+		loader: 'url-loader?mimetype=application/font-woff'
 	},
 	{
 		test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
-		loader: 'url?limit=10000&mimetype=application/octet-stream'
+		loader: 'url-loader?mimetype=application/octet-stream'
 	},
 	{
 		test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
-		loader: 'file'
+		loader: 'file-loader'
 	},
 	{
 		test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
-		loader: 'url?limit=10000&mimetype=image/svg+xml'
+		loader: 'url-loader?mimetype=image/svg+xml'
 	}
-
 ];

@@ -1,6 +1,7 @@
 import {NgModule, Pipe, PipeTransform} from '@angular/core';
-import isString from 'lodash-bound/isString';
-import isUndefined from 'lodash-bound/isUndefined'
+import isString    from 'lodash-bound/isString';
+import isUndefined from 'lodash-bound/isUndefined';
+import isSet       from 'lodash-bound/isSet';
 
 @Pipe({name: 'hideClass'})
 /**
@@ -25,11 +26,12 @@ export class HideClass implements PipeTransform {
 export class FilterBy implements PipeTransform {
     /**
      * @param {Array<Resource>} items - the array of resources to filter
-     * @param {string} searchString - the string that the resource field must contain
-     * @param {string} propName - the resource field name
+     * @param {[string, string]} params - an array with two parameters:
+     * [0] - the string that the resource field must contain, [1] - the resource field name
      * @returns {Array<Resource>} - the array of filtered resources
      */
-    transform(items = [], [searchString, propName]) {
+    transform(items = [], params) {
+        let [searchString, propName] = params;
         if (searchString.length === 0) { return items; }
         return items.filter(item => (typeof(item[propName]) === 'string')
             ? item[propName].toLowerCase().indexOf(searchString.toLowerCase()) !== -1
@@ -47,6 +49,23 @@ export class SetToArray implements PipeTransform {
      * @returns {Array} - the array of items
      */
     transform(items) { return Array.from(items || {}).filter(x => !x::isUndefined()); }
+}
+
+/**
+ * The ValueToSet pipe, converts a given value to a set.
+ */
+@Pipe({name: 'valueToSet'})
+export class ValueToSet implements PipeTransform {
+    /**
+     * @param {Set} item - the set of items
+     * @returns {Set} - the set of items
+     */
+    transform(item) {
+        if (item::isSet()) { return item; }
+        let res = new Set();
+        if (item) { res.add(item); }
+        return res;
+    }
 }
 
 /**
@@ -107,8 +126,8 @@ export class MapToOptions implements PipeTransform {
  * The PipeTransformModule module, exports open-physiology helper pipes
  */
 @NgModule({
-    declarations: [ OrderBy, FilterBy, SetToArray, HideClass, MapToOptions],
-    exports: [ OrderBy, FilterBy, SetToArray, HideClass, MapToOptions]
+    declarations: [ OrderBy, FilterBy, SetToArray, HideClass, MapToOptions, ValueToSet],
+    exports: [ OrderBy, FilterBy, SetToArray, HideClass, MapToOptions, ValueToSet]
 })
 export class PipeTransformModule {}
 

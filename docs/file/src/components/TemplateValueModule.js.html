@@ -34,6 +34,7 @@
     
   <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">common</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/PipeTransformModule.js~FilterBy.html">FilterBy</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/PipeTransformModule.js~HideClass.html">HideClass</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/PipeTransformModule.js~MapToOptions.html">MapToOptions</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/PipeTransformModule.js~OrderBy.html">OrderBy</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/PipeTransformModule.js~PipeTransformModule.html">PipeTransformModule</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/common/PipeTransformModule.js~SetToArray.html">SetToArray</a></span></span></li>
@@ -56,7 +57,6 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/panels/ResourcePanelModule.js~ResourcePanelModule.html">ResourcePanelModule</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">test-app</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/test-app/app.js~TestApp.html">TestApp</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/test-app/app.js~TestAppModule.html">TestAppModule</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-loadData">loadData</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">toolbars</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/toolbars/ToolbarAddModule.js~ToolbarAdd.html">ToolbarAdd</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/toolbars/ToolbarAddModule.js~ToolbarAddModule.html">ToolbarAddModule</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/toolbars/ToolbarCommandsModule.js~ToolbarCommands.html">ToolbarCommands</a></span></span></li>
@@ -73,89 +73,94 @@
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import {NgModule, Component, Input, EventEmitter, Output} from &apos;@angular/core&apos;;
 import {CommonModule} from &apos;@angular/common&apos;;
 import {FormsModule} from &apos;@angular/forms&apos;;
+import isUndefined from &apos;lodash-bound/isUndefined&apos;;
 
 @Component({
     &quot;inputs&quot;: [&quot;caption&quot;, &quot;item&quot;, &quot;min&quot;, &quot;max&quot;, &quot;step&quot;],
     &quot;selector&quot;: &quot;template-value&quot;,
     &quot;template&quot;: `
-      &lt;div class=&quot;input-control input-control-md&quot;&gt;
-        &lt;label for=&quot;caption&quot;&gt;{{caption}}:&lt;/label&gt;
-        
-        &lt;div class=&quot;btn-group&quot; style=&quot;float: left;&quot;&gt;
-          &lt;button type=&quot;button&quot; class=&quot;btn btn-default btn-icon&quot; 
-            [ngClass]=&quot;{&apos;active&apos;: valueType === &apos;Value&apos;}&quot; (click)=&quot;updateType(&apos;Value&apos;)&quot;&gt;
-            &lt;span class=&quot;glyphicon glyphicon-th&quot;&gt;&lt;/span&gt;
-          &lt;/button&gt;
-          &lt;button type=&quot;button&quot; class=&quot;btn btn-default btn-icon&quot; 
-            [ngClass]=&quot;{&apos;active&apos;: valueType === &apos;Range&apos;}&quot; (click)=&quot;updateType(&apos;Range&apos;)&quot;&gt;
-            &lt;span class=&quot;glyphicon glyphicon-transfer&quot;&gt;&lt;/span&gt;
-          &lt;/button&gt;
-          &lt;button type=&quot;button&quot; class=&quot;btn btn-default btn-icon&quot; 
-            [ngClass]=&quot;{&apos;active&apos;: valueType === &apos;Distribution&apos;}&quot; (click)=&quot;updateType(&apos;Distribution&apos;)&quot;&gt;
-            &lt;span class=&quot;glyphicon glyphicon-random&quot;&gt;&lt;/span&gt;
-          &lt;/button&gt;
-        &lt;/div&gt;
-      &lt;/div&gt;
-      
-      &lt;div class=&quot;input-control input-control-sm&quot; *ngIf=&quot;valueType === &apos;Value&apos;&quot;&gt;
-        &lt;label&gt;Value:&lt;/label&gt;
-        &lt;input type=&quot;number&quot; class=&quot;form-control&quot; 
-           [min] =&quot;min&quot; 
-           [max] =&quot;max&quot; 
-           [step]=&quot;step&quot; 
-           [(ngModel)]=&quot;value&quot; 
-           (ngModelChange)=&quot;updated.emit(value)&quot;/&gt;
-      &lt;/div&gt;
+        &lt;div class=&quot;input-control input-control-lg&quot;&gt;
+            &lt;label for=&quot;caption&quot;&gt;{{caption}}:&lt;/label&gt;
 
-      &lt;div class=&quot;input-control&quot; *ngIf=&quot;(valueType === &apos;Range&apos;) || (valueType === &apos;Distribution&apos;)&quot;&gt;
-        &lt;label&gt;{{(valueType === &apos;Range&apos;)? &quot;Range&quot;: &quot;Distribution&quot;}}:&lt;/label&gt;
-        &lt;fieldset &gt;
-          &lt;!--&lt;distribution-class caption=&quot;Class&quot; [clsName] = &quot;valueSet.distributionClass&quot;&gt;&lt;/distribution-class&gt; --&gt;
-          &lt;!--Min--&gt; 
-          &lt;div class=&quot;input-control input-control-sm&quot;&gt;
-            &lt;label for=&quot;min&quot;&gt;Min: &lt;/label&gt;
-            &lt;input type=&quot;number&quot; class=&quot;form-control&quot; 
-              [min] =&quot;min&quot; 
-              [max] =&quot;max&quot; 
-              [step]=&quot;step&quot; 
-              [(ngModel)]=&quot;valueSet.min&quot;
-              (ngModelChange)=&quot;updated.emit(valueSet)&quot;&gt;
-          &lt;/div&gt;
-          &lt;!--Max--&gt;
-          &lt;div class=&quot;input-control input-control-sm&quot;&gt;
-            &lt;label for=&quot;max&quot;&gt;Max: &lt;/label&gt;
-            &lt;input type=&quot;number&quot; class=&quot;form-control&quot; 
-              [min] =&quot;min&quot; 
-              [max] =&quot;max&quot; 
-              [step]=&quot;step&quot; 
-              [(ngModel)]=&quot;valueSet.max&quot;
-              (ngModelChange)=&quot;updated.emit(valueSet)&quot;&gt;
-          &lt;/div&gt;
-          &lt;div *ngIf=&quot;valueType === &apos;Distribution&apos;&quot; style=&quot;display: inline-block&quot;&gt;
-            &lt;!--Mean--&gt;
-            &lt;div class=&quot;input-control input-control-sm&quot;&gt;
-              &lt;label for=&quot;mean&quot;&gt;Mean: &lt;/label&gt;
-              &lt;input type=&quot;number&quot; class=&quot;form-control&quot; 
-              [min] =&quot;min&quot; 
-              [max] =&quot;max&quot; 
-              [step]=&quot;step&quot; 
-              [(ngModel)]=&quot;valueSet.mean&quot;
-              (ngModelChange)=&quot;updated.emit(valueSet)&quot;&gt;
+            &lt;div class=&quot;btn-group&quot; style=&quot;float: left;&quot;&gt;
+                &lt;button type=&quot;button&quot; class=&quot;btn btn-default btn-icon&quot;
+                        [ngClass]=&quot;{&apos;active&apos;: item.class === &apos;Number&apos;}&quot; (click)=&quot;_updateValue(&apos;Number&apos;)&quot;&gt;
+                    &lt;span class=&quot;glyphicon glyphicon-th&quot;&gt;&lt;/span&gt;
+                &lt;/button&gt;
+                &lt;button type=&quot;button&quot; class=&quot;btn btn-default btn-icon&quot;
+                        [ngClass]=&quot;{&apos;active&apos;: item.class === &apos;NumberRange&apos;}&quot; (click)=&quot;_updateValue(&apos;NumberRange&apos;)&quot;&gt;
+                    &lt;span class=&quot;glyphicon glyphicon-transfer&quot;&gt;&lt;/span&gt;
+                &lt;/button&gt;
+                &lt;button type=&quot;button&quot; class=&quot;btn btn-default btn-icon&quot;
+                        [ngClass]=&quot;{&apos;active&apos;: item.class === &apos;BoundedNormalDistribution&apos;}&quot;
+                        (click)=&quot;_updateValue(&apos;BoundedNormalDistribution&apos;)&quot;&gt;
+                    &lt;span class=&quot;glyphicon glyphicon-stats&quot;&gt;&lt;/span&gt;
+                &lt;/button&gt;
+                &lt;button type=&quot;button&quot; class=&quot;btn btn-default btn-icon&quot;
+                        [ngClass]=&quot;{&apos;active&apos;: item.class === &apos;UniformDistribution&apos;}&quot;
+                        (click)=&quot;_updateValue(&apos;UniformDistribution&apos;)&quot;&gt;
+                    &lt;span class=&quot;glyphicon glyphicon-align-center&quot;&gt;&lt;/span&gt;
+                &lt;/button&gt;
             &lt;/div&gt;
-            &lt;!--Std--&gt;
-            &lt;div class=&quot;input-control input-control-sm&quot;&gt;
-              &lt;label for=&quot;std&quot;&gt;Std: &lt;/label&gt;
-              &lt;input type=&quot;number&quot; class=&quot;form-control&quot; 
-              [min] =&quot;min&quot; 
-              [max] =&quot;max&quot; 
-              [step]=&quot;step&quot; 
-              [(ngModel)]=&quot;valueSet.std&quot;
-              (ngModelChange)=&quot;updated.emit(valueSet)&quot;&gt;
-            &lt;/div&gt;
-          &lt;/div&gt;
-        &lt;/fieldset&gt;
-      &lt;/div&gt;
-   `,
+        &lt;/div&gt;
+
+        &lt;div class=&quot;input-control input-control-md&quot; *ngIf=&quot;item.class === &apos;Number&apos;&quot;&gt;
+            &lt;label&gt;Value:&lt;/label&gt;
+            &lt;input type=&quot;number&quot; class=&quot;form-control&quot;
+                   [min]=&quot;min&quot;
+                   [max]=&quot;max&quot;
+                   [step]=&quot;step&quot;
+                   [(ngModel)]=&quot;item.value&quot;
+                   (ngModelChange)=&quot;updated.emit(item)&quot;/&gt;
+        &lt;/div&gt;
+
+        &lt;div class=&quot;input-control&quot; *ngIf=&quot;(item.class === &apos;NumberRange&apos;) || (item.class.endsWith(&apos;Distribution&apos;))&quot;&gt;
+            &lt;label&gt;{{_getLabel()}}:&lt;/label&gt;
+            &lt;fieldset&gt;
+                &lt;div class=&quot;input-control input-control-sm&quot;&gt;
+                    &lt;label for=&quot;min&quot;&gt;Min: &lt;/label&gt;
+                    &lt;input type=&quot;number&quot; class=&quot;form-control&quot;
+                           [min]=&quot;min&quot;
+                           [max]=&quot;max&quot;
+                           [step]=&quot;step&quot;
+                           [(ngModel)]=&quot;item.min&quot;
+                           (ngModelChange)=&quot;updated.emit(item)&quot;&gt;
+                &lt;/div&gt;
+                &lt;!--Max--&gt;
+                &lt;div class=&quot;input-control input-control-sm&quot;&gt;
+                    &lt;label for=&quot;max&quot;&gt;Max: &lt;/label&gt;
+                    &lt;input type=&quot;number&quot; class=&quot;form-control&quot;
+                           [min]=&quot;min&quot;
+                           [max]=&quot;max&quot;
+                           [step]=&quot;step&quot;
+                           [(ngModel)]=&quot;item.max&quot;
+                           (ngModelChange)=&quot;updated.emit(item)&quot;&gt;
+                &lt;/div&gt;
+                &lt;div *ngIf=&quot;item.class === &apos;BoundedNormalDistribution&apos;&quot; style=&quot;display: inline-block&quot;&gt;
+                    &lt;!--Mean--&gt;
+                    &lt;div class=&quot;input-control input-control-sm&quot;&gt;
+                        &lt;label for=&quot;mean&quot;&gt;Mean: &lt;/label&gt;
+                        &lt;input type=&quot;number&quot; class=&quot;form-control&quot;
+                               [min]=&quot;min&quot;
+                               [max]=&quot;max&quot;
+                               [step]=&quot;step&quot;
+                               [(ngModel)]=&quot;item.mean&quot;
+                               (ngModelChange)=&quot;updated.emit(item)&quot;&gt;
+                    &lt;/div&gt;
+                    &lt;!--Std--&gt;
+                    &lt;div class=&quot;input-control input-control-sm&quot;&gt;
+                        &lt;label for=&quot;std&quot;&gt;Std: &lt;/label&gt;
+                        &lt;input type=&quot;number&quot; class=&quot;form-control&quot;
+                               [min]=&quot;min&quot;
+                               [max]=&quot;max&quot;
+                               [step]=&quot;step&quot;
+                               [(ngModel)]=&quot;item.std&quot;
+                               (ngModelChange)=&quot;updated.emit(item)&quot;&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+            &lt;/fieldset&gt;
+        &lt;/div&gt;
+    `,
     &quot;styles&quot;: [`
         input {width: 60px;}
         .form-control {
@@ -170,52 +175,64 @@ import {FormsModule} from &apos;@angular/forms&apos;;
     `],
 })
 /**
- * The TemplateValueComponent, provides fields for editing typedDistribution schema:
- *   &apos;value&apos;: { type: &apos;number&apos; },
- *   &apos;min&apos;:   { type: &apos;number&apos; },
- *   &apos;max&apos;:   { type: &apos;number&apos; },
- *   &apos;mean&apos;:  { type: &apos;number&apos; },
- *   &apos;std&apos;:   { type: &apos;number&apos; },
- *   &apos;class&apos;: { type: &apos;string&apos;, required: true }
+ * The TemplateValueComponent, provides fields for editing typedDistribution schema
  */
 export class TemplateValueComponent{
-    @Input() item;
-    @Input() min: number = 0;
-    @Input() max: number = 10;
+    /**
+     * @property {Object} item - the object specifying a value, range or distribution:
+     * { &apos;value&apos;: { type: &apos;number&apos; },
+     *   &apos;min&apos;:   { type: &apos;number&apos; },
+     *   &apos;max&apos;:   { type: &apos;number&apos; },
+     *   &apos;mean&apos;:  { type: &apos;number&apos; },
+     *   &apos;std&apos;:   { type: &apos;number&apos; },
+     *   &apos;class&apos;: { type: &apos;string&apos;, required: true }
+     *    Class values: &apos;UniformDistribution&apos; | &apos;BoundedNormalDistribution&apos; | &apos;Number&apos; | &apos;NumberRange&apos;
+     */
+    @Input() item = {value: 0, class: &apos;Number&apos;};
+    /**
+     * @property {number} min - the default value of the field &quot;min&quot;
+     */
+    @Input() min = 0;
+    /**
+     * @property {number} max - the default value of the field &quot;max&quot;
+     */
+    @Input() max = 10;
+    /**
+     * @property {number} step - the default value of the field &quot;step&quot;
+     */
     @Input() step: number = 1;
 
-    value: number = 0;
-    valueSet = {};
-    valueType: string = &quot;Value&quot;;
+    /**
+     * The event signalling that the object has been changed
+     * @type {EventEmitter}
+     */
     @Output() updated = new EventEmitter();
 
+    /**
+     * Initialize the component
+     */
     ngOnInit(){
-        if (this.item) {
-            if (this.item instanceof Object) {
-                this.valueSet = this.item;
-                if (this.item.distribution){
-                    this.valueType = &quot;Distribution&quot;;
-                }
-                else {
-                    this.valueType = &quot;Range&quot;;
-                }
-            } else {
-                this.value = this.item;
-            }
+        if (this.item::isUndefined()){
+            this.item = {value: 0, class: &apos;Number&apos;};
+        }
+        if (this.item.class::isUndefined()){
+            this.item.class = &apos;Number&apos;;
         }
     }
 
-    updateType(type: string){
-        this.valueType = type;
-        if (type === &quot;Value&quot;){
-            this.item = this.value;
-        } else {
-            this.item = this.valueSet;
-            this.valueSet.distribution = (this.valueType === &apos;Distribution&apos;)? &quot;Normal&quot;: undefined;
-        }
-
+    _updateValue(type){
+        this.item.class = type;
         this.updated.emit(this.item);
     }
+
+    _getLabel(){
+        return
+            (this.item.class === &apos;NumberRange&apos;)? &apos;Range&apos;:
+            (this.item.class === &apos;BoundedNormalDistribution&apos;)
+                ? &apos;Bounded normal distribution&apos;
+                : &apos;Uniform distribution&apos;;
+    }
+
 }
 
 /**

@@ -12,6 +12,18 @@ window.esdocSearchIndex = [
     "class"
   ],
   [
+    "nested-resource-editor/src/common/pipetransformmodule.js~filterby",
+    "class/src/common/PipeTransformModule.js~FilterBy.html",
+    "<span>FilterBy</span> <span class=\"search-result-import-path\">nested-resource-editor/src/common/PipeTransformModule.js</span>",
+    "class"
+  ],
+  [
+    "nested-resource-editor/src/common/pipetransformmodule.js~hideclass",
+    "class/src/common/PipeTransformModule.js~HideClass.html",
+    "<span>HideClass</span> <span class=\"search-result-import-path\">nested-resource-editor/src/common/PipeTransformModule.js</span>",
+    "class"
+  ],
+  [
     "nested-resource-editor/src/panels/highlightservice.js~highlightservice",
     "class/src/panels/HighlightService.js~HighlightService.html",
     "<span>HighlightService</span> <span class=\"search-result-import-path\">nested-resource-editor/src/panels/HighlightService.js</span>",
@@ -21,6 +33,12 @@ window.esdocSearchIndex = [
     "nested-resource-editor/src/panels/itemheader.js~itemheader",
     "class/src/panels/ItemHeader.js~ItemHeader.html",
     "<span>ItemHeader</span> <span class=\"search-result-import-path\">nested-resource-editor/src/panels/ItemHeader.js</span>",
+    "class"
+  ],
+  [
+    "nested-resource-editor/src/common/pipetransformmodule.js~maptooptions",
+    "class/src/common/PipeTransformModule.js~MapToOptions.html",
+    "<span>MapToOptions</span> <span class=\"search-result-import-path\">nested-resource-editor/src/common/PipeTransformModule.js</span>",
     "class"
   ],
   [
@@ -60,6 +78,18 @@ window.esdocSearchIndex = [
     "class"
   ],
   [
+    "nested-resource-editor/src/common/pipetransformmodule.js~orderby",
+    "class/src/common/PipeTransformModule.js~OrderBy.html",
+    "<span>OrderBy</span> <span class=\"search-result-import-path\">nested-resource-editor/src/common/PipeTransformModule.js</span>",
+    "class"
+  ],
+  [
+    "nested-resource-editor/src/common/pipetransformmodule.js~pipetransformmodule",
+    "class/src/common/PipeTransformModule.js~PipeTransformModule.html",
+    "<span>PipeTransformModule</span> <span class=\"search-result-import-path\">nested-resource-editor/src/common/PipeTransformModule.js</span>",
+    "class"
+  ],
+  [
     "nested-resource-editor/src/panels/resourcepanelmodule.js~resourcepanel",
     "class/src/panels/ResourcePanelModule.js~ResourcePanel.html",
     "<span>ResourcePanel</span> <span class=\"search-result-import-path\">nested-resource-editor/src/panels/ResourcePanelModule.js</span>",
@@ -72,9 +102,27 @@ window.esdocSearchIndex = [
     "class"
   ],
   [
+    "nested-resource-editor/src/common/pipetransformmodule.js~settoarray",
+    "class/src/common/PipeTransformModule.js~SetToArray.html",
+    "<span>SetToArray</span> <span class=\"search-result-import-path\">nested-resource-editor/src/common/PipeTransformModule.js</span>",
+    "class"
+  ],
+  [
     "nested-resource-editor/src/common/components/customselectmodule.js~singleselectinput",
     "class/src/common/components/CustomSelectModule.js~SingleSelectInput.html",
     "<span>SingleSelectInput</span> <span class=\"search-result-import-path\">nested-resource-editor/src/common/components/CustomSelectModule.js</span>",
+    "class"
+  ],
+  [
+    "nested-resource-editor/src/components/templatevaluemodule.js~templatevaluecomponent",
+    "class/src/components/TemplateValueModule.js~TemplateValueComponent.html",
+    "<span>TemplateValueComponent</span> <span class=\"search-result-import-path\">nested-resource-editor/src/components/TemplateValueModule.js</span>",
+    "class"
+  ],
+  [
+    "nested-resource-editor/src/components/templatevaluemodule.js~templatevaluemodule",
+    "class/src/components/TemplateValueModule.js~TemplateValueModule.html",
+    "<span>TemplateValueModule</span> <span class=\"search-result-import-path\">nested-resource-editor/src/components/TemplateValueModule.js</span>",
     "class"
   ],
   [
@@ -480,6 +528,42 @@ window.esdocSearchIndex = [
     "external"
   ],
   [
+    "src/common/pipetransformmodule.js",
+    "file/src/common/PipeTransformModule.js.html",
+    "src/common/PipeTransformModule.js",
+    "file"
+  ],
+  [
+    "src/common/pipetransformmodule.js~filterby#transform",
+    "class/src/common/PipeTransformModule.js~FilterBy.html#instance-method-transform",
+    "src/common/PipeTransformModule.js~FilterBy#transform",
+    "method"
+  ],
+  [
+    "src/common/pipetransformmodule.js~hideclass#transform",
+    "class/src/common/PipeTransformModule.js~HideClass.html#instance-method-transform",
+    "src/common/PipeTransformModule.js~HideClass#transform",
+    "method"
+  ],
+  [
+    "src/common/pipetransformmodule.js~maptooptions#transform",
+    "class/src/common/PipeTransformModule.js~MapToOptions.html#instance-method-transform",
+    "src/common/PipeTransformModule.js~MapToOptions#transform",
+    "method"
+  ],
+  [
+    "src/common/pipetransformmodule.js~orderby#transform",
+    "class/src/common/PipeTransformModule.js~OrderBy.html#instance-method-transform",
+    "src/common/PipeTransformModule.js~OrderBy#transform",
+    "method"
+  ],
+  [
+    "src/common/pipetransformmodule.js~settoarray#transform",
+    "class/src/common/PipeTransformModule.js~SetToArray.html#instance-method-transform",
+    "src/common/PipeTransformModule.js~SetToArray#transform",
+    "method"
+  ],
+  [
     "src/common/components/customselectmodule.js",
     "file/src/common/components/CustomSelectModule.js.html",
     "src/common/components/CustomSelectModule.js",
@@ -490,6 +574,12 @@ window.esdocSearchIndex = [
     "class/src/common/components/CustomSelectModule.js~MultiSelectInput.html#instance-constructor-constructor",
     "src/common/components/CustomSelectModule.js~MultiSelectInput#constructor",
     "method"
+  ],
+  [
+    "src/common/components/customselectmodule.js~multiselectinput#items",
+    "class/src/common/components/CustomSelectModule.js~MultiSelectInput.html#instance-member-items",
+    "src/common/components/CustomSelectModule.js~MultiSelectInput#items",
+    "member"
   ],
   [
     "src/common/components/customselectmodule.js~multiselectinput#ngonchanges",
@@ -546,6 +636,24 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
+    "src/components/templatevaluemodule.js",
+    "file/src/components/TemplateValueModule.js.html",
+    "src/components/TemplateValueModule.js",
+    "file"
+  ],
+  [
+    "src/components/templatevaluemodule.js~templatevaluecomponent#item",
+    "class/src/components/TemplateValueModule.js~TemplateValueComponent.html#instance-member-item",
+    "src/components/TemplateValueModule.js~TemplateValueComponent#item",
+    "member"
+  ],
+  [
+    "src/components/templatevaluemodule.js~templatevaluecomponent#ngoninit",
+    "class/src/components/TemplateValueModule.js~TemplateValueComponent.html#instance-method-ngOnInit",
+    "src/components/TemplateValueModule.js~TemplateValueComponent#ngOnInit",
+    "method"
+  ],
+  [
     "src/index.js",
     "file/src/index.js.html",
     "src/index.js",
@@ -583,13 +691,13 @@ window.esdocSearchIndex = [
   ],
   [
     "src/panels/abstractresourcelist.js~abstractresourcelist#highlighteditem",
-    "class/src/panels/AbstractResourceList.js~AbstractResourceList.html#instance-set-highlightedItem",
+    "class/src/panels/AbstractResourceList.js~AbstractResourceList.html#instance-get-highlightedItem",
     "src/panels/AbstractResourceList.js~AbstractResourceList#highlightedItem",
     "member"
   ],
   [
     "src/panels/abstractresourcelist.js~abstractresourcelist#highlighteditem",
-    "class/src/panels/AbstractResourceList.js~AbstractResourceList.html#instance-get-highlightedItem",
+    "class/src/panels/AbstractResourceList.js~AbstractResourceList.html#instance-set-highlightedItem",
     "src/panels/AbstractResourceList.js~AbstractResourceList#highlightedItem",
     "member"
   ],
@@ -613,13 +721,13 @@ window.esdocSearchIndex = [
   ],
   [
     "src/panels/abstractresourcelist.js~abstractresourcelist#openitem",
-    "class/src/panels/AbstractResourceList.js~AbstractResourceList.html#instance-get-openItem",
+    "class/src/panels/AbstractResourceList.js~AbstractResourceList.html#instance-set-openItem",
     "src/panels/AbstractResourceList.js~AbstractResourceList#openItem",
     "member"
   ],
   [
     "src/panels/abstractresourcelist.js~abstractresourcelist#openitem",
-    "class/src/panels/AbstractResourceList.js~AbstractResourceList.html#instance-set-openItem",
+    "class/src/panels/AbstractResourceList.js~AbstractResourceList.html#instance-get-openItem",
     "src/panels/AbstractResourceList.js~AbstractResourceList#openItem",
     "member"
   ],
@@ -744,16 +852,16 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
-    "src/panels/nestedresourcewidgetmodule.js~nestedresourcewidget#hiddentypes",
-    "class/src/panels/NestedResourceWidgetModule.js~NestedResourceWidget.html#instance-get-hiddenTypes",
-    "src/panels/NestedResourceWidgetModule.js~NestedResourceWidget#hiddenTypes",
-    "member"
-  ],
-  [
     "src/panels/nestedresourcewidgetmodule.js~nestedresourcewidget#ngoninit",
     "class/src/panels/NestedResourceWidgetModule.js~NestedResourceWidget.html#instance-method-ngOnInit",
     "src/panels/NestedResourceWidgetModule.js~NestedResourceWidget#ngOnInit",
     "method"
+  ],
+  [
+    "src/panels/nestedresourcewidgetmodule.js~nestedresourcewidget#resourceclasses",
+    "class/src/panels/NestedResourceWidgetModule.js~NestedResourceWidget.html#instance-member-resourceClasses",
+    "src/panels/NestedResourceWidgetModule.js~NestedResourceWidget#resourceClasses",
+    "member"
   ],
   [
     "src/panels/resourcepanelmodule.js",
@@ -789,6 +897,12 @@ window.esdocSearchIndex = [
     "src/test-app/app.js~testapp#ngondestroy",
     "class/src/test-app/app.js~TestApp.html#instance-method-ngOnDestroy",
     "src/test-app/app.js~TestApp#ngOnDestroy",
+    "method"
+  ],
+  [
+    "src/test-app/app.js~testapp#resourcefactory",
+    "class/src/test-app/app.js~TestApp.html#instance-method-resourceFactory",
+    "src/test-app/app.js~TestApp#resourceFactory",
     "method"
   ],
   [
