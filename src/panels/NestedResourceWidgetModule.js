@@ -40,25 +40,25 @@ import moduleFactory from 'open-physiology-manifest';
                                     (applied)="_onFiltered($event)"></toolbar-filter>
                 </div>
 
-                <accordion [closeOthers]="true" dnd-sortable-container [dropZones]="_typeNames" [sortableData]="items">
-                    <accordion-group *ngFor="let item of items 
+                <accordion [closeOthers]="true">
+                    <accordion-group class="list-group-item" *ngFor="let item of items 
                           | hideClass : _hiddenTypes
                           | orderBy : _sortByMode
                           | filterBy: [_searchString, _filterByMode]
-                          ; let i = index" class="list-group-item"
-                                     dnd-sortable [sortableIndex]="i"
+                          ; let i = index" 
                                      (onOpen) ="openItem = item"
                                      (onClose)="openItem = null"
                     >
                         <accordion-heading (click)="selectedItem = item">
-                            <item-header [item]="item"
-                                         [options]="options"
-                                         [isActive]="item === activeItem"
-                                         [isOpen]="item === openItem"
+                            <item-header [item]     ="item"
+                                         [options]  ="options"
+                                         [isActive] ="item === activeItem"
+                                         [isOpen]   ="item === openItem"
                                          (mouseover)="highlightedItem = item"
-                                         (mouseout)="_unhighlight(item)"
+                                         (mouseout) ="_unhighlight(item)"
                                          (activeItemChanged)="activeItem = item"
-                                         [ngClass]="{highlighted: item === highlightedItem, active: item === selectedItem}">
+                                         [ngClass]  ="{highlighted: item === highlightedItem, 
+                                            active: item === selectedItem}">
                             </item-header>
                         </accordion-heading>
                         <div *ngIf="!options?.headersOnly">

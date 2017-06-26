@@ -34,15 +34,15 @@ import {ToastyService} from 'ng2-toasty';
                         | filterBy: [_searchString, _filterByMode]; let i = index" class="list-group-item"
                                      dnd-sortable [sortableIndex]="i"
                                      (onDragEnd)="_onDragEnd(i)"
-                                     (onOpen)="openItem = item"
-                                     (onClose)="openItem = null">
+                                     (onOpen)   = "openItem = item"
+                                     (onClose)  = "openItem = null">
 
-                        <accordion-heading (click)="selectedItem = item">
-                            <item-header [item]="item"
-                                         [isOpen]="item === openItem"
-                                         (mouseover)="highlightedItem = item"
-                                         (mouseout)="_unhighlight(item)"
-                                         [ngClass]="{highlighted: item === highlightedItem, active: item === selectedItem}">
+                        <accordion-heading (click)  = "selectedItem = item">
+                            <item-header [item]     = "item"
+                                         [isOpen]   = "item === openItem"
+                                         (mouseover)= "highlightedItem = item"
+                                         (mouseout) = "_unhighlight(item)"
+                                         [ngClass]  = "{highlighted: item === highlightedItem, active: item === selectedItem}">
                             </item-header>
                         </accordion-heading>
 
@@ -131,31 +131,48 @@ export class NestedResourceList extends AbstractResourceList {
      * @param {Object} changes - the object defining input data changes
      */
     ngOnChanges(changes) {
+        /**
+         * Check if resource 'a' is followed by the resource 'b' in a a partially
+         * ordered list defines by the IsRadiallyAdjacent relationship
+         * @param a {Resource} - the resource
+         * @param b {Resource} - the resource
+         * @returns {boolean}  - true, if the resource 'a' precedes the resource 'b'
+         * @example
+         * a[-->IsRadiallyAdjacent][2] = [b]
+         * b[-->IsRadiallyAdjacent][2] = [c]
+         * isFollowedBy(a, c) = true
+         * isFollowedBy(c, a) = false
+         */
+        function isFollowedBy(a, b){
+            let follow_a  = [];
+            let a1 = a;
+            while (a1 && a1['-->IsRadiallyAdjacent'] && a1['-->IsRadiallyAdjacent'][2]){
+                let b1 = a1['-->IsRadiallyAdjacent'][2];
+                if (b1[0]){ follow_a.push(b1[0]); }
+                a1 = b1[0];
+            }
+            return follow_a.includes(b);
+        }
+
         if (this.items && this.options.ordered) {
             this.items.sort((a, b) => {
-                let a1 = a;
-                let follow_a = [];
-                let b1 = [...a1['-->IsRadiallyAdjacent']];
-                while (b1.length > 0){
-                    follow_a.push(b1[0]);
-                    a1 = b1[0];
-                    b1 = [...a1['-->IsRadiallyAdjacent']];
-                }
-                return ( follow_a.includes(b) )
+                let a_b = isFollowedBy(a, b);
+                let b_a = isFollowedBy(b, a);
+                return a_b? -1: (b_a? 1: 0);
             });
         }
     }
 
     _onDragEnd(index) {
-        if (this.items.length < 2 || !this.options.ordered) { return; }
-        for (let i = 1; i < this.items.length; i++){
-            this.resourceFactory(this.resourceClasses.IsRadiallyAdjacent.name,
-                {1: this.items[i-1], 2: this.items[i]});
+        if (this.items.length > 1 && this.options.ordered) {
+            for (let i = 0; i < this.items.length; i++) {
+                this.items[i]['-->IsRadiallyAdjacent'][2] = [];
+            }
+            for (let i = 1; i < this.items.length; i++) {
+                this.items[i - 1]['-->IsRadiallyAdjacent'][2].push(this.items[i]);
+            }
+            this.updated.emit(this.items);
         }
-        // for (let i = 1; i < this.items.length; i++) {
-        //     console.log(this.items[i].name, this.items[i]['-->IsRadiallyAdjacent']);
-        // }
-        this.updated.emit(this.items);
     }
 
     /**

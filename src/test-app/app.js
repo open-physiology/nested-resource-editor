@@ -51,10 +51,10 @@ export class TestApp {
 			});
 		//model.Resource.getAll(); //Fails!
         let fma = this._model.ExternalResource.new({name: "FMA 13867"});
-        this._model.Lyph.new({name: "Kidney", externals: [fma]}, {createAxis: true});
-		this._model.Lyph.new({name: "Heart"});
-		this._model.Lyph.new({name: "Head"});
-
+		let l1 = this._model.Lyph.new({name: "Kidney lobus"});
+		let l2 = this._model.Lyph.new({name: "Red Blood Cell"});
+        let l3 = this._model.Lyph.new({name: "Hilum of kidney"});
+        this._model.Lyph.new({name: "Kidney", externals: [fma], layers: [l1, l2, l3]});
 
 		this.resourceFactory = ::this.resourceFactory;
 	}

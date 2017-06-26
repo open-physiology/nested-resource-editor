@@ -61,37 +61,38 @@ import {HighlightService}      from './HighlightService.js';
 
                             <div *ngIf="field.type === 'select'">
                                 <label>{{_getPropertyLabel(field.value)}}: </label>
-                                <select-input [items]   = "item.p(field.value) | async"
-                                              [options] = "_possibleValues[field.value]"
+                                <select-input [items]       = "item.p(field.value) | async"
+                                              [options]     = "_possibleValues[field.value]"
                                               [placeholder] = "_getPlaceholder(field.value)"
-                                              (updated) = "_updateProperty(field.value, $event)"
-                                              [multiple]= "false"
+                                              (updated)     = "_updateProperty(field.value, $event)"
+                                              [multiple]    = "false"
                                 >
                                 </select-input>
                             </div>
 
                             <div *ngIf="field.type === 'multiSelect'">
                                 <label>{{_getPropertyLabel(field.value)}}: </label>
-                                <select-input [items]="item.p(field.value) | async"
+                                <select-input [items]       = "item.p(field.value) | async"
                                               [placeholder] = "_getPlaceholder(field.value)"
-                                              [options]="_possibleValues[field.value]">
+                                              [options]     = "_possibleValues[field.value]">
                                 </select-input>
                             </div>
 
                             <nested-resource-list *ngIf="field.type === 'relation'"
-                                                  [caption]="_getPropertyLabel(field.value)"
-                                                  [items]="item.p(field.value) | async | setToArray"
-                                                  [resourceClasses]="resourceClasses"
-                                                  [resourceFactory]="resourceFactory"
-                                                  [options]="{ordered: ['layers', 'segments'].includes(field.value)}"
-                                                  [type]="item.constructor.relationshipShortcuts[field.value].codomain.resourceClass"
-                                                  (updated)="_updateProperty(field.value, $event)">
+                                    [caption] = "_getPropertyLabel(field.value)"
+                                    [items]   = "item.p(field.value) | async | setToArray"
+                                    [resourceClasses] = "resourceClasses"
+                                    [resourceFactory] = "resourceFactory"
+                                    [options] = "{ordered: ['layers', 'segments'].includes(field.value)}"
+                                    
+                                    [type]    = "item.constructor.relationshipShortcuts[field.value].codomain.resourceClass"
+                                    (updated) = "_updateProperty(field.value, $event)">
                             </nested-resource-list>
 
                             <template-value *ngIf="field.type === 'template'"
                                             [caption]="_getPropertyLabel(field.value)"
-                                            [item]="item.p(field.value) | async"
-                                            [step]="_getDefaultValue(field.value, 'step')"
+                                            [item]   ="item.p(field.value) | async"
+                                            [step]   ="_getDefaultValue(field.value, 'step')"
                                             (updated)="_updateProperty(field.value, $event)">
                             </template-value>
 
@@ -108,7 +109,7 @@ import {HighlightService}      from './HighlightService.js';
                         </div>
                     </div>
 
-                    <modal-window *ngIf="item.class === resourceClasses.Lyph.name"
+                    <modal-window *ngIf ="item.class === resourceClasses.Lyph.name"
                                   [item]="item"
                                   [resourceClasses]="resourceClasses"
                                   [resourceFactory]="resourceFactory">
@@ -386,8 +387,7 @@ export class ResourcePanel {
                 }
             }
         } catch (reason){
-            let errorMsg = "Failed to commit resource!\n" + reason;
-            this._toastyService.error(errorMsg);
+            this._toastyService.error("Failed to commit resource!\n" + reason);
             console.error(reason);
         }
 
